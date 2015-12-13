@@ -5,6 +5,8 @@
  */
 package roadnetwork.domain;
 
+import roadnetwork.gui.JanelaPrincipal;
+
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
@@ -12,6 +14,17 @@ package roadnetwork.domain;
 public class Main {
     
     public static void main(String[] args){
+        
+        JanelaPrincipal janela=new JanelaPrincipal();
+                try {
+            Manager manager = new Manager("Road Network Simulation");
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         
     }
     
