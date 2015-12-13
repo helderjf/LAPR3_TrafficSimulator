@@ -7,10 +7,11 @@ package roadnetwork.domain;
 
 /**
  *
- * @author Andre
+ * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public class Segment {
     
+    private int id;
     private int index;
     private double initial_Height;
     private double slope;
@@ -30,6 +31,7 @@ public class Segment {
     
     /**
      * 
+     * @param id id
      * @param index index
      * @param initial_Height initial_Height
      * @param slope slope
@@ -39,7 +41,8 @@ public class Segment {
      * @param min_Velocity min_Velocity
      * @param max_Vehicles max_Vehicles
      */
-    public Segment(int index, double initial_Height, double slope, double lenght, double rrc, double max_Velocity, double min_Velocity, double max_Vehicles) {
+    public Segment(int id, int index, double initial_Height, double slope, double lenght, double rrc, double max_Velocity, double min_Velocity, double max_Vehicles) {
+        this.id = id;
         this.index = index;
         this.initial_Height = initial_Height;
         this.slope = slope;
@@ -56,6 +59,7 @@ public class Segment {
      */
     public Segment(Segment s)
     {
+        s.id = this.id;
         s.index = this.index;
         s.initial_Height = this.initial_Height;
         s.lenght = this.lenght;
@@ -64,6 +68,22 @@ public class Segment {
         s.min_Velocity = this.min_Velocity;
         s.rrc = this.rrc;
         s.slope = this.slope;
+    }
+
+    /**
+     * 
+     * @return id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * 
+     * @param id id
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -201,21 +221,22 @@ public class Segment {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + this.index;
-        hash = 67 * hash + (int) (Double.doubleToLongBits(this.initial_Height) ^ (Double.doubleToLongBits(this.initial_Height) >>> 32));
-        hash = 67 * hash + (int) (Double.doubleToLongBits(this.slope) ^ (Double.doubleToLongBits(this.slope) >>> 32));
-        hash = 67 * hash + (int) (Double.doubleToLongBits(this.lenght) ^ (Double.doubleToLongBits(this.lenght) >>> 32));
-        hash = 67 * hash + (int) (Double.doubleToLongBits(this.rrc) ^ (Double.doubleToLongBits(this.rrc) >>> 32));
-        hash = 67 * hash + (int) (Double.doubleToLongBits(this.max_Velocity) ^ (Double.doubleToLongBits(this.max_Velocity) >>> 32));
-        hash = 67 * hash + (int) (Double.doubleToLongBits(this.min_Velocity) ^ (Double.doubleToLongBits(this.min_Velocity) >>> 32));
-        hash = 67 * hash + (int) (Double.doubleToLongBits(this.max_Vehicles) ^ (Double.doubleToLongBits(this.max_Vehicles) >>> 32));
+        hash = 17 * hash + this.id;
+        hash = 17 * hash + this.index;
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.initial_Height) ^ (Double.doubleToLongBits(this.initial_Height) >>> 32));
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.slope) ^ (Double.doubleToLongBits(this.slope) >>> 32));
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.lenght) ^ (Double.doubleToLongBits(this.lenght) >>> 32));
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.rrc) ^ (Double.doubleToLongBits(this.rrc) >>> 32));
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.max_Velocity) ^ (Double.doubleToLongBits(this.max_Velocity) >>> 32));
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.min_Velocity) ^ (Double.doubleToLongBits(this.min_Velocity) >>> 32));
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.max_Vehicles) ^ (Double.doubleToLongBits(this.max_Vehicles) >>> 32));
         return hash;
     }
 
     /**
      * 
      * @param obj object
-     * @return result
+     * @return 
      */
     @Override
     public boolean equals(Object obj) {
@@ -226,6 +247,9 @@ public class Segment {
             return false;
         }
         final Segment other = (Segment) obj;
+        if (this.id != other.id) {
+            return false;
+        }
         if (this.index != other.index) {
             return false;
         }
@@ -259,12 +283,8 @@ public class Segment {
      */
     @Override
     public String toString() {
-        return "Segment{" + "index=" + index + ", initial_Height=" + initial_Height + ", slope=" + slope + ", lenght=" + lenght + ", rrc=" + rrc + ", max_Velocity=" + max_Velocity + ", min_Velocity=" + min_Velocity + ", max_Vehicles=" + max_Vehicles + '}';
+        return "Segment{" + "id=" + id + ", index=" + index + ", initial_Height=" + initial_Height + ", slope=" + slope + ", lenght=" + lenght + ", rrc=" + rrc + ", max_Velocity=" + max_Velocity + ", min_Velocity=" + min_Velocity + ", max_Vehicles=" + max_Vehicles + '}';
     }
-    
-    
-    
-    
-    
+
     
 }
