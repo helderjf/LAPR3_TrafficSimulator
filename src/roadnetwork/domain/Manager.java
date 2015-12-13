@@ -12,15 +12,21 @@ package roadnetwork.domain;
 public class Manager {
     
     private String m_name;
+    private Project m_currentProject;
     
     public Manager(String name){
         
         m_name=name;
+        
        
     }
 
     public String getM_name() {
         return m_name;
+    }
+
+    public Project getCurrentProject() {
+        return m_currentProject;
     }
     
     
