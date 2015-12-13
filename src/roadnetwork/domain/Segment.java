@@ -21,12 +21,21 @@ public class Segment {
     private double min_Velocity;
     private double max_Vehicles;
 
+
     /**
      * 
      */
     public Segment()
     {
-        
+        this.id = 0;
+        this.index = 0;
+        this.initial_Height = 0;
+        this.lenght = 0;
+        this.max_Vehicles = 0;
+        this.min_Velocity = 0;
+        this.max_Velocity = 0;
+        this.slope = 0;
+        this.rrc = 0;
     }
     
     /**
