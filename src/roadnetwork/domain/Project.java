@@ -5,10 +5,29 @@
  */
 package roadnetwork.domain;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public class Project {
+
+    private RoadNetwork m_roadNetwork;
+    private ArrayList<Vehicle> m_vehicleList;
+    
+    
+    
+    
+    public ArrayList<Vehicle> getVehicleList() {
+        return m_vehicleList;
+    }
+
+    public RoadNetwork getRoadNetwork() {
+        return m_roadNetwork;
+    }
+    
+
+    
     
 }

@@ -15,10 +15,10 @@ public class Main {
     
     public static void main(String[] args){
         
-        JanelaPrincipal janela=new JanelaPrincipal();
                 try {
             Manager manager = new Manager("Road Network Simulation");
 
+            JanelaPrincipal janela=new JanelaPrincipal(manager);
 
 
         } catch (Exception e) {
