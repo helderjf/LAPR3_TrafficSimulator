@@ -16,6 +16,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
      */
     public JanelaPrincipal() {
         initComponents();
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 

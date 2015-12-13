@@ -16,7 +16,14 @@ public class Main {
     public static void main(String[] args){
         
         JanelaPrincipal janela=new JanelaPrincipal();
-        
+                try {
+            Manager manager = new Manager("Road Network Simulation");
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
         
     }
