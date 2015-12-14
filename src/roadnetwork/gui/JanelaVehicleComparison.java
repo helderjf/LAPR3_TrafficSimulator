@@ -11,14 +11,17 @@ package roadnetwork.gui;
  */
 public class JanelaVehicleComparison extends javax.swing.JFrame {
 
+    JanelaPrincipal m_janelaPrincipal;
+    
     /**
      * Creates new form JanelaVehicleComparison
+     * @param janela
      */
     public JanelaVehicleComparison(JanelaPrincipal janela) {
+        m_janelaPrincipal=janela;
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
-        setTitle("Vehicle Comparison");
     }
 
     /**
@@ -30,7 +33,8 @@ public class JanelaVehicleComparison extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Vehicle Comparison");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

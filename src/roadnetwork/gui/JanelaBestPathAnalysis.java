@@ -11,14 +11,17 @@ package roadnetwork.gui;
  */
 public class JanelaBestPathAnalysis extends javax.swing.JFrame {
 
+    JanelaPrincipal m_janelaPrincipal;
+    
     /**
      * Creates new form JanelaBestPathAnalysis
+     * @param janela
      */
     public JanelaBestPathAnalysis(JanelaPrincipal janela) {
+        m_janelaPrincipal=janela;
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
-        setTitle("Best Path Analysis");
     }
 
     /**
@@ -30,7 +33,8 @@ public class JanelaBestPathAnalysis extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Best Path Analysis");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
