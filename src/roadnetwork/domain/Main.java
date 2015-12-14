@@ -19,6 +19,27 @@ public class Main {
             Manager manager = new Manager("Road Network Simulation");
 
             JanelaPrincipal janela=new JanelaPrincipal(manager);
+            
+            
+            //CREATE MOCK OBJECTS
+            Project projecto1 = new Project();
+            RoadNetwork roadNetwork1 = new RoadNetwork();
+            
+            Node node1 = new Node();
+            Node node2 = new Node();
+            //...
+            Road road1 = new Road();
+            //...
+            
+            Section section1 = new Section();
+            //...
+            
+            Segment segment1 = new Segment();
+            //...
+            
+            Vehicle vehicle1 = new Vehicle("v1", "vehiculo1", 1000, new TypeOfVehicle(), 0, 0.03);
+            //...
+            
 
 
         } catch (Exception e) {

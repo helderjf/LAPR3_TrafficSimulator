@@ -20,6 +20,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     
     /**
      * Creates new form JanelaPrincipal
+     * @param manager
      */
     public JanelaPrincipal(Manager manager) {
         m_manager=manager;
@@ -30,7 +31,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     
     private void openProject(){
         m_janelaOpenProject = new JanelaOpenProject(this);
-        //setContentPane(m_janelaOpenProject);
         revalidate();
     }
     
