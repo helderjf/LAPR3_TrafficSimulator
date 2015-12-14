@@ -89,14 +89,6 @@ public class Segment {
 
     /**
      * 
-     * @param id id
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * 
      * @return return an index
      */
     public int getIndex() {
@@ -105,7 +97,7 @@ public class Segment {
 
     /**
      * 
-     * @param receives an index 
+     * @param index index 
      */
     public void setIndex(int index) {
         this.index = index;

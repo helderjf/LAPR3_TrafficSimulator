@@ -124,14 +124,6 @@ public class Vehicle {
 
     /**
      * 
-     * @param type type
-     */
-    public void setType(TypeOfVehicle type) {
-        this.type = type;
-    }
-
-    /**
-     * 
      * @return load
      */
     public double getLoad() {

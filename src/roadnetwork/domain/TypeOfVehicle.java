@@ -52,14 +52,6 @@ public class TypeOfVehicle {
     public int getId() {
         return id;
     }
-
-    /**
-     * 
-     * @param id id 
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
     
     /**
      * 
