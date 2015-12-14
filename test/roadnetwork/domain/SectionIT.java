@@ -47,8 +47,6 @@ public class SectionIT {
         int expResult = 0;
         int result = instance.getId();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -61,8 +59,6 @@ public class SectionIT {
         Node expResult = null;
         Node result = instance.getBeginningNode();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -74,8 +70,6 @@ public class SectionIT {
         Node beginningNode = null;
         Section instance = new Section();
         instance.setBeginningNode(beginningNode);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -88,8 +82,6 @@ public class SectionIT {
         Node expResult = null;
         Node result = instance.getEndingNode();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -101,8 +93,6 @@ public class SectionIT {
         Node endingNode = null;
         Section instance = new Section();
         instance.setEndingNode(endingNode);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -115,8 +105,6 @@ public class SectionIT {
         String expResult = "";
         String result = instance.getTypology();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -128,8 +116,6 @@ public class SectionIT {
         String typology = "";
         Section instance = new Section();
         instance.setTypology(typology);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -142,8 +128,6 @@ public class SectionIT {
         String expResult = "";
         String result = instance.getDirection();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -155,8 +139,6 @@ public class SectionIT {
         String direction = "";
         Section instance = new Section();
         instance.setDirection(direction);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -169,8 +151,6 @@ public class SectionIT {
         double expResult = 0.0;
         double result = instance.getToll();
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -182,8 +162,6 @@ public class SectionIT {
         double toll = 0.0;
         Section instance = new Section();
         instance.setToll(toll);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -196,8 +174,6 @@ public class SectionIT {
         WindDirection expResult = null;
         WindDirection result = instance.getWindDirection();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -209,23 +185,8 @@ public class SectionIT {
         WindDirection windDirection = null;
         Section instance = new Section();
         instance.setWindDirection(windDirection);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of hashCode method, of class Section.
-     */
-    @Test
-    public void testHashCode() {
-        System.out.println("hashCode");
-        Section instance = new Section();
-        int expResult = 0;
-        int result = instance.hashCode();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of equals method, of class Section.
@@ -238,22 +199,6 @@ public class SectionIT {
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of toString method, of class Section.
-     */
-    @Test
-    public void testToString() {
-        System.out.println("toString");
-        Section instance = new Section();
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

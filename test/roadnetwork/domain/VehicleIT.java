@@ -47,8 +47,6 @@ public class VehicleIT {
         String expResult = "";
         String result = instance.getId();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -60,8 +58,6 @@ public class VehicleIT {
         String id = "";
         Vehicle instance = new Vehicle();
         instance.setId(id);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -74,8 +70,6 @@ public class VehicleIT {
         String expResult = "";
         String result = instance.getName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -87,8 +81,6 @@ public class VehicleIT {
         String name = "";
         Vehicle instance = new Vehicle();
         instance.setName(name);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -101,8 +93,6 @@ public class VehicleIT {
         double expResult = 0.0;
         double result = instance.getMass();
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -114,8 +104,6 @@ public class VehicleIT {
         double mass = 0.0;
         Vehicle instance = new Vehicle();
         instance.setMass(mass);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -128,8 +116,6 @@ public class VehicleIT {
         TypeOfVehicle expResult = null;
         TypeOfVehicle result = instance.getType();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -142,8 +128,6 @@ public class VehicleIT {
         double expResult = 0.0;
         double result = instance.getLoad();
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -155,8 +139,6 @@ public class VehicleIT {
         double load = 0.0;
         Vehicle instance = new Vehicle();
         instance.setLoad(load);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -169,8 +151,6 @@ public class VehicleIT {
         double expResult = 0.0;
         double result = instance.getDrag_Coefficient();
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -182,23 +162,8 @@ public class VehicleIT {
         double drag_Coefficient = 0.0;
         Vehicle instance = new Vehicle();
         instance.setDrag_Coefficient(drag_Coefficient);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of hashCode method, of class Vehicle.
-     */
-    @Test
-    public void testHashCode() {
-        System.out.println("hashCode");
-        Vehicle instance = new Vehicle();
-        int expResult = 0;
-        int result = instance.hashCode();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of equals method, of class Vehicle.
@@ -211,8 +176,6 @@ public class VehicleIT {
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -225,8 +188,6 @@ public class VehicleIT {
         String expResult = "";
         String result = instance.toString();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

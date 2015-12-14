@@ -76,18 +76,6 @@ public class WindDirection {
 
     /**
      * 
-     * @return hash
-     */
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 83 * hash + (int) (Double.doubleToLongBits(this.angle) ^ (Double.doubleToLongBits(this.angle) >>> 32));
-        hash = 83 * hash + (int) (Double.doubleToLongBits(this.velocity) ^ (Double.doubleToLongBits(this.velocity) >>> 32));
-        return hash;
-    }
-
-    /**
-     * 
      * @param obj object
      * @return result
      */

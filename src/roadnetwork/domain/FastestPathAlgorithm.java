@@ -13,9 +13,11 @@ import java.util.ArrayList;
  */
 public class FastestPathAlgorithm implements BestPathAlgorithm{
 
+    
     @Override
     public SimulationResult bestPath(RoadNetwork roadNetwork, Node originNode, Node destinyNode, ArrayList<Vehicle> vehicleList) {
         //TO DO implementar
+        return null;
     }
     
     
@@ -23,6 +25,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
     
     
     public double calculateTravelTime(Section section){
+        /*
         ArrayList<Segment> segmentList = section.getSegments();
         double time=0; //in seconds
         for(Segment it : segmentList){
@@ -31,6 +34,8 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
             time+=lenght*3600/maxVel;
         }
         return time;
+        */
+        return 0;
     }
     
     

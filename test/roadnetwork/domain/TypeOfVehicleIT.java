@@ -47,8 +47,7 @@ public class TypeOfVehicleIT {
         int expResult = 0;
         int result = instance.getId();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+ 
     }
 
     /**
@@ -61,8 +60,7 @@ public class TypeOfVehicleIT {
         String expResult = "";
         String result = instance.getType();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -74,23 +72,9 @@ public class TypeOfVehicleIT {
         String type = "";
         TypeOfVehicle instance = new TypeOfVehicle();
         instance.setType(type);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
-    /**
-     * Test of hashCode method, of class TypeOfVehicle.
-     */
-    @Test
-    public void testHashCode() {
-        System.out.println("hashCode");
-        TypeOfVehicle instance = new TypeOfVehicle();
-        int expResult = 0;
-        int result = instance.hashCode();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of equals method, of class TypeOfVehicle.
@@ -103,22 +87,6 @@ public class TypeOfVehicleIT {
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of toString method, of class TypeOfVehicle.
-     */
-    @Test
-    public void testToString() {
-        System.out.println("toString");
-        TypeOfVehicle instance = new TypeOfVehicle();
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

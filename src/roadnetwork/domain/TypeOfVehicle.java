@@ -71,18 +71,6 @@ public class TypeOfVehicle {
 
     /**
      * 
-     * @return hash
-     */
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 53 * hash + this.id;
-        hash = 53 * hash + Objects.hashCode(this.type);
-        return hash;
-    }
-
-    /**
-     * 
      * @param obj object
      * @return result
      */

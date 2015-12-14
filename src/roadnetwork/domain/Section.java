@@ -175,22 +175,6 @@ public class Section {
         this.windDirection = windDirection;
     }
 
-    /**
-     * 
-     * @return hash
-     */
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 11 * hash + this.id;
-        hash = 11 * hash + Objects.hashCode(this.beginningNode);
-        hash = 11 * hash + Objects.hashCode(this.endingNode);
-        hash = 11 * hash + Objects.hashCode(this.typology);
-        hash = 11 * hash + Objects.hashCode(this.direction);
-        hash = 11 * hash + (int) (Double.doubleToLongBits(this.toll) ^ (Double.doubleToLongBits(this.toll) >>> 32));
-        hash = 11 * hash + Objects.hashCode(this.windDirection);
-        return hash;
-    }
 
     /**
      * 
