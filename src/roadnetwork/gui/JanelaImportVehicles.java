@@ -17,7 +17,7 @@ public class JanelaImportVehicles extends javax.swing.JFrame {
      * Creates new form JanelaImportVehicles
      */
     public JanelaImportVehicles(JanelaPrincipal janela) {
-        m_janelaPrincipal=janela;
+        m_janelaPrincipal=janela;       
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
