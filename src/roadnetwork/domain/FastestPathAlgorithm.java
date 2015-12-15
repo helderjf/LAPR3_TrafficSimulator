@@ -29,13 +29,13 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
     }
     
     private void addConection(Section section){
-        if (section.getDirection().equals("direct")) {
+        if (section.getDirection().equals(Direction.direct)) {
             m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section));
             
-        } else if (section.getDirection().equals("reverse")) {
+        } else if (section.getDirection().equals(Direction.reverse)) {
             m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section));
             
-        }else if (section.getDirection().equals("bidirectional")) {
+        }else if (section.getDirection().equals(Direction.bidirectional)) {
              m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section));
              m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section));
         }
