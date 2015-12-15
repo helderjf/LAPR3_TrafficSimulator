@@ -53,8 +53,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
     
     
     private double calculateTravelTime(Section section){
-        /*
-        ArrayList<Segment> segmentList = section.getSegments();
+        ArrayList<Segment> segmentList = section.getSegmentsList();
         double time=0; //in seconds
         for(Segment it : segmentList){
             double maxVel = it.getMax_Velocity();
@@ -62,8 +61,6 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
             time+=lenght*3600/maxVel;
         }
         return time;
-        */
-        return 0;
     }
     
     
