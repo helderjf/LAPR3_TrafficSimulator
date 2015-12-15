@@ -5,6 +5,7 @@
  */
 package roadnetwork.domain;
 
+import graphutils.Graph;
 import java.util.ArrayList;
 
 /**
@@ -13,10 +14,37 @@ import java.util.ArrayList;
  */
 public class FastestPathAlgorithm implements BestPathAlgorithm{
 
+    SimulationResult m_simulationResult;
+    Graph<Node,Section> m_graph;
+    
+    public FastestPathAlgorithm(RoadNetwork rn){
+        m_graph=new Graph<>(true);
+        graphConstruction(rn);
+    }
+    
+    private void graphConstruction(RoadNetwork rn){
+        for (Section sec : rn.getSectionList()) {
+            addConection(sec);
+        }
+    }
+    
+    private void addConection(Section section){
+        if (section.getDirection().equals("direct")) {
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section));
+            
+        } else if (section.getDirection().equals("reverse")) {
+            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section));
+            
+        }else if (section.getDirection().equals("bidirectional")) {
+             m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section));
+             m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section));
+        }
+    
+    }
     
     @Override
     public SimulationResult bestPath(RoadNetwork roadNetwork, Node originNode, Node destinyNode, ArrayList<Vehicle> vehicleList) {
-        //TO DO implementar
+        
         return null;
     }
     
@@ -24,7 +52,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
     
     
     
-    public double calculateTravelTime(Section section){
+    private double calculateTravelTime(Section section){
         /*
         ArrayList<Segment> segmentList = section.getSegments();
         double time=0; //in seconds

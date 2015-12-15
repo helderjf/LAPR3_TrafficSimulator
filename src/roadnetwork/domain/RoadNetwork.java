@@ -15,9 +15,13 @@ public class RoadNetwork {
     
     private ArrayList<Node> m_nodeList;
     private ArrayList<Section> m_sectionList;
-
+    
     public ArrayList<Node> getNodeList() {
         return m_nodeList;
+    }
+    
+    public ArrayList<Section> getSectionList(){
+        return m_sectionList;
     }
     
 }
