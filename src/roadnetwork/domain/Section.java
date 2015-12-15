@@ -5,6 +5,7 @@
  */
 package roadnetwork.domain;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -20,6 +21,7 @@ public class Section {
     private String direction;
     private double toll;
     private WindDirection windDirection;
+    private ArrayList<Segment> segmentsList;
 
     /**
      * 
@@ -33,9 +35,10 @@ public class Section {
         this.toll = 0;
         this.typology = "";
         this.windDirection = null;
+        this.segmentsList = null;
         
     }
-    
+
     /**
      * 
      * @param id id of section
@@ -45,8 +48,9 @@ public class Section {
      * @param direction Direction (direct – beginning to	end; reverse – end to beginning,	bidirectional)
      * @param toll Toll	(may be	zero)
      * @param windDirection Wind direction (angle) and speed (m/s) relative to section direct direction (probability distributions)
+     * @param segmentsList segmentsList
      */
-    public Section(int id, Node beginningNode, Node endingNode, String typology, String direction, double toll, WindDirection windDirection) {
+    public Section(int id, Node beginningNode, Node endingNode, String typology, String direction, double toll, WindDirection windDirection, ArrayList<Segment> segmentsList) {
         this.id = id;
         this.beginningNode = beginningNode;
         this.endingNode = endingNode;
@@ -54,6 +58,7 @@ public class Section {
         this.direction = direction;
         this.toll = toll;
         this.windDirection = windDirection;
+        this.segmentsList = segmentsList;
     }
     
     /**
@@ -69,6 +74,7 @@ public class Section {
         s.toll = this.toll;
         s.typology = this.typology;
         s.windDirection = this.windDirection;
+        s.segmentsList = this.segmentsList;
     }
 
     /**
@@ -175,12 +181,15 @@ public class Section {
         this.windDirection = windDirection;
     }
 
+    public ArrayList<Segment> getSegmentsList() {
+        return segmentsList;
+    }
 
-    /**
-     * 
-     * @param obj object
-     * @return result
-     */
+    public void setSegmentsList(ArrayList<Segment> segmentsList) {
+        this.segmentsList = segmentsList;
+    }
+
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -211,17 +220,17 @@ public class Section {
         if (!Objects.equals(this.windDirection, other.windDirection)) {
             return false;
         }
+        if (!Objects.equals(this.segmentsList, other.segmentsList)) {
+            return false;
+        }
         return true;
     }
 
-    /**
-     * 
-     * @return Section string
-     */
     @Override
     public String toString() {
-        return "Section{" + "id=" + id + ", beginningNode=" + beginningNode + ", endingNode=" + endingNode + ", typology=" + typology + ", direction=" + direction + ", toll=" + toll + ", windDirection=" + windDirection + '}';
+        return "Section{" + "id=" + id + ", beginningNode=" + beginningNode + ", endingNode=" + endingNode + ", typology=" + typology + ", direction=" + direction + ", toll=" + toll + ", windDirection=" + windDirection + ", segmentsList=" + segmentsList + '}';
     }
     
+
     
 }
