@@ -24,10 +24,11 @@ public class CombustionVehicle extends Vehicle implements Combustion {
      * @param type type of CombustionVehicle
      * @param load load of CombustionVehicle
      * @param drag_Coefficient drag_Coefficient of CombustionVehicle
+     * @param maxSpeed maximum speed
      * @param typeOfCombustion typeOfCombustion of CombustionVehicle
      */
-    public CombustionVehicle(String id, String name, double mass, TypeOfVehicle type, double load, double drag_Coefficient, String typeOfCombustion) {
-        super(id, name, mass, type, load, drag_Coefficient);
+    public CombustionVehicle(String id, String name, double mass, TypeOfVehicle type, double load, double drag_Coefficient, double maxSpeed, String typeOfCombustion) {
+        super(id, name, mass, type, load, maxSpeed, drag_Coefficient);
         this.typeOfCombustion = typeOfCombustion;
     }
 

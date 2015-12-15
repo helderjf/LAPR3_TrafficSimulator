@@ -20,6 +20,7 @@ public class Vehicle {
     private TypeOfVehicle type;
     private double load;
     private double drag_Coefficient;
+    private double maxSpeed;
 
     /**
      * 
@@ -31,7 +32,8 @@ public class Vehicle {
         this.mass = 0;
         this.type = null;
         this.load = 0;
-        this.drag_Coefficient = 0;    
+        this.drag_Coefficient = 0;
+        this.maxSpeed=0;
     }
     
     /**
@@ -42,14 +44,16 @@ public class Vehicle {
      * @param type type
      * @param load load
      * @param drag_Coefficient drag coefficient 
+     * @param maxSpeed maximum speed
      */
-    public Vehicle(String id, String name, double mass, TypeOfVehicle type, double load, double drag_Coefficient) {
+    public Vehicle(String id, String name, double mass, TypeOfVehicle type, double load, double drag_Coefficient, double maxSpeed) {
         this.id = id;
         this.name = name;
         this.mass = mass;
         this.type = type;
         this.load = load;
         this.drag_Coefficient = drag_Coefficient;
+        this.maxSpeed=maxSpeed;
     }
     
     /**
@@ -195,7 +199,11 @@ public class Vehicle {
      */
     @Override
     public String toString() {
-        return "id=" + id + ", name=" + name + ", mass=" + mass + ", type=" + type + ", load=" + load + ", drag_Coefficient=" + drag_Coefficient + '}';
+        return "id=" + id + ", name=" + name + ", mass=" + mass + ", type=" + type + ", load=" + load + ", drag_Coefficient=" + drag_Coefficient + ", maximum speed=" + maxSpeed +'}';
+    }
+
+    double getMaximumSpeed() {
+        return maxSpeed;
     }
     
     
