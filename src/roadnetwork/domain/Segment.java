@@ -89,14 +89,6 @@ public class Segment {
 
     /**
      * 
-     * @param id id
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * 
      * @return return an index
      */
     public int getIndex() {
@@ -105,7 +97,7 @@ public class Segment {
 
     /**
      * 
-     * @param receives an index 
+     * @param index index 
      */
     public void setIndex(int index) {
         this.index = index;
@@ -223,24 +215,6 @@ public class Segment {
         this.max_Vehicles = max_Vehicles;
     }
 
-    /**
-     * 
-     * @return hash
-     */
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + this.id;
-        hash = 17 * hash + this.index;
-        hash = 17 * hash + (int) (Double.doubleToLongBits(this.initial_Height) ^ (Double.doubleToLongBits(this.initial_Height) >>> 32));
-        hash = 17 * hash + (int) (Double.doubleToLongBits(this.slope) ^ (Double.doubleToLongBits(this.slope) >>> 32));
-        hash = 17 * hash + (int) (Double.doubleToLongBits(this.lenght) ^ (Double.doubleToLongBits(this.lenght) >>> 32));
-        hash = 17 * hash + (int) (Double.doubleToLongBits(this.rrc) ^ (Double.doubleToLongBits(this.rrc) >>> 32));
-        hash = 17 * hash + (int) (Double.doubleToLongBits(this.max_Velocity) ^ (Double.doubleToLongBits(this.max_Velocity) >>> 32));
-        hash = 17 * hash + (int) (Double.doubleToLongBits(this.min_Velocity) ^ (Double.doubleToLongBits(this.min_Velocity) >>> 32));
-        hash = 17 * hash + (int) (Double.doubleToLongBits(this.max_Vehicles) ^ (Double.doubleToLongBits(this.max_Vehicles) >>> 32));
-        return hash;
-    }
 
     /**
      * 

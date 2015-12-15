@@ -11,28 +11,33 @@ import java.util.ArrayList;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-//public class FastestPathAlgorithm implements BestPathAlgorithm{
-//
-//    @Override
-//    public SimulationResult bestPath(RoadNetwork roadNetwork, Node originNode, Node destinyNode, ArrayList<Vehicle> vehicleList) {
-//        //TO DO implementar
-//    }
-//    
-//    
-//    
-//    
-//    
-//    public double calculateTravelTime(Section section){
-//        ArrayList<Segment> segmentList = section.getSegments();
-//        double time=0; //in seconds
-//        for(Segment it : segmentList){
-//            double maxVel = it.getMax_Velocity();
-//            double lenght = it.getLenght();
-//            time+=lenght*3600/maxVel;
-//        }
-//        return time;
-//    }
-//    
-//    
-//    
-//}
+public class FastestPathAlgorithm implements BestPathAlgorithm{
+
+    
+    @Override
+    public SimulationResult bestPath(RoadNetwork roadNetwork, Node originNode, Node destinyNode, ArrayList<Vehicle> vehicleList) {
+        //TO DO implementar
+        return null;
+    }
+    
+    
+    
+    
+    
+    public double calculateTravelTime(Section section){
+        /*
+        ArrayList<Segment> segmentList = section.getSegments();
+        double time=0; //in seconds
+        for(Segment it : segmentList){
+            double maxVel = it.getMax_Velocity();
+            double lenght = it.getLenght();
+            time+=lenght*3600/maxVel;
+        }
+        return time;
+        */
+        return 0;
+    }
+    
+    
+    
+}

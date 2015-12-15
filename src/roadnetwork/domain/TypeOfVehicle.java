@@ -52,14 +52,6 @@ public class TypeOfVehicle {
     public int getId() {
         return id;
     }
-
-    /**
-     * 
-     * @param id id 
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
     
     /**
      * 
@@ -75,18 +67,6 @@ public class TypeOfVehicle {
      */
     public void setType(String type) {
         this.type = type;
-    }
-
-    /**
-     * 
-     * @return hash
-     */
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 53 * hash + this.id;
-        hash = 53 * hash + Objects.hashCode(this.type);
-        return hash;
     }
 
     /**

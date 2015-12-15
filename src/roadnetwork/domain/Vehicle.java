@@ -124,14 +124,6 @@ public class Vehicle {
 
     /**
      * 
-     * @param type type
-     */
-    public void setType(TypeOfVehicle type) {
-        this.type = type;
-    }
-
-    /**
-     * 
      * @return load
      */
     public double getLoad() {
@@ -160,22 +152,6 @@ public class Vehicle {
      */
     public void setDrag_Coefficient(double drag_Coefficient) {
         this.drag_Coefficient = drag_Coefficient;
-    }
-
-    /**
-     * 
-     * @return hash
-     */
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 11 * hash + Objects.hashCode(this.id);
-        hash = 11 * hash + Objects.hashCode(this.name);
-        hash = 11 * hash + (int) (Double.doubleToLongBits(this.mass) ^ (Double.doubleToLongBits(this.mass) >>> 32));
-        hash = 11 * hash + Objects.hashCode(this.type);
-        hash = 11 * hash + (int) (Double.doubleToLongBits(this.load) ^ (Double.doubleToLongBits(this.load) >>> 32));
-        hash = 11 * hash + (int) (Double.doubleToLongBits(this.drag_Coefficient) ^ (Double.doubleToLongBits(this.drag_Coefficient) >>> 32));
-        return hash;
     }
 
     /**
@@ -219,7 +195,7 @@ public class Vehicle {
      */
     @Override
     public String toString() {
-        return "Vehicle{" + "id=" + id + ", name=" + name + ", mass=" + mass + ", type=" + type + ", load=" + load + ", drag_Coefficient=" + drag_Coefficient + '}';
+        return "id=" + id + ", name=" + name + ", mass=" + mass + ", type=" + type + ", load=" + load + ", drag_Coefficient=" + drag_Coefficient + '}';
     }
     
     
