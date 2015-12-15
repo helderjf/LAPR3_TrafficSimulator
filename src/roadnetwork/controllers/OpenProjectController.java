@@ -23,7 +23,7 @@ public class OpenProjectController {
     }
     
     public ArrayList<String> getProjectsIDList(){
-        m_dataAccessLayer=m_manager.getM_dataAccessLayer();
+        m_dataAccessLayer=m_manager.getdataAccessLayer();
         return m_dataAccessLayer.getProjectsIDList();
     }
     

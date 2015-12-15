@@ -33,14 +33,16 @@ public class JanelaOpenProject extends javax.swing.JFrame {
         if (m_projectsIDList.isEmpty()) {
             JOptionPane.showMessageDialog(this, "There are no projects available");
             m_janelaPrincipal = new JanelaPrincipal(m_janelaPrincipal.getManager());
+        }else{
+        
+            m_modelProjectsIDs = new ModeloLista<>();
+            m_modelProjectsIDs.setItems(m_projectsIDList);
+        
+            initComponents();
+            setLocationRelativeTo(null);
+            setVisible(true);
         }
         
-        m_modelProjectsIDs = new ModeloLista<>();
-        m_modelProjectsIDs.setItems(m_projectsIDList);
-        
-        initComponents();
-        setLocationRelativeTo(null);
-        setVisible(true);
     }
 
     /**
@@ -112,6 +114,8 @@ public class JanelaOpenProject extends javax.swing.JFrame {
                 .addGap(31, 31, 31))
         );
 
+        getAccessibleContext().setAccessibleDescription("");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -122,11 +126,15 @@ public class JanelaOpenProject extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         if (jList1.getSelectedValue()!=null) {
-            m_openProjectController.selectProject(jList1.getSelectedValue().toString());
-            JOptionPane.showMessageDialog(this,"The selected Project is now active");
+            boolean project_state=m_openProjectController.selectProject(jList1.getSelectedValue().toString());
+            if (project_state==true) {
+                JOptionPane.showMessageDialog(this,"The selected Project is now active");
+            }else{
+                JOptionPane.showMessageDialog(this, "ERROR: It was not possible to make the selected project active!");
+            }
             m_janelaPrincipal = new JanelaPrincipal(m_janelaPrincipal.getManager());
         }else{
-            JOptionPane.showMessageDialog(this,"You must select a project");
+            JOptionPane.showMessageDialog(this,"You must select one project");
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed

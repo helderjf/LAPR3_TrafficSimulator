@@ -31,7 +31,7 @@ public class Manager {
     /**
      * @return the m_dataAccessLayer
      */
-    public DataAccessLayer getM_dataAccessLayer() {
+    public DataAccessLayer getdataAccessLayer() {
         return m_dataAccessLayer;
     }
     

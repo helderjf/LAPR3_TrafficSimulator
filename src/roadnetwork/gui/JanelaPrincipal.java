@@ -16,7 +16,11 @@ import roadnetwork.domain.Project;
 public class JanelaPrincipal extends javax.swing.JFrame {
 
     private Manager m_manager;
+    private JanelaNewProject m_janelaNewProject;
     private JanelaOpenProject m_janelaOpenProject;
+    private JanelaCopyProject m_janelaCopyProject;
+    private JanelaImportVehicles m_janelaImportVehicles;
+    private JanelaProperties m_janelaProperties;
     private JanelaBestPathAnalysis m_janelaBestPathAnalysis;
     private JanelaVehicleComparison m_janelaVehicleComparison;
     
@@ -32,8 +36,28 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         setVisible(true);
     }
     
+    private void newProject(){
+        m_janelaNewProject = new JanelaNewProject(this);
+        revalidate();
+    }
+    
     private void openProject(){
         m_janelaOpenProject = new JanelaOpenProject(this);
+        revalidate();
+    }
+    
+    private void copyProject(){
+        m_janelaCopyProject = new JanelaCopyProject(this);
+        revalidate();
+    }
+    
+    private void importVehicles(){
+        m_janelaImportVehicles = new JanelaImportVehicles(this);
+        revalidate();
+    }
+    
+    private void properties(){
+        m_janelaProperties = new JanelaProperties(this);
         revalidate();
     }
     
@@ -175,7 +199,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        newProject();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -183,15 +207,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+        copyProject();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
+        importVehicles();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
+        properties();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
