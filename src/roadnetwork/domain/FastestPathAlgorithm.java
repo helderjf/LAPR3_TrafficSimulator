@@ -5,6 +5,7 @@
  */
 package roadnetwork.domain;
 
+import graphutils.Graph;
 import java.util.ArrayList;
 
 /**
@@ -13,10 +14,37 @@ import java.util.ArrayList;
  */
 public class FastestPathAlgorithm implements BestPathAlgorithm{
 
+    SimulationResult m_simulationResult;
+    Graph<Node,Section> m_graph;
+    
+    public FastestPathAlgorithm(RoadNetwork rn, Vehicle vehicle){
+        m_graph=new Graph<>(true);
+        graphConstruction(rn,vehicle);
+    }
+    
+    private void graphConstruction(RoadNetwork rn,Vehicle vehicle){
+        for (Section sec : rn.getSectionList()) {
+            addConection(sec,vehicle);
+        }
+    }
+    
+    private void addConection(Section section, Vehicle vehicle){
+        if (section.getDirection().equals(Direction.direct)) {
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section,vehicle));
+            
+        } else if (section.getDirection().equals(Direction.reverse)) {
+            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section,vehicle));
+            
+        }else if (section.getDirection().equals(Direction.bidirectional)) {
+             m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section,vehicle));
+             m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section,vehicle));
+        }
+    
+    }
     
     @Override
     public SimulationResult bestPath(RoadNetwork roadNetwork, Node originNode, Node destinyNode, ArrayList<Vehicle> vehicleList) {
-        //TO DO implementar
+        
         return null;
     }
     
@@ -26,6 +54,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
     
     public double calculateTravelTime(Section section, Vehicle vehicle){
         
+
         ArrayList<Segment> segmentList = section.getSegmentsList();
         double time=0; //in seconds
         for(Segment it : segmentList){
