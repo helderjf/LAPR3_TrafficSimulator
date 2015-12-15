@@ -5,6 +5,10 @@
  */
 package roadnetwork.gui;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import roadnetwork.controllers.OpenProjectController;
+
 /**
  *
  * @author josemiranda
@@ -12,6 +16,9 @@ package roadnetwork.gui;
 public class JanelaOpenProject extends javax.swing.JFrame {
 
     JanelaPrincipal m_janelaPrincipal;
+    OpenProjectController m_openProjectController;
+    ModeloLista<String> m_modelProjectsIDs;
+    private ArrayList<String> m_projectsIDList;
     
     /**
      * Creates new form FrameOpenProject
@@ -19,6 +26,18 @@ public class JanelaOpenProject extends javax.swing.JFrame {
      */
     public JanelaOpenProject(JanelaPrincipal janela) {
         m_janelaPrincipal=janela;
+        
+        m_openProjectController=new OpenProjectController(m_janelaPrincipal.getManager());
+        m_projectsIDList = m_openProjectController.getProjectsIDList();
+        
+        if (m_projectsIDList.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "There are no projects available");
+            m_janelaPrincipal = new JanelaPrincipal(m_janelaPrincipal.getManager());
+        }
+        
+        m_modelProjectsIDs = new ModeloLista<>();
+        m_modelProjectsIDs.setItems(m_projectsIDList);
+        
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -42,11 +61,7 @@ public class JanelaOpenProject extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Open Project");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        jList1.setModel(m_modelProjectsIDs);
         jScrollPane1.setViewportView(jList1);
 
         jLabel1.setText("Select a project from the list:");
@@ -86,7 +101,7 @@ public class JanelaOpenProject extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
+                .addContainerGap(56, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -101,11 +116,19 @@ public class JanelaOpenProject extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        m_janelaPrincipal = new JanelaPrincipal(m_janelaPrincipal.getManager());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        
+        if (jList1.getSelectedValue()!=null) {
+            m_openProjectController.selectProject(jList1.getSelectedValue().toString());
+            JOptionPane.showMessageDialog(this,"The selected Project is now active");
+            m_janelaPrincipal = new JanelaPrincipal(m_janelaPrincipal.getManager());
+        }else{
+            JOptionPane.showMessageDialog(this,"You must select a project");
+        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     

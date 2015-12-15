@@ -5,7 +5,9 @@
  */
 package roadnetwork.gui;
 
+import java.util.ArrayList;
 import roadnetwork.domain.Manager;
+import roadnetwork.domain.Project;
 
 /**
  *
@@ -17,6 +19,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private JanelaOpenProject m_janelaOpenProject;
     private JanelaBestPathAnalysis m_janelaBestPathAnalysis;
     private JanelaVehicleComparison m_janelaVehicleComparison;
+    
     
     /**
      * Creates new form JanelaPrincipal
@@ -44,6 +47,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         revalidate();
     }
     
+    public Manager getManager(){
+        return m_manager;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.

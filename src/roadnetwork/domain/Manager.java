@@ -13,12 +13,11 @@ public class Manager {
     
     private String m_name;
     private Project m_currentProject;
+    private DataAccessLayer m_dataAccessLayer;
     
     public Manager(String name){
-        
         m_name=name;
-        
-       
+        m_dataAccessLayer=new DataAccessLayer();
     }
 
     public String getM_name() {
@@ -27,6 +26,13 @@ public class Manager {
 
     public Project getCurrentProject() {
         return m_currentProject;
+    }
+
+    /**
+     * @return the m_dataAccessLayer
+     */
+    public DataAccessLayer getM_dataAccessLayer() {
+        return m_dataAccessLayer;
     }
     
     
