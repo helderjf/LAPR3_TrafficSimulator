@@ -68,6 +68,7 @@ public class Vehicle {
         v.name = this.name;
         v.type = this.type;
         v.drag_Coefficient = this.drag_Coefficient;
+        v.maxSpeed = this.maxSpeed;
     }
 
     /**
@@ -160,6 +161,23 @@ public class Vehicle {
 
     /**
      * 
+     * @return maxSpeed
+     */
+    public double getMaximumSpeed() {
+        return maxSpeed;
+    }
+
+    /**
+     * 
+     * @param maxSpeed maxSpeed 
+     */
+    public void setMaximumSpeed(double maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+    
+
+    /**
+     * 
      * @param obj object
      * @return result
      */
@@ -192,6 +210,7 @@ public class Vehicle {
         }
         return true;
     }
+    
 
     /**
      * 
@@ -202,12 +221,6 @@ public class Vehicle {
         return "id=" + id + ", name=" + name + ", mass=" + mass + ", type=" + type + ", load=" + load + ", drag_Coefficient=" + drag_Coefficient + ", maximum speed=" + maxSpeed +'}';
     }
 
-    double getMaximumSpeed() {
-        return maxSpeed;
-    }
-    
-    
-    
-    
-    
+  
+  
 }
