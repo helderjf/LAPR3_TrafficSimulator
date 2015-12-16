@@ -25,8 +25,8 @@ public class Main {
             Project projecto1 = new Project();
             RoadNetwork roadNetwork1 = new RoadNetwork();
             
-            Node node1 = new Node();
-            Node node2 = new Node();
+            Junction node1 = new Junction();
+            Junction node2 = new Junction();
             //...
             Road road1 = new Road();
             //...

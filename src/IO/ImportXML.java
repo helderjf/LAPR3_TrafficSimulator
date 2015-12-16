@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
+import roadnetwork.domain.*;
 /**
  *
  * @author ruben

@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author Andre
  */
-public class NodeIT {
+public class JunctionIT {
     
-    public NodeIT() {
+    public JunctionIT() {
     }
     
     @BeforeClass
