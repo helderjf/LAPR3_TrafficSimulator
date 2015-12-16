@@ -11,8 +11,8 @@ package roadnetwork.domain;
  */
 public class ElectricVehicle extends Vehicle implements Electric{
 
-    public ElectricVehicle(String id, String name, double mass, TypeOfVehicle type, double load, double drag_Coefficient) {
-        super(id, name, mass, type, load, drag_Coefficient);
+    public ElectricVehicle(String id, String name, double mass, TypeOfVehicle type, double load, double drag_Coefficient, double maxSpeed) {
+        super(id, name, mass, type, load, drag_Coefficient, maxSpeed);
     }
 
     @Override

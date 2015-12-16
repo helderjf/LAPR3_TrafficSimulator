@@ -17,27 +17,27 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
     SimulationResult m_simulationResult;
     Graph<Node,Section> m_graph;
     
-    public FastestPathAlgorithm(RoadNetwork rn){
+    public FastestPathAlgorithm(RoadNetwork rn, Vehicle vehicle){
         m_graph=new Graph<>(true);
-        graphConstruction(rn);
+        graphConstruction(rn,vehicle);
     }
     
-    private void graphConstruction(RoadNetwork rn){
+    private void graphConstruction(RoadNetwork rn,Vehicle vehicle){
         for (Section sec : rn.getSectionList()) {
-            addConection(sec);
+            addConection(sec,vehicle);
         }
     }
     
-    private void addConection(Section section){
+    private void addConection(Section section, Vehicle vehicle){
         if (section.getDirection().equals(Direction.direct)) {
-            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section));
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section,vehicle));
             
         } else if (section.getDirection().equals(Direction.reverse)) {
-            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section));
+            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section,vehicle));
             
         }else if (section.getDirection().equals(Direction.bidirectional)) {
-             m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section));
-             m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section));
+             m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section,vehicle));
+             m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section,vehicle));
         }
     
     }
@@ -52,15 +52,24 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
     
     
     
-    private double calculateTravelTime(Section section){
+    public double calculateTravelTime(Section section, Vehicle vehicle){
+        
+
         ArrayList<Segment> segmentList = section.getSegmentsList();
         double time=0; //in seconds
         for(Segment it : segmentList){
-            double maxVel = it.getMax_Velocity();
+            double maxVel;
+            
+            if(it.getMax_Velocity() <= vehicle.getMaximumSpeed()){
+                maxVel = it.getMax_Velocity();
+            }else{
+                maxVel = vehicle.getMaximumSpeed();
+            }
             double lenght = it.getLenght();
             time+=lenght*3600/maxVel;
         }
         return time;
+        
     }
     
     
