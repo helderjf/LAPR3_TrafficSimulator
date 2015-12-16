@@ -5,6 +5,7 @@
  */
 package roadnetwork.domain;
 
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,29 +39,67 @@ public class CombustionVehicleIT {
     }
 
     /**
-     * Test of getTypeOfCombustion method, of class CombustionVehicle.
+     * Test of getFuel method, of class CombustionVehicle.
      */
     @Test
-    public void testGetTypeOfCombustion() {
-        System.out.println("getTypeOfCombustion");
+    public void testGetFuel() {
+        System.out.println("getFuel");
         CombustionVehicle instance = null;
-        instance.setTypeOfCombustion("teste");
-        String expResult = "teste";
-        String result = instance.getTypeOfCombustion();
+        String expResult = "";
+        String result = instance.getFuel();
         assertEquals(expResult, result);
+
     }
 
     /**
-     * Test of setTypeOfCombustion method, of class CombustionVehicle.
+     * Test of setFuel method, of class CombustionVehicle.
      */
     @Test
-    public void testSetTypeOfCombustion() {
-        System.out.println("setTypeOfCombustion");
-        String typeOfCombustion = "";
+    public void testSetFuel() {
+        System.out.println("setFuel");
+        String fuel = "";
         CombustionVehicle instance = null;
-        instance.setTypeOfCombustion(typeOfCombustion);
+        instance.setFuel(fuel);
+
     }
 
+    /**
+     * Test of getGearRatio method, of class CombustionVehicle.
+     */
+    @Test
+    public void testGetGearRatio() {
+        System.out.println("getGearRatio");
+        CombustionVehicle instance = null;
+        ArrayList<Double> expResult = null;
+        ArrayList<Double> result = instance.getGearRatio();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of setGearRatio method, of class CombustionVehicle.
+     */
+    @Test
+    public void testSetGearRatio() {
+        System.out.println("setGearRatio");
+        ArrayList<Double> gearRatio = null;
+        CombustionVehicle instance = null;
+        instance.setGearRatio(gearRatio);
+
+    }
+
+    /**
+     * Test of hashCode method, of class CombustionVehicle.
+     */
+    @Test
+    public void testHashCode() {
+        System.out.println("hashCode");
+        CombustionVehicle instance = null;
+        int expResult = 0;
+        int result = instance.hashCode();
+        assertEquals(expResult, result);
+
+    }
 
     /**
      * Test of equals method, of class CombustionVehicle.
@@ -73,6 +112,7 @@ public class CombustionVehicleIT {
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
+
     }
 
     /**
@@ -85,6 +125,7 @@ public class CombustionVehicleIT {
         String expResult = "";
         String result = instance.toString();
         assertEquals(expResult, result);
+
     }
     
 }
