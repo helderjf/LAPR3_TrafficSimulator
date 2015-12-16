@@ -6,7 +6,10 @@
 package roadnetwork.domain;
 
 import graphutils.Graph;
+import graphutils.GraphAlgorithms;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 
 /**
  *
@@ -44,8 +47,15 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
     
     @Override
     public SimulationResult bestPath(RoadNetwork roadNetwork, Node originNode, Node destinyNode, ArrayList<Vehicle> vehicleList) {
+        SimulationResult simResult=new SimulationResult();
+        Deque<Node> fastestPath = new ArrayDeque<>();
+        GraphAlgorithms.shortestPath(m_graph, originNode, destinyNode, fastestPath);
         
-        return null;
+        //TODO
+        //simResult.setPath(fastestPath);
+        //set outros parametros da simulacao
+        
+        return simResult;
     }
     
     
