@@ -5,6 +5,7 @@
  */
 package roadnetwork.domain;
 
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -47,6 +48,20 @@ public class SectionIT {
         int expResult = 0;
         int result = instance.getId();
         assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of getRoadId method, of class Section.
+     */
+    @Test
+    public void testGetRoadId() {
+        System.out.println("getRoadId");
+        Section instance = new Section();
+        String expResult = "";
+        String result = instance.getRoadId();
+        assertEquals(expResult, result);
+
     }
 
     /**
@@ -82,6 +97,7 @@ public class SectionIT {
         Junction expResult = null;
         Junction result = instance.getEndingNode();
         assertEquals(expResult, result);
+
     }
 
     /**
@@ -93,6 +109,7 @@ public class SectionIT {
         Junction endingNode = null;
         Section instance = new Section();
         instance.setEndingNode(endingNode);
+
     }
 
     /**
@@ -105,6 +122,7 @@ public class SectionIT {
         String expResult = "";
         String result = instance.getTypology();
         assertEquals(expResult, result);
+
     }
 
     /**
@@ -116,6 +134,7 @@ public class SectionIT {
         String typology = "";
         Section instance = new Section();
         instance.setTypology(typology);
+
     }
 
     /**
@@ -125,9 +144,10 @@ public class SectionIT {
     public void testGetDirection() {
         System.out.println("getDirection");
         Section instance = new Section();
-        String expResult = "";
-        String result = instance.getDirection();
+        Direction expResult = null;
+        Direction result = instance.getDirection();
         assertEquals(expResult, result);
+
     }
 
     /**
@@ -136,7 +156,7 @@ public class SectionIT {
     @Test
     public void testSetDirection() {
         System.out.println("setDirection");
-        String direction = "";
+        Direction direction = null;
         Section instance = new Section();
         instance.setDirection(direction);
     }
@@ -151,6 +171,7 @@ public class SectionIT {
         double expResult = 0.0;
         double result = instance.getToll();
         assertEquals(expResult, result, 0.0);
+
     }
 
     /**
@@ -162,6 +183,7 @@ public class SectionIT {
         double toll = 0.0;
         Section instance = new Section();
         instance.setToll(toll);
+
     }
 
     /**
@@ -174,6 +196,7 @@ public class SectionIT {
         WindDirection expResult = null;
         WindDirection result = instance.getWindDirection();
         assertEquals(expResult, result);
+
     }
 
     /**
@@ -185,8 +208,33 @@ public class SectionIT {
         WindDirection windDirection = null;
         Section instance = new Section();
         instance.setWindDirection(windDirection);
+
     }
 
+    /**
+     * Test of getSegmentsList method, of class Section.
+     */
+    @Test
+    public void testGetSegmentsList() {
+        System.out.println("getSegmentsList");
+        Section instance = new Section();
+        ArrayList<Segment> expResult = null;
+        ArrayList<Segment> result = instance.getSegmentsList();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of setSegmentsList method, of class Section.
+     */
+    @Test
+    public void testSetSegmentsList() {
+        System.out.println("setSegmentsList");
+        ArrayList<Segment> segmentsList = null;
+        Section instance = new Section();
+        instance.setSegmentsList(segmentsList);
+
+    }
 
     /**
      * Test of equals method, of class Section.
@@ -199,6 +247,19 @@ public class SectionIT {
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of toString method, of class Section.
+     */
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        Section instance = new Section();
+        String expResult = "";
+        String result = instance.toString();
+        assertEquals(expResult, result);
+
     }
     
 }
