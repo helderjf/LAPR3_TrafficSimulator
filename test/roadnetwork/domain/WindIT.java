@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author Andre
  */
-public class WindDirectionIT {
+public class WindIT {
     
-    public WindDirectionIT() {
+    public WindIT() {
     }
     
     @BeforeClass
@@ -38,12 +38,12 @@ public class WindDirectionIT {
     }
 
     /**
-     * Test of getAngle method, of class WindDirection.
+     * Test of getAngle method, of class Wind.
      */
     @Test
     public void testGetAngle() {
         System.out.println("getAngle");
-        WindDirection instance = new WindDirection();
+        Wind instance = new Wind();
         double expResult = 0.0;
         double result = instance.getAngle();
         assertEquals(expResult, result, 0.0);
@@ -51,24 +51,24 @@ public class WindDirectionIT {
     }
 
     /**
-     * Test of setAngle method, of class WindDirection.
+     * Test of setAngle method, of class Wind.
      */
     @Test
     public void testSetAngle() {
         System.out.println("setAngle");
         double angle = 0.0;
-        WindDirection instance = new WindDirection();
+        Wind instance = new Wind();
         instance.setAngle(angle);
 
     }
 
     /**
-     * Test of getVelocity method, of class WindDirection.
+     * Test of getVelocity method, of class Wind.
      */
     @Test
     public void testGetVelocity() {
         System.out.println("getVelocity");
-        WindDirection instance = new WindDirection();
+        Wind instance = new Wind();
         double expResult = 0.0;
         double result = instance.getVelocity();
         assertEquals(expResult, result, 0.0);
@@ -76,38 +76,38 @@ public class WindDirectionIT {
     }
 
     /**
-     * Test of setVelocity method, of class WindDirection.
+     * Test of setVelocity method, of class Wind.
      */
     @Test
     public void testSetVelocity() {
         System.out.println("setVelocity");
         double velocity = 0.0;
-        WindDirection instance = new WindDirection();
+        Wind instance = new Wind();
         instance.setVelocity(velocity);
 
     }
 
 
     /**
-     * Test of equals method, of class WindDirection.
+     * Test of equals method, of class Wind.
      */
     @Test
     public void testEquals() {
         System.out.println("equals");
         Object obj = null;
-        WindDirection instance = new WindDirection();
+        Wind instance = new Wind();
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of toString method, of class WindDirection.
+     * Test of toString method, of class Wind.
      */
     @Test
     public void testToString() {
         System.out.println("toString");
-        WindDirection instance = new WindDirection();
+        Wind instance = new Wind();
         String expResult = "";
         String result = instance.toString();
         assertEquals(expResult, result);

@@ -11,7 +11,8 @@ package roadnetwork.domain;
  */
 public class Junction {
     
-    private int id;
+    private String junctionId;
+    
 
 
     /**
@@ -19,15 +20,15 @@ public class Junction {
      */
     public Junction()
     {
-        this.id = 0;
+        this.junctionId = "";
     }
     
     /**
      * 
-     * @param id id of Node
+     * @param id junctionId of Node
      */
-    public Junction(int id) {
-        this.id = id;
+    public Junction(String id) {
+        this.junctionId = id;
     }
     
     /**
@@ -36,15 +37,15 @@ public class Junction {
      */
     public Junction(Junction n)
     {
-        n.id = this.id;
+        n.junctionId = this.junctionId;
     }
 
     /**
      * 
-     * @return id of Junction
+     * @return junctionId of Junction
      */
-    public int getId() {
-        return id;
+    public String getJunctionId() {
+        return junctionId;
     }
 
     /**
@@ -71,7 +72,7 @@ public class Junction {
             return false;
         }
         final Junction other = (Junction) obj;
-        if (this.id != other.id) {
+        if (this.junctionId != other.junctionId) {
             return false;
         }
         return true;
@@ -83,7 +84,7 @@ public class Junction {
      */
     @Override
     public String toString() {
-        return "Node{" + "id=" + id + '}';
+        return "Node{" + "id=" + junctionId + '}';
     }
   
 }
