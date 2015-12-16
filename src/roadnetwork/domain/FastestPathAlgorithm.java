@@ -20,9 +20,20 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
     SimulationResult m_simulationResult;
     Graph<Junction,Section> m_graph;
     
-    public FastestPathAlgorithm(RoadNetwork rn, Vehicle vehicle){
+    
+     @Override
+    public SimulationResult bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
         m_graph=new Graph<>(true);
-        graphConstruction(rn,vehicle);
+        graphConstruction(roadNetwork, vehicle);
+        
+        ArrayList<Section> fastestPath = new ArrayList<>();
+        double fastestPathLength=GraphAlgorithms.getShortestPathLength(m_graph, originNode, destinyNode, fastestPath);
+        
+        SimulationResult simResult=new SimulationResult();
+        //TODO
+        //simResult.setPath(fastestPath);
+        //set outros parametros da simulacao
+        return simResult;
     }
     
     private void graphConstruction(RoadNetwork rn,Vehicle vehicle){
@@ -42,25 +53,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
              m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section,vehicle));
              m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section,vehicle));
         }
-    
     }
-    
-    @Override
-    public SimulationResult bestPath(RoadNetwork roadNetwork, Node originNode, Node destinyNode, ArrayList<Vehicle> vehicleList) {
-        SimulationResult simResult=new SimulationResult();
-        Deque<Node> fastestPath = new ArrayDeque<>();
-        GraphAlgorithms.shortestPath(m_graph, originNode, destinyNode, fastestPath);
-        
-        //TODO
-        //simResult.setPath(fastestPath);
-        //set outros parametros da simulacao
-        
-        return simResult;
-    }
-    
-    
-    
-    
     
     public double calculateTravelTime(Section section, Vehicle vehicle){
         
@@ -81,7 +74,6 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
         return time;
         
     }
-    
-    
+
     
 }
