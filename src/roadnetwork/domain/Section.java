@@ -15,8 +15,8 @@ import java.util.Objects;
 public class Section {
     
     private int id;
-    private Node beginningNode;
-    private Node endingNode;
+    private Junction beginningNode;
+    private Junction endingNode;
     private String typology;
     private Direction direction;
     private double toll;
@@ -50,7 +50,7 @@ public class Section {
      * @param windDirection Wind direction (angle) and speed (m/s) relative to section direct direction (probability distributions)
      * @param segmentsList segmentsList
      */
-    public Section(int id, Node beginningNode, Node endingNode, String typology, Direction direction, double toll, WindDirection windDirection, ArrayList<Segment> segmentsList) {
+    public Section(int id, Junction beginningNode, Junction endingNode, String typology, Direction direction, double toll, WindDirection windDirection, ArrayList<Segment> segmentsList) {
         this.id = id;
         this.beginningNode = beginningNode;
         this.endingNode = endingNode;
@@ -89,7 +89,7 @@ public class Section {
      * 
      * @return BeginningNode
      */
-    public Node getBeginningNode() {
+    public Junction getBeginningNode() {
         return beginningNode;
     }
     
@@ -97,7 +97,7 @@ public class Section {
      * 
      * @param beginningNode beginningNode
      */
-    public void setBeginningNode(Node beginningNode) {
+    public void setBeginningNode(Junction beginningNode) {
         this.beginningNode = beginningNode;
     }
 
@@ -105,7 +105,7 @@ public class Section {
      * 
      * @return EndingNode
      */
-    public Node getEndingNode() {
+    public Junction getEndingNode() {
         return endingNode;
     }
 
@@ -113,7 +113,7 @@ public class Section {
      * 
      * @param endingNode endingNode
      */
-    public void setEndingNode(Node endingNode) {
+    public void setEndingNode(Junction endingNode) {
         this.endingNode = endingNode;
     }
 

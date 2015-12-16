@@ -9,7 +9,7 @@ package roadnetwork.domain;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class Node {
+public class Junction {
     
     private int id;
 
@@ -17,7 +17,7 @@ public class Node {
     /**
      * 
      */
-    public Node()
+    public Junction()
     {
         this.id = 0;
     }
@@ -26,7 +26,7 @@ public class Node {
      * 
      * @param id id of Node
      */
-    public Node(int id) {
+    public Junction(int id) {
         this.id = id;
     }
     
@@ -34,14 +34,14 @@ public class Node {
      * 
      * @param n Node object
      */
-    public Node(Node n)
+    public Junction(Junction n)
     {
         n.id = this.id;
     }
 
     /**
      * 
-     * @return id of Node
+     * @return id of Junction
      */
     public int getId() {
         return id;
@@ -70,7 +70,7 @@ public class Node {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Node other = (Node) obj;
+        final Junction other = (Junction) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -79,7 +79,7 @@ public class Node {
 
     /**
      * 
-     * @return Node string
+     * @return Junction string
      */
     @Override
     public String toString() {

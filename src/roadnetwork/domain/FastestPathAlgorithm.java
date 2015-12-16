@@ -18,7 +18,7 @@ import java.util.Deque;
 public class FastestPathAlgorithm implements BestPathAlgorithm{
 
     SimulationResult m_simulationResult;
-    Graph<Node,Section> m_graph;
+    Graph<Junction,Section> m_graph;
     
     public FastestPathAlgorithm(RoadNetwork rn, Vehicle vehicle){
         m_graph=new Graph<>(true);
