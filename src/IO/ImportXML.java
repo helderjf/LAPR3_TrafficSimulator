@@ -29,7 +29,7 @@ public class ImportXML implements Import {
     }
     
     @Override
-    public ArrayList<String> importNodes(String path) {
+    public ArrayList<String> importNodes() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
         Node rootNode = xmlDocument.getDocumentElement(); 
@@ -51,7 +51,7 @@ public class ImportXML implements Import {
     
     
     //Criar o documento no formato DOM apartir do ficheiro dado como argumento
-    private Document documentBuilder (File inputFile)
+    private Document documentBuilder (File file)
     {
         try
         { 
@@ -74,7 +74,7 @@ public class ImportXML implements Import {
   
 
     @Override
-    public Node importSections(String path) {
+    public Node importSections() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
         Document document = documentBuilder(inputFile);
