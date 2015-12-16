@@ -7,6 +7,7 @@ package IO;
 
 import java.util.ArrayList;
 import org.w3c.dom.*;
+import roadnetwork.domain.*;
 
 /**
  *
@@ -26,5 +27,5 @@ public interface Import {
      * @param path
      * @return Dom Node type with all sections
      */
-    public Node importSections();
+    public ArrayList<Section> importSections();
 }

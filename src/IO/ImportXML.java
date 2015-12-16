@@ -75,22 +75,24 @@ public class ImportXML implements Import {
   
 
     @Override
-    public Node importSections() {
+    public ArrayList<Section> importSections() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
-        Document document = documentBuilder(inputFile);
-        Node rootNode = document.getDocumentElement(); 
-        NodeList nList = rootNode.getChildNodes();
-
-        for (int i = 0; i < nList.getLength(); i++) {
-            Node childNode = nList.item(i);
-
-            if (childNode.getNodeName().equals("section_list")) {
-
-                return childNode;
-            }
+        ArrayList<Section> list = new ArrayList();
+        
+        NodeList sectionList = xmlDocument.getElementsByTagName("section_list");
+        
+        for (int i = 0; i < sectionList.getLength(); i++) {
+            Node childNode = sectionList.item(i);
+            Section section  = getSection(childNode);
+            list.add(section);
         }
-        return null;
+        return list;
+    }
+    
+    private Section getSection(Node node){
+        Section section = new Section();
+        
+        return section;
     }
     
 }
