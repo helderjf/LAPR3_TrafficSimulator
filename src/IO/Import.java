@@ -19,12 +19,12 @@ public interface Import {
      * @param path for the file
      * @return ArrayList of nodes names 
      */
-    public ArrayList<String> importNodes(String path);
+    public ArrayList<String> importNodes();
     
     /**
      * import sections from an xml file 
      * @param path
      * @return Dom Node type with all sections
      */
-    public Node importSections(String path);
+    public Node importSections();
 }
