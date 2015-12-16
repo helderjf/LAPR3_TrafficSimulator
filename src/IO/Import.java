@@ -5,19 +5,26 @@
  */
 package IO;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.*;
+import java.util.ArrayList;
 import org.w3c.dom.*;
-import org.xml.sax.SAXException;
 
 /**
  *
  * @author ruben
  */
 public interface Import {
-    public Node importNodes(String path);
+    
+    /**
+     * Import nodes from a file
+     * @param path for the file
+     * @return ArrayList of nodes names 
+     */
+    public ArrayList<String> importNodes(String path);
+    
+    /**
+     * import sections from an xml file 
+     * @param path
+     * @return Dom Node type with all sections
+     */
     public Node importSections(String path);
 }

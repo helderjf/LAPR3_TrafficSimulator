@@ -7,6 +7,7 @@ package IO;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.*;
@@ -18,25 +19,33 @@ import org.xml.sax.SAXException;
  */
 public class ImportXML implements Import {
 
+    private final File inputFile;
+    private final Document xmlDocument;
+    
+    public ImportXML(File file){
+        inputFile = file;
+        xmlDocument = documentBuilder (inputFile);
+        assert (xmlDocument != null);
+    }
+    
     @Override
-    public Node importNodes(String path) {
+    public ArrayList<String> importNodes(String path) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Node rootNode = xmlDocument.getDocumentElement(); 
+        NodeList nList = rootNode.getChildNodes();
 
-        File inputFile = new File(path);
-        Document document = documentBuilder(inputFile);
-
-        Node rootNode = document.getDocumentElement(); 
-        NodeList nList = document.getDocumentElement().getChildNodes();
-
+        ArrayList<String> list = new ArrayList();
+        
         for (int i = 0; i < nList.getLength(); i++) {
             Node childNode = nList.item(i);
-
             if (childNode.getNodeName().equals("node_list")) { //tratar lista de nos
-
-                return childNode;
+                for (int j = 0; j < childNode.getChildNodes().getLength(); j++) {
+                    list.add(childNode.getChildNodes().item(j).getNodeValue());
+                }
             }
         }
-        return null;
+        return list;
     }
     
     
@@ -67,15 +76,15 @@ public class ImportXML implements Import {
     @Override
     public Node importSections(String path) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        File inputFile = new File(path);
+
         Document document = documentBuilder(inputFile);
         Node rootNode = document.getDocumentElement(); 
-        NodeList nList = document.getDocumentElement().getChildNodes();
+        NodeList nList = rootNode.getChildNodes();
 
         for (int i = 0; i < nList.getLength(); i++) {
             Node childNode = nList.item(i);
 
-            if (childNode.getNodeName().equals("node_list")) { //tratar lista de nos
+            if (childNode.getNodeName().equals("section_list")) {
 
                 return childNode;
             }
