@@ -15,6 +15,7 @@ import java.util.Objects;
 public class Section {
     
     private int id;
+    private String roadId;
     private Node beginningNode;
     private Node endingNode;
     private String typology;
@@ -36,12 +37,13 @@ public class Section {
         this.typology = "";
         this.windDirection = null;
         this.segmentsList = null;
-        
+        this.roadId = "";
     }
 
     /**
      * 
      * @param id id of section
+     * @param roadId roadID
      * @param beginningNode beginningNode
      * @param endingNode endingNode
      * @param typology Typology (regular road, urban road/street, express road, controlled-access highway)
@@ -50,8 +52,9 @@ public class Section {
      * @param windDirection Wind direction (angle) and speed (m/s) relative to section direct direction (probability distributions)
      * @param segmentsList segmentsList
      */
-    public Section(int id, Node beginningNode, Node endingNode, String typology, Direction direction, double toll, WindDirection windDirection, ArrayList<Segment> segmentsList) {
+    public Section(int id, String roadId, Node beginningNode, Node endingNode, String typology, Direction direction, double toll, WindDirection windDirection, ArrayList<Segment> segmentsList) {
         this.id = id;
+        this.roadId = roadId;
         this.beginningNode = beginningNode;
         this.endingNode = endingNode;
         this.typology = typology;
@@ -71,6 +74,7 @@ public class Section {
         s.direction = this.direction;
         s.endingNode = this.endingNode;
         s.id = this.id;
+        s.roadId = this.roadId;
         s.toll = this.toll;
         s.typology = this.typology;
         s.windDirection = this.windDirection;
@@ -85,6 +89,15 @@ public class Section {
         return id;
     }
 
+    /**
+     * 
+     * @return roadID
+     */
+    public String getRoadId() {
+        return roadId;
+    }
+
+        
     /**
      * 
      * @return BeginningNode
@@ -189,7 +202,11 @@ public class Section {
         this.segmentsList = segmentsList;
     }
 
-
+    /**
+     * 
+     * @param obj object
+     * @return 
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -202,6 +219,9 @@ public class Section {
         if (this.id != other.id) {
             return false;
         }
+        if (!Objects.equals(this.roadId, other.roadId)) {
+            return false;
+        }
         if (!Objects.equals(this.beginningNode, other.beginningNode)) {
             return false;
         }
@@ -211,7 +231,7 @@ public class Section {
         if (!Objects.equals(this.typology, other.typology)) {
             return false;
         }
-        if (!Objects.equals(this.direction, other.direction)) {
+        if (this.direction != other.direction) {
             return false;
         }
         if (Double.doubleToLongBits(this.toll) != Double.doubleToLongBits(other.toll)) {
@@ -226,11 +246,15 @@ public class Section {
         return true;
     }
 
+    /**
+     * 
+     * @return Section string
+     */
     @Override
     public String toString() {
-        return "Section{" + "id=" + id + ", beginningNode=" + beginningNode + ", endingNode=" + endingNode + ", typology=" + typology + ", direction=" + direction + ", toll=" + toll + ", windDirection=" + windDirection + ", segmentsList=" + segmentsList + '}';
+        return "Section{" + "id=" + id + ", roadId=" + roadId + ", beginningNode=" + beginningNode + ", endingNode=" + endingNode + ", typology=" + typology + ", direction=" + direction + ", toll=" + toll + ", windDirection=" + windDirection + ", segmentsList=" + segmentsList + '}';
     }
-    
+
 
     
 }
