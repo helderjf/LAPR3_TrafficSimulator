@@ -5,6 +5,8 @@
  */
 package roadnetwork.domain;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -21,6 +23,18 @@ public class Vehicle {
     private double load;
     private double drag_Coefficient;
     private double maxSpeed;
+    private double rrc;
+    private double wheelSize;
+    private HashMap<Segment,Double> velocityLimit;
+    private double torque;
+    private double mostEfficientRPM;
+    private double consuption;
+    private double minRPM;
+    private double maxRPM;
+    private double finalDriveRatio;
+
+    
+            
 
     /**
      * 
@@ -34,6 +48,15 @@ public class Vehicle {
         this.load = 0;
         this.drag_Coefficient = 0;
         this.maxSpeed=0;
+        this.rrc = 0;
+        this.wheelSize = 0;
+        this.velocityLimit = null;
+        this.torque = 0;
+        this.mostEfficientRPM = 0;
+        this.consuption = 0;
+        this.minRPM = 0;
+        this.maxRPM = 0;
+        this.finalDriveRatio = 0;
     }
     
     /**
@@ -45,8 +68,19 @@ public class Vehicle {
      * @param load load
      * @param drag_Coefficient drag coefficient 
      * @param maxSpeed maximum speed
+     * @param rrc rrc
+     * @param wheelSize wheelSize
+     * @param velocityLimit velocityLimit
+     * @param torque torque
+     * @param mostEfficientRPM mostEfficientRPM
+     * @param consuption consuption
+     * @param minRPM minRPM
+     * @param maxRPM maxRPM
+     * @param finalDriveRatio finalDriveRatio
      */
-    public Vehicle(String id, String name, double mass, TypeOfVehicle type, double load, double drag_Coefficient, double maxSpeed) {
+    public Vehicle(String id, String name, double mass, TypeOfVehicle type, double load, double drag_Coefficient, double maxSpeed,
+                    double rrc, double wheelSize, HashMap<Segment,Double> velocityLimit, double torque, double mostEfficientRPM,
+                    double consuption, double minRPM, double maxRPM, double finalDriveRatio) {
         this.id = id;
         this.name = name;
         this.mass = mass;
@@ -54,6 +88,16 @@ public class Vehicle {
         this.load = load;
         this.drag_Coefficient = drag_Coefficient;
         this.maxSpeed=maxSpeed;
+        this.rrc = rrc;
+        this.wheelSize = wheelSize;
+        this.velocityLimit = velocityLimit;
+        this.torque = torque;
+        this.mostEfficientRPM = mostEfficientRPM;
+        this.consuption = consuption;
+        this.minRPM = minRPM;
+        this.maxRPM = maxRPM;
+        this.finalDriveRatio = finalDriveRatio;
+   
     }
     
     /**
@@ -68,6 +112,17 @@ public class Vehicle {
         v.name = this.name;
         v.type = this.type;
         v.drag_Coefficient = this.drag_Coefficient;
+        v.maxSpeed = this.maxSpeed;
+        v.rrc = this.rrc;
+        v.wheelSize = this.wheelSize;
+        v.velocityLimit = this.velocityLimit;
+        v.torque = this.torque;
+        v.mostEfficientRPM = this.mostEfficientRPM;
+        v.consuption = this.consuption;
+        v.minRPM = this.minRPM;
+        v.maxRPM = this.maxRPM;
+        v.finalDriveRatio = this.finalDriveRatio;
+        
     }
 
     /**
@@ -160,8 +215,184 @@ public class Vehicle {
 
     /**
      * 
+     * @return maxSpeed
+     */
+    public double getMaximumSpeed() {
+        return maxSpeed;
+    }
+
+    /**
+     * 
+     * @param maxSpeed maxSpeed 
+     */
+    public void setMaximumSpeed(double maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+    /**
+     * 
+     * @return maxSpeed
+     */
+    public double getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    /**
+     * 
+     * @param maxSpeed maxSpeed
+     */
+    public void setMaxSpeed(double maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+    /**
+     * 
+     * @return rrc
+     */
+    public double getRrc() {
+        return rrc;
+    }
+
+    /**
+     * 
+     * @param rrc rrc
+     */
+    public void setRrc(double rrc) {
+        this.rrc = rrc;
+    }
+
+    /**
+     * 
+     * @return wheelsize
+     */
+    public double getWheelSize() {
+        return wheelSize;
+    }
+
+    /**
+     * 
+     * @param wheelSize wheelsize
+     */
+    public void setWheelSize(double wheelSize) {
+        this.wheelSize = wheelSize;
+    }
+
+    /**
+     * 
+     * @return velocitylimit
+     */
+    public HashMap<Segment, Double> getVelocityLimit() {
+        return velocityLimit;
+    }
+
+    /**
+     * 
+     * @param velocityLimit velocityLimit
+     */
+    public void setVelocityLimit(HashMap<Segment, Double> velocityLimit) {
+        this.velocityLimit = velocityLimit;
+    }
+
+    /**
+     * 
+     * @return torque
+     */
+    public double getTorque() {
+        return torque;
+    }
+
+    /**
+     * 
+     * @param torque torque
+     */
+    public void setTorque(double torque) {
+        this.torque = torque;
+    }
+
+    /**
+     * 
+     * @return MostEfficientRPM
+     */
+    public double getMostEfficientRPM() {
+        return mostEfficientRPM;
+    }
+
+    /**
+     * 
+     * @param mostEfficientRPM MostEfficientRPM
+     */
+    public void setMostEfficientRPM(double mostEfficientRPM) {
+        this.mostEfficientRPM = mostEfficientRPM;
+    }
+
+    /**
+     * 
+     * @return consuption
+     */
+    public double getConsuption() {
+        return consuption;
+    }
+
+    /**
+     * 
+     * @param consuption consuption
+     */
+    public void setConsuption(double consuption) {
+        this.consuption = consuption;
+    }
+
+    /**
+     * 
+     * @return minrpm
+     */
+    public double getMinRPM() {
+        return minRPM;
+    }
+
+    /**
+     * 
+     * @param minRPM minrpm
+     */
+    public void setMinRPM(double minRPM) {
+        this.minRPM = minRPM;
+    }
+
+    /**
+     * 
+     * @return maxrpm
+     */
+    public double getMaxRPM() {
+        return maxRPM;
+    }
+
+    /**
+     * 
+     * @param maxRPM maxrpm
+     */
+    public void setMaxRPM(double maxRPM) {
+        this.maxRPM = maxRPM;
+    }
+
+    /**
+     * 
+     * @return FinalDriveRatio
+     */
+    public double getFinalDriveRatio() {
+        return finalDriveRatio;
+    }
+
+    /**
+     * 
+     * @param finalDriveRatio FinalDriveRatio
+     */
+    public void setFinalDriveRatio(double finalDriveRatio) {
+        this.finalDriveRatio = finalDriveRatio;
+    }
+
+    /**
+     * 
      * @param obj object
-     * @return result
+     * @return 
      */
     @Override
     public boolean equals(Object obj) {
@@ -190,24 +421,46 @@ public class Vehicle {
         if (Double.doubleToLongBits(this.drag_Coefficient) != Double.doubleToLongBits(other.drag_Coefficient)) {
             return false;
         }
+        if (Double.doubleToLongBits(this.maxSpeed) != Double.doubleToLongBits(other.maxSpeed)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.rrc) != Double.doubleToLongBits(other.rrc)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.wheelSize) != Double.doubleToLongBits(other.wheelSize)) {
+            return false;
+        }
+        if (!Objects.equals(this.velocityLimit, other.velocityLimit)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.torque) != Double.doubleToLongBits(other.torque)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.mostEfficientRPM) != Double.doubleToLongBits(other.mostEfficientRPM)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.consuption) != Double.doubleToLongBits(other.consuption)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.minRPM) != Double.doubleToLongBits(other.minRPM)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.maxRPM) != Double.doubleToLongBits(other.maxRPM)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.finalDriveRatio) != Double.doubleToLongBits(other.finalDriveRatio)) {
+            return false;
+        }
         return true;
     }
 
     /**
      * 
-     * @return string
+     * @return Vehicle string
      */
     @Override
     public String toString() {
-        return "id=" + id + ", name=" + name + ", mass=" + mass + ", type=" + type + ", load=" + load + ", drag_Coefficient=" + drag_Coefficient + ", maximum speed=" + maxSpeed +'}';
+        return "Vehicle{" + "id=" + id + ", name=" + name + ", mass=" + mass + ", type=" + type + ", load=" + load + ", drag_Coefficient=" + drag_Coefficient + ", maxSpeed=" + maxSpeed + ", rrc=" + rrc + ", wheelSize=" + wheelSize + ", velocityLimit=" + velocityLimit + ", torque=" + torque + ", mostEfficientRPM=" + mostEfficientRPM + ", consuption=" + consuption + ", minRPM=" + minRPM + ", maxRPM=" + maxRPM + ", finalDriveRatio=" + finalDriveRatio + '}';
     }
-
-    double getMaximumSpeed() {
-        return maxSpeed;
-    }
-    
-    
-    
-    
-    
+  
 }

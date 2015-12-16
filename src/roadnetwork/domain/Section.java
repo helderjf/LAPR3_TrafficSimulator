@@ -15,12 +15,13 @@ import java.util.Objects;
 public class Section {
     
     private int id;
+    private String roadId;
     private Junction beginningNode;
     private Junction endingNode;
     private String typology;
     private Direction direction;
     private double toll;
-    private WindDirection windDirection;
+    private Wind wind;
     private ArrayList<Segment> segmentsList;
 
     /**
@@ -29,12 +30,13 @@ public class Section {
     public Section()
     {
         this.id = 0;
+        this.roadId = ""; 
         this.beginningNode = null;
         this.endingNode = null;
         this.direction = null;
         this.toll = 0;
         this.typology = "";
-        this.windDirection = null;
+        this.wind = null;
         this.segmentsList = null;
         
     }
@@ -42,6 +44,7 @@ public class Section {
     /**
      * 
      * @param id id of section
+     * @param roadId roadId of section
      * @param beginningNode beginningNode
      * @param endingNode endingNode
      * @param typology Typology (regular road, urban road/street, express road, controlled-access highway)
@@ -50,14 +53,15 @@ public class Section {
      * @param windDirection Wind direction (angle) and speed (m/s) relative to section direct direction (probability distributions)
      * @param segmentsList segmentsList
      */
-    public Section(int id, Junction beginningNode, Junction endingNode, String typology, Direction direction, double toll, WindDirection windDirection, ArrayList<Segment> segmentsList) {
+    public Section(int id, String roadId, Junction beginningNode, Junction endingNode, String typology, Direction direction, double toll, Wind windDirection, ArrayList<Segment> segmentsList) {
         this.id = id;
+        this.roadId = roadId;
         this.beginningNode = beginningNode;
         this.endingNode = endingNode;
         this.typology = typology;
         this.direction = direction;
         this.toll = toll;
-        this.windDirection = windDirection;
+        this.wind = windDirection;
         this.segmentsList = segmentsList;
     }
     
@@ -71,9 +75,10 @@ public class Section {
         s.direction = this.direction;
         s.endingNode = this.endingNode;
         s.id = this.id;
+        s.roadId = this.roadId;
         s.toll = this.toll;
         s.typology = this.typology;
-        s.windDirection = this.windDirection;
+        s.wind = this.wind;
         s.segmentsList = this.segmentsList;
     }
 
@@ -84,6 +89,16 @@ public class Section {
     public int getId() {
         return id;
     }
+
+    /**
+     * 
+     * @return roadId
+     */
+    public String getRoadId() {
+        return roadId;
+    }
+    
+    
 
     /**
      * 
@@ -167,18 +182,18 @@ public class Section {
 
     /**
      * 
-     * @return windDirection
+     * @return wind
      */
-    public WindDirection getWindDirection() {
-        return windDirection;
+    public Wind getWind() {
+        return wind;
     }
 
     /**
      * 
-     * @param windDirection windDirection
+     * @param wind wind
      */
-    public void setWindDirection(WindDirection windDirection) {
-        this.windDirection = windDirection;
+    public void setWind(Wind wind) {
+        this.wind = wind;
     }
 
     public ArrayList<Segment> getSegmentsList() {
@@ -189,7 +204,11 @@ public class Section {
         this.segmentsList = segmentsList;
     }
 
-
+    /**
+     * 
+     * @param obj object
+     * @return result
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -202,6 +221,9 @@ public class Section {
         if (this.id != other.id) {
             return false;
         }
+        if (!Objects.equals(this.roadId, other.roadId)) {
+            return false;
+        }
         if (!Objects.equals(this.beginningNode, other.beginningNode)) {
             return false;
         }
@@ -211,13 +233,13 @@ public class Section {
         if (!Objects.equals(this.typology, other.typology)) {
             return false;
         }
-        if (!Objects.equals(this.direction, other.direction)) {
+        if (this.direction != other.direction) {
             return false;
         }
         if (Double.doubleToLongBits(this.toll) != Double.doubleToLongBits(other.toll)) {
             return false;
         }
-        if (!Objects.equals(this.windDirection, other.windDirection)) {
+        if (!Objects.equals(this.wind, other.wind)) {
             return false;
         }
         if (!Objects.equals(this.segmentsList, other.segmentsList)) {
@@ -226,11 +248,21 @@ public class Section {
         return true;
     }
 
+    /**
+     * 
+     * @return Section string
+     */
     @Override
     public String toString() {
-        return "Section{" + "id=" + id + ", beginningNode=" + beginningNode + ", endingNode=" + endingNode + ", typology=" + typology + ", direction=" + direction + ", toll=" + toll + ", windDirection=" + windDirection + ", segmentsList=" + segmentsList + '}';
+        return "Section{" + "id=" + id + ", roadId=" + getRoadId() + ", beginningNode=" + beginningNode + ", endingNode=" + endingNode + ", typology=" + typology + ", direction=" + direction + ", toll=" + toll + ", windDirection=" + wind + ", segmentsList=" + segmentsList + '}';
     }
-    
 
-    
+    /**
+     * @param roadId the roadId to set
+     */
+    public void setRoadId(String roadId) {
+        this.roadId = roadId;
+    }
+
+  
 }

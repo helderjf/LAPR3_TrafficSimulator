@@ -20,6 +20,7 @@ public class Segment {
     private double max_Velocity;
     private double min_Velocity;
     private double max_Vehicles;
+    private int number_vehicles;
 
 
     /**
@@ -267,6 +268,20 @@ public class Segment {
     @Override
     public String toString() {
         return "Segment{" + "id=" + id + ", index=" + index + ", initial_Height=" + initial_Height + ", slope=" + slope + ", lenght=" + lenght + ", rrc=" + rrc + ", max_Velocity=" + max_Velocity + ", min_Velocity=" + min_Velocity + ", max_Vehicles=" + max_Vehicles + '}';
+    }
+
+    /**
+     * @return the number_vehicles
+     */
+    public int getNumber_vehicles() {
+        return number_vehicles;
+    }
+
+    /**
+     * @param number_vehicles the number_vehicles to set
+     */
+    public void setNumber_vehicles(int number_vehicles) {
+        this.number_vehicles = number_vehicles;
     }
 
     
