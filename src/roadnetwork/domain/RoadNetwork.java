@@ -13,10 +13,10 @@ import java.util.ArrayList;
  */
 public class RoadNetwork {
     
-    private ArrayList<Node> m_nodeList;
+    private ArrayList<Junction> m_nodeList;
     private ArrayList<Section> m_sectionList;
     
-    public ArrayList<Node> getNodeList() {
+    public ArrayList<Junction> getNodeList() {
         return m_nodeList;
     }
     

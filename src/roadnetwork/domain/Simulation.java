@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class Simulation {
     
-    private Node m_originNode;
-    private Node m_destinyNode;
+    private Junction m_originNode;
+    private Junction m_destinyNode;
     private ArrayList<Vehicle> m_vehicleList;
     private BestPathAlgorithm m_algorithm;
     private SimulationResult m_results;
