@@ -7,7 +7,7 @@ package roadnetwork.controllers;
 
 import java.util.ArrayList;
 import roadnetwork.domain.Manager;
-import roadnetwork.domain.Node;
+import roadnetwork.domain.Junction;
 import roadnetwork.domain.Project;
 import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.Vehicle;
@@ -22,7 +22,7 @@ public class BestPathSimulationContoller {
     private Project m_project;
     private Vehicle m_vehicle;
     private RoadNetwork m_roadNetwork;
-    private ArrayList<Node> m_nodeList;
+    private ArrayList<Junction> m_nodeList;
     
 
     public BestPathSimulationContoller(Manager manager) {
@@ -47,7 +47,7 @@ public class BestPathSimulationContoller {
         return m_roadNetwork;
     }
 
-    public ArrayList<Node> getNodeList() {
+    public ArrayList<Junction> getNodeList() {
         m_nodeList=m_roadNetwork.getNodeList();
         return m_nodeList;
     }

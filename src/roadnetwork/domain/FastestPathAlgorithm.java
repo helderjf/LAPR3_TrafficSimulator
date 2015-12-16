@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class FastestPathAlgorithm implements BestPathAlgorithm{
 
     SimulationResult m_simulationResult;
-    Graph<Node,Section> m_graph;
+    Graph<Junction,Section> m_graph;
     
     public FastestPathAlgorithm(RoadNetwork rn, Vehicle vehicle){
         m_graph=new Graph<>(true);
@@ -43,7 +43,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
     }
     
     @Override
-    public SimulationResult bestPath(RoadNetwork roadNetwork, Node originNode, Node destinyNode, ArrayList<Vehicle> vehicleList) {
+    public SimulationResult bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, ArrayList<Vehicle> vehicleList) {
         
         return null;
     }

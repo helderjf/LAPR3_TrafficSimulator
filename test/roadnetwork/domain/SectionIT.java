@@ -56,8 +56,8 @@ public class SectionIT {
     public void testGetBeginningNode() {
         System.out.println("getBeginningNode");
         Section instance = new Section();
-        Node expResult = null;
-        Node result = instance.getBeginningNode();
+        Junction expResult = null;
+        Junction result = instance.getBeginningNode();
         assertEquals(expResult, result);
     }
 
@@ -67,7 +67,7 @@ public class SectionIT {
     @Test
     public void testSetBeginningNode() {
         System.out.println("setBeginningNode");
-        Node beginningNode = null;
+        Junction beginningNode = null;
         Section instance = new Section();
         instance.setBeginningNode(beginningNode);
     }
@@ -79,8 +79,8 @@ public class SectionIT {
     public void testGetEndingNode() {
         System.out.println("getEndingNode");
         Section instance = new Section();
-        Node expResult = null;
-        Node result = instance.getEndingNode();
+        Junction expResult = null;
+        Junction result = instance.getEndingNode();
         assertEquals(expResult, result);
     }
 
@@ -90,7 +90,7 @@ public class SectionIT {
     @Test
     public void testSetEndingNode() {
         System.out.println("setEndingNode");
-        Node endingNode = null;
+        Junction endingNode = null;
         Section instance = new Section();
         instance.setEndingNode(endingNode);
     }
@@ -171,8 +171,8 @@ public class SectionIT {
     public void testGetWindDirection() {
         System.out.println("getWindDirection");
         Section instance = new Section();
-        WindDirection expResult = null;
-        WindDirection result = instance.getWindDirection();
+        Wind expResult = null;
+        Wind result = instance.getWind();
         assertEquals(expResult, result);
     }
 
@@ -182,9 +182,9 @@ public class SectionIT {
     @Test
     public void testSetWindDirection() {
         System.out.println("setWindDirection");
-        WindDirection windDirection = null;
+        Wind windDirection = null;
         Section instance = new Section();
-        instance.setWindDirection(windDirection);
+        instance.setWind(windDirection);
     }
 
 

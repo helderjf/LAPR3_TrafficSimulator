@@ -9,14 +9,14 @@ package roadnetwork.domain;
  *
  * @author Andre
  */
-public class WindDirection {
+public class Wind {
     double angle;
     double velocity;
 
     /**
      * 
      */
-    public WindDirection()
+    public Wind()
     {
         this.angle = 0;
         this.velocity = 0;
@@ -27,7 +27,7 @@ public class WindDirection {
      * @param angle angle
      * @param velocity velocity
      */
-    public WindDirection(double angle, double velocity) {
+    public Wind(double angle, double velocity) {
         this.angle = angle;
         this.velocity = velocity;
     }
@@ -36,7 +36,7 @@ public class WindDirection {
      * 
      * @param wd WindDirection
      */
-    public WindDirection(WindDirection wd)
+    public Wind(Wind wd)
     {
         wd.angle = this.angle;
         wd.velocity = this.velocity;
@@ -87,7 +87,7 @@ public class WindDirection {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final WindDirection other = (WindDirection) obj;
+        final Wind other = (Wind) obj;
         if (Double.doubleToLongBits(this.angle) != Double.doubleToLongBits(other.angle)) {
             return false;
         }
@@ -99,7 +99,7 @@ public class WindDirection {
 
     /**
      * 
-     * @return WindDirection string
+     * @return Wind string
      */
     @Override
     public String toString() {
