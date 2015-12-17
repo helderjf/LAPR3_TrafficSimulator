@@ -20,6 +20,8 @@ public class Manager {
     private Project m_currentProject;
     private DataAccessLayer m_dataAccessLayer;
     private List<BestPathAlgorithm> m_algorithmsList;
+    private ProjectFactory m_projectFactory;
+    
     
     private ArrayList<Project> projectList; //TO DO TEMPORÁRIO / MOCK
     
@@ -32,6 +34,7 @@ public class Manager {
         m_name=name;
         m_dataAccessLayer=new DataAccessLayer();
         m_algorithmsList= new ArrayList<>();
+        m_projectFactory = new ProjectFactory();
     }
 
     public String getM_name() {
@@ -59,5 +62,14 @@ public class Manager {
 
     public ExportCSV newCSV(String fileName) {
         return new ExportCSV();
+    }
+
+    public ProjectFactory getProjectFactory() {
+        return m_projectFactory;
+    }
+
+    public boolean setCurrentProject(Project project) {
+        m_currentProject=project;
+        return true;
     }
 }
