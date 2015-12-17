@@ -23,18 +23,14 @@ public class Manager {
     private ProjectFactory m_projectFactory;
     
     
-    private ArrayList<Project> projectList; //TO DO TEMPORÁRIO / MOCK
-    
-    public ArrayList<Project> getProjectList(){
-        return projectList;
-    }
-    
     
     public Manager(String name){
         m_name=name;
         m_dataAccessLayer=new DataAccessLayer();
         m_algorithmsList= new ArrayList<>();
         m_projectFactory = new ProjectFactory();
+        m_algorithmsList.add(new FastestPathAlgorithm());
+        
     }
 
     public String getM_name() {

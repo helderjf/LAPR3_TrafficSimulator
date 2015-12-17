@@ -66,11 +66,16 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
         double time=0; //in seconds
         for(Segment it : segmentList){
             double maxVel;
+            SectionTypology type = section.getSectionType();
+            double vehicleSpeedLimit=500;
+            if(vehicle.getVelocityLimit().get(String.valueOf(type)) != null){
+                vehicleSpeedLimit=vehicle.getVelocityLimit().get(String.valueOf(type));
+            }
             
-            if(it.getMax_Velocity() <= vehicle.getMaximumSpeed()){
+            if(it.getMax_Velocity() <= vehicleSpeedLimit){
                 maxVel = it.getMax_Velocity();
             }else{
-                maxVel = vehicle.getMaximumSpeed();
+                maxVel = vehicleSpeedLimit;
             }
             double lenght = it.getLenght();
             time+=lenght*3600/maxVel;

@@ -264,5 +264,9 @@ public class Section {
         this.roadId = roadId;
     }
 
+    SectionTypology getSectionType() {
+        return typology;
+    }
+
   
 }
