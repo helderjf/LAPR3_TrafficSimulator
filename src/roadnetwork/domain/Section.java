@@ -18,7 +18,7 @@ public class Section {
     private String roadId;
     private Junction beginningNode;
     private Junction endingNode;
-    private String typology;
+    private SectionTypology typology;
     private Direction direction;
     private double toll;
     private Wind wind;
@@ -35,7 +35,7 @@ public class Section {
         this.endingNode = null;
         this.direction = null;
         this.toll = 0;
-        this.typology = "";
+        this.typology = null;
         this.wind = null;
         this.segmentsList = null;
         
@@ -53,7 +53,7 @@ public class Section {
      * @param windDirection Wind direction (angle) and speed (m/s) relative to section direct direction (probability distributions)
      * @param segmentsList segmentsList
      */
-    public Section(int id, String roadId, Junction beginningNode, Junction endingNode, String typology, Direction direction, double toll, Wind windDirection, ArrayList<Segment> segmentsList) {
+    public Section(int id, String roadId, Junction beginningNode, Junction endingNode, SectionTypology typology, Direction direction, double toll, Wind windDirection, ArrayList<Segment> segmentsList) {
         this.id = id;
         this.roadId = roadId;
         this.beginningNode = beginningNode;
@@ -136,7 +136,7 @@ public class Section {
      * 
      * @return Typology
      */
-    public String getTypology() {
+    public SectionTypology getTypology() {
         return typology;
     }
 
@@ -144,7 +144,7 @@ public class Section {
      * 
      * @param typology Typology
      */
-    public void setTypology(String typology) {
+    public void setTypology(SectionTypology typology) {
         this.typology = typology;
     }
 
