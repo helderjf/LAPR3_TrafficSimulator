@@ -7,7 +7,6 @@ package roadnetwork.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import roadnetwork.gui.JanelaPrincipal;
 import roadnetwork.gui.MainFrame;
 
 /**
