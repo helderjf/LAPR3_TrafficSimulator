@@ -110,7 +110,7 @@ public class ImportXML implements Import {
         
         //definir typology
         String typology = domElement.getElementsByTagName("typology").item(0).getNodeValue();
-        section.setTypology(typology);
+        section.setTypology(SectionTypology.valueOf(typology));
         
         //definir typology
         String direction = domElement.getElementsByTagName("direction").item(0).getNodeValue();
@@ -167,4 +167,48 @@ public class ImportXML implements Import {
         return segment;
     }
     
+    
+    public ArrayList<Vehicle> importVehicle()
+    {
+        ArrayList<Vehicle> list = new ArrayList();
+        
+        //get vehicle list
+        Node domVehicleList = xmlDocument.getElementsByTagName("vehicle_list").item(0);
+        
+        //get vehicles
+        for (int i = 0; i < domVehicleList.getChildNodes().getLength(); i++) {
+            
+            Node nodeChild = domVehicleList.getChildNodes().item(i);
+            Vehicle vehicle = imporVehicle(nodeChild);
+            list.add(vehicle);
+        }
+        return list;
+    }
+
+    private Vehicle imporVehicle(Node nodeChild) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Vehicle vehicle;
+        Element domElementVehicle = (Element)nodeChild;
+        
+        String name = domElementVehicle.getAttribute("name");
+        String description = domElementVehicle.getAttribute("description");
+        
+        String type = domElementVehicle.getElementsByTagName("type").item(0).getNodeValue();
+        String motorization = domElementVehicle.getElementsByTagName("motorization").item(0).getNodeValue();
+        
+        switch (motorization){
+                case "electic":
+                    vehicle = new ElectricVehicle();
+                break;
+                case "hybrid":
+                    vehicle = new HybridVehicle();
+                break;
+                default:
+                    String fuel = domElementVehicle.getElementsByTagName("fuel").item(0).getNodeValue();
+                    vehicle = new CombustionVehicle();
+                    //vehicle.dynamic_cast(CombustionVehicle);
+                break;
+                }
+        return vehicle;    
+    }
 }
