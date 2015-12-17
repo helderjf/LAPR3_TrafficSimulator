@@ -5,10 +5,16 @@
  */
 package roadnetwork.state;
 
+import roadnetwork.domain.Project;
+
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ProjectStateSimulationReadySaved {
+public class ProjectStateSimulationReadySaved extends ProjectStateImpl{
+
+    public ProjectStateSimulationReadySaved(Project p) {
+        super(p);
+    }
     
 }

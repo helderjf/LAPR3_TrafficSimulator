@@ -5,10 +5,16 @@
  */
 package roadnetwork.state;
 
+import roadnetwork.domain.Project;
+
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ProjectStateRoadNetworkAssigned {
+public class ProjectStateRoadNetworkAssigned extends ProjectStateImpl{
+
+    public ProjectStateRoadNetworkAssigned(Project p) {
+        super(p);
+    }
     
 }
