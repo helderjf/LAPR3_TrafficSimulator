@@ -5,6 +5,10 @@
  */
 package roadnetwork.gui;
 
+import java.util.ArrayList;
+import roadnetwork.controllers.BestPathSimulationContoller;
+import roadnetwork.domain.Vehicle;
+
 /**
  *
  * @author josemiranda
@@ -12,13 +16,21 @@ package roadnetwork.gui;
 public class BestPathAnalysisFrame extends javax.swing.JFrame {
 
     MainFrame m_mainFrame;
+    BestPathSimulationContoller m_bpSimulationController;
+    ArrayList<Vehicle> m_vehiclesList;
     
     /**
      * Creates new form JanelaBestPathAnalysis
      * @param frame
      */
     public BestPathAnalysisFrame(MainFrame frame) {
-        m_mainFrame=frame;
+          m_mainFrame=frame;
+        m_bpSimulationController=new BestPathSimulationContoller(m_mainFrame.getManager());
+        
+        //get the active project's list of vehicles
+        m_vehiclesList=m_bpSimulationController.newBestPathSimulation();
+        
+        
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -54,6 +66,7 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        jList1.setToolTipText("");
         jScrollPane1.setViewportView(jList1);
 
         jLabel1.setText("Please choose a vehicle from the list:");

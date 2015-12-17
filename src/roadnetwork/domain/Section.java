@@ -50,10 +50,10 @@ public class Section {
      * @param typology Typology (regular road, urban road/street, express road, controlled-access highway)
      * @param direction Direction (direct – beginning to	end; reverse – end to beginning,	bidirectional)
      * @param toll Toll	(may be	zero)
-     * @param windDirection Wind direction (angle) and speed (m/s) relative to section direct direction (probability distributions)
+     * @param wind Wind direction (angle) and speed (m/s) relative to section direct direction (probability distributions)
      * @param segmentsList segmentsList
      */
-    public Section(int id, String roadId, Junction beginningNode, Junction endingNode, SectionTypology typology, Direction direction, double toll, Wind windDirection, ArrayList<Segment> segmentsList) {
+    public Section(int id, String roadId, Junction beginningNode, Junction endingNode, SectionTypology typology, Direction direction, double toll, Wind wind, ArrayList<Segment> segmentsList) {
         this.id = id;
         this.roadId = roadId;
         this.beginningNode = beginningNode;
@@ -61,7 +61,7 @@ public class Section {
         this.typology = typology;
         this.direction = direction;
         this.toll = toll;
-        this.wind = windDirection;
+        this.wind = wind;
         this.segmentsList = segmentsList;
     }
     
