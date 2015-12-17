@@ -35,12 +35,19 @@ public class BestPathSimulationContoller {
     private ResultFastestPath m_simulationResult;
     private ExportCSV m_csv;
     
-
+    /**
+     * 
+     * @param manager manager of project
+     */
     public BestPathSimulationContoller(Manager manager) {
         m_manager = manager;
 
     }
 
+    /**
+     * 
+     * @return VehicleList
+     */
     public ArrayList<Vehicle> newBestPathSimulation() {
 
         m_project = m_manager.getCurrentProject();
@@ -49,33 +56,62 @@ public class BestPathSimulationContoller {
 
     }
 
+    /**
+     * 
+     * @param v vehicle
+     */
     public void setVehicle(Vehicle v) {
         m_vehicle=v;
     }
 
+    /**
+     * 
+     * @return roadNetwork
+     */
     public RoadNetwork getRoadNetwork() {
         m_roadNetwork=m_project.getRoadNetwork();
         return m_roadNetwork;
     }
 
+    /**
+     * 
+     * @return nodeList
+     */
     public ArrayList<Junction> getNodeList() {
         m_nodeList=m_roadNetwork.getNodeList();
         return m_nodeList;
     }
     
+    /**
+     * 
+     * @param oj Junction1
+     * @param dj Junction2
+     */
     public void setSimulationNodes(Junction oj, Junction dj){
         m_originJunction=oj;
         m_destinationJunction=dj;
     }
     
+    /**
+     * 
+     * @return AlgorithmsList
+     */
     public List<BestPathAlgorithm> getBestPathAlgorithms(){
         return m_manager.getAlgorithmsList();
     }
  
+    /**
+     * 
+     * @param alg BestPathAlgorithm
+     */
     public void setAlgorithm(BestPathAlgorithm alg){
         m_bpAlgorithm=alg;
     }
     
+    /**
+     * 
+     * @return simulation run
+     */
     public SimulationResult runSimulation(){
         Simulation simulation = m_project.newBestPathSimulation(m_roadNetwork,
                                                                 m_originJunction, 
@@ -85,6 +121,11 @@ public class BestPathSimulationContoller {
         return simulation.run();
     }
     
+    /**
+     * 
+     * @param fileName name of file
+     * @return exportation
+     */
     public boolean exportResultsCSV(String fileName){
         m_csv=m_manager.newCSV(fileName);
         return m_csv.export(m_simulationResult);

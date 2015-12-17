@@ -26,13 +26,14 @@ public class Vehicle {
     private double maxSpeed;
     private double rrc;
     private double wheelSize;
-    private HashMap<Segment,Double> velocityLimit;
+    private HashMap<String,Double> velocityLimit;
     private double torque;
     private double mostEfficientRPM;
     private double consuption;
     private double minRPM;
     private double maxRPM;
     private double finalDriveRatio;
+    private ArrayList<Double> gearList;
 
     
             
@@ -80,7 +81,7 @@ public class Vehicle {
      * @param finalDriveRatio finalDriveRatio
      */
     public Vehicle(String id, String name, double mass, String type, double load, double drag_Coefficient, double maxSpeed,
-                    double rrc, double wheelSize, HashMap<Segment,Double> velocityLimit, double torque, double mostEfficientRPM,
+                    double rrc, double wheelSize, HashMap<String,Double> velocityLimit, double torque, double mostEfficientRPM,
                     double consuption, double minRPM, double maxRPM, double finalDriveRatio) {
         this.id = id;
         this.name = name;
@@ -282,7 +283,7 @@ public class Vehicle {
      * 
      * @return velocitylimit
      */
-    public HashMap<Segment, Double> getVelocityLimit() {
+    public HashMap<String, Double> getVelocityLimit() {
         return velocityLimit;
     }
 
@@ -290,7 +291,7 @@ public class Vehicle {
      * 
      * @param velocityLimit velocityLimit
      */
-    public void setVelocityLimit(HashMap<Segment, Double> velocityLimit) {
+    public void setVelocityLimit(HashMap<String, Double> velocityLimit) {
         this.velocityLimit = velocityLimit;
     }
 
@@ -461,7 +462,7 @@ public class Vehicle {
      */
     @Override
     public String toString() {
-        return "Vehicle{" + "id=" + id + ", name=" + name + ", mass=" + mass + ", type=" + type + ", load=" + load + ", drag_Coefficient=" + drag_Coefficient + ", maxSpeed=" + maxSpeed + ", rrc=" + rrc + ", wheelSize=" + wheelSize + ", velocityLimit=" + velocityLimit + ", torque=" + torque + ", mostEfficientRPM=" + mostEfficientRPM + ", consuption=" + consuption + ", minRPM=" + minRPM + ", maxRPM=" + maxRPM + ", finalDriveRatio=" + finalDriveRatio + '}';
+        return "Vehicle{" + "id=" + id + ", name=" + name + ", mass=" + mass + ", type=" + getType() + ", load=" + load + ", drag_Coefficient=" + drag_Coefficient + ", maxSpeed=" + maxSpeed + ", rrc=" + rrc + ", wheelSize=" + wheelSize + ", velocityLimit=" + velocityLimit + ", torque=" + torque + ", mostEfficientRPM=" + mostEfficientRPM + ", consuption=" + consuption + ", minRPM=" + minRPM + ", maxRPM=" + maxRPM + ", finalDriveRatio=" + finalDriveRatio + '}';
     }
 
     /**
@@ -477,9 +478,26 @@ public class Vehicle {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
-    
-    
+
+    /**
+     * @return the gearList
+     */
+    public ArrayList<Double> getGearList() {
+        return gearList;
+    }
+
+    /**
+     * @param gearList the gearList to set
+     */
+    public void setGearList(ArrayList<Double> gearList) {
+        this.gearList = gearList;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
   
 }

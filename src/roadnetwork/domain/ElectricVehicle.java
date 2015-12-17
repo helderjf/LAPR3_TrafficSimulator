@@ -37,7 +37,7 @@ public class ElectricVehicle extends Vehicle implements Electric{
      * @param gearRatio gearRatio of Electric Vehicles
      */
     public ElectricVehicle(String id, String name, double mass, String type, double load, double drag_Coefficient, double maxSpeed,
-        double rrc, double wheelSize, HashMap<Segment,Double> velocityLimit, double torque, double mostEfficientRPM,
+        double rrc, double wheelSize, HashMap<String,Double> velocityLimit, double torque, double mostEfficientRPM,
         double consuption, double minRPM, double maxRPM, double finalDriveRatio, String fuel, ArrayList<Double> gearRatio) {
         super(id, name, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit, torque, mostEfficientRPM, consuption,
                 minRPM, maxRPM, finalDriveRatio);
