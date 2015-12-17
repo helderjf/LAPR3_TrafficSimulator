@@ -29,6 +29,18 @@ public class Project {
     public RoadNetwork getRoadNetwork() {
         return m_roadNetwork;
     }
+
+    public void setRoadNetwork(RoadNetwork m_roadNetwork) {
+        this.m_roadNetwork = m_roadNetwork;
+    }
+
+    public void setVehicleList(ArrayList<Vehicle> m_vehicleList) {
+        this.m_vehicleList = m_vehicleList;
+    }
+    
+    
+    
+    
     
 
     public Simulation newBestPathSimulation(RoadNetwork rn, Junction oj, 

@@ -7,7 +7,7 @@ package roadnetwork.controllers;
 
 /**
  *
- * @author Andre
+ * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public class ImportVehiclesController {
     

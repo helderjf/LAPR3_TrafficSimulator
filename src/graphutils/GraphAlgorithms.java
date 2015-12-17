@@ -213,6 +213,16 @@ public class GraphAlgorithms {
     }
 
     //shortest-path between voInf and vdInf
+    /**
+     * 
+     * @param <V> Vertice
+     * @param <E> Edge
+     * @param g graph
+     * @param voInf VOrig
+     * @param vdInf VDest
+     * @param shortPath shortPath
+     * @return result
+     */
     public static<V,E> double shortestPath(Graph<V,E> g, V voInf, V vdInf, Deque<V> shortPath){
         Vertex<V,E> vOrig = g.getVertex(voInf);
         Vertex<V,E> vDest = g.getVertex(vdInf);
@@ -241,6 +251,16 @@ public class GraphAlgorithms {
         return 0;
     }
     
+    /**
+     * 
+     * @param <V> Vertice
+     * @param <E> Edge
+     * @param g graph
+     * @param voInf Vertice Orig
+     * @param vdInf Vertice Destiny
+     * @param path Path
+     * @return lenght
+     */
     public static<V,E> double getShortestPathLength(Graph<V,E> g, V voInf, V vdInf, ArrayList<E> path){
         Deque<V> shortPath=new ArrayDeque<>();
         double length = shortestPath(g, voInf, vdInf, shortPath);

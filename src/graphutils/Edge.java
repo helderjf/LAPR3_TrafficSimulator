@@ -4,10 +4,9 @@ package graphutils;
 /**
  * 
  * @author DEI-ESINF
- * @param <V>
- * @param <E>
+ * @param <V> vertice
+ * @param <E> edge
  */
-
 public class Edge<V,E> implements Comparable {
     
     private E element;           // Edge information
@@ -39,6 +38,11 @@ public class Edge<V,E> implements Comparable {
         return endverts; 
     }
            
+    /**
+     * 
+     * @param otherObj
+     * @return result
+     */
     @Override
     public boolean equals(Object otherObj) {
         
@@ -55,6 +59,11 @@ public class Edge<V,E> implements Comparable {
                 this.element.equals(otherEdge.element));
     }
     
+    /**
+     * 
+     * @param otherObject object
+     * @return result
+     */
     @Override
     public int compareTo(Object otherObject) {
         
@@ -64,6 +73,10 @@ public class Edge<V,E> implements Comparable {
         return 1;
     }
        
+    /**
+     * 
+     * @return string
+     */
     @Override
     public String toString() {
         String st="";

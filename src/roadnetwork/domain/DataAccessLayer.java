@@ -6,19 +6,18 @@
 package roadnetwork.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
  * @author josemiranda
  */
 public class DataAccessLayer {
-    
-    
-    
-    public ArrayList<String> getProjectsIDList(){
+
+    public ArrayList<String> getProjectsIDList() {
         ArrayList<String> pidl = new ArrayList<>();
         //TODO call procedure
-        
+
         //dummy
         String p1 = "project 1 - Porto Centro";
         String p2 = "project 2 - Porto Norte";
@@ -28,11 +27,13 @@ public class DataAccessLayer {
         pidl.add(p3);
         return pidl;
     }
-    
-    public boolean makeProjectActive(){
+
+
+
+    public boolean makeProjectActive() {
         //TODO load project
-        
+
         return true;
     }
-    
+
 }

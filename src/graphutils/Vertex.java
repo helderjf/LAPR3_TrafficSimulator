@@ -8,8 +8,8 @@ import java.util.Map;
 /**
  *
  * @author DEI-ESINF
- * @param <V>
- * @param <E>
+ * @param <V> vertice
+ * @param <E> edge
  */
 
 public class Vertex<V,E> {
@@ -33,6 +33,11 @@ public class Vertex<V,E> {
 
     public Map<Vertex<V,E>, Edge<V,E>> getOutgoing() { return outVerts ; } 
          
+    /**
+     * 
+     * @param otherObj object
+     * @return result
+     */
     @Override
     public boolean equals(Object otherObj) {
         if (this == otherObj){
@@ -48,6 +53,10 @@ public class Vertex<V,E> {
                 this.element.equals(otherVertex.element));
     }
     
+    /**
+     * 
+     * @return copy object
+     */
     @Override
     public Vertex<V,E> clone() {
         
@@ -69,6 +78,10 @@ public class Vertex<V,E> {
         return newVertex;
     }
     
+    /**
+     * 
+     * @return string
+     */
     @Override
     public String toString() {
        return element + " (" + key + "): " ; }   
