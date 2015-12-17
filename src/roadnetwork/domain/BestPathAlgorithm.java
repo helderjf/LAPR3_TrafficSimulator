@@ -13,7 +13,14 @@ import java.util.ArrayList;
  */
 public interface BestPathAlgorithm {
     
-    
+    /**
+     * 
+     * @param roadNetwork roadNetwork
+     * @param originNode originNode
+     * @param destinyNode destinyNode
+     * @param vehicle vehicle
+     * @return bestPath
+     */
     public ResultFastestPath bestPath(RoadNetwork roadNetwork, 
             Junction originNode, 
             Junction destinyNode, 
