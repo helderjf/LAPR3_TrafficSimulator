@@ -5,6 +5,8 @@
  */
 package roadnetwork.domain;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
@@ -14,6 +16,13 @@ public class Manager {
     private String m_name;
     private Project m_currentProject;
     private DataAccessLayer m_dataAccessLayer;
+    
+    private ArrayList<Project> projectList; //TO DO TEMPORÁRIO / MOCK
+    
+    public ArrayList<Project> getProjectList(){
+        return projectList;
+    }
+    
     
     public Manager(String name){
         m_name=name;

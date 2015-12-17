@@ -23,5 +23,17 @@ public class RoadNetwork {
     public ArrayList<Section> getSectionList(){
         return m_sectionList;
     }
+
+    public void setNodeList(ArrayList<Junction> m_nodeList) {
+        this.m_nodeList = m_nodeList;
+    }
+
+    public void setSectionList(ArrayList<Section> m_sectionList) {
+        this.m_sectionList = m_sectionList;
+    }
+    
+    
+    
+    
     
 }
