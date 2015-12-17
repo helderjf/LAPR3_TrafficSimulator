@@ -28,4 +28,10 @@ public interface Import {
      * @return Dom Node type with all sections
      */
     public ArrayList<Section> importSections();
+    
+    /**
+     * import vehicles from an xml file
+     * @return ArrayList of vehicles
+     */
+    public ArrayList<Vehicle> importVehicle();
 }

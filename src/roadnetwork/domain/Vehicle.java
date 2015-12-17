@@ -18,8 +18,9 @@ public class Vehicle {
       
     private String id;
     private String name;
+    private String description;
     private double mass;
-    private TypeOfVehicle type;
+    private String type;
     private double load;
     private double drag_Coefficient;
     private double maxSpeed;
@@ -78,7 +79,7 @@ public class Vehicle {
      * @param maxRPM maxRPM
      * @param finalDriveRatio finalDriveRatio
      */
-    public Vehicle(String id, String name, double mass, TypeOfVehicle type, double load, double drag_Coefficient, double maxSpeed,
+    public Vehicle(String id, String name, double mass, String type, double load, double drag_Coefficient, double maxSpeed,
                     double rrc, double wheelSize, HashMap<Segment,Double> velocityLimit, double torque, double mostEfficientRPM,
                     double consuption, double minRPM, double maxRPM, double finalDriveRatio) {
         this.id = id;
@@ -177,7 +178,7 @@ public class Vehicle {
      * 
      * @return type
      */
-    public TypeOfVehicle getType() {
+    public String getType() {
         return type;
     }
 
@@ -461,6 +462,20 @@ public class Vehicle {
     @Override
     public String toString() {
         return "Vehicle{" + "id=" + id + ", name=" + name + ", mass=" + mass + ", type=" + type + ", load=" + load + ", drag_Coefficient=" + drag_Coefficient + ", maxSpeed=" + maxSpeed + ", rrc=" + rrc + ", wheelSize=" + wheelSize + ", velocityLimit=" + velocityLimit + ", torque=" + torque + ", mostEfficientRPM=" + mostEfficientRPM + ", consuption=" + consuption + ", minRPM=" + minRPM + ", maxRPM=" + maxRPM + ", finalDriveRatio=" + finalDriveRatio + '}';
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
   
 }

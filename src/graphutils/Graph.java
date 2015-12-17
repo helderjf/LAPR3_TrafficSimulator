@@ -244,7 +244,7 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         if (vdest == null)
              vdest = insertVertex(vDest);
         
-        if (getEdge(vorig,vdest) == null) {               
+        //if (getEdge(vorig,vdest) == null) {               
             Edge<V,E> newedge = new Edge<>(eInf,eWeight,vorig,vdest);
             vorig.getOutgoing().put(vdest,newedge);
             numEdge++;
@@ -258,8 +258,8 @@ public class Graph<V,E> implements GraphInterface<V,E> {
                 }       
             
             return newedge ;
-        }
-        return null ;
+        //}
+        //return null ;
     }
     
     /* Removes the edge between with source vertex vorigInf and destination vertex

@@ -43,5 +43,11 @@ public class Project {
     
     
 
+    public Simulation newBestPathSimulation(RoadNetwork rn, Junction oj, 
+            Junction dj, BestPathAlgorithm alg, Vehicle v) {
+        return new Simulation(rn, oj, dj, alg, v);
+    }
+    
+    
     
 }

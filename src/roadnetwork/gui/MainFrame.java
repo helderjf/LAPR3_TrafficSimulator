@@ -13,23 +13,23 @@ import roadnetwork.domain.Project;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class JanelaPrincipal extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame {
 
     private Manager m_manager;
-    private JanelaNewProject m_janelaNewProject;
-    private JanelaOpenProject m_janelaOpenProject;
-    private JanelaCopyProject m_janelaCopyProject;
-    private JanelaImportVehicles m_janelaImportVehicles;
-    private JanelaProperties m_janelaProperties;
-    private JanelaBestPathAnalysis m_janelaBestPathAnalysis;
-    private JanelaVehicleComparison m_janelaVehicleComparison;
+    private NewProjectFrame m_newProjectFrame;
+    private OpenProjectFrame m_openProjectFrame;
+    private CopyProjectFrame m_copyProjectFrame;
+    private ImportVehiclesFrame m_importVehiclesFrame;
+    private PropertiesFrame m_propertiesFrame;
+    private BestPathAnalysisFrame m_bestPathAnalysisFrame;
+    private VehicleComparisonFrame m_vehicleComparisonFrame;
     
     
     /**
      * Creates new form JanelaPrincipal
      * @param manager
      */
-    public JanelaPrincipal(Manager manager) {
+    public MainFrame(Manager manager) {
         m_manager=manager;
         initComponents();
         setLocationRelativeTo(null);
@@ -37,37 +37,37 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }
     
     private void newProject(){
-        m_janelaNewProject = new JanelaNewProject(this);
+        m_newProjectFrame = new NewProjectFrame(this);
         revalidate();
     }
     
     private void openProject(){
-        m_janelaOpenProject = new JanelaOpenProject(this);
+        m_openProjectFrame = new OpenProjectFrame(this);
         revalidate();
     }
     
     private void copyProject(){
-        m_janelaCopyProject = new JanelaCopyProject(this);
+        m_copyProjectFrame = new CopyProjectFrame(this);
         revalidate();
     }
     
     private void importVehicles(){
-        m_janelaImportVehicles = new JanelaImportVehicles(this);
+        m_importVehiclesFrame = new ImportVehiclesFrame(this);
         revalidate();
     }
     
     private void properties(){
-        m_janelaProperties = new JanelaProperties(this);
+        m_propertiesFrame = new PropertiesFrame(this);
         revalidate();
     }
     
     private void bestPathAnalysis(){
-        m_janelaBestPathAnalysis= new JanelaBestPathAnalysis(this);
+        m_bestPathAnalysisFrame= new BestPathAnalysisFrame(this);
         revalidate();
     }
 
     private void vehicleComparison(){
-        m_janelaVehicleComparison=new JanelaVehicleComparison(this);
+        m_vehicleComparisonFrame=new VehicleComparisonFrame(this);
         revalidate();
     }
     

@@ -13,16 +13,27 @@ import java.util.ArrayList;
  */
 public class Simulation {
     
+    private RoadNetwork m_roaNetwork;
     private Junction m_originNode;
     private Junction m_destinyNode;
-    private ArrayList<Vehicle> m_vehicleList;
+    private Vehicle m_vehicle;
     private BestPathAlgorithm m_algorithm;
     private SimulationResult m_results;
     
+    public Simulation(RoadNetwork rn, Junction oj, 
+            Junction dj, BestPathAlgorithm alg, Vehicle v){
+        
+        m_roaNetwork=rn;
+        m_originNode=oj;
+        m_destinyNode=dj;
+        m_algorithm=alg;
+        m_vehicle=v;
+    }
     
     
-    
-    
+    public SimulationResult run(){
+        return m_algorithm.bestPath(m_roaNetwork, m_originNode, m_destinyNode, m_vehicle);
+    }
     
     
     

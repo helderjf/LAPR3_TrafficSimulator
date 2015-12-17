@@ -8,6 +8,7 @@ package roadnetwork.domain;
 import java.util.ArrayList;
 import java.util.HashMap;
 import roadnetwork.gui.JanelaPrincipal;
+import roadnetwork.gui.MainFrame;
 
 /**
  *
@@ -20,7 +21,7 @@ public class Main {
                 try {
             Manager manager = new Manager("Road Network Simulation");
 
-            JanelaPrincipal janela=new JanelaPrincipal(manager);
+            MainFrame janela=new MainFrame(manager);
             
             
             //CREATE MOCK OBJECTS

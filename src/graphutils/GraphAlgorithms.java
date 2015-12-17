@@ -250,13 +250,31 @@ public class GraphAlgorithms {
             Vertex<V,E> vi = g.getVertex(shortPath.poll());
             Vertex<V,E> vj = g.getVertex(shortPath.peek());
             
-            Edge<V,E> edge = g.getEdge(vi, vj);
             
-            path.add(edge.getElement());
-        }
-        
+            if(g.outDegree(vi)>1)
+            {
+                Edge<V,E> lightEdge = new Edge<>();
+                double min = Double.MAX_VALUE;
+                for (Edge<V,E> e : g.outgoingEdges(vi))
+                {
+                    if(e.getWeight()<min)
+                    {
+                        min = e.getWeight();
+                        lightEdge = e;
+                    }
+                    path.add(lightEdge.getElement());
+                }
+            }
+            else
+            {
+                Edge<V,E> edge = g.getEdge(vi, vj);
+                path.add(edge.getElement());
+            }      
+        }  
         return length;
     }
+    
+
    
     /**
      * Reverses the path
