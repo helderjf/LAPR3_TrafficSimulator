@@ -9,15 +9,15 @@ package roadnetwork.gui;
  *
  * @author josemiranda
  */
-public class JanelaCopyProject extends javax.swing.JFrame {
+public class CopyProjectFrame extends javax.swing.JFrame {
 
-    JanelaPrincipal m_janelaPrincipal;
+    MainFrame m_mainFrame;
     
     /**
      * Creates new form JanelaCopyProject
      */
-    public JanelaCopyProject(JanelaPrincipal janela) {
-        m_janelaPrincipal=janela;
+    public CopyProjectFrame(MainFrame frame) {
+        m_mainFrame=frame;
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);

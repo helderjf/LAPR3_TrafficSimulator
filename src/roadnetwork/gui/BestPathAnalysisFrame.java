@@ -13,28 +13,16 @@ import roadnetwork.domain.Vehicle;
  *
  * @author josemiranda
  */
-public class JanelaBestPathAnalysis extends javax.swing.JFrame {
+public class BestPathAnalysisFrame extends javax.swing.JFrame {
 
-    JanelaPrincipal m_janelaPrincipal;
-    BestPathSimulationContoller m_bpSimulationController;
-    ArrayList<Vehicle> m_vehiclesList;
-    ModeloLista<String> m_modelVehiclesIDs;
-    
+    MainFrame m_mainFrame;
     
     /**
      * Creates new form JanelaBestPathAnalysis
-     * @param janela
+     * @param frame
      */
-    public JanelaBestPathAnalysis(JanelaPrincipal janela) {
-        m_janelaPrincipal=janela;
-        m_bpSimulationController=new BestPathSimulationContoller(m_janelaPrincipal.getManager());
-        
-        //get the active project's list of vehicles
-        m_vehiclesList=m_bpSimulationController.newBestPathSimulation();
-        
-        m_modelVehiclesIDs= new ModeloLista<>();
-        
-        
+    public BestPathAnalysisFrame(MainFrame frame) {
+        m_mainFrame=frame;
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
