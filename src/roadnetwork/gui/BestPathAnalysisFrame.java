@@ -18,18 +18,21 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
     MainFrame m_mainFrame;
     BestPathSimulationContoller m_bpSimulationController;
     ArrayList<Vehicle> m_vehiclesList;
+    ModelList<Vehicle> m_modelVehicles;
     
     /**
      * Creates new form JanelaBestPathAnalysis
      * @param frame
      */
     public BestPathAnalysisFrame(MainFrame frame) {
-          m_mainFrame=frame;
+        m_mainFrame=frame;
         m_bpSimulationController=new BestPathSimulationContoller(m_mainFrame.getManager());
-        
+         
         //get the active project's list of vehicles
         m_vehiclesList=m_bpSimulationController.newBestPathSimulation();
-        
+       
+        m_modelVehicles=new ModelList();
+        m_modelVehicles.setItems(m_vehiclesList);
         
         initComponents();
         setLocationRelativeTo(null);
@@ -61,11 +64,7 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
 
         jButton2.setText("Cancel");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        jList1.setModel(m_modelVehicles);
         jList1.setToolTipText("");
         jScrollPane1.setViewportView(jList1);
 
