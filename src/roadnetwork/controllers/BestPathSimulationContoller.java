@@ -41,7 +41,7 @@ public class BestPathSimulationContoller {
 
     }
 
-    public ArrayList<Vehicle> newBestPathSimulati() {
+    public ArrayList<Vehicle> newBestPathSimulation() {
 
         m_project = m_manager.getCurrentProject();
 
