@@ -11,14 +11,14 @@ package roadnetwork.gui;
  */
 public class BestPathAnalysisFrame extends javax.swing.JFrame {
 
-    MainFrame m_janelaPrincipal;
+    MainFrame m_mainFrame;
     
     /**
      * Creates new form JanelaBestPathAnalysis
-     * @param janela
+     * @param frame
      */
-    public BestPathAnalysisFrame(MainFrame janela) {
-        m_janelaPrincipal=janela;
+    public BestPathAnalysisFrame(MainFrame frame) {
+        m_mainFrame=frame;
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);

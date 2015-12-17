@@ -16,13 +16,13 @@ import roadnetwork.domain.Project;
 public class MainFrame extends javax.swing.JFrame {
 
     private Manager m_manager;
-    private NewProjectFrame m_janelaNewProject;
-    private OpenProjectFrame m_janelaOpenProject;
-    private CopyProjectFrame m_janelaCopyProject;
-    private ImportVehiclesFrame m_janelaImportVehicles;
-    private PropertiesFrame m_janelaProperties;
-    private BestPathAnalysisFrame m_janelaBestPathAnalysis;
-    private VehicleComparisonFrame m_janelaVehicleComparison;
+    private NewProjectFrame m_newProjectFrame;
+    private OpenProjectFrame m_openProjectFrame;
+    private CopyProjectFrame m_copyProjectFrame;
+    private ImportVehiclesFrame m_importVehiclesFrame;
+    private PropertiesFrame m_propertiesFrame;
+    private BestPathAnalysisFrame m_bestPathAnalysisFrame;
+    private VehicleComparisonFrame m_vehicleComparisonFrame;
     
     
     /**
@@ -37,37 +37,37 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     private void newProject(){
-        m_janelaNewProject = new NewProjectFrame(this);
+        m_newProjectFrame = new NewProjectFrame(this);
         revalidate();
     }
     
     private void openProject(){
-        m_janelaOpenProject = new OpenProjectFrame(this);
+        m_openProjectFrame = new OpenProjectFrame(this);
         revalidate();
     }
     
     private void copyProject(){
-        m_janelaCopyProject = new CopyProjectFrame(this);
+        m_copyProjectFrame = new CopyProjectFrame(this);
         revalidate();
     }
     
     private void importVehicles(){
-        m_janelaImportVehicles = new ImportVehiclesFrame(this);
+        m_importVehiclesFrame = new ImportVehiclesFrame(this);
         revalidate();
     }
     
     private void properties(){
-        m_janelaProperties = new PropertiesFrame(this);
+        m_propertiesFrame = new PropertiesFrame(this);
         revalidate();
     }
     
     private void bestPathAnalysis(){
-        m_janelaBestPathAnalysis= new BestPathAnalysisFrame(this);
+        m_bestPathAnalysisFrame= new BestPathAnalysisFrame(this);
         revalidate();
     }
 
     private void vehicleComparison(){
-        m_janelaVehicleComparison=new VehicleComparisonFrame(this);
+        m_vehicleComparisonFrame=new VehicleComparisonFrame(this);
         revalidate();
     }
     

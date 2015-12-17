@@ -11,13 +11,13 @@ package roadnetwork.gui;
  */
 public class PropertiesFrame extends javax.swing.JFrame {
 
-    MainFrame m_janelaPrincipal;
+    MainFrame m_mainFrame;
     
     /**
      * Creates new form JanelaProperties
      */
-    public PropertiesFrame(MainFrame janela) {
-        m_janelaPrincipal=janela;
+    public PropertiesFrame(MainFrame frame) {
+        m_mainFrame=frame;
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
