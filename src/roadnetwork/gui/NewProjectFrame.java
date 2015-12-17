@@ -9,15 +9,14 @@ package roadnetwork.gui;
  *
  * @author josemiranda
  */
-public class JanelaVehicleComparison extends javax.swing.JFrame {
-
-    JanelaPrincipal m_janelaPrincipal;
+public class NewProjectFrame extends javax.swing.JFrame {
+    
+    MainFrame m_janelaPrincipal;
     
     /**
-     * Creates new form JanelaVehicleComparison
-     * @param janela
+     * Creates new form JanelaNewProject
      */
-    public JanelaVehicleComparison(JanelaPrincipal janela) {
+    public NewProjectFrame(MainFrame janela) {
         m_janelaPrincipal=janela;
         initComponents();
         setLocationRelativeTo(null);
@@ -34,7 +33,7 @@ public class JanelaVehicleComparison extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Vehicle Comparison");
+        setTitle("New Project");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -50,7 +49,7 @@ public class JanelaVehicleComparison extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

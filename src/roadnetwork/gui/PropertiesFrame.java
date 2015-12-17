@@ -9,14 +9,14 @@ package roadnetwork.gui;
  *
  * @author josemiranda
  */
-public class JanelaNewProject extends javax.swing.JFrame {
-    
-    JanelaPrincipal m_janelaPrincipal;
+public class PropertiesFrame extends javax.swing.JFrame {
+
+    MainFrame m_janelaPrincipal;
     
     /**
-     * Creates new form JanelaNewProject
+     * Creates new form JanelaProperties
      */
-    public JanelaNewProject(JanelaPrincipal janela) {
+    public PropertiesFrame(MainFrame janela) {
         m_janelaPrincipal=janela;
         initComponents();
         setLocationRelativeTo(null);
@@ -33,7 +33,7 @@ public class JanelaNewProject extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("New Project");
+        setTitle("Properties");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

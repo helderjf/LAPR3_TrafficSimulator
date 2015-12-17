@@ -9,14 +9,15 @@ package roadnetwork.gui;
  *
  * @author josemiranda
  */
-public class JanelaCopyProject extends javax.swing.JFrame {
+public class VehicleComparisonFrame extends javax.swing.JFrame {
 
-    JanelaPrincipal m_janelaPrincipal;
+    MainFrame m_janelaPrincipal;
     
     /**
-     * Creates new form JanelaCopyProject
+     * Creates new form JanelaVehicleComparison
+     * @param janela
      */
-    public JanelaCopyProject(JanelaPrincipal janela) {
+    public VehicleComparisonFrame(MainFrame janela) {
         m_janelaPrincipal=janela;
         initComponents();
         setLocationRelativeTo(null);
@@ -33,7 +34,7 @@ public class JanelaCopyProject extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Copy Project");
+        setTitle("Vehicle Comparison");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

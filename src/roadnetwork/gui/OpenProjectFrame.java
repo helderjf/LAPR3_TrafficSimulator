@@ -13,18 +13,18 @@ import roadnetwork.controllers.OpenProjectController;
  *
  * @author josemiranda
  */
-public class JanelaOpenProject extends javax.swing.JFrame {
+public class OpenProjectFrame extends javax.swing.JFrame {
 
-    JanelaPrincipal m_janelaPrincipal;
+    MainFrame m_janelaPrincipal;
     OpenProjectController m_openProjectController;
-    ModeloLista<String> m_modelProjectsIDs;
+    ModelList<String> m_modelProjectsIDs;
     private ArrayList<String> m_projectsIDList;
     
     /**
      * Creates new form FrameOpenProject
      * @param janela
      */
-    public JanelaOpenProject(JanelaPrincipal janela) {
+    public OpenProjectFrame(MainFrame janela) {
         m_janelaPrincipal=janela;
         
         m_openProjectController=new OpenProjectController(m_janelaPrincipal.getManager());
@@ -32,10 +32,10 @@ public class JanelaOpenProject extends javax.swing.JFrame {
         
         if (m_projectsIDList.isEmpty()) {
             JOptionPane.showMessageDialog(this, "There are no projects available");
-            m_janelaPrincipal = new JanelaPrincipal(m_janelaPrincipal.getManager());
+            m_janelaPrincipal = new MainFrame(m_janelaPrincipal.getManager());
         }else{
         
-            m_modelProjectsIDs = new ModeloLista<>();
+            m_modelProjectsIDs = new ModelList<>();
             m_modelProjectsIDs.setItems(m_projectsIDList);
         
             initComponents();
@@ -120,7 +120,7 @@ public class JanelaOpenProject extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        m_janelaPrincipal = new JanelaPrincipal(m_janelaPrincipal.getManager());
+        m_janelaPrincipal = new MainFrame(m_janelaPrincipal.getManager());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -132,7 +132,7 @@ public class JanelaOpenProject extends javax.swing.JFrame {
             }else{
                 JOptionPane.showMessageDialog(this, "ERROR: It was not possible to make the selected project active!");
             }
-            m_janelaPrincipal = new JanelaPrincipal(m_janelaPrincipal.getManager());
+            m_janelaPrincipal = new MainFrame(m_janelaPrincipal.getManager());
         }else{
             JOptionPane.showMessageDialog(this,"You must select one project");
         }

@@ -13,7 +13,7 @@ import javax.swing.DefaultListModel;
  *
  * @author Helder Faria
  */
-public class ModeloLista<T> extends DefaultListModel<T> {
+public class ModelList<T> extends DefaultListModel<T> {
 
     public boolean setItem(T item) {
 

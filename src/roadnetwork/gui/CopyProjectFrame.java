@@ -9,15 +9,15 @@ package roadnetwork.gui;
  *
  * @author josemiranda
  */
-public class JanelaImportVehicles extends javax.swing.JFrame {
+public class CopyProjectFrame extends javax.swing.JFrame {
 
-    JanelaPrincipal m_janelaPrincipal;
+    MainFrame m_janelaPrincipal;
     
     /**
-     * Creates new form JanelaImportVehicles
+     * Creates new form JanelaCopyProject
      */
-    public JanelaImportVehicles(JanelaPrincipal janela) {
-        m_janelaPrincipal=janela;       
+    public CopyProjectFrame(MainFrame janela) {
+        m_janelaPrincipal=janela;
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -33,7 +33,7 @@ public class JanelaImportVehicles extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Import Vehicles");
+        setTitle("Copy Project");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
