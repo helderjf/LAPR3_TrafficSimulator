@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public interface BestPathAlgorithm {
     
     
-    public SimulationResult bestPath(RoadNetwork roadNetwork, 
+    public ResultFastestPath bestPath(RoadNetwork roadNetwork, 
             Junction originNode, 
             Junction destinyNode, 
             Vehicle vehicle);

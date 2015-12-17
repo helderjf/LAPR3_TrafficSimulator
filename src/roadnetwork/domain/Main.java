@@ -37,7 +37,7 @@ public class Main {
             Segment segment1 = new Segment();
             //...
             
-            Vehicle vehicle1 = new Vehicle("v1", "vehiculo1", 1000, new TypeOfVehicle(), 0, 0.03,150);
+            //Vehicle vehicle1 = new Vehicle("v1", "vehiculo1", 1000, new TypeOfVehicle(), 0, 0.03,150);
             //...
             
 

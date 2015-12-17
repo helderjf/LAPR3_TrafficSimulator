@@ -17,22 +17,26 @@ import java.util.Deque;
  */
 public class FastestPathAlgorithm implements BestPathAlgorithm{
 
-    SimulationResult m_simulationResult;
     Graph<Junction,Section> m_graph;
     
     
      @Override
-    public SimulationResult bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
+    public ResultFastestPath bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
         m_graph=new Graph<>(true);
         graphConstruction(roadNetwork, vehicle);
         
         ArrayList<Section> fastestPath = new ArrayList<>();
         double fastestPathLength=GraphAlgorithms.getShortestPathLength(m_graph, originNode, destinyNode, fastestPath);
         
-        SimulationResult simResult=new SimulationResult();
-        //TODO
-        //simResult.setPath(fastestPath);
-        //set outros parametros da simulacao
+        ArrayList<Double> sectionTime = new ArrayList<>();
+        for (Section s : fastestPath) {
+             sectionTime.add(calculateTravelTime(s,vehicle));
+        }
+        
+        ResultFastestPath simResult=new ResultFastestPath();
+        simResult.setPath(fastestPath);
+        simResult.setLength(fastestPathLength);
+        simResult.setSectionWeight(sectionTime);
         return simResult;
     }
     

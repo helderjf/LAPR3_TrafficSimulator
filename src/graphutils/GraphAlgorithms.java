@@ -251,10 +251,8 @@ public class GraphAlgorithms {
             Vertex<V,E> vj = g.getVertex(shortPath.peek());
             
             Edge<V,E> edge = g.getEdge(vi, vj);
-            
             path.add(edge.getElement());
         }
-        
         return length;
     }
    

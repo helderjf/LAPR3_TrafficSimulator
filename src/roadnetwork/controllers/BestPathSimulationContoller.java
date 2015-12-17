@@ -5,11 +5,17 @@
  */
 package roadnetwork.controllers;
 
+import IO.ExportCSV;
 import java.util.ArrayList;
+import java.util.List;
+import roadnetwork.domain.BestPathAlgorithm;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Junction;
 import roadnetwork.domain.Project;
 import roadnetwork.domain.RoadNetwork;
+import roadnetwork.domain.ResultFastestPath;
+import roadnetwork.domain.Simulation;
+import roadnetwork.domain.SimulationResult;
 import roadnetwork.domain.Vehicle;
 
 /**
@@ -23,6 +29,11 @@ public class BestPathSimulationContoller {
     private Vehicle m_vehicle;
     private RoadNetwork m_roadNetwork;
     private ArrayList<Junction> m_nodeList;
+    private Junction m_originJunction;
+    private Junction m_destinationJunction;
+    private BestPathAlgorithm m_bpAlgorithm;
+    private ResultFastestPath m_simulationResult;
+    private ExportCSV m_csv;
     
 
     public BestPathSimulationContoller(Manager manager) {
@@ -52,6 +63,31 @@ public class BestPathSimulationContoller {
         return m_nodeList;
     }
     
+    public void setSimulationNodes(Junction oj, Junction dj){
+        m_originJunction=oj;
+        m_destinationJunction=dj;
+    }
     
+    public List<BestPathAlgorithm> getBestPathAlgorithms(){
+        return m_manager.getAlgorithmsList();
+    }
  
+    public void setAlgorithm(BestPathAlgorithm alg){
+        m_bpAlgorithm=alg;
+    }
+    
+    public SimulationResult runSimulation(){
+        Simulation simulation = m_project.newBestPathSimulation(m_roadNetwork,
+                                                                m_originJunction, 
+                                                                m_destinationJunction, 
+                                                                m_bpAlgorithm,
+                                                                m_vehicle);
+        return simulation.run();
+    }
+    
+    public boolean exportResultsCSV(String fileName){
+        m_csv=m_manager.newCSV(fileName);
+        return m_csv.export(m_simulationResult);
+    }
+    
 }
