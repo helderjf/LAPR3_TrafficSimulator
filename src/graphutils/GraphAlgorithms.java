@@ -214,7 +214,6 @@ public class GraphAlgorithms {
 
     //shortest-path between voInf and vdInf
     public static<V,E> double shortestPath(Graph<V,E> g, V voInf, V vdInf, Deque<V> shortPath){
-      
         Vertex<V,E> vOrig = g.getVertex(voInf);
         Vertex<V,E> vDest = g.getVertex(vdInf);
     
@@ -240,6 +239,23 @@ public class GraphAlgorithms {
             return lengthPath;
         }
         return 0;
+    }
+    
+    public static<V,E> double getShortestPathLength(Graph<V,E> g, V voInf, V vdInf, ArrayList<E> path){
+        Deque<V> shortPath=new ArrayDeque<>();
+        double length = shortestPath(g, voInf, vdInf, shortPath);
+        
+        
+        while(shortPath.iterator().hasNext()){
+            Vertex<V,E> vi = g.getVertex(shortPath.poll());
+            Vertex<V,E> vj = g.getVertex(shortPath.peek());
+            
+            Edge<V,E> edge = g.getEdge(vi, vj);
+            
+            path.add(edge.getElement());
+        }
+        
+        return length;
     }
    
     /**
