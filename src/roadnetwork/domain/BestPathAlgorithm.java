@@ -17,7 +17,7 @@ public interface BestPathAlgorithm {
     public SimulationResult bestPath(RoadNetwork roadNetwork, 
             Junction originNode, 
             Junction destinyNode, 
-            ArrayList<Vehicle> vehicleList);
+            Vehicle vehicle);
     
     
 }
