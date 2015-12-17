@@ -20,6 +20,7 @@ public class Segment {
     private double min_Velocity;
     private double max_Vehicles;
     private int number_vehicles;
+    private double rrc;
 
 
     /**
@@ -248,6 +249,20 @@ public class Segment {
      */
     public void setNumber_vehicles(int number_vehicles) {
         this.number_vehicles = number_vehicles;
+    }
+
+    /**
+     * @return the rrc
+     */
+    public double getRrc() {
+        return rrc;
+    }
+
+    /**
+     * @param rrc the rrc to set
+     */
+    public void setRrc(double rrc) {
+        this.rrc = rrc;
     }
 
     
