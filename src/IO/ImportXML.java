@@ -8,6 +8,7 @@ package IO;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.*;
@@ -195,7 +196,7 @@ public class ImportXML implements Import {
         
         String type = domElementVehicle.getElementsByTagName("type").item(0).getNodeValue();
         String motorization = domElementVehicle.getElementsByTagName("motorization").item(0).getNodeValue();
-        
+
         switch (motorization){
                 case "electic":
                     vehicle = new ElectricVehicle();
@@ -205,10 +206,60 @@ public class ImportXML implements Import {
                 break;
                 default:
                     String fuel = domElementVehicle.getElementsByTagName("fuel").item(0).getNodeValue();
-                    vehicle = new CombustionVehicle();
-                    //vehicle.dynamic_cast(CombustionVehicle);
+                    vehicle  = new CombustionVehicle();
                 break;
                 }
+        String mass = domElementVehicle.getElementsByTagName("mass").item(0).getNodeValue();
+        mass = mass.split("kg")[0];
+        String load = domElementVehicle.getElementsByTagName("load").item(0).getNodeValue();
+        load = load.split("kg")[0];
+        String drag = domElementVehicle.getElementsByTagName("drag").item(0).getNodeValue();
+        String rrc = domElementVehicle.getElementsByTagName("rrc").item(0).getNodeValue();
+        String wheelSize = domElementVehicle.getElementsByTagName("wheel_size").item(0).getNodeValue();
+        
+        Node velocityLimitList = domElementVehicle.getElementsByTagName("velocity_limit_list").item(0);
+        for (int i = 0; i < velocityLimitList.getChildNodes().getLength(); i++) {
+            Element velocityLimit = (Element)velocityLimitList.getChildNodes().item(i);
+            String segment = velocityLimit.getElementsByTagName("segment").item(0).getNodeValue();
+            String limit = velocityLimit.getElementsByTagName("limit").item(0).getNodeValue();
+            HashMap<String,Double> hash = new HashMap();
+            hash.put(segment, Double.parseDouble(limit));
+            vehicle.setVelocityLimit(hash);
+        }
+
+        //GET ENERGY
+        Element energy = (Element)domElementVehicle.getElementsByTagName("energy").item(0);
+        String torque = energy.getElementsByTagName("torque").item(0).getNodeValue();
+        String rpm = energy.getElementsByTagName("rpm").item(0).getNodeValue();
+        String consumption = energy.getElementsByTagName("consumption").item(0).getNodeValue();
+        String minRpm = energy.getElementsByTagName("min_rpm").item(0).getNodeValue();
+        String maxRpm = energy.getElementsByTagName("max_rpm").item(0).getNodeValue();
+        String finalDriveRation = energy.getElementsByTagName("final_drive_ratio").item(0).getNodeValue();
+        
+        Element domGearList = (Element)domElementVehicle.getElementsByTagName("gear_list").item(0);
+        ArrayList<Double> gearList = new ArrayList();
+        for (int i = 0; i < domGearList.getChildNodes().getLength(); i++) {
+            Element domGear = (Element) domGearList.getChildNodes().item(i);
+            //int gearId = Integer.parseInt(domGear.getAttribute("id"));
+            double ratio = Double.parseDouble(domGear.getFirstChild().getNodeValue());
+
+            gearList.add(ratio);
+        }
+        
+        vehicle.setName(name);
+        vehicle.setDescription(description);
+        vehicle.setType(type);
+        vehicle.setMass(Double.parseDouble(mass));
+        vehicle.setLoad(Double.parseDouble(load));
+        vehicle.setDrag_Coefficient(Double.parseDouble(drag));
+        vehicle.setRrc(Double.parseDouble(rrc));
+        vehicle.setWheelSize(Double.parseDouble(wheelSize));
+        vehicle.setTorque(Double.parseDouble(torque));
+        vehicle.setConsuption(Double.parseDouble(consumption));
+        vehicle.setMinRPM(Double.parseDouble(minRpm));
+        vehicle.setMaxRPM(Double.parseDouble(maxRpm));
+        vehicle.setFinalDriveRatio(Double.parseDouble(finalDriveRation));
+        vehicle.setGearList(gearList);
         return vehicle;    
     }
 }
