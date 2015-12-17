@@ -118,28 +118,28 @@ public class SectionIT {
         instance.setTypology(typology);
     }
 
-    /**
-     * Test of getDirection method, of class Section.
-     */
-    @Test
-    public void testGetDirection() {
-        System.out.println("getDirection");
-        Section instance = new Section();
-        String expResult = "";
-        Direction result = instance.getDirection();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of setDirection method, of class Section.
-     */
-    @Test
-    public void testSetDirection() {
-        System.out.println("setDirection");
-        Direction direction = null;
-        Section instance = new Section();
-        instance.setDirection(direction);
-    }
+//    /**
+//     * Test of getDirection method, of class Section.
+//     */
+//    @Test
+//    public void testGetDirection() {
+//        System.out.println("getDirection");
+//        Section instance = new Section();
+//        String expResult = "";
+//        String result = instance.getDirection();
+//        assertEquals(expResult, result);
+//    }
+//
+//    /**
+//     * Test of setDirection method, of class Section.
+//     */
+//    @Test
+//    public void testSetDirection() {
+//        System.out.println("setDirection");
+//        String direction = "";
+//        Section instance = new Section();
+//        instance.setDirection(direction);
+//    }
 
     /**
      * Test of getToll method, of class Section.
