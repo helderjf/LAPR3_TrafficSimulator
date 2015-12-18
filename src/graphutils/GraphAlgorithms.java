@@ -270,26 +270,23 @@ public class GraphAlgorithms {
             Vertex<V,E> vi = g.getVertex(shortPath.poll());
             Vertex<V,E> vj = g.getVertex(shortPath.peek());
             
+            double min = Double.MAX_VALUE;
+            Edge<V,E> lightEdge = new Edge<>();
             
-            if(g.outDegree(vi)>1)
+            for (Edge<V,E> e : g.outgoingEdges(vi))
             {
-                Edge<V,E> lightEdge = new Edge<>();
-                double min = Double.MAX_VALUE;
-                for (Edge<V,E> e : g.outgoingEdges(vi))
+                if(e == g.getEdge(vi, vj))
                 {
-                    if(e.getWeight()<min)
+                    if(e.getWeight() < min)
                     {
-                        min = e.getWeight();
                         lightEdge = e;
+                        min = e.getWeight();
                     }
-                    path.add(lightEdge.getElement());
                 }
             }
-            else
-            {
-                Edge<V,E> edge = g.getEdge(vi, vj);
-                path.add(edge.getElement());
-            }      
+            
+            path.add(lightEdge.getElement());
+
         }  
         return length;
     }
