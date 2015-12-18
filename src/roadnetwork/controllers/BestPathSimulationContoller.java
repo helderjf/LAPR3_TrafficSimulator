@@ -96,7 +96,7 @@ public class BestPathSimulationContoller {
      * 
      * @return AlgorithmsList
      */
-    public List<BestPathAlgorithm> getBestPathAlgorithms(){
+    public ArrayList<BestPathAlgorithm> getBestPathAlgorithms(){
         return m_manager.getAlgorithmsList();
     }
  

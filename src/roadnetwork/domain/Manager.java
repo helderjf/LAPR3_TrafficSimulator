@@ -19,7 +19,7 @@ public class Manager {
     private String m_name;
     private Project m_currentProject;
     private DataAccessLayer m_dataAccessLayer;
-    private List<BestPathAlgorithm> m_algorithmsList;
+    private ArrayList<BestPathAlgorithm> m_algorithmsList;
     private ProjectFactory m_projectFactory;
     
     
@@ -30,6 +30,7 @@ public class Manager {
         m_algorithmsList= new ArrayList<>();
         m_projectFactory = new ProjectFactory();
         m_algorithmsList.add(new FastestPathAlgorithm());
+        m_algorithmsList.add(new MostEfficientPath());
         
     }
 
@@ -48,7 +49,7 @@ public class Manager {
         return m_dataAccessLayer;
     }
     
-    public List<BestPathAlgorithm> getAlgorithmsList(){
+    public ArrayList<BestPathAlgorithm> getAlgorithmsList(){
         return m_algorithmsList;
     }
     

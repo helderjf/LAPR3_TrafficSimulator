@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.BestPathSimulationContoller;
 import roadnetwork.domain.RoadNetwork;
+import roadnetwork.domain.SimulationResult;
 import roadnetwork.domain.Vehicle;
 
 /**
@@ -22,21 +23,23 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
     ArrayList<Vehicle> m_vehiclesList;
     ModelList<Vehicle> m_modelVehicles;
     RoadNetwork m_roadNetwork;
-    
+    SimulationResult m_results;
+
     /**
      * Creates new form JanelaBestPathAnalysis
+     *
      * @param frame
      */
     public BestPathAnalysisFrame(MainFrame frame) {
-        m_mainFrame=frame;
-        m_bpSimulationController=new BestPathSimulationContoller(m_mainFrame.getManager());
-         
+        m_mainFrame = frame;
+        m_bpSimulationController = new BestPathSimulationContoller(m_mainFrame.getManager());
+
         //get the active project's list of vehicles
-        m_vehiclesList=m_bpSimulationController.newBestPathSimulation();
-       
-        m_modelVehicles=new ModelList();
+        m_vehiclesList = m_bpSimulationController.newBestPathSimulation();
+
+        m_modelVehicles = new ModelList();
         m_modelVehicles.setItems(m_vehiclesList);
-        
+
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -169,17 +172,28 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-                if (jList1.getSelectedValue()!=null) {
-            m_bpSimulationController.setVehicle((Vehicle)jList1.getSelectedValue());
-            
-            this.setContentPane(new BestPathChooseNodesPane(this, m_bpSimulationController));
-            this.revalidate();
+        if (jList1.getSelectedValue() != null) {
+            m_bpSimulationController.setVehicle((Vehicle) jList1.getSelectedValue());
+            setChooseNodesPane();
             //m_mainFrame = new MainFrame(m_mainFrame.getManager());
-        }else{
-            JOptionPane.showMessageDialog(this,"You must select one vehicle");
+        } else {
+            JOptionPane.showMessageDialog(this, "You must select one vehicle");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public void setChooseNodesPane() {
+        this.setContentPane(new BestPathChooseNodesPane(this, m_bpSimulationController));
+        this.revalidate();
+    }
+
+    public void setChooseAlgorithmPane(){
+        this.setContentPane(new BestPathChooseAlgorithmPane(this, m_bpSimulationController));
+        this.revalidate();
+    }
+    
+    public void runSimulation() {
+        m_results=m_bpSimulationController.runSimulation();
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -194,4 +208,6 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
+
+
 }

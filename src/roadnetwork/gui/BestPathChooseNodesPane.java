@@ -134,7 +134,7 @@ public class BestPathChooseNodesPane extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this,"Origin and destiny nodes can not be the same");
             }else{
                 m_bpSimulationController.setSimulationNodes((Junction)jList1.getSelectedValue(), (Junction)jList2.getSelectedValue());
-                m_ancestorFrame.setVisible(false);
+                m_ancestorFrame.setChooseAlgorithmPane();
             }
         }else{
             JOptionPane.showMessageDialog(this,"You must select two nodes");

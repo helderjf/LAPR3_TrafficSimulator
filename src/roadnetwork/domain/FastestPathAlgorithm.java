@@ -81,5 +81,14 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
         
     }
 
+    @Override
+    public String toString() {
+        return "Fastest path";
+    }
+
+    
+    
+    
+    
     
 }

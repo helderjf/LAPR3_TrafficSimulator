@@ -62,5 +62,14 @@ public class ResultFastestPath implements SimulationResult{
     public void setSectionWeight(ArrayList<Double> m_sectionWeight) {
         this.m_sectionWeight = m_sectionWeight;
     }
+
+    @Override
+    public String toString() {
+        return "ResultFastestPath{" + '}';
+    }
+    
+    
+    
+    
     
 }
