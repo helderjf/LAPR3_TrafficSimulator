@@ -7,19 +7,44 @@ package roadnetwork.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
- * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
+ * @author josemiranda
  */
-public class ProjectFactory {
-
-    public ProjectFactory() {
-        
+public class FastestPathAlgorithmTest {
+    
+    public FastestPathAlgorithmTest() {
     }
- 
-    public Project getProjectByID(String pid){
-               //CREATE MOCK OBJECTS
+    
+    @BeforeClass
+    public static void setUpClass() {
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+    }
+    
+    @Before
+    public void setUp() {
+    }
+    
+    @After
+    public void tearDown() {
+    }
+
+    /**
+     * Test of bestPath method, of class FastestPathAlgorithm.
+     */
+    @Test
+    public void testBestPath() {
+        System.out.println("bestPath");
         Junction node0 = new Junction("node0");
         Junction node1 = new Junction("node1");
         Junction node2 = new Junction("node2");
@@ -96,11 +121,27 @@ public class ProjectFactory {
         Project projecto1 = new Project();
         projecto1.setRoadNetwork(roadNetwork1);
         projecto1.setVehicleList(vehicleList);
-
-        return projecto1;
-
+        FastestPathAlgorithm instance = new FastestPathAlgorithm();
+        ArrayList<Section> expResult = new ArrayList<>();
+        expResult.add(section3);
+        ResultFastestPath result = instance.bestPath(roadNetwork1, node0, node2, vehicle1);
+        assertEquals(expResult, result.getPath());
     }
-    
-    
+
+    /**
+     * Test of calculateTravelTime method, of class FastestPathAlgorithm.
+     */
+    @Test
+    public void testCalculateTravelTime() {
+        System.out.println("calculateTravelTime");
+        Section section = null;
+        Vehicle vehicle = null;
+        FastestPathAlgorithm instance = new FastestPathAlgorithm();
+        double expResult = 0.0;
+        double result = instance.calculateTravelTime(section, vehicle);
+        assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

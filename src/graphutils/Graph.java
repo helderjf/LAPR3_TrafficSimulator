@@ -18,6 +18,7 @@ public class Graph<V,E> implements GraphInterface<V,E> {
     private int numEdge;
     private boolean isDirected;
     private ArrayList<Vertex<V,E>> listVert;  //Vertice list
+    private ArrayList<Edge<V,E>> listEdge;    //Edges list
     
     // Constructs an empty graph (either undirected or directed)
     public Graph(boolean directed) { 
@@ -25,6 +26,7 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         numEdge=0;
         isDirected=directed;
         listVert = new ArrayList<>();
+        listEdge= new ArrayList<>();
     }
     
     @Override
@@ -42,13 +44,7 @@ public class Graph<V,E> implements GraphInterface<V,E> {
      */
     @Override
     public Iterable<Edge<V,E>> edges() {
-    ArrayList<Edge<V,E>> listEdge = new ArrayList<>();
-    for (Vertex<V, E> v: listVert) {
-        for (Edge<V,E> e: outgoingEdges(v)) {
-            listEdge.add(e);
-        }
-    }
-    return listEdge;
+        return listEdge;
     }
     
     
@@ -248,6 +244,7 @@ public class Graph<V,E> implements GraphInterface<V,E> {
             Edge<V,E> newedge = new Edge<>(eInf,eWeight,vorig,vdest);
             vorig.getOutgoing().put(vdest,newedge);
             numEdge++;
+            listEdge.add(newedge);
              
             //if graph is not direct insert other edge in the opposite direction 
             if (!isDirected)

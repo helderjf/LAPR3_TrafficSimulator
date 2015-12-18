@@ -7,9 +7,7 @@ package roadnetwork.domain;
 
 import graphutils.Graph;
 import graphutils.GraphAlgorithms;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 
 /**
  *
@@ -24,7 +22,6 @@ public class FastestPathAlgorithm implements BestPathAlgorithm{
     public ResultFastestPath bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
         m_graph=new Graph<>(true);
         graphConstruction(roadNetwork, vehicle);
-        
         ArrayList<Section> fastestPath = new ArrayList<>();
         double fastestPathLength=GraphAlgorithms.getShortestPathLength(m_graph, originNode, destinyNode, fastestPath);
         
