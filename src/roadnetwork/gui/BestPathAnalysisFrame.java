@@ -172,7 +172,7 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
                 if (jList1.getSelectedValue()!=null) {
             m_bpSimulationController.setVehicle((Vehicle)jList1.getSelectedValue());
             
-            this.setContentPane(new BestPathChooseNodesPane(this));
+            this.setContentPane(new BestPathChooseNodesPane(this, m_bpSimulationController));
             this.revalidate();
             //m_mainFrame = new MainFrame(m_mainFrame.getManager());
         }else{

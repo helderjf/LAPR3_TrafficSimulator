@@ -5,6 +5,12 @@
  */
 package roadnetwork.gui;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import roadnetwork.controllers.BestPathSimulationContoller;
+import roadnetwork.domain.Junction;
+import roadnetwork.domain.RoadNetwork;
+
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
@@ -12,14 +18,23 @@ package roadnetwork.gui;
 public class BestPathChooseNodesPane extends javax.swing.JPanel {
 
     BestPathAnalysisFrame m_ancestorFrame;
+    BestPathSimulationContoller m_bpSimulationController;
+    RoadNetwork m_roadNetwork;
+    ArrayList<Junction> m_nodesList;
+    ModelList<Junction> m_nodesListModel = new ModelList<>();
+    
     
     
     
     /**
      * Creates new form BestPathChooseNodesPane
      */
-    public BestPathChooseNodesPane(BestPathAnalysisFrame ancestor) {
+    public BestPathChooseNodesPane(BestPathAnalysisFrame ancestor, BestPathSimulationContoller controller) {
         m_ancestorFrame=ancestor;
+        m_bpSimulationController = controller;
+        m_roadNetwork=m_bpSimulationController.getRoadNetwork();
+        m_nodesList=m_bpSimulationController.getNodeList();
+        m_nodesListModel.setItems(m_nodesList);
         initComponents();
         
     }
@@ -47,18 +62,10 @@ public class BestPathChooseNodesPane extends javax.swing.JPanel {
 
         jLabel2.setText("Destiny Node");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        jList1.setModel(m_nodesListModel);
         jScrollPane1.setViewportView(jList1);
 
-        jList2.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        jList2.setModel(m_nodesListModel);
         jScrollPane2.setViewportView(jList2);
 
         jLabel3.setText("Please select the origin and destiny nodes:");
@@ -84,25 +91,20 @@ public class BestPathChooseNodesPane extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(105, 105, 105)
-                                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jButton1))
-                                .addGap(0, 111, Short.MAX_VALUE)))))
-                .addContainerGap())
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(jToggleButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(108, 108, 108))
+                            .addComponent(jButton1))))
+                .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,11 +128,21 @@ public class BestPathChooseNodesPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
+        if(jList1.getSelectedValue() != null &&
+                jList2.getSelectedValue() != null){
+            if(jList1.getSelectedValue() == jList2.getSelectedValue()){
+                JOptionPane.showMessageDialog(this,"Origin and destiny nodes can not be the same");
+            }else{
+                m_bpSimulationController.setSimulationNodes((Junction)jList1.getSelectedValue(), (Junction)jList2.getSelectedValue());
+                m_ancestorFrame.setVisible(false);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this,"You must select two nodes");
+        }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
+        m_ancestorFrame.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
