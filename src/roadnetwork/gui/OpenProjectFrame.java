@@ -120,7 +120,8 @@ public class OpenProjectFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        m_mainFrame = new MainFrame(m_mainFrame.getManager());
+        this.setVisible(false);
+        //m_mainFrame = new MainFrame(m_mainFrame.getManager());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -132,7 +133,8 @@ public class OpenProjectFrame extends javax.swing.JFrame {
             }else{
                 JOptionPane.showMessageDialog(this, "ERROR: It was not possible to make the selected project active!");
             }
-            m_mainFrame = new MainFrame(m_mainFrame.getManager());
+            this.setVisible(false);
+            //m_mainFrame = new MainFrame(m_mainFrame.getManager());
         }else{
             JOptionPane.showMessageDialog(this,"You must select one project");
         }

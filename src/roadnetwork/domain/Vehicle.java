@@ -462,8 +462,34 @@ public class Vehicle {
      */
     @Override
     public String toString() {
-        return "Vehicle{" + "id=" + id + ", name=" + name + ", mass=" + mass + ", type=" + getType() + ", load=" + load + ", drag_Coefficient=" + drag_Coefficient + ", maxSpeed=" + maxSpeed + ", rrc=" + rrc + ", wheelSize=" + wheelSize + ", velocityLimit=" + velocityLimit + ", torque=" + torque + ", mostEfficientRPM=" + mostEfficientRPM + ", consuption=" + consuption + ", minRPM=" + minRPM + ", maxRPM=" + maxRPM + ", finalDriveRatio=" + finalDriveRatio + '}';
+        return "Vehicle " + id + " - " + name;
     }
+    
+     /**
+     * 
+     * @return Vehicle data
+     */
+    public String showData() {
+        return "dVehicle: \n"
+                + "id= " + id + "\n"
+                + "name= " + name + "\n"
+                + "mass= " + mass + "\n"
+                + "type= " + getType() + "\n"
+                + "load= " + load + "\n"
+                + "drag_Coefficient= " + drag_Coefficient + "\n"
+                + "maxSpeed=" + maxSpeed + "\n"
+                + "rrc=" + rrc + "\n"
+                + "wheelSize=" + wheelSize + "\n"
+                + "velocityLimit=" + velocityLimit + "\n"
+                + "torque=" + torque + "\n"
+                + "mostEfficientRPM=" + mostEfficientRPM + "\n"
+                + "consuption=" + consuption + "\n"
+                + "minRPM=" + minRPM + "\n"
+                + "maxRPM=" + maxRPM + "\n"
+                + "finalDriveRatio=" + finalDriveRatio;
+    }
+    
+    
 
     /**
      * @return the description

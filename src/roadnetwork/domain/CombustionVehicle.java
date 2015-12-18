@@ -115,14 +115,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
     
     
 
-    /**
-     * 
-     * @return CombustionVehicle string
-     */
-    @Override
-    public String toString() {
-        return "CombustionVehicle{" + super.toString() + "typeOfCombustion=" + getFuel() + "Gear Ratio" + gearRatio +'}';
-    }
+
     
     
 }
