@@ -29,7 +29,6 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
             sectionTime.add(calculateTravelTime(s, vehicle));
         }
 
-
         return constructResults(originNode, destinyNode, fastestPath,fastestPathLength,sectionTime);
     }
 
@@ -52,6 +51,12 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         }
     }
 
+    /**
+     * 
+     * @param section section
+     * @param vehicle vehicle
+     * @return return total time by section
+     */
     private double calculateTravelTime(Section section, Vehicle vehicle) {
 
         ArrayList<Segment> segmentList = section.getSegmentsList();

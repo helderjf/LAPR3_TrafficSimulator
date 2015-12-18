@@ -61,7 +61,7 @@ public class FastestPathAlgorithmTest {
 
         Section section1 = new Section(1, "E01", node0, node1, SectionTypology.regularroad, Direction.bidirectional, 0, new Wind(20, 3), list1);
 
-        Segment segment3 = new Segment(1, 100, 0, 10, 90, 0, 30);
+        Segment segment3 = new Segment(1, 100, 0, 1, 90, 0, 30);
         Segment segment4 = new Segment(2, 100, 0.5, 5, 90, 0, 20);
         ArrayList<Segment> list2 = new ArrayList();
         list2.add(segment3);
@@ -124,24 +124,24 @@ public class FastestPathAlgorithmTest {
         FastestPathAlgorithm instance = new FastestPathAlgorithm();
         ArrayList<Section> expResult = new ArrayList<>();
         expResult.add(section3);
-        ResultFastestPath result = instance.bestPath(roadNetwork1, node0, node2, vehicle1);
+        ResultFastestPath result = instance.bestPath(roadNetwork1, node1, node2, vehicle1);
         assertEquals(expResult, result.getPath());
     }
 
     /**
      * Test of calculateTravelTime method, of class FastestPathAlgorithm.
      */
-    @Test
-    public void testCalculateTravelTime() {
-        System.out.println("calculateTravelTime");
-        Section section = null;
-        Vehicle vehicle = null;
-        FastestPathAlgorithm instance = new FastestPathAlgorithm();
-        double expResult = 0.0;
-        double result = instance.calculateTravelTime(section, vehicle);
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    @Test
+//    public void testCalculateTravelTime() {
+//        System.out.println("calculateTravelTime");
+//        Section section = null;
+//        Vehicle vehicle = null;
+//        FastestPathAlgorithm instance = new FastestPathAlgorithm();
+//        double expResult = 0.0;
+//        //double result = instance.calculateTravelTime(section, vehicle);
+//        assertEquals(expResult, result, 0.0);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
     
 }
