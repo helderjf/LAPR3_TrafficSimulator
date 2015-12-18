@@ -11,10 +11,15 @@ import roadnetwork.domain.Project;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ProjectStateVehiclesAssigned extends ProjectStateImpl{
+public class ProjectStateVehiclesAssigned extends ProjectStateImpl {
 
     public ProjectStateVehiclesAssigned(Project p) {
         super(p);
     }
-    
+
+    @Override
+    public boolean canImportRoadNetwork() {
+        return true;
+    }
+
 }
