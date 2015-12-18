@@ -261,33 +261,33 @@ public class GraphAlgorithms {
      * @param path Path
      * @return lenght
      */
-    public static<V,E> double getShortestPathLength(Graph<V,E> g, V voInf, V vdInf, ArrayList<E> path){
-        Deque<V> shortPath=new ArrayDeque<>();
+    public static <V, E> double getShortestPathLength(Graph<V, E> g, V voInf, V vdInf, ArrayList<E> path) {
+        Deque<V> shortPath = new ArrayDeque<>();
         double length = shortestPath(g, voInf, vdInf, shortPath);
-        
-        
-        while(shortPath.iterator().hasNext()){
-            Vertex<V,E> vi = g.getVertex(shortPath.poll());
-            Vertex<V,E> vj = g.getVertex(shortPath.peek());
-            
+
+        while (shortPath.iterator().hasNext()) {
+
+            Vertex<V, E> vi = g.getVertex(shortPath.poll());
+            if (shortPath.iterator().hasNext()) {
+                
+            Vertex<V, E> vj = g.getVertex(shortPath.peek());
+
             double min = Double.MAX_VALUE;
-            Edge<V,E> lightEdge = new Edge<>();
-            
-            for (Edge<V,E> e : g.outgoingEdges(vi))
-            {
-                if(e == g.getEdge(vi, vj))
-                {
-                    if(e.getWeight() < min)
-                    {
+            Edge<V, E> lightEdge = new Edge<>();
+
+            for (Edge<V, E> e : g.outgoingEdges(vi)) {
+                if (e == g.getEdge(vi, vj)) {
+                    if (e.getWeight() < min) {
                         lightEdge = e;
                         min = e.getWeight();
                     }
                 }
             }
-            
-            path.add(lightEdge.getElement());
 
-        }  
+            path.add(lightEdge.getElement());
+            }
+        }
+
         return length;
     }
     

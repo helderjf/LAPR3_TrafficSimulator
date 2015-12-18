@@ -40,15 +40,15 @@ public class SegmentIT {
     /**
      * Test of getId method, of class Segment.
      */
-    @Test
-    public void testGetId() {
-        System.out.println("getId");
-        Segment instance = new Segment();
-        int expResult = 0;
-        int result = instance.getId();
-        assertEquals(expResult, result);
-
-    }
+//    @Test
+//    public void testGetId() {
+//        System.out.println("getId");
+//        Segment instance = new Segment();
+//        int expResult = 0;
+//        int result = instance.getId();
+//        assertEquals(expResult, result);
+//
+//    }
 
     /**
      * Test of getIndex method, of class Segment.
