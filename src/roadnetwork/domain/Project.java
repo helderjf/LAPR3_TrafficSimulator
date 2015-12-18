@@ -9,6 +9,8 @@ import java.io.File;
 import java.util.ArrayList;
 import IO.*;
 import org.w3c.dom.*;
+import roadnetwork.state.ProjectState;
+import roadnetwork.state.ProjectStateCreated;
 
 /**
  *
@@ -16,10 +18,28 @@ import org.w3c.dom.*;
  */
 public class Project {
 
+    private int m_id;
+    private String m_name;
+    private String m_description;
     private RoadNetwork m_roadNetwork;
     private ArrayList<Vehicle> m_vehicleList;
+    private ProjectState m_state;
     
     
+    public Project(){
+        m_state=new ProjectStateCreated(this);
+    }
+    
+    public Project(String name, String description){
+        m_name=name;
+        m_description=description;
+        m_state= new ProjectStateCreated(this);
+    }
+    
+    public boolean setState(ProjectState newState){
+        m_state=newState;
+        return true;
+    }
     
     
     public ArrayList<Vehicle> getVehicleList() {
@@ -38,15 +58,19 @@ public class Project {
         this.m_vehicleList = m_vehicleList;
     }
     
-    
-    
-    
-    
+
 
     public Simulation newBestPathSimulation(RoadNetwork rn, Junction oj, 
             Junction dj, BestPathAlgorithm alg, Vehicle v) {
         return new Simulation(rn, oj, dj, alg, v);
     }
+
+    @Override
+    public String toString() {
+        return m_name + " - " + m_description;
+    }
+    
+    
     
     
     

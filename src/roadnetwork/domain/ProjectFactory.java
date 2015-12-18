@@ -50,7 +50,7 @@ public class ProjectFactory {
         Road road1 = new Road(1, "E01");
         road1.setSections(sectionlist1);
 
-        Segment segment5 = new Segment(1, 100, 0, 200, 120, 50, 100);
+        Segment segment5 = new Segment(1, 100, 0, 10, 120, 50, 100);
         ArrayList<Segment> list3 = new ArrayList();
         list3.add(segment5);
         Section section3 = new Section(3, "A01", node0, node2, SectionTypology.highway, Direction.bidirectional, 12, new Wind(-5, 3), list3);
@@ -81,7 +81,7 @@ public class ProjectFactory {
         roadNetwork1.setSectionList(completeSectionList);
 
         HashMap velocityLimit = new HashMap();
-        velocityLimit.put("Highway", 100);
+        velocityLimit.put("Highway", 60);
         ArrayList<Double> gearList = new ArrayList();
         gearList.add(3.5);
         gearList.add(2.5);

@@ -118,7 +118,8 @@ public class BestPathSimulationContoller {
                                                                 m_destinationJunction, 
                                                                 m_bpAlgorithm,
                                                                 m_vehicle);
-        return simulation.run();
+        m_simulationResult= (ResultFastestPath)simulation.run();
+        return m_simulationResult;
     }
     
     /**

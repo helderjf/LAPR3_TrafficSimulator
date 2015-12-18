@@ -7,6 +7,8 @@ package roadnetwork.gui;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import roadnetwork.controllers.BestPathSimulationContoller;
 import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.SimulationResult;
@@ -82,6 +84,7 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
         jList1.setModel(m_modelVehicles);
         jList1.setToolTipText("");
         jScrollPane1.setViewportView(jList1);
+        jList1.addListSelectionListener(new L());
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -181,21 +184,21 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void setChooseNodesPane() {
-        this.setContentPane(new BestPathChooseNodesPane(this, m_bpSimulationController));
-        this.revalidate();
-    }
 
-    public void setChooseAlgorithmPane(){
-        this.setContentPane(new BestPathChooseAlgorithmPane(this, m_bpSimulationController));
-        this.revalidate();
-    }
+   private class L implements ListSelectionListener{
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            String vehicleProperties;
+            vehicleProperties = ((Vehicle) jList1.getSelectedValue()).showData();
+            jTextArea1.setText(vehicleProperties);
+        }
     
-    public void runSimulation() {
-        m_results=m_bpSimulationController.runSimulation();
-        setContentPane(new BestPathShowResultsPane(this, m_bpSimulationController, m_results));
-        this.revalidate();
-    }
+    
+    
+}
+    
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -212,4 +215,22 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 
+    
+     public void setChooseNodesPane() {
+        this.setContentPane(new BestPathChooseNodesPane(this, m_bpSimulationController));
+        this.revalidate();
+    }
+
+    public void setChooseAlgorithmPane(){
+        this.setContentPane(new BestPathChooseAlgorithmPane(this, m_bpSimulationController));
+        this.revalidate();
+    }
+    
+    public void runSimulation() {
+        m_results=m_bpSimulationController.runSimulation();
+        setContentPane(new BestPathShowResultsPane(this, m_bpSimulationController, m_results));
+        this.revalidate();
+    }   
+    
+    
 }

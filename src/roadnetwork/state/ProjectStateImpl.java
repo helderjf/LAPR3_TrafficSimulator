@@ -22,6 +22,41 @@ public class ProjectStateImpl implements ProjectState{
     public Project getProject(){
         return m_project;
     }
+
+    @Override
+    public boolean canImportRoadNetwork() {
+        return false;
+    }
+
+    @Override
+    public boolean canImportVehicles() {
+        return false;
+    }
+
+    @Override
+    public boolean canSaveProject() {
+        return false;
+    }
+
+    @Override
+    public boolean canCopyProject() {
+        return false;
+    }
+
+    @Override
+    public boolean canEditProperties() {
+        return false;
+    }
+
+    @Override
+    public boolean canSimulate() {
+        return false;
+    }
+
+    @Override
+    public boolean vadidate() {
+        return false;
+    }
     
     
     

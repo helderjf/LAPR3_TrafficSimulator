@@ -470,7 +470,7 @@ public class Vehicle {
      * @return Vehicle data
      */
     public String showData() {
-        return "dVehicle: \n"
+        return "Vehicle: \n"
                 + "id= " + id + "\n"
                 + "name= " + name + "\n"
                 + "mass= " + mass + "\n"

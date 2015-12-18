@@ -58,7 +58,8 @@ public class Manager {
     }
 
     public ExportCSV newCSV(String fileName) {
-        return new ExportCSV();
+        
+        return new ExportCSV(fileName);
     }
 
     public ProjectFactory getProjectFactory() {

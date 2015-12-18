@@ -16,19 +16,19 @@ import roadnetwork.domain.ResultFastestPath;
  * @author josemiranda
  */
 public class ExportCSV {
+
     String m_fileName;
-    
-    
-    public void setFileName(String name){
-        m_fileName=name;
+
+    public ExportCSV(String name) {
+        m_fileName = name+".csv";
     }
-    
-    public boolean export(ResultFastestPath result){
-        boolean flag=true;
-        try{
+
+    public boolean export(ResultFastestPath result) {
+        boolean flag = true;
+        try {
             FileWriter file = new FileWriter(new File(m_fileName));
             file.append("PATH;");
-            file.append("/n");
+            file.append("\n");
             file.append("Section");
             file.append(';');
             file.append("Beginning Node");
@@ -37,27 +37,31 @@ public class ExportCSV {
             file.append(';');
             file.append("Section Weight");
             file.append(';');
-            file.append("/n");
-           int index = 0;
+            file.append("\n");
+            int index = 0;
             for (Section section : result.getPath()) {
                 file.append(section.getRoadId());
-                file.append(section.getBeginningNode().getJunctionId()); 
+                file.append(';');
+                file.append(section.getBeginningNode().getJunctionId());
+                file.append(';');
                 file.append(section.getEndingNode().getJunctionId());
-                file.append(result.getSectionWeight().get(index).toString());
+                file.append(';');
+                Double time = result.getSectionWeight().get(index)/60;
+                file.append(time.toString());
                 index++;
-                file.append("/n");
+                file.append("\n");
             }
             file.append("Total;");
             file.append(String.valueOf(result.getLength()));
             file.append(';');
             file.flush();
             file.close();
-        }catch (IOException ex) {
+        } catch (IOException ex) {
             ex.getMessage();
-            flag=false;
+            flag = false;
         }
-        
+
         return flag;
     }
-        
+
 }

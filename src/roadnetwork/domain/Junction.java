@@ -84,7 +84,7 @@ public class Junction {
      */
     @Override
     public String toString() {
-        return "Node{" + "id=" + junctionId + '}';
+        return "Node " + junctionId;
     }
   
 }

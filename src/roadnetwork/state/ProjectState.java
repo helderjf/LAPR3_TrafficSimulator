@@ -11,7 +11,18 @@ package roadnetwork.state;
  */
 public interface ProjectState {
     
+    public boolean canImportRoadNetwork();
     
+    public boolean canImportVehicles();
     
+    public boolean canSaveProject();
     
+    public boolean canCopyProject();
+    
+    public boolean canEditProperties();
+    
+    public boolean canSimulate();
+    
+    public boolean vadidate();        
 }
+    

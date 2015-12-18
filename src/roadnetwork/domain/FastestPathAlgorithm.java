@@ -61,6 +61,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
             SectionTypology type = section.getSectionType();
             double vehicleSpeedLimit = 500;
             if (vehicle.getVelocityLimit().get(String.valueOf(type)) != null) {
+            double teste = vehicle.getVelocityLimit().get(String.valueOf(type));
                 vehicleSpeedLimit = vehicle.getVelocityLimit().get(String.valueOf(type));
             }
 
