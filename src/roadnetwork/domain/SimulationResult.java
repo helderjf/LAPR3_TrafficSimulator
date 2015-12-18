@@ -7,8 +7,10 @@ package roadnetwork.domain;
 
 /**
  *
- * @author josemiranda
+ * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public interface SimulationResult {
+    
+    public String printResults();
     
 }

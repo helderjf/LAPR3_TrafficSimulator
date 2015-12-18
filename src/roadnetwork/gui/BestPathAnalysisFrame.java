@@ -193,6 +193,8 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
     
     public void runSimulation() {
         m_results=m_bpSimulationController.runSimulation();
+        setContentPane(new BestPathShowResultsPane(this, m_bpSimulationController, m_results));
+        this.revalidate();
     }
     
 

@@ -11,14 +11,17 @@ import java.util.ArrayList;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ResultFastestPath implements SimulationResult{
-    
+public class ResultFastestPath implements SimulationResult {
+
+    private Junction m_originNode;
+    private Junction m_destinyNode;
     private ArrayList<Section> m_path;
     private double m_length;
     private ArrayList<Double> m_sectionWeight;
-    
-    public ResultFastestPath(){
-        
+
+    public ResultFastestPath(Junction origin, Junction destiny) {
+        m_originNode = origin;
+        m_destinyNode = destiny;
     }
 
     /**
@@ -34,7 +37,7 @@ public class ResultFastestPath implements SimulationResult{
     public double getLength() {
         return m_length;
     }
-    
+
     /**
      * @return the m_sectionWeight
      */
@@ -55,7 +58,7 @@ public class ResultFastestPath implements SimulationResult{
     public void setLength(double m_length) {
         this.m_length = m_length;
     }
-    
+
     /**
      * @param m_sectionWeight the m_sectionWeight to set
      */
@@ -63,13 +66,38 @@ public class ResultFastestPath implements SimulationResult{
         this.m_sectionWeight = m_sectionWeight;
     }
 
+    public Junction getOriginNode() {
+        return m_originNode;
+    }
+
+    public Junction getDestinyNode() {
+        return m_destinyNode;
+    }
+
     @Override
     public String toString() {
-        return "ResultFastestPath{" + '}';
+        return "Fastest path between " + m_originNode.toString() + " and " + m_destinyNode.toString() + " is:\n"
+                + "COMPLETAR ESTE MÉTODO!!!";
     }
-    
-    
-    
-    
-    
+
+    @Override
+    public String printResults() {
+        StringBuilder results = new StringBuilder();
+        for(Section it : m_path){
+            results.append(it.getBeginningNode().toString());
+            results.append(" ---> ");
+            results.append(it.getEndingNode().toString());
+            results.append("  @  ");
+            results.append(it.getRoadId());
+            results.append(" Travel time: ");
+            
+            int i = m_path.indexOf(it);
+            results.append(m_sectionWeight.get(i)/60);
+            results.append(" minutes");
+            
+            results.append("\n");
+        }
+        return results.toString();
+    }
+
 }
