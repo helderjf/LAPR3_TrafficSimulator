@@ -6,7 +6,6 @@
 package roadnetwork.gui;
 
 import javax.swing.JOptionPane;
-import roadnetwork.domain.Manager;
 
 /**
  *
@@ -110,8 +109,8 @@ public class EditProjectPropertiesPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (jTextField1.getText() != null && jTextPane1.getText() != null) {
-            m_ancestor.newProperties(jTextField1.getText(), jTextPane1.getText());
+        if (!jTextField1.getText().replace(" ", "").equals("") && !jTextPane1.getText().replace(" ", "").equals("")) {
+            m_ancestor.newProperties(jTextField1.getText().trim(), jTextPane1.getText().trim());
         } else {
             JOptionPane.showMessageDialog(this, "You must enter a project name and a project description.");
         }
