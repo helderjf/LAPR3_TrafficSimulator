@@ -41,15 +41,15 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
             setVisible(false);
         } else {
 
+            //get the active project's list of vehicles
+            m_vehiclesList = m_bpSimulationController.newBestPathSimulation();
+            m_modelVehicles = new ModelList();
+            m_modelVehicles.setItems(m_vehiclesList);
+
+            
             initComponents();
             setLocationRelativeTo(null);
             setVisible(true);
-
-            //get the active project's list of vehicles
-            m_vehiclesList = m_bpSimulationController.newBestPathSimulation();
-
-            m_modelVehicles = new ModelList();
-            m_modelVehicles.setItems(m_vehiclesList);
         }
     }
 

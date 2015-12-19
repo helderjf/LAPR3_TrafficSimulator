@@ -7,6 +7,7 @@ package roadnetwork.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import roadnetwork.state.ProjectStateSimulationReady;
 
 /**
  *
@@ -96,7 +97,7 @@ public class ProjectFactory {
         Project projecto1 = new Project();
         projecto1.setRoadNetwork(roadNetwork1);
         projecto1.setVehicleList(vehicleList);
-
+        projecto1.setState(new ProjectStateSimulationReady(projecto1));
         return projecto1;
 
     }
