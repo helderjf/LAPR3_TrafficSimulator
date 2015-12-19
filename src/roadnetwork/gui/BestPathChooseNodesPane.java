@@ -18,7 +18,6 @@ import roadnetwork.domain.RoadNetwork;
 public class BestPathChooseNodesPane extends javax.swing.JPanel {
 
     BestPathAnalysisFrame m_ancestorFrame;
-    BestPathSimulationContoller m_bpSimulationController;
     RoadNetwork m_roadNetwork;
     ArrayList<Junction> m_nodesList;
     ModelList<Junction> m_nodesListModel = new ModelList<>();
@@ -29,11 +28,9 @@ public class BestPathChooseNodesPane extends javax.swing.JPanel {
     /**
      * Creates new form BestPathChooseNodesPane
      */
-    public BestPathChooseNodesPane(BestPathAnalysisFrame ancestor, BestPathSimulationContoller controller) {
+    public BestPathChooseNodesPane(BestPathAnalysisFrame ancestor, ArrayList<Junction> nodesList) {
         m_ancestorFrame=ancestor;
-        m_bpSimulationController = controller;
-        m_roadNetwork=m_bpSimulationController.getRoadNetwork();
-        m_nodesList=m_bpSimulationController.getNodeList();
+        m_nodesList=nodesList;
         m_nodesListModel.setItems(m_nodesList);
         initComponents();
         
@@ -120,9 +117,9 @@ public class BestPathChooseNodesPane extends javax.swing.JPanel {
                     .addComponent(jScrollPane1)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton1)
-                    .addComponent(jButton1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jToggleButton1))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -133,8 +130,7 @@ public class BestPathChooseNodesPane extends javax.swing.JPanel {
             if(jList1.getSelectedValue() == jList2.getSelectedValue()){
                 JOptionPane.showMessageDialog(this,"Origin and destiny nodes can not be the same");
             }else{
-                m_bpSimulationController.setSimulationNodes((Junction)jList1.getSelectedValue(), (Junction)jList2.getSelectedValue());
-                m_ancestorFrame.setChooseAlgorithmPane();
+                m_ancestorFrame.setSimulationNodes((Junction)jList1.getSelectedValue(), (Junction)jList2.getSelectedValue());
             }
         }else{
             JOptionPane.showMessageDialog(this,"You must select two nodes");

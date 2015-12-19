@@ -34,9 +34,9 @@ public class BestPathSimulationContoller {
     private BestPathAlgorithm m_bpAlgorithm;
     private ResultFastestPath m_simulationResult;
     private ExportCSV m_csv;
-    
+
     /**
-     * 
+     *
      * @param manager manager of project
      */
     public BestPathSimulationContoller(Manager manager) {
@@ -44,100 +44,103 @@ public class BestPathSimulationContoller {
 
     }
 
+    public boolean projectActive() {
+        m_project = m_manager.getCurrentProject();
+        if (m_project != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean newSimulation() {
+
+        return m_project.canSimulate();
+    }
+
     /**
-     * 
+     *
      * @return VehicleList
      */
     public ArrayList<Vehicle> newBestPathSimulation() {
-
 
         return m_project.getVehicleList();
 
     }
 
     /**
-     * 
+     *
      * @param v vehicle
      */
     public void setVehicle(Vehicle v) {
-        m_vehicle=v;
+        m_vehicle = v;
     }
 
     /**
-     * 
+     *
      * @return roadNetwork
      */
     public RoadNetwork getRoadNetwork() {
-        m_roadNetwork=m_project.getRoadNetwork();
+        m_roadNetwork = m_project.getRoadNetwork();
         return m_roadNetwork;
     }
 
     /**
-     * 
+     *
      * @return nodeList
      */
     public ArrayList<Junction> getNodeList() {
-        m_nodeList=m_roadNetwork.getNodeList();
+        m_nodeList = m_roadNetwork.getNodeList();
         return m_nodeList;
     }
-    
+
     /**
-     * 
+     *
      * @param oj Junction1
      * @param dj Junction2
      */
-    public void setSimulationNodes(Junction oj, Junction dj){
-        m_originJunction=oj;
-        m_destinationJunction=dj;
+    public void setSimulationNodes(Junction oj, Junction dj) {
+        m_originJunction = oj;
+        m_destinationJunction = dj;
     }
-    
+
     /**
-     * 
+     *
      * @return AlgorithmsList
      */
-    public ArrayList<BestPathAlgorithm> getBestPathAlgorithms(){
+    public ArrayList<BestPathAlgorithm> getBestPathAlgorithms() {
         return m_manager.getAlgorithmsList();
     }
- 
+
     /**
-     * 
+     *
      * @param alg BestPathAlgorithm
      */
-    public void setAlgorithm(BestPathAlgorithm alg){
-        m_bpAlgorithm=alg;
+    public void setAlgorithm(BestPathAlgorithm alg) {
+        m_bpAlgorithm = alg;
     }
-    
+
     /**
-     * 
+     *
      * @return simulation run
      */
-    public SimulationResult runSimulation(){
+    public SimulationResult runSimulation() {
         Simulation simulation = m_project.newBestPathSimulation(m_roadNetwork,
-                                                                m_originJunction, 
-                                                                m_destinationJunction, 
-                                                                m_bpAlgorithm,
-                                                                m_vehicle);
-        m_simulationResult= (ResultFastestPath)simulation.run();
+                m_originJunction,
+                m_destinationJunction,
+                m_bpAlgorithm,
+                m_vehicle);
+        m_simulationResult = (ResultFastestPath) simulation.run();
         return m_simulationResult;
     }
-    
+
     /**
-     * 
+     *
      * @param fileName name of file
      * @return exportation
      */
-    public boolean exportResultsCSV(String fileName){
-        m_csv=m_manager.newCSV(fileName);
+    public boolean exportResultsCSV(String fileName) {
+        m_csv = m_manager.newCSV(fileName);
         return m_csv.export(m_simulationResult);
     }
 
-    public boolean newSimulation() {
-        m_project = m_manager.getCurrentProject();
-        if(m_project == null){
-            return false;
-        }else{
-            return m_project.canSimulate();
-        }
-    }
-    
 }

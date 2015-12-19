@@ -5,13 +5,9 @@
  */
 package roadnetwork.gui;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import roadnetwork.controllers.BestPathSimulationContoller;
 import roadnetwork.domain.BestPathAlgorithm;
-import roadnetwork.domain.Junction;
-import roadnetwork.domain.RoadNetwork;
 
 /**
  *
@@ -20,21 +16,15 @@ import roadnetwork.domain.RoadNetwork;
 public class BestPathChooseAlgorithmPane extends javax.swing.JPanel {
 
     BestPathAnalysisFrame m_ancestorFrame;
-    BestPathSimulationContoller m_bpSimulationController;
-    ArrayList<BestPathAlgorithm> m_algorithmsList;
     ModelList<BestPathAlgorithm> m_algorithmsListModel = new ModelList<>();
-    
-    
-    
+
     /**
      * Creates new form BestPathChooseAlgorithm
      */
-    public BestPathChooseAlgorithmPane(BestPathAnalysisFrame ancestor, BestPathSimulationContoller controller) {
-        
-        m_ancestorFrame=ancestor;
-        m_bpSimulationController = controller;
-        m_algorithmsList=m_bpSimulationController.getBestPathAlgorithms();
-        m_algorithmsListModel.setItems(m_algorithmsList);
+    public BestPathChooseAlgorithmPane(BestPathAnalysisFrame ancestor, ArrayList<BestPathAlgorithm> algorithmsList) {
+
+        m_ancestorFrame = ancestor;
+        m_algorithmsListModel.setItems(algorithmsList);
         initComponents();
     }
 
@@ -110,13 +100,12 @@ public class BestPathChooseAlgorithmPane extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(jList1.getSelectedValue() != null){
-            m_bpSimulationController.setAlgorithm((BestPathAlgorithm)jList1.getSelectedValue());
-            m_ancestorFrame.runSimulation();
-        }else{
+        if (jList1.getSelectedValue() != null) {
+            m_ancestorFrame.setAlgorithm((BestPathAlgorithm)jList1.getSelectedValue());
+        } else {
             JOptionPane.showMessageDialog(this, "You must select an algorithm");
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

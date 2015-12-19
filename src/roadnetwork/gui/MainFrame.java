@@ -23,57 +23,59 @@ public class MainFrame extends javax.swing.JFrame {
     private ImportVehiclesFrame m_importVehiclesFrame;
     private BestPathAnalysisFrame m_bestPathAnalysisFrame;
     private VehicleComparisonFrame m_vehicleComparisonFrame;
-    
-    
+
     /**
      * Creates new form JanelaPrincipal
+     *
      * @param manager
      */
     public MainFrame(Manager manager) {
-        m_manager=manager;
+        m_manager = manager;
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
     }
-    
-    private void newProject(){
+
+    private void newProject() {
         m_newProjectFrame = new NewProjectFrame(this);
         //revalidate();
     }
-    
-    private void openProject(){
+
+    private void openProject() {
         m_openProjectFrame = new OpenProjectFrame(this);
         revalidate();
     }
-    
-    private void copyProject(){
+
+    private void copyProject() {
         m_copyProjectFrame = new CopyProjectFrame(this);
         revalidate();
     }
-    
-    private void importVehicles(){
+
+    private void importVehicles() {
         m_importVehiclesFrame = new ImportVehiclesFrame(this);
         revalidate();
     }
-    
-    private void properties(){
+
+    private void properties() {
         new EditProjectPropertiesFrame(this);
+        revalidate();
+
     }
-    
-    private void bestPathAnalysis(){
-        m_bestPathAnalysisFrame= new BestPathAnalysisFrame(this);
+
+    private void bestPathAnalysis() {
+        m_bestPathAnalysisFrame = new BestPathAnalysisFrame(this);
         revalidate();
     }
 
-    private void vehicleComparison(){
-        m_vehicleComparisonFrame=new VehicleComparisonFrame(this);
+    private void vehicleComparison() {
+        m_vehicleComparisonFrame = new VehicleComparisonFrame(this);
         revalidate();
     }
-    
-    public Manager getManager(){
+
+    public Manager getManager() {
         return m_manager;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -234,7 +236,6 @@ public class MainFrame extends javax.swing.JFrame {
         vehicleComparison();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;

@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import roadnetwork.controllers.BestPathSimulationContoller;
+import roadnetwork.domain.BestPathAlgorithm;
+import roadnetwork.domain.Junction;
 import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.SimulationResult;
 import roadnetwork.domain.Vehicle;
@@ -23,8 +25,8 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
     MainFrame m_mainFrame;
     BestPathSimulationContoller m_bpSimulationController;
     ArrayList<Vehicle> m_vehiclesList;
-    ModelList<Vehicle> m_modelVehicles;
     RoadNetwork m_roadNetwork;
+    ArrayList<Junction> m_nodesList;
     SimulationResult m_results;
 
     /**
@@ -36,20 +38,28 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
         m_mainFrame = frame;
         m_bpSimulationController = new BestPathSimulationContoller(m_mainFrame.getManager());
 
-        if (!m_bpSimulationController.newSimulation()) {
-            JOptionPane.showMessageDialog(m_mainFrame, "The active project can not be simulated at this point!", "Error",JOptionPane.WARNING_MESSAGE);
-            setVisible(false);
-        } else {
+        run();
 
+    }
+
+    private void run() {
+
+        if (!m_bpSimulationController.projectActive()) {
+            JOptionPane.showMessageDialog(this, "Can't create Simulation. There is no active project.", "No active project", JOptionPane.INFORMATION_MESSAGE);
+            setVisible(false);
+        } else if (m_bpSimulationController.newSimulation()) {
             //get the active project's list of vehicles
             m_vehiclesList = m_bpSimulationController.newBestPathSimulation();
-            m_modelVehicles = new ModelList();
-            m_modelVehicles.setItems(m_vehiclesList);
 
-            
             initComponents();
             setLocationRelativeTo(null);
+
+            setContentPane(new BestPathAnalysisChooseVehiclePane(this, m_vehiclesList));
+
             setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(m_mainFrame, "The active project can not be simulated at this point!", "Error", JOptionPane.WARNING_MESSAGE);
+            setVisible(false);
         }
     }
 
@@ -65,13 +75,6 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -87,68 +90,15 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Best Path Analysis");
 
-        jList1.setModel(m_modelVehicles);
-        jList1.setToolTipText("");
-        jScrollPane1.setViewportView(jList1);
-        jList1.addListSelectionListener(new L());
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("[vehicle properties]");
-        jScrollPane2.setViewportView(jTextArea1);
-
-        jLabel1.setText("Please select a vehicle from the list:");
-
-        jButton1.setText("Ok");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Cancel");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
-                        .addGap(4, 4, 4))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGap(0, 407, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(20, 20, 20))
+            .addGap(0, 308, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -176,52 +126,29 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (jList1.getSelectedValue() != null) {
-            m_bpSimulationController.setVehicle((Vehicle) jList1.getSelectedValue());
-            setChooseNodesPane();
-            //m_mainFrame = new MainFrame(m_mainFrame.getManager());
-        } else {
-            JOptionPane.showMessageDialog(this, "You must select one vehicle");
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private class L implements ListSelectionListener {
-
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            String vehicleProperties;
-            vehicleProperties = ((Vehicle) jList1.getSelectedValue()).showData();
-            jTextArea1.setText(vehicleProperties);
-        }
-
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 
+    public void setVehicle(Vehicle v) {
+        m_bpSimulationController.setVehicle(v);
+        setChooseNodesPane();
+    }
+
     public void setChooseNodesPane() {
-        this.setContentPane(new BestPathChooseNodesPane(this, m_bpSimulationController));
+        m_roadNetwork = m_bpSimulationController.getRoadNetwork();
+        m_nodesList = m_bpSimulationController.getNodeList();
+
+        this.setContentPane(new BestPathChooseNodesPane(this, m_nodesList));
         this.revalidate();
     }
 
     public void setChooseAlgorithmPane() {
-        this.setContentPane(new BestPathChooseAlgorithmPane(this, m_bpSimulationController));
+
+        this.setContentPane(new BestPathChooseAlgorithmPane(this, m_bpSimulationController.getBestPathAlgorithms()));
         this.revalidate();
     }
 
@@ -229,6 +156,17 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
         m_results = m_bpSimulationController.runSimulation();
         setContentPane(new BestPathShowResultsPane(this, m_bpSimulationController, m_results));
         this.revalidate();
+    }
+
+    void setSimulationNodes(Junction originNode, Junction destinyNode) {
+        m_bpSimulationController.setSimulationNodes(originNode, destinyNode);
+        setChooseAlgorithmPane();
+
+    }
+
+    void setAlgorithm(BestPathAlgorithm algorithm) {
+        m_bpSimulationController.setAlgorithm(algorithm);
+        runSimulation();
     }
 
 }
