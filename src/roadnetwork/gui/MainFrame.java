@@ -21,7 +21,6 @@ public class MainFrame extends javax.swing.JFrame {
     private OpenProjectFrame m_openProjectFrame;
     private CopyProjectFrame m_copyProjectFrame;
     private ImportVehiclesFrame m_importVehiclesFrame;
-    private PropertiesFrame m_propertiesFrame;
     private BestPathAnalysisFrame m_bestPathAnalysisFrame;
     private VehicleComparisonFrame m_vehicleComparisonFrame;
     
@@ -58,8 +57,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     private void properties(){
-        m_propertiesFrame = new PropertiesFrame(this);
-        revalidate();
+        new EditProjectPropertiesFrame(this);
     }
     
     private void bestPathAnalysis(){

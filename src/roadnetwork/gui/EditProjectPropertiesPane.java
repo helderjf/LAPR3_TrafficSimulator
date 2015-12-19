@@ -6,20 +6,25 @@
 package roadnetwork.gui;
 
 import javax.swing.JOptionPane;
+import roadnetwork.domain.Manager;
 
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class NewProjectPane extends javax.swing.JPanel {
+public class EditProjectPropertiesPane extends javax.swing.JPanel {
 
-    NewProjectFrame m_ancestor;
-
+    EditProjectPropertiesFrame m_ancestor;
+    String m_oldName;
+    String m_oldDescription;
+    
     /**
-     * Creates new form NewProjectPane
+     * Creates new form EditProjectPropertiesPane
      */
-    public NewProjectPane(NewProjectFrame ancestor) {
-        m_ancestor = ancestor;
+    public EditProjectPropertiesPane(EditProjectPropertiesFrame ancestor, String pname, String pdesc) {
+        m_ancestor=ancestor;
+        m_oldName=pname;
+        m_oldDescription=pdesc;
         initComponents();
     }
 
@@ -32,8 +37,8 @@ public class NewProjectPane extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
@@ -42,11 +47,14 @@ public class NewProjectPane extends javax.swing.JPanel {
 
         jLabel1.setText("Project name:");
 
+        jTextField1.setText(m_oldName);
+
         jLabel2.setText("Project description:");
 
+        jTextPane1.setText(m_oldDescription);
         jScrollPane1.setViewportView(jTextPane1);
 
-        jButton1.setText("Create Project");
+        jButton1.setText("Ok");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -76,8 +84,8 @@ public class NewProjectPane extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jButton1)
+                        .addGap(97, 97, 97)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)))
                 .addContainerGap(40, Short.MAX_VALUE))
@@ -93,25 +101,25 @@ public class NewProjectPane extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addGap(22, 22, 22))
+                .addGap(18, 18, 18))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        m_ancestor.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (jTextField1.getText() != null && jTextPane1.getText() != null) {
-           m_ancestor.createProject(jTextField1.getText(), jTextPane1.getText());
+            m_ancestor.newProperties(jTextField1.getText(), jTextPane1.getText());
         } else {
             JOptionPane.showMessageDialog(this, "You must enter a project name and a project description.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        m_ancestor.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

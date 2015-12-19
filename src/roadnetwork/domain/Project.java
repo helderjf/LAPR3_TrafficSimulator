@@ -46,7 +46,15 @@ public class Project {
 
     public void setDescription(String description) {
         m_description = description;
-    }    
+    } 
+    
+        public String getName() {
+        return m_name;
+    }
+
+    public String getDescription() {
+        return m_description;
+    }
     
     public ArrayList<Vehicle> getVehicleList() {
         return m_vehicleList;
@@ -83,5 +91,15 @@ public class Project {
     public boolean canSimulate() {
         return m_state.canSimulate();
     }
+
+    public boolean canEditProperties() {
+        return m_state.canEditProperties();
+    }
+
+    public boolean propertiesChanged() {
+        return m_state.propertiesChanged();
+    }
+
+
 
 }

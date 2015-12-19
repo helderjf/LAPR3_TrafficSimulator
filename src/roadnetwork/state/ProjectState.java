@@ -26,5 +26,7 @@ public interface ProjectState {
     public boolean vadidate();        
 
     public boolean projectCreated();
+
+    public boolean propertiesChanged();
 }
     

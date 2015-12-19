@@ -45,7 +45,7 @@ public class ProjectStateImpl implements ProjectState {
 
     @Override
     public boolean canEditProperties() {
-        return false;
+        return true;
     }
 
     @Override
@@ -63,6 +63,14 @@ public class ProjectStateImpl implements ProjectState {
         if (m_project != null) {
             ProjectState ns = new ProjectStateEmpty(m_project);
             m_project.setState(ns);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean propertiesChanged() {
+        if (m_project.getName() != null && m_project.getDescription() != null) {
             return true;
         }
         return false;
