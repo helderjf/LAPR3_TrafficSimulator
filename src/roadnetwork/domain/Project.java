@@ -80,4 +80,8 @@ public class Project {
                 && m_state.projectCreated();
     }
 
+    public boolean canSimulate() {
+        return m_state.canSimulate();
+    }
+
 }

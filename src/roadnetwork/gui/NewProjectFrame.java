@@ -5,20 +5,27 @@
  */
 package roadnetwork.gui;
 
+import javax.swing.JOptionPane;
+import roadnetwork.controllers.NewProjectController;
+
 /**
  *
- * @author josemiranda
+ * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public class NewProjectFrame extends javax.swing.JFrame {
-    
+
     MainFrame m_mainFrame;
-    
+    NewProjectController m_newProjectController;
+
     /**
      * Creates new form JanelaNewProject
      */
     public NewProjectFrame(MainFrame frame) {
-        m_mainFrame=frame;
+        m_mainFrame = frame;
+        m_newProjectController = new NewProjectController(m_mainFrame.getManager());
+        m_newProjectController.newProject();
         initComponents();
+        setContentPane(new NewProjectPane(this));
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -49,8 +56,17 @@ public class NewProjectFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    void createProject(String name, String description) {
+        m_newProjectController.setProjectName(name);
+        if (m_newProjectController.setProjectDescription(description)) {
+            JOptionPane.showMessageDialog(this, "Project \"" + name + "\" has been created and is now active");
+            setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "The was an error. Project nor created!");
+            setVisible(false);
+        }
+    }
 }

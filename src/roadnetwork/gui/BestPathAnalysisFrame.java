@@ -16,7 +16,7 @@ import roadnetwork.domain.Vehicle;
 
 /**
  *
- * @author josemiranda
+ * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public class BestPathAnalysisFrame extends javax.swing.JFrame {
 
@@ -36,15 +36,21 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
         m_mainFrame = frame;
         m_bpSimulationController = new BestPathSimulationContoller(m_mainFrame.getManager());
 
-        //get the active project's list of vehicles
-        m_vehiclesList = m_bpSimulationController.newBestPathSimulation();
+        if (!m_bpSimulationController.newSimulation()) {
+            JOptionPane.showMessageDialog(m_mainFrame, "The active project can not be simulated at this point!", "Error",JOptionPane.WARNING_MESSAGE);
+            setVisible(false);
+        } else {
 
-        m_modelVehicles = new ModelList();
-        m_modelVehicles.setItems(m_vehiclesList);
+            initComponents();
+            setLocationRelativeTo(null);
+            setVisible(true);
 
-        initComponents();
-        setLocationRelativeTo(null);
-        setVisible(true);
+            //get the active project's list of vehicles
+            m_vehiclesList = m_bpSimulationController.newBestPathSimulation();
+
+            m_modelVehicles = new ModelList();
+            m_modelVehicles.setItems(m_vehiclesList);
+        }
     }
 
     /**
@@ -184,8 +190,7 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-
-   private class L implements ListSelectionListener{
+    private class L implements ListSelectionListener {
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
@@ -193,13 +198,9 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
             vehicleProperties = ((Vehicle) jList1.getSelectedValue()).showData();
             jTextArea1.setText(vehicleProperties);
         }
-    
-    
-    
-}
-    
-    
-    
+
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -214,23 +215,20 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 
-
-    
-     public void setChooseNodesPane() {
+    public void setChooseNodesPane() {
         this.setContentPane(new BestPathChooseNodesPane(this, m_bpSimulationController));
         this.revalidate();
     }
 
-    public void setChooseAlgorithmPane(){
+    public void setChooseAlgorithmPane() {
         this.setContentPane(new BestPathChooseAlgorithmPane(this, m_bpSimulationController));
         this.revalidate();
     }
-    
+
     public void runSimulation() {
-        m_results=m_bpSimulationController.runSimulation();
+        m_results = m_bpSimulationController.runSimulation();
         setContentPane(new BestPathShowResultsPane(this, m_bpSimulationController, m_results));
         this.revalidate();
-    }   
-    
-    
+    }
+
 }

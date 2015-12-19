@@ -11,10 +11,15 @@ import roadnetwork.domain.Project;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ProjectStateSimulationReady extends ProjectStateImpl{
+public class ProjectStateSimulationReady extends ProjectStateImpl {
 
     public ProjectStateSimulationReady(Project p) {
         super(p);
     }
-    
+
+    @Override
+    public boolean canSimulate() {
+        return true;
+    }
+
 }

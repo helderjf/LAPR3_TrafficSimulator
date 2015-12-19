@@ -6,6 +6,7 @@
 package roadnetwork.gui;
 
 import java.util.ArrayList;
+import roadnetwork.controllers.NewProjectController;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 
@@ -38,7 +39,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     private void newProject(){
         m_newProjectFrame = new NewProjectFrame(this);
-        revalidate();
+        //revalidate();
     }
     
     private void openProject(){

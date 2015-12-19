@@ -50,7 +50,6 @@ public class BestPathSimulationContoller {
      */
     public ArrayList<Vehicle> newBestPathSimulation() {
 
-        m_project = m_manager.getCurrentProject();
 
         return m_project.getVehicleList();
 
@@ -130,6 +129,15 @@ public class BestPathSimulationContoller {
     public boolean exportResultsCSV(String fileName){
         m_csv=m_manager.newCSV(fileName);
         return m_csv.export(m_simulationResult);
+    }
+
+    public boolean newSimulation() {
+        m_project = m_manager.getCurrentProject();
+        if(m_project == null){
+            return false;
+        }else{
+            return m_project.canSimulate();
+        }
     }
     
 }

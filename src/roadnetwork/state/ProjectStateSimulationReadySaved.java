@@ -16,5 +16,12 @@ public class ProjectStateSimulationReadySaved extends ProjectStateImpl{
     public ProjectStateSimulationReadySaved(Project p) {
         super(p);
     }
+
+    @Override
+    public boolean canSimulate() {
+        return true;
+    }
+    
+    
     
 }
