@@ -100,6 +100,10 @@ public class ProjectFactory {
         return projecto1;
 
     }
+
+    public Project newProject() {
+        return new Project();
+    }
     
     
     

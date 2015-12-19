@@ -11,15 +11,15 @@ import roadnetwork.domain.Project;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ProjectStateImpl implements ProjectState{
-    
+public class ProjectStateImpl implements ProjectState {
+
     protected Project m_project;
-    
-    public ProjectStateImpl(Project p){
+
+    public ProjectStateImpl(Project p) {
         m_project = p;
     }
-    
-    public Project getProject(){
+
+    public Project getProject() {
         return m_project;
     }
 
@@ -57,8 +57,15 @@ public class ProjectStateImpl implements ProjectState{
     public boolean vadidate() {
         return false;
     }
-    
-    
-    
-    
+
+    @Override
+    public boolean projectCreated() {
+        if (m_project != null) {
+            ProjectState ns = new ProjectStateEmpty(m_project);
+            m_project.setState(ns);
+            return true;
+        }
+        return false;
+    }
+
 }

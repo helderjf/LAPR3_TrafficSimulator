@@ -24,23 +24,29 @@ public class Project {
     private RoadNetwork m_roadNetwork;
     private ArrayList<Vehicle> m_vehicleList;
     private ProjectState m_state;
-    
-    
-    public Project(){
-        m_state=new ProjectStateCreated(this);
+
+    public Project() {
+        m_state = new ProjectStateCreated(this);
     }
-    
-    public Project(String name, String description){
-        m_name=name;
-        m_description=description;
-        m_state= new ProjectStateCreated(this);
+
+    public Project(String name, String description) {
+        m_name = name;
+        m_description = description;
+        m_state = new ProjectStateCreated(this);
     }
-    
-    public boolean setState(ProjectState newState){
-        m_state=newState;
+
+    public boolean setState(ProjectState newState) {
+        m_state = newState;
         return true;
     }
-    
+
+    public void setName(String name) {
+        m_name = name;
+    }
+
+    public void setDescription(String description) {
+        m_description = description;
+    }    
     
     public ArrayList<Vehicle> getVehicleList() {
         return m_vehicleList;
@@ -57,10 +63,8 @@ public class Project {
     public void setVehicleList(ArrayList<Vehicle> m_vehicleList) {
         this.m_vehicleList = m_vehicleList;
     }
-    
 
-
-    public Simulation newBestPathSimulation(RoadNetwork rn, Junction oj, 
+    public Simulation newBestPathSimulation(RoadNetwork rn, Junction oj,
             Junction dj, BestPathAlgorithm alg, Vehicle v) {
         return new Simulation(rn, oj, dj, alg, v);
     }
@@ -69,9 +73,11 @@ public class Project {
     public String toString() {
         return m_name + " - " + m_description;
     }
-    
-    
-    
-    
-    
+
+    public boolean projectCreated() {
+        
+        return (m_name!=null && m_description != null)
+                && m_state.projectCreated();
+    }
+
 }

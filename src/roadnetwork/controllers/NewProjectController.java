@@ -5,7 +5,6 @@
  */
 package roadnetwork.controllers;
 
-import roadnetwork.domain.DataAccessLayer;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 import roadnetwork.domain.ProjectFactory;
@@ -28,11 +27,21 @@ public class NewProjectController {
         m_manager = manager;
     }
     
-//    public Project newProject(){
-//        
-//        return m_manager.newProject
-//    }
+    public Project newProject(){
+        m_project = m_manager.getProjectFactory().newProject();
+        return m_project;
+    }
     
+    public void setProjectName(String name){
+        m_project.setName(name);
+    }
     
+    public boolean setProjectDescription(String description){
+        m_project.setDescription(description);
+        return (m_manager.setCurrentProject(m_project)
+                && m_project.projectCreated());
+        
+        
+    }
 
 }

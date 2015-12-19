@@ -24,5 +24,7 @@ public interface ProjectState {
     public boolean canSimulate();
     
     public boolean vadidate();        
+
+    public boolean projectCreated();
 }
     
