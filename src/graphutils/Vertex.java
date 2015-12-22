@@ -1,6 +1,7 @@
 
 package graphutils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class Vertex<V,E> {
     
     private int key ;       //Vertex key number
     private V  element ;   //Vertex information
-    private Map<Vertex<V,E>, Edge<V,E>> outVerts; //adjacent vertices
+    private Map<Vertex<V,E>, ArrayList<Edge<V,E>>> outVerts; //adjacent vertices
        
     public Vertex () { } 
     
@@ -31,7 +32,7 @@ public class Vertex<V,E> {
     }	 
     public void setElement(V vInf) { element = vInf; }		
 
-    public Map<Vertex<V,E>, Edge<V,E>> getOutgoing() { return outVerts ; } 
+    public Map<Vertex<V,E>, ArrayList<Edge<V,E>>> getOutgoing() { return outVerts ; } 
          
     /**
      * 
@@ -65,12 +66,12 @@ public class Vertex<V,E> {
         newVertex.key = key;
         newVertex.element = element;
         
-        Map<Vertex<V,E>, Edge<V,E>> newMap = new HashMap<>();
+        Map<Vertex<V,E>, ArrayList<Edge<V,E>>> newMap = new HashMap<>();
         
-        Iterator<Map.Entry<Vertex<V,E>,Edge<V,E>>> itmap;
+        Iterator<Map.Entry<Vertex<V,E>,ArrayList<Edge<V,E>>>> itmap;
         itmap = this.outVerts.entrySet().iterator();
         while (itmap.hasNext()) {
-            Map.Entry<Vertex<V,E>,Edge<V,E>> entry = itmap.next();
+            Map.Entry<Vertex<V,E>,ArrayList<Edge<V,E>>> entry = itmap.next();
             newMap.put(entry.getKey(),entry.getValue());
         }    
         newVertex.outVerts=newMap;

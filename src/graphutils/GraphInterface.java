@@ -1,6 +1,8 @@
 
 package graphutils;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author DEI-ESINF
@@ -26,7 +28,7 @@ public interface GraphInterface<V,E> {
    * @param vdest
    * @return the edge or null if vertices are not adjacent or don't exist 
    */
-   Edge<V,E> getEdge(Vertex<V,E> vorig, Vertex<V,E> vdest);
+   ArrayList<Edge<V,E>> getEdge(Vertex<V,E> vorig, Vertex<V,E> vdest);
 
   /* Returns the vertices of edge e as an array of length two 
    * If the graph is directed, the first vertex is the origin, and

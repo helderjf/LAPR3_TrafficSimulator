@@ -51,7 +51,7 @@ public class ProjectFactory {
         Road road1 = new Road(1, "E01");
         road1.setSections(sectionlist1);
 
-        Segment segment5 = new Segment(1, 100, 0, 10, 120, 50, 100);
+        Segment segment5 = new Segment(1, 100, 0, 100, 120, 50, 100);
         ArrayList<Segment> list3 = new ArrayList();
         list3.add(segment5);
         Section section3 = new Section(3, "A01", node0, node2, SectionTypology.highway, Direction.bidirectional, 12, new Wind(-5, 3), list3);
@@ -61,7 +61,7 @@ public class ProjectFactory {
         Road road2 = new Road(2, "A01");
         road2.setSections(sectionlist2);
 
-        Segment segment6 = new Segment(1, 100, 0.125, 20, 120, 50, 100);
+        Segment segment6 = new Segment(1, 100, 0.125, 30, 120, 50, 100);
         ArrayList<Segment> list4 = new ArrayList();
         list4.add(segment6);
         Section section4 = new Section(4, "A03", node1, node2, SectionTypology.highway, Direction.bidirectional, 4, new Wind(-5, 3), list4);
