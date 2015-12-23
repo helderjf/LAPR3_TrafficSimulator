@@ -26,7 +26,7 @@ public class Manager {
     
     public Manager(String name){
         m_name=name;
-        m_dataAccessLayer=new DataAccessLayer();
+        m_dataAccessLayer=new DataAccessLayer("jdbc:oracle:thin:@localhost:1521:XE", "grupo60", "pass60");
         m_algorithmsList= new ArrayList<>();
         m_projectFactory = new ProjectFactory();
         m_algorithmsList.add(new FastestPathAlgorithm());
