@@ -5,7 +5,6 @@
  */
 package roadnetwork.domain;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -16,7 +15,7 @@ import java.util.Objects;
 public class CombustionVehicle extends Vehicle implements Combustion {
     
     private String fuel;
-    private ArrayList<Double> gearRatio;
+    private HashMap<Integer,Double> gearRatio;
 
 
 
@@ -24,6 +23,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
      * 
      * @param id id of CombustionVehicle
      * @param name name of CombustionVehicle
+     * @param description description of Vehicle
      * @param mass mass of CombustionVehicle
      * @param type type of CombustionVehicle
      * @param load load of CombustionVehicle
@@ -41,14 +41,17 @@ public class CombustionVehicle extends Vehicle implements Combustion {
      * @param finalDriveRatio finalDriveRatio of CombustionVehicle
      * @param gearRatio gearRatio of CombustionVehicle
      */
-    public CombustionVehicle(String id, String name, double mass, String type, double load, double drag_Coefficient, double maxSpeed,
-                    double rrc, double wheelSize, HashMap<String,Double> velocityLimit, double torque, double mostEfficientRPM,
-                    double consuption, double minRPM, double maxRPM, double finalDriveRatio, String fuel, ArrayList<Double> gearRatio) {
-        super(id, name, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit, torque, mostEfficientRPM, consuption,
-                minRPM, maxRPM, finalDriveRatio);
+    public CombustionVehicle(String id, String name, String description, double mass, String type, double load, 
+            double drag_Coefficient, double maxSpeed, double rrc, double wheelSize, HashMap<String, Double> velocityLimit, 
+            double torque, double mostEfficientRPM, double consuption, double minRPM, double maxRPM, 
+            double finalDriveRatio, String fuel, HashMap<Integer,Double> gearRatio) {
+        super(id, name, description, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit, 
+                torque, mostEfficientRPM, consuption, minRPM, maxRPM, finalDriveRatio);
         this.fuel = fuel;
         this.gearRatio = gearRatio;
     }
+    
+    
     
     public CombustionVehicle(){ };
 
@@ -72,7 +75,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
      * 
      * @return gearRatio
      */
-    public ArrayList<Double> getGearRatio() {
+    public HashMap<Integer,Double> getGearRatio() {
         return gearRatio;
     }
 
@@ -80,7 +83,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
      * 
      * @param gearRatio gearRatio
      */
-    public void setGearRatio(ArrayList<Double> gearRatio) {
+    public void setGearRatio(HashMap<Integer,Double> gearRatio) {
         this.gearRatio = gearRatio;
     }
 

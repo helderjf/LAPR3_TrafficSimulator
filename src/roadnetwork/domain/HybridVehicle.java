@@ -5,7 +5,6 @@
  */
 package roadnetwork.domain;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -14,12 +13,16 @@ import java.util.HashMap;
  */
 public class HybridVehicle extends Vehicle implements Electric , Combustion{
 
-    public HybridVehicle(String id, String name, double mass, String type, double load, double drag_Coefficient, double maxSpeed,
-        double rrc, double wheelSize, HashMap<String,Double> velocityLimit, double torque, double mostEfficientRPM,
-        double consuption, double minRPM, double maxRPM, double finalDriveRatio, String fuel, ArrayList<Double> gearRatio) {
-        super(id, name, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit, torque, mostEfficientRPM, consuption,
-                minRPM, maxRPM, finalDriveRatio);
+
+    public HybridVehicle(String id, String name, String description, double mass, String type, double load, 
+            double drag_Coefficient, double maxSpeed, double rrc, double wheelSize, HashMap<String, Double> velocityLimit, 
+            double torque, double mostEfficientRPM, double consuption, double minRPM, double maxRPM, 
+            double finalDriveRatio) {
+        super(id, name, description, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit, torque, 
+                mostEfficientRPM, consuption, minRPM, maxRPM, finalDriveRatio);
     }
+    
+    
     
     public HybridVehicle(){};
     
