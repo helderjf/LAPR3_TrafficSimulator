@@ -6,7 +6,7 @@
 package roadnetwork.controllers;
 
 import java.util.ArrayList;
-import data.access.layer.DataAccessLayer;
+import data.access.layer.DataAccessObject;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 import data.access.layer.ProjectReader;
@@ -18,7 +18,7 @@ import data.access.layer.ProjectReader;
 public class OpenProjectController {
     
     Manager m_manager;
-    DataAccessLayer m_dataAccessLayer;
+    DataAccessObject m_dataAccessLayer;
     ProjectReader m_projectFactory;
     Project m_project;
     

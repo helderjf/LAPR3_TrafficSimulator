@@ -32,5 +32,6 @@ public interface ProjectState {
     public boolean isSaved();
 
     public boolean projectSaved();
+
 }
     

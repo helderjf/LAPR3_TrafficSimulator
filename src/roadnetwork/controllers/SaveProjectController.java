@@ -5,7 +5,7 @@
  */
 package roadnetwork.controllers;
 
-import data.access.layer.DataAccessLayer;
+import data.access.layer.DataAccessObject;
 import data.access.layer.ProjectWriter;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
@@ -17,7 +17,7 @@ import roadnetwork.domain.Project;
 public class SaveProjectController {
 
     Manager m_manager;
-    DataAccessLayer m_dataAccessLayer;
+    DataAccessObject m_dataAccessLayer;
     ProjectWriter m_writer;
     Project m_project;
 

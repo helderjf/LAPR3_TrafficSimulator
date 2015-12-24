@@ -116,4 +116,12 @@ public class Project {
         return m_state.projectSaved();
     }
 
+    public ProjectState getState() {
+        return m_state;
+    }
+
+    public void setPK(int pk) {
+        m_PK=pk;
+    }
+
 }

@@ -5,21 +5,24 @@
  */
 package data.access.layer;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class DataAccessLayer {
+public class DataAccessObject {
 
     private String m_dbUrl;
     private String m_user;
@@ -28,7 +31,7 @@ public class DataAccessLayer {
     private Statement m_statement;
     private ResultSet m_output;
 
-    public DataAccessLayer(String dbUrl, String user, String pass) {
+    public DataAccessObject(String dbUrl, String user, String pass) {
         m_dbUrl = dbUrl;
         m_user = user;
         m_pass = pass;
@@ -43,7 +46,7 @@ public class DataAccessLayer {
             return true;
             
         } catch (SQLException ex) {
-            Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataAccessObject.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return false;
@@ -72,6 +75,27 @@ public class DataAccessLayer {
         //TODO load project
 
         return true;
+    }
+
+    int saveNewProject(String projectName, String projectDescription, String projectState) throws SQLException{
+        if(m_connection==null){
+            if(!connect()){
+                return -1;//returns -1 so the caller knows the connection failed
+            }
+        }
+        
+        //create statement
+        CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_PROJECT(?,?,?,?)}");
+        statement.setString(1, projectName);
+        statement.setString(1, projectDescription);
+        statement.setString(1, projectState);
+        statement.registerOutParameter(4, Types.INTEGER);
+
+        //execute statement
+        statement.execute();
+
+        return statement.getInt(4);
+
     }
 
 }

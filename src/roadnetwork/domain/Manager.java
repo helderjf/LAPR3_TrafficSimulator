@@ -6,7 +6,7 @@
 package roadnetwork.domain;
 
 import data.access.layer.ProjectReader;
-import data.access.layer.DataAccessLayer;
+import data.access.layer.DataAccessObject;
 import java.util.ArrayList;
 import IO.ExportCSV;
 import data.access.layer.ProjectWriter;
@@ -21,7 +21,7 @@ public class Manager {
     
     private String m_name;
     private Project m_currentProject;
-    private DataAccessLayer m_dataAccessLayer;
+    private DataAccessObject m_dataAccessObject;
     private ArrayList<BestPathAlgorithm> m_algorithmsList;
     private ProjectReader m_projectReader;
     private ProjectWriter m_projectWriter;
@@ -30,10 +30,10 @@ public class Manager {
     
     public Manager(String name){
         m_name=name;
-        m_dataAccessLayer=new DataAccessLayer("jdbc:oracle:thin:@localhost:1521:XE", "grupo60", "pass60");
+        m_dataAccessObject=new DataAccessObject("jdbc:oracle:thin:@localhost:1521:XE", "grupo60", "pass60");
         m_algorithmsList= new ArrayList<>();
         m_projectReader = new ProjectReader();
-        m_projectWriter = new ProjectWriter();
+        m_projectWriter = new ProjectWriter(m_dataAccessObject);
         m_algorithmsList.add(new FastestPathAlgorithm());
         m_algorithmsList.add(new MostEfficientPath());
         
@@ -50,8 +50,8 @@ public class Manager {
     /**
      * @return the m_dataAccessLayer
      */
-    public DataAccessLayer getdataAccessLayer() {
-        return m_dataAccessLayer;
+    public DataAccessObject getdataAccessLayer() {
+        return m_dataAccessObject;
     }
     
     public ArrayList<BestPathAlgorithm> getAlgorithmsList(){

@@ -28,5 +28,7 @@ public class ProjectStateVehiclesAssignedSaved extends ProjectStateImpl {
     }
     
     
+    
+    
 
 }
