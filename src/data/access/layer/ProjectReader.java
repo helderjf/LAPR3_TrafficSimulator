@@ -3,20 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package roadnetwork.domain;
+package data.access.layer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import roadnetwork.domain.CombustionVehicle;
+import roadnetwork.domain.Direction;
+import roadnetwork.domain.Junction;
+import roadnetwork.domain.Project;
+import roadnetwork.domain.Road;
+import roadnetwork.domain.RoadNetwork;
+import roadnetwork.domain.Section;
+import roadnetwork.domain.SectionTypology;
+import roadnetwork.domain.Segment;
+import roadnetwork.domain.Vehicle;
+import roadnetwork.domain.Wind;
 import roadnetwork.state.ProjectStateSimulationReady;
 
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ProjectFactory {
+public class ProjectReader {
 
-    public ProjectFactory() {
+    public ProjectReader() {
         
     }
  
@@ -52,7 +62,7 @@ public class ProjectFactory {
         Road road1 = new Road(1, "E01");
         road1.setSections(sectionlist1);
 
-        Segment segment5 = new Segment(1, 100, 0, 10, 120, 50, 100);
+        Segment segment5 = new Segment(1, 100, 0, 100, 120, 50, 100);
         ArrayList<Segment> list3 = new ArrayList();
         list3.add(segment5);
         Section section3 = new Section(3, "A01", node0, node2, SectionTypology.highway, Direction.bidirectional, 12, new Wind(-5, 3), list3);
@@ -62,7 +72,7 @@ public class ProjectFactory {
         Road road2 = new Road(2, "A01");
         road2.setSections(sectionlist2);
 
-        Segment segment6 = new Segment(1, 100, 0.125, 20, 120, 50, 100);
+        Segment segment6 = new Segment(1, 100, 0.125, 10, 61, 50, 100);
         ArrayList<Segment> list4 = new ArrayList();
         list4.add(segment6);
         Section section4 = new Section(4, "A03", node1, node2, SectionTypology.highway, Direction.bidirectional, 4, new Wind(-5, 3), list4);
@@ -84,21 +94,14 @@ public class ProjectFactory {
 
         HashMap velocityLimit = new HashMap();
         velocityLimit.put("Highway", 60);
-        HashMap<Integer,Double> gearList = new HashMap<>();
-        gearList.put(1, 3.5);
-        gearList.put(2, 2.5);
-        gearList.put(3, 1.25);
-        gearList.put(4, 0.9);
+        ArrayList<Double> gearList = new ArrayList();
+        gearList.add(3.5);
+        gearList.add(2.5);
+        gearList.add(1.25);
+        gearList.add(0.9);
 
-        
-//public CombustionVehicle(String id, String name, String description, double mass, String type, double load, 
-//            double drag_Coefficient, double maxSpeed, double rrc, double wheelSize, HashMap<String, Double> velocityLimit, 
-//            double torque, double mostEfficientRPM, double consuption, double minRPM, double maxRPM, 
-//            double finalDriveRatio, ArrayList<Double> gearList, String fuel, ArrayList<Double> gearRatio) {
+        Vehicle vehicle1 = new CombustionVehicle("v1", "dummy1", 1400, "car", 120, 0.35, 150, 0.01, 0.5, velocityLimit, 250, 2500, 8.2, 1000, 5500, 2.6, "gasoline", gearList);
 
-        Vehicle vehicle1 = new CombustionVehicle("v1", "dummy1", "desc1", 1400, "car", 120, 0.35, 150, 0.01, 0.5,
-                velocityLimit, 250, 2500, 8.2, 1000, 5500, 2.6, "gasoline", gearList);
-        
         ArrayList<Vehicle> vehicleList = new ArrayList();
         vehicleList.add(vehicle1);
 

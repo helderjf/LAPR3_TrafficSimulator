@@ -22,4 +22,13 @@ public class ProjectStateVehiclesAssignedSaved extends ProjectStateImpl {
         return true;
     }
 
+    @Override
+    public boolean isSaved() {
+        return true;
+    }
+    
+    
+    
+    
+
 }

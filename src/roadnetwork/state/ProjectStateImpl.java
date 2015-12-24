@@ -76,4 +76,15 @@ public class ProjectStateImpl implements ProjectState {
         return false;
     }
 
+    @Override
+    public boolean isSaved() {
+        return false;
+    }
+
+    @Override
+    public boolean projectSaved() {
+        return false;
+    }
+
+
 }

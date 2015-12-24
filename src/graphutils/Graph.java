@@ -56,7 +56,7 @@ public class Graph<V,E> implements GraphInterface<V,E> {
    * @return the edge or null if vertices are not adjacent or don't exist 
    */
     @Override
-    public Edge<V,E> getEdge(Vertex<V,E> vorig, Vertex<V,E> vdest){
+    public ArrayList<Edge<V,E>> getEdge(Vertex<V,E> vorig, Vertex<V,E> vdest){
        
         if (listVert.contains(vorig) && listVert.contains(vdest))
            return vorig.getOutgoing().get(vdest);
@@ -166,10 +166,13 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         
         ArrayList<Edge<V,E>> edges = new ArrayList<>();
         
-        Map<Vertex<V,E>,Edge<V,E>>  map = v.getOutgoing();          
-        Iterator<Map.Entry<Vertex<V,E>,Edge<V,E>>> it = map.entrySet().iterator();
-        while(it.hasNext()) 
-            edges.add(it.next().getValue());
+        Map<Vertex<V,E>,ArrayList<Edge<V,E>>>  map = v.getOutgoing();          
+        Iterator<Map.Entry<Vertex<V,E>,ArrayList<Edge<V,E>>>> it = map.entrySet().iterator();
+        while(it.hasNext()){
+            for(Edge<V,E> e : it.next().getValue()){
+                edges.add(e);
+            }
+        }
        
         return edges ;
     }
@@ -242,21 +245,28 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         
         //if (getEdge(vorig,vdest) == null) {               
             Edge<V,E> newedge = new Edge<>(eInf,eWeight,vorig,vdest);
-            vorig.getOutgoing().put(vdest,newedge);
+            ArrayList<Edge<V,E>> lst;
+            if (getEdge(vorig,vdest) == null) {
+                lst= new ArrayList<>();
+            } else{
+                lst = vorig.getOutgoing().get(vdest);
+            }
+            lst.add(newedge);
+            vorig.getOutgoing().put(vdest,lst);
             numEdge++;
             listEdge.add(newedge);
              
             //if graph is not direct insert other edge in the opposite direction 
-            if (!isDirected)
-                if (getEdge(vdest,vorig) == null) { 
-                    Edge<V,E> otheredge = new Edge<>(eInf,eWeight,vdest,vorig);
-                    vdest.getOutgoing().put(vorig,otheredge);
-                    numEdge++;
-                }       
+//            if (!isDirected)
+//                if (getEdge(vdest,vorig) == null) { 
+//                    Edge<V,E> otheredge = new Edge<>(eInf,eWeight,vdest,vorig);
+//                    vdest.getOutgoing().put(vorig,otheredge);
+//                    numEdge++;
+//                }       
             
             return newedge ;
-        //}
-        //return null ;
+//        }
+//           return null ;
     }
     
     /* Removes the edge between with source vertex vorigInf and destination vertex
@@ -275,6 +285,7 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         if (vorig != null && vdest != null) 
             if (edge.equals(getEdge(vorig,vdest))){
                vorig.getOutgoing().remove(vdest);
+               listEdge.remove(edge);
                numEdge--;
             } 
     }
@@ -395,7 +406,7 @@ public class Graph<V,E> implements GraphInterface<V,E> {
             for (Vertex<V,E> vert : listVert) {
                 s += vert + "\n" ;
                 if (!vert.getOutgoing().isEmpty()){
-                   for (Map.Entry<Vertex<V,E>, Edge<V,E>> entry : vert.getOutgoing().entrySet()){
+                   for (Map.Entry<Vertex<V,E>, ArrayList<Edge<V,E>>> entry : vert.getOutgoing().entrySet()){
                        s += entry.getValue() + "\n" ;
                    }
                 }

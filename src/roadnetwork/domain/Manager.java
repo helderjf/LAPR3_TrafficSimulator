@@ -5,8 +5,11 @@
  */
 package roadnetwork.domain;
 
+import data.access.layer.ProjectReader;
+import data.access.layer.DataAccessObject;
 import java.util.ArrayList;
 import IO.ExportCSV;
+import data.access.layer.ProjectWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,17 +21,19 @@ public class Manager {
     
     private String m_name;
     private Project m_currentProject;
-    private DataAccessLayer m_dataAccessLayer;
+    private DataAccessObject m_dataAccessObject;
     private ArrayList<BestPathAlgorithm> m_algorithmsList;
-    private ProjectFactory m_projectFactory;
+    private ProjectReader m_projectReader;
+    private ProjectWriter m_projectWriter;
     
     
     
     public Manager(String name){
         m_name=name;
-        m_dataAccessLayer=new DataAccessLayer();
+        m_dataAccessObject=new DataAccessObject("jdbc:oracle:thin:@localhost:1521:XE", "grupo60", "pass60");
         m_algorithmsList= new ArrayList<>();
-        m_projectFactory = new ProjectFactory();
+        m_projectReader = new ProjectReader();
+        m_projectWriter = new ProjectWriter(m_dataAccessObject);
         m_algorithmsList.add(new FastestPathAlgorithm());
         m_algorithmsList.add(new MostEfficientPath());
         
@@ -45,8 +50,8 @@ public class Manager {
     /**
      * @return the m_dataAccessLayer
      */
-    public DataAccessLayer getdataAccessLayer() {
-        return m_dataAccessLayer;
+    public DataAccessObject getdataAccessLayer() {
+        return m_dataAccessObject;
     }
     
     public ArrayList<BestPathAlgorithm> getAlgorithmsList(){
@@ -62,12 +67,19 @@ public class Manager {
         return new ExportCSV(fileName);
     }
 
-    public ProjectFactory getProjectFactory() {
-        return m_projectFactory;
+    public ProjectReader getProjectReader() {
+        return m_projectReader;
     }
 
     public boolean setCurrentProject(Project project) {
         m_currentProject=project;
         return true;
     }
+
+    public ProjectWriter getProjectWriter() {
+        return m_projectWriter;
+    }
+    
+    
+    
 }

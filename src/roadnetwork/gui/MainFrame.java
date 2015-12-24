@@ -6,7 +6,9 @@
 package roadnetwork.gui;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import roadnetwork.controllers.NewProjectController;
+import roadnetwork.controllers.SaveProjectController;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 
@@ -72,6 +74,19 @@ public class MainFrame extends javax.swing.JFrame {
         revalidate();
     }
 
+    private void saveProject() {
+        SaveProjectController m_saveProjectController = new SaveProjectController(m_manager);
+        if(m_saveProjectController.checkProjectSaved()){
+            JOptionPane.showMessageDialog(this, "The project is already saved", "Save Project", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            if(m_saveProjectController.saveProject()){
+                JOptionPane.showMessageDialog(this, "Project saved", "Save Project", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(this, "Ther was an error! The project has not been saved!", "Save Project", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
     public Manager getManager() {
         return m_manager;
     }
@@ -96,6 +111,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -145,6 +161,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem2);
+
+        jMenuItem8.setText("Save Project");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem8);
 
         jMenuItem3.setText("Copy Project");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -236,6 +260,10 @@ public class MainFrame extends javax.swing.JFrame {
         vehicleComparison();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        saveProject();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
@@ -254,6 +282,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
 }

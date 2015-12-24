@@ -11,10 +11,15 @@ import roadnetwork.domain.Project;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ProjectStateRoadNetworkAssignedSaved extends ProjectStateImpl{
+public class ProjectStateRoadNetworkAssignedSaved extends ProjectStateImpl {
 
     public ProjectStateRoadNetworkAssignedSaved(Project p) {
         super(p);
     }
-    
+
+    @Override
+    public boolean isSaved() {
+        return true;
+    }
+
 }

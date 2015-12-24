@@ -275,16 +275,19 @@ public class GraphAlgorithms {
             double min = Double.MAX_VALUE;
             Edge<V, E> lightEdge = new Edge<>();
 
-            for (Edge<V, E> e : g.outgoingEdges(vi)) {
-                if (e == g.getEdge(vi, vj)) {
-                    if (e.getWeight() < min) {
-                        lightEdge = e;
-                        min = e.getWeight();
+                for (Edge<V, E> e : g.outgoingEdges(vi)) {
+                    for (Edge<V, E> it : g.getEdge(vi, vj)) {
+                        if (e.equals(it)) {
+                            if (e.getWeight() < min) {
+                                lightEdge = e;
+                                min = e.getWeight();
+                            }
+                        }
+
                     }
                 }
-            }
 
-            path.add(lightEdge.getElement());
+                path.add(lightEdge.getElement());
             }
         }
 

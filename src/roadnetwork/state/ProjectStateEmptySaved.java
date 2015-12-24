@@ -11,9 +11,9 @@ import roadnetwork.domain.Project;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ProjectStateEmptySaved extends ProjectStateImpl{
-    
-        public ProjectStateEmptySaved(Project p) {
+public class ProjectStateEmptySaved extends ProjectStateImpl {
+
+    public ProjectStateEmptySaved(Project p) {
         super(p);
     }
 
@@ -21,5 +21,10 @@ public class ProjectStateEmptySaved extends ProjectStateImpl{
     public boolean canImportRoadNetwork() {
         return true;
     }
-    
+
+    @Override
+    public boolean isSaved() {
+        return true;
+    }
+
 }
