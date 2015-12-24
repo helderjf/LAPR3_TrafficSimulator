@@ -259,7 +259,7 @@ public class ImportXML implements Import {
         vehicle.setMinRPM(Double.parseDouble(minRpm));
         vehicle.setMaxRPM(Double.parseDouble(maxRpm));
         vehicle.setFinalDriveRatio(Double.parseDouble(finalDriveRation));
-        vehicle.setGearList(gearList);
+        //vehicle.setGearList(gearList);
         return vehicle;    
     }
 }
