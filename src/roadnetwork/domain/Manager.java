@@ -5,6 +5,8 @@
  */
 package roadnetwork.domain;
 
+import data.access.layer.ProjectMaker;
+import data.access.layer.DataAccessLayer;
 import java.util.ArrayList;
 import IO.ExportCSV;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ public class Manager {
     private Project m_currentProject;
     private DataAccessLayer m_dataAccessLayer;
     private ArrayList<BestPathAlgorithm> m_algorithmsList;
-    private ProjectFactory m_projectFactory;
+    private ProjectMaker m_projectFactory;
     
     
     
@@ -28,7 +30,7 @@ public class Manager {
         m_name=name;
         m_dataAccessLayer=new DataAccessLayer("jdbc:oracle:thin:@localhost:1521:XE", "grupo60", "pass60");
         m_algorithmsList= new ArrayList<>();
-        m_projectFactory = new ProjectFactory();
+        m_projectFactory = new ProjectMaker();
         m_algorithmsList.add(new FastestPathAlgorithm());
         m_algorithmsList.add(new MostEfficientPath());
         
@@ -62,7 +64,7 @@ public class Manager {
         return new ExportCSV(fileName);
     }
 
-    public ProjectFactory getProjectFactory() {
+    public ProjectMaker getProjectFactory() {
         return m_projectFactory;
     }
 

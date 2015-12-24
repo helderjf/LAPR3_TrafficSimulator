@@ -3,19 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package roadnetwork.domain;
+package data.access.layer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import roadnetwork.domain.CombustionVehicle;
+import roadnetwork.domain.Direction;
+import roadnetwork.domain.Junction;
+import roadnetwork.domain.Project;
+import roadnetwork.domain.Road;
+import roadnetwork.domain.RoadNetwork;
+import roadnetwork.domain.Section;
+import roadnetwork.domain.SectionTypology;
+import roadnetwork.domain.Segment;
+import roadnetwork.domain.Vehicle;
+import roadnetwork.domain.Wind;
 import roadnetwork.state.ProjectStateSimulationReady;
 
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ProjectFactory {
+public class ProjectMaker {
 
-    public ProjectFactory() {
+    public ProjectMaker() {
         
     }
  
@@ -61,7 +72,7 @@ public class ProjectFactory {
         Road road2 = new Road(2, "A01");
         road2.setSections(sectionlist2);
 
-        Segment segment6 = new Segment(1, 100, 0.125, 30, 120, 50, 100);
+        Segment segment6 = new Segment(1, 100, 0.125, 10, 61, 50, 100);
         ArrayList<Segment> list4 = new ArrayList();
         list4.add(segment6);
         Section section4 = new Section(4, "A03", node1, node2, SectionTypology.highway, Direction.bidirectional, 4, new Wind(-5, 3), list4);
