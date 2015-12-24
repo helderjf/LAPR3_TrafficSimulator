@@ -16,5 +16,5 @@ public class ProjectStateCreated extends ProjectStateImpl{
     public ProjectStateCreated(Project p) {
         super(p);
     }
-    
+
 }

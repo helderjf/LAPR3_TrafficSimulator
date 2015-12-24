@@ -7,7 +7,7 @@ package roadnetwork.controllers;
 
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
-import data.access.layer.ProjectMaker;
+import data.access.layer.ProjectReader;
 
 /**
  *
@@ -28,7 +28,7 @@ public class NewProjectController {
     }
     
     public Project newProject(){
-        m_project = m_manager.getProjectFactory().newProject();
+        m_project = m_manager.getProjectReader().newProject();
         return m_project;
     }
     

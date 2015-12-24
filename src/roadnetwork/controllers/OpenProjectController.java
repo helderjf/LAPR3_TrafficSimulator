@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import data.access.layer.DataAccessLayer;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
-import data.access.layer.ProjectMaker;
+import data.access.layer.ProjectReader;
 
 /**
  *
@@ -19,7 +19,7 @@ public class OpenProjectController {
     
     Manager m_manager;
     DataAccessLayer m_dataAccessLayer;
-    ProjectMaker m_projectFactory;
+    ProjectReader m_projectFactory;
     Project m_project;
     
     
@@ -46,7 +46,7 @@ public class OpenProjectController {
      * @return make ProjectActive
      */
     public boolean selectProject(String pid){
-        m_projectFactory = m_manager.getProjectFactory();
+        m_projectFactory = m_manager.getProjectReader();
         
         m_project=m_projectFactory.getProjectByID(pid);
         

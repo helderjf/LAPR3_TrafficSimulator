@@ -18,7 +18,7 @@ import roadnetwork.state.ProjectStateCreated;
  */
 public class Project {
 
-    private int m_id;
+    private int m_PK;
     private String m_name;
     private String m_description;
     private RoadNetwork m_roadNetwork;
@@ -46,16 +46,16 @@ public class Project {
 
     public void setDescription(String description) {
         m_description = description;
-    } 
-    
-        public String getName() {
+    }
+
+    public String getName() {
         return m_name;
     }
 
     public String getDescription() {
         return m_description;
     }
-    
+
     public ArrayList<Vehicle> getVehicleList() {
         return m_vehicleList;
     }
@@ -83,8 +83,8 @@ public class Project {
     }
 
     public boolean projectCreated() {
-        
-        return (m_name!=null && m_description != null)
+
+        return (m_name != null && m_description != null)
                 && m_state.projectCreated();
     }
 
@@ -100,6 +100,20 @@ public class Project {
         return m_state.propertiesChanged();
     }
 
+    public boolean isSaved() {
+        return m_state.isSaved();
+    }
 
+    public boolean hasPK() {
+        if (m_PK != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean projectSaved() {
+        return m_state.projectSaved();
+    }
 
 }

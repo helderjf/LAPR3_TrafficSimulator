@@ -24,9 +24,9 @@ import roadnetwork.state.ProjectStateSimulationReady;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ProjectMaker {
+public class ProjectReader {
 
-    public ProjectMaker() {
+    public ProjectReader() {
         
     }
  

@@ -28,5 +28,9 @@ public interface ProjectState {
     public boolean projectCreated();
 
     public boolean propertiesChanged();
+
+    public boolean isSaved();
+
+    public boolean projectSaved();
 }
     
