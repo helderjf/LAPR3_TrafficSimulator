@@ -35,7 +35,6 @@ public class DataAccessObject {
         m_dbUrl = dbUrl;
         m_user = user;
         m_pass = pass;
-
     }
 
     public boolean connect() {
@@ -87,8 +86,8 @@ public class DataAccessObject {
         //create statement
         CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_PROJECT(?,?,?,?)}");
         statement.setString(1, projectName);
-        statement.setString(1, projectDescription);
-        statement.setString(1, projectState);
+        statement.setString(2, projectDescription);
+        statement.setString(3, projectState);
         statement.registerOutParameter(4, Types.INTEGER);
 
         //execute statement
