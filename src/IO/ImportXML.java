@@ -162,7 +162,7 @@ public class ImportXML implements Import {
         segment.setLenght(Double.parseDouble(segmentLength));
         segment.setMax_Velocity(Double.parseDouble(maxVelocity));
         segment.setMin_Velocity(Double.parseDouble(minVelocity));
-        segment.setRrc(segmentRrc);
+        //segment.setRrc(segmentRrc);
         segment.setNumber_vehicles(numberVehicles);
         
         return segment;
@@ -259,7 +259,7 @@ public class ImportXML implements Import {
         vehicle.setMinRPM(Double.parseDouble(minRpm));
         vehicle.setMaxRPM(Double.parseDouble(maxRpm));
         vehicle.setFinalDriveRatio(Double.parseDouble(finalDriveRation));
-        vehicle.setGearList(gearList);
+        //vehicle.setGearList(gearList);
         return vehicle;    
     }
 }

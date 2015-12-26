@@ -94,13 +94,15 @@ public class ProjectReader {
 
         HashMap velocityLimit = new HashMap();
         velocityLimit.put("Highway", 60);
-        ArrayList<Double> gearList = new ArrayList();
-        gearList.add(3.5);
-        gearList.add(2.5);
-        gearList.add(1.25);
-        gearList.add(0.9);
+        HashMap<Integer,Double> gearList = new HashMap<>();
+        gearList.put(1, 3.5);
+        gearList.put(2, 2.5);
+        gearList.put(3, 1.25);
+        gearList.put(4, 0.9);
 
-        Vehicle vehicle1 = new CombustionVehicle("v1", "dummy1", 1400, "car", 120, 0.35, 150, 0.01, 0.5, velocityLimit, 250, 2500, 8.2, 1000, 5500, 2.6, "gasoline", gearList);
+
+        Vehicle vehicle1 = new CombustionVehicle("v1", "dummy1", "desc", 1400, "car", 120, 0.35, 150, 0.01, 0.5, velocityLimit, 
+                250, 2500, 8.2, 1000, 5500, 2.6, "gasoline", gearList);
 
         ArrayList<Vehicle> vehicleList = new ArrayList();
         vehicleList.add(vehicle1);

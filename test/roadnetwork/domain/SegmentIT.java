@@ -151,31 +151,6 @@ public class SegmentIT {
     }
 
     /**
-     * Test of getRrc method, of class Segment.
-     */
-    @Test
-    public void testGetRrc() {
-        System.out.println("getRrc");
-        Segment instance = new Segment();
-        double expResult = 0.0;
-        double result = instance.getRrc();
-        assertEquals(expResult, result, 0.0);
-
-    }
-
-    /**
-     * Test of setRrc method, of class Segment.
-     */
-    @Test
-    public void testSetRrc() {
-        System.out.println("setRrc");
-        double rrc = 0.0;
-        Segment instance = new Segment();
-        instance.setRrc(rrc);
-
-    }
-
-    /**
      * Test of getMax_Velocity method, of class Segment.
      */
     @Test

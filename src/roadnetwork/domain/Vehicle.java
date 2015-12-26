@@ -33,7 +33,7 @@ public class Vehicle {
     private double minRPM;
     private double maxRPM;
     private double finalDriveRatio;
-    private ArrayList<Double> gearList;
+    //private ArrayList<Double> gearList;
 
     
             
@@ -45,8 +45,9 @@ public class Vehicle {
     {
         this.id = "";
         this.name = "";
+        this.description = "";
         this.mass = 0;
-        this.type = null;
+        this.type = "";
         this.load = 0;
         this.drag_Coefficient = 0;
         this.maxSpeed=0;
@@ -59,32 +60,36 @@ public class Vehicle {
         this.minRPM = 0;
         this.maxRPM = 0;
         this.finalDriveRatio = 0;
+        //this.gearList = null;
     }
-    
+
     /**
      * 
      * @param id id
      * @param name name
+     * @param description description
      * @param mass mass
      * @param type type
      * @param load load
      * @param drag_Coefficient drag coefficient 
      * @param maxSpeed maximum speed
      * @param rrc rrc
-     * @param wheelSize wheelSize
+     * @param wheelSize wheelSize diameter
      * @param velocityLimit velocityLimit
      * @param torque torque
      * @param mostEfficientRPM mostEfficientRPM
      * @param consuption consuption
      * @param minRPM minRPM
      * @param maxRPM maxRPM
-     * @param finalDriveRatio finalDriveRatio
+     * @param finalDriveRatio finalDriveRatio 
+     //* @param gearList gearList 
      */
-    public Vehicle(String id, String name, double mass, String type, double load, double drag_Coefficient, double maxSpeed,
+    public Vehicle(String id, String name, String description, double mass, String type, double load, double drag_Coefficient, double maxSpeed,
                     double rrc, double wheelSize, HashMap<String,Double> velocityLimit, double torque, double mostEfficientRPM,
                     double consuption, double minRPM, double maxRPM, double finalDriveRatio) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.mass = mass;
         this.type = type;
         this.load = load;
@@ -99,6 +104,7 @@ public class Vehicle {
         this.minRPM = minRPM;
         this.maxRPM = maxRPM;
         this.finalDriveRatio = finalDriveRatio;
+        //this.gearList = gearList;
    
     }
     
@@ -109,10 +115,11 @@ public class Vehicle {
     public Vehicle(Vehicle v)
     {
         v.id = this.id;
-        v.load = this.load;
-        v.mass = this.mass;
         v.name = this.name;
+        v.description = this.description;
+        v.mass = this.mass;
         v.type = this.type;
+        v.load = this.load;
         v.drag_Coefficient = this.drag_Coefficient;
         v.maxSpeed = this.maxSpeed;
         v.rrc = this.rrc;
@@ -390,7 +397,42 @@ public class Vehicle {
     public void setFinalDriveRatio(double finalDriveRatio) {
         this.finalDriveRatio = finalDriveRatio;
     }
+    
+        /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
 
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+//
+//    /**
+//     * @return the gearList
+//     */
+//    public ArrayList<Double> getGearList() {
+//        return gearList;
+//    }
+//
+//    /**
+//     * @param gearList the gearList to set
+//     */
+//    public void setGearList(ArrayList<Double> gearList) {
+//        this.gearList = gearList;
+//    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+    
     /**
      * 
      * @param obj object
@@ -456,6 +498,13 @@ public class Vehicle {
         return true;
     }
 
+    public double Energy()
+    {
+        
+        return 0;
+    }
+    
+    
     /**
      * 
      * @return Vehicle string
@@ -491,39 +540,6 @@ public class Vehicle {
     
     
 
-    /**
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
 
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * @return the gearList
-     */
-    public ArrayList<Double> getGearList() {
-        return gearList;
-    }
-
-    /**
-     * @param gearList the gearList to set
-     */
-    public void setGearList(ArrayList<Double> gearList) {
-        this.gearList = gearList;
-    }
-
-    /**
-     * @param type the type to set
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
   
 }

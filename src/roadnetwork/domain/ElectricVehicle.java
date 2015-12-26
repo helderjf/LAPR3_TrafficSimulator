@@ -5,7 +5,6 @@
  */
 package roadnetwork.domain;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -19,6 +18,7 @@ public class ElectricVehicle extends Vehicle implements Electric{
      * 
      * @param id id of Electric Vehicles
      * @param name name of Electric Vehicles
+     * @param description description of Electric Vehicles
      * @param mass mass of Electric Vehicles
      * @param type type of Electric Vehicles
      * @param load load of Electric Vehicles
@@ -33,17 +33,19 @@ public class ElectricVehicle extends Vehicle implements Electric{
      * @param minRPM minRPM of Electric Vehicles
      * @param maxRPM maxRPM of Electric Vehicles
      * @param finalDriveRatio finalDriveRatio of Electric Vehicles
-     * @param fuel fuel of Electric Vehicles
-     * @param gearRatio gearRatio of Electric Vehicles
      */
-    public ElectricVehicle(String id, String name, double mass, String type, double load, double drag_Coefficient, double maxSpeed,
-        double rrc, double wheelSize, HashMap<String,Double> velocityLimit, double torque, double mostEfficientRPM,
-        double consuption, double minRPM, double maxRPM, double finalDriveRatio, String fuel, ArrayList<Double> gearRatio) {
-        super(id, name, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit, torque, mostEfficientRPM, consuption,
-                minRPM, maxRPM, finalDriveRatio);
-    }
+
     
-    public ElectricVehicle(){ };
+    public ElectricVehicle(String id, String name, String description, double mass, String type, double load, 
+            double drag_Coefficient, double maxSpeed, double rrc, double wheelSize, HashMap<String, Double> velocityLimit, 
+            double torque, double mostEfficientRPM, double consuption, double minRPM, double maxRPM, 
+            double finalDriveRatio){
+        super(id, name, description, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit, 
+                torque, mostEfficientRPM, consuption, minRPM, maxRPM, finalDriveRatio);
+ };
+
+    public ElectricVehicle() {
+    }
 
     /**
      * 
