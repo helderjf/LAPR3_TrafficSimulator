@@ -13,6 +13,9 @@ import java.util.ArrayList;
  */
 public class RoadNetwork {
     
+    private int m_PK;
+    private String m_name;
+    private String m_description;
     private ArrayList<Junction> m_nodeList;
     private ArrayList<Section> m_sectionList;
     
@@ -30,6 +33,18 @@ public class RoadNetwork {
 
     public void setSectionList(ArrayList<Section> m_sectionList) {
         this.m_sectionList = m_sectionList;
+    }
+
+    public String getName() {
+        return m_name;
+    }
+
+    public String getDescription() {
+        return m_description;
+    }
+
+    public void setPK(int pk) {
+        m_PK = pk;
     }
     
     

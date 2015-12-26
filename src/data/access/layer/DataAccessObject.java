@@ -97,4 +97,23 @@ public class DataAccessObject {
 
     }
 
+    int saveNewRoadNetwork(String roadNetworkName, String roadNetworkDescription) throws SQLException{
+                if(m_connection==null){
+            if(!connect()){
+                return -1;//returns -1 so the caller knows the connection failed
+            }
+        }
+        
+        //create statement
+        CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_ROADNETWORK(?,?,?)}");
+        statement.setString(1, roadNetworkName);
+        statement.setString(2, roadNetworkName);
+        statement.registerOutParameter(4, Types.INTEGER);
+
+        //execute statement
+        statement.execute();
+
+        return statement.getInt(3);
+    }
+
 }
