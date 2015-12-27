@@ -15,7 +15,7 @@ public class HybridVehicle extends Vehicle implements Electric , Combustion{
 
 
     public HybridVehicle(String name, String description, double mass, String type, double load, 
-            double drag_Coefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, 
+            double drag_Coefficient, double frontalArea, double rrc, double wheelSize, HashMap<String, Double> velocityLimit, 
             double torque, double mostEfficientRPM, double consuption, double minRPM, double maxRPM, 
             double finalDriveRatio) {
         super(name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit, 

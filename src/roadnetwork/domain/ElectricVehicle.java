@@ -33,7 +33,7 @@ public class ElectricVehicle extends Vehicle implements Electric{
 
     
     public ElectricVehicle(String name, String description, double mass, String type, double load, 
-            double drag_Coefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, 
+            double drag_Coefficient, double frontalArea, double rrc, double wheelSize, HashMap<String, Double> velocityLimit, 
             double minRPM, double maxRPM, 
             double finalDriveRatio){
         super(name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit, 

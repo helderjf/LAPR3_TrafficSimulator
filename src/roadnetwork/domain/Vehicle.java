@@ -5,7 +5,6 @@
  */
 package roadnetwork.domain;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -26,7 +25,7 @@ public class Vehicle {
     private double frontalArea;
     private double rrc;
     private double wheelSize;
-    private HashMap<SectionTypology,Double> velocityLimit;
+    private HashMap<String,Double> velocityLimit;
     private double minRPM;
     private double maxRPM;
     private double finalDriveRatio;
@@ -71,7 +70,7 @@ public class Vehicle {
      * @param finalDriveRatio finalDriveRatio 
      */
     public Vehicle(String name, String description, double mass, String type, double load, double drag_Coefficient, 
-                    double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology,Double> velocityLimit,
+                    double frontalArea, double rrc, double wheelSize, HashMap<String,Double> velocityLimit,
                     double minRPM, double maxRPM, double finalDriveRatio) {
         this.name = name;
         this.description = description;
@@ -234,7 +233,7 @@ public class Vehicle {
      * 
      * @return velocitylimit
      */
-    public HashMap<SectionTypology, Double> getVelocityLimit() {
+    public HashMap<String, Double> getVelocityLimit() {
         return velocityLimit;
     }
 
@@ -242,7 +241,7 @@ public class Vehicle {
      * 
      * @param velocityLimit velocityLimit
      */
-    public void setVelocityLimit(HashMap<SectionTypology, Double> velocityLimit) {
+    public void setVelocityLimit(HashMap<String, Double> velocityLimit) {
         this.velocityLimit = velocityLimit;
     }
 
