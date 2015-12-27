@@ -15,7 +15,6 @@ import java.util.Objects;
  */
 public class CombustionVehicle extends Vehicle implements Combustion {
 
-    private int m_pk;
     private String fuel;
     private ArrayList<Double> gearList;
     private ArrayList<Throttle> throttleList;
@@ -28,7 +27,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
      * @param type type of CombustionVehicle
      * @param load load of CombustionVehicle
      * @param drag_Coefficient drag_Coefficient of CombustionVehicle
-     * @param maxSpeed maximum speed of CombustionVehicle
+     * @param frontalArea
      * @param rrc rrc of CombustionVehicle
      * @param wheelSize wheelSize of CombustionVehicle
      * @param velocityLimit velocityLimit of CombustionVehicle
@@ -43,10 +42,10 @@ public class CombustionVehicle extends Vehicle implements Combustion {
      * @param throttleList
      */
     public CombustionVehicle(String name, String description, double mass, String type, double load,
-            double drag_Coefficient, double maxSpeed, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit,
+            double drag_Coefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit,
             double torque, double mostEfficientRPM, double consuption, double minRPM, double maxRPM,
             double finalDriveRatio, String fuel, ArrayList<Double> gearList, ArrayList<Throttle> throttleList) {
-        super(name, description, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit,
+        super(name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
                 minRPM, maxRPM, finalDriveRatio);
         this.fuel = fuel;
         this.gearList = gearList;
@@ -84,7 +83,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
 
     /**
      *
-     * @param gearRatio gearRatio
+     * @param gearList
      */
     public void setGearList(ArrayList<Double> gearList) {
         this.gearList = gearList;
@@ -97,18 +96,6 @@ public class CombustionVehicle extends Vehicle implements Combustion {
     public void setThrottleList(ArrayList<Throttle> throttleList) {
         this.throttleList = throttleList;
     }
-
-    public int getPK() {
-        return m_pk;
-    }
-
-    public void setPK(int pk) {
-        this.m_pk = pk;
-    }
-    
-    
-    
-    
 
     /**
      *

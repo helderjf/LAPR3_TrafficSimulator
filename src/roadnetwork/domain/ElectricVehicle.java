@@ -22,7 +22,7 @@ public class ElectricVehicle extends Vehicle implements Electric{
      * @param type type of Electric Vehicles
      * @param load load of Electric Vehicles
      * @param drag_Coefficient drag_Coefficient of Electric Vehicles
-     * @param maxSpeed maxSpeed of Electric Vehicles
+     * @param frontalArea
      * @param rrc rrc of Electric Vehicles
      * @param wheelSize wheelSize of Electric Vehicles
      * @param velocityLimit velocityLimit of Electric Vehicles
@@ -32,11 +32,11 @@ public class ElectricVehicle extends Vehicle implements Electric{
      */
 
     
-    public ElectricVehicle(String id, String name, String description, double mass, String type, double load, 
-            double drag_Coefficient, double maxSpeed, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, 
+    public ElectricVehicle(String name, String description, double mass, String type, double load, 
+            double drag_Coefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, 
             double minRPM, double maxRPM, 
             double finalDriveRatio){
-        super(name, description, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit, 
+        super(name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit, 
                 minRPM, maxRPM, finalDriveRatio);
  };
 

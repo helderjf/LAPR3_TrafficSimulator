@@ -145,8 +145,8 @@ public class SectionIT {
     public void testGetDirection() {
         System.out.println("getDirection");
         Section instance = new Section();
-        Direction expResult = null;
-        Direction result = instance.getDirection();
+        SectionDirection expResult = null;
+        SectionDirection result = instance.getDirection();
         assertEquals(expResult, result);
 
     }
@@ -157,7 +157,7 @@ public class SectionIT {
     @Test
     public void testSetDirection() {
         System.out.println("setDirection");
-        Direction direction = null;
+        SectionDirection direction = null;
         Section instance = new Section();
         instance.setDirection(direction);
 

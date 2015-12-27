@@ -15,7 +15,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import roadnetwork.domain.Direction;
+import roadnetwork.domain.SectionDirection;
 import roadnetwork.domain.SectionTypology;
 
 /**
@@ -119,30 +119,7 @@ public class DataAccessObject {
         return statement.getInt(4);
     }
 
-    //NAO ESTÁ A FUNCIONAR
-//   public Integer[] saveNewNodes(int roadNetworkPK, String[] nodeNames) throws SQLException {
-//
-//        Integer[] nodesPK = new Integer[nodeNames.length];
-//        if (m_connection == null) {
-//            if (!connect()) {
-//                nodesPK[0] = -1;
-//                return nodesPK;//returns -1 so the caller knows the connection failed
-//            }
-//        }
-//
-//        CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_NODES(?,?,?)}");
-//
-//        statement.setInt(1, roadNetworkPK);
-//        statement.setArray(2, m_connection.createOracleArray("ARRAY_STRINGS", nodesPK));
-//        statement.registerOutParameter(3, OracleTypes.ARRAY, "ARRAY_VALUES");
-//
-//        statement.execute();
-//
-//        Array aux = statement.getArray(3);
-//        nodesPK = (Integer[]) aux.getArray();
-//
-//        return nodesPK;
-//    }
+
     public int saveNewNode(int roadNetworkPK, String nodeName) throws SQLException {
         if (m_connection == null) {
             if (!connect()) {
@@ -168,7 +145,7 @@ public class DataAccessObject {
             int beginningNode,
             int endingNode,
             SectionTypology typology,
-            Direction direction,
+            SectionDirection direction,
             double toll,
             double windDirection,
             double windVelocity) throws SQLException {

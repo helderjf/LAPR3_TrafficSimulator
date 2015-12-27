@@ -20,7 +20,7 @@ public class Section {
     private Junction beginningNode;
     private Junction endingNode;
     private SectionTypology typology;
-    private Direction direction;
+    private SectionDirection direction;
     private double toll;
     private Wind wind;
     private ArrayList<Segment> segmentsList;
@@ -48,12 +48,12 @@ public class Section {
      * @param beginningNode beginningNode
      * @param endingNode endingNode
      * @param typology Typology (regular road, urban road/street, express road, controlled-access highway)
-     * @param direction Direction (direct – beginning to	end; reverse – end to beginning,	bidirectional)
+     * @param direction SectionDirection (direct – beginning to	end; reverse – end to beginning,	bidirectional)
      * @param toll Toll	(may be	zero)
      * @param wind Wind direction (angle) and speed (m/s) relative to section direct direction (probability distributions)
      * @param segmentsList segmentsList
      */
-    public Section(String roadId, Junction beginningNode, Junction endingNode, SectionTypology typology, Direction direction, double toll, Wind wind, ArrayList<Segment> segmentsList) {
+    public Section(String roadId, Junction beginningNode, Junction endingNode, SectionTypology typology, SectionDirection direction, double toll, Wind wind, ArrayList<Segment> segmentsList) {
         
         this.roadName = roadId;
         this.beginningNode = beginningNode;
@@ -152,7 +152,7 @@ public class Section {
      * 
      * @return direction
      */
-    public Direction getDirection() {
+    public SectionDirection getDirection() {
         return direction;
     }
 
@@ -160,7 +160,7 @@ public class Section {
      * 
      * @param direction direction
      */
-    public void setDirection(Direction direction) {
+    public void setDirection(SectionDirection direction) {
         this.direction = direction;
     }
 

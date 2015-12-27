@@ -19,11 +19,11 @@ public class Vehicle {
     private int m_pk;
     private String name;
     private String description;
-    private double mass;
     private String type;
+    private double mass;
     private double load;
     private double dragCoefficient;
-    private double maxSpeed;
+    private double frontalArea;
     private double rrc;
     private double wheelSize;
     private HashMap<SectionTypology,Double> velocityLimit;
@@ -46,7 +46,6 @@ public class Vehicle {
         this.type = "";
         this.load = 0;
         this.dragCoefficient = 0;
-        this.maxSpeed=0;
         this.rrc = 0;
         this.wheelSize = 0;
         this.velocityLimit = null;
@@ -63,16 +62,16 @@ public class Vehicle {
      * @param type type
      * @param load load
      * @param drag_Coefficient drag coefficient 
-     * @param maxSpeed maximum speed
+     * @param frontalArea 
      * @param rrc rrc
      * @param wheelSize wheelSize diameter
-     * @param velocityLimit velocityLimit
+     * @param velocityLimit
      * @param minRPM minRPM
      * @param maxRPM maxRPM
      * @param finalDriveRatio finalDriveRatio 
      */
-    public Vehicle(String name, String description, double mass, String type, double load, double drag_Coefficient, double maxSpeed,
-                    double rrc, double wheelSize, HashMap<SectionTypology,Double> velocityLimit,
+    public Vehicle(String name, String description, double mass, String type, double load, double drag_Coefficient, 
+                    double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology,Double> velocityLimit,
                     double minRPM, double maxRPM, double finalDriveRatio) {
         this.name = name;
         this.description = description;
@@ -80,7 +79,7 @@ public class Vehicle {
         this.type = type;
         this.load = load;
         this.dragCoefficient = drag_Coefficient;
-        this.maxSpeed=maxSpeed;
+        this.frontalArea=frontalArea;
         this.rrc = rrc;
         this.wheelSize = wheelSize;
         this.velocityLimit = velocityLimit;
@@ -102,7 +101,7 @@ public class Vehicle {
         v.type = this.type;
         v.load = this.load;
         v.dragCoefficient = this.dragCoefficient;
-        v.maxSpeed = this.maxSpeed;
+        v.frontalArea = this.frontalArea;
         v.rrc = this.rrc;
         v.wheelSize = this.wheelSize;
         v.velocityLimit = this.velocityLimit;
@@ -197,38 +196,6 @@ public class Vehicle {
      */
     public void setDragCoefficient(double drag_Coefficient) {
         this.dragCoefficient = drag_Coefficient;
-    }
-
-    /**
-     * 
-     * @return maxSpeed
-     */
-    public double getMaximumSpeed() {
-        return maxSpeed;
-    }
-
-    /**
-     * 
-     * @param maxSpeed maxSpeed 
-     */
-    public void setMaximumSpeed(double maxSpeed) {
-        this.maxSpeed = maxSpeed;
-    }
-
-    /**
-     * 
-     * @return maxSpeed
-     */
-    public double getMaxSpeed() {
-        return maxSpeed;
-    }
-
-    /**
-     * 
-     * @param maxSpeed maxSpeed
-     */
-    public void setMaxSpeed(double maxSpeed) {
-        this.maxSpeed = maxSpeed;
     }
 
     /**
@@ -381,9 +348,6 @@ public class Vehicle {
         if (Double.doubleToLongBits(this.dragCoefficient) != Double.doubleToLongBits(other.dragCoefficient)) {
             return false;
         }
-        if (Double.doubleToLongBits(this.maxSpeed) != Double.doubleToLongBits(other.maxSpeed)) {
-            return false;
-        }
         if (Double.doubleToLongBits(this.rrc) != Double.doubleToLongBits(other.rrc)) {
             return false;
         }
@@ -433,7 +397,6 @@ public class Vehicle {
                 + "type= " + getType() + "\n"
                 + "load= " + load + "\n"
                 + "drag_Coefficient= " + dragCoefficient + "\n"
-                + "maxSpeed=" + maxSpeed + "\n"
                 + "rrc=" + rrc + "\n"
                 + "wheelSize=" + wheelSize + "\n"
                 + "velocityLimit=" + velocityLimit + "\n"

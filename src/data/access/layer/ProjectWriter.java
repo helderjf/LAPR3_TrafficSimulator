@@ -65,19 +65,7 @@ public class ProjectWriter {
                     it.setPK(m_dao.saveNewNode(m_roadNetworkPK, it.getJunctionId()));
                 }
 
-//TENTATIVA DE FAZER COM ARRAYS ORACLE
-//            String[] nodeNames= new String[m_nodeList.size()];
-//            for(int i =0; i<m_nodeList.size();i++){
-//                nodeNames[i] = m_nodeList.get(i).getJunctionId();
-//            }
-//            
-//            Integer[] nodesPK = new Integer[m_nodeList.size()];
-//            nodesPK = m_dao.saveNewNodes(m_roadNetworkPK,nodeNames);
-//            
-//            for(int i = 0; i<m_nodeList.size();i++){
-//                m_nodeList.get(i).setPK(nodesPK[i]);
-//            }
-//TENTATIVA DE FAZER COM ARRAYS ORACLE
+
                 m_sectionList = m_roadNetwork.getSectionList();
                 for (Section section : m_sectionList) {
                     section.setPK(m_dao.saveNewSection(

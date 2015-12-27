@@ -9,6 +9,6 @@ package roadnetwork.domain;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public enum Direction {direct, reverse, bidirectional
+public enum SectionDirection {unidirectional, bidirectional
     
 }

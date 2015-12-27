@@ -115,7 +115,7 @@ public class ImportXML implements Import {
         
         //definir typology
         String direction = domElement.getElementsByTagName("direction").item(0).getNodeValue();
-        section.setDirection(Direction.valueOf(direction));
+        section.setDirection(SectionDirection.valueOf(direction));
         
         //definir Toll
         String toll = domElement.getElementsByTagName("toll").item(0).getNodeValue();
