@@ -76,27 +76,27 @@ public class SegmentIT {
     }
 
     /**
-     * Test of getInitial_Height method, of class Segment.
+     * Test of getInitialHeight method, of class Segment.
      */
     @Test
     public void testGetInitial_Height() {
         System.out.println("getInitial_Height");
         Segment instance = new Segment();
         double expResult = 0.0;
-        double result = instance.getInitial_Height();
+        double result = instance.getInitialHeight();
         assertEquals(expResult, result, 0.0);
 
     }
 
     /**
-     * Test of setInitial_Height method, of class Segment.
+     * Test of setInitialHeight method, of class Segment.
      */
     @Test
     public void testSetInitial_Height() {
         System.out.println("setInitial_Height");
         double initial_Height = 0.0;
         Segment instance = new Segment();
-        instance.setInitial_Height(initial_Height);
+        instance.setInitialHeight(initial_Height);
 
     }
 

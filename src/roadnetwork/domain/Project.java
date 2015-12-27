@@ -124,4 +124,12 @@ public class Project {
         m_PK=pk;
     }
 
+    public boolean hasRoadNetwork() {
+        return m_state.hasRoadNetwork();
+    }
+
+    public boolean hasVehicles() {
+        return m_state.hasVehicles();
+    }
+
 }

@@ -11,6 +11,7 @@ package roadnetwork.domain;
  */
 public class Junction {
     
+    private int m_pk;
     private String junctionId;
     
 
@@ -78,6 +79,17 @@ public class Junction {
         return true;
     }
 
+    public int getPK() {
+        return m_pk;
+    }
+
+    public void setPK(int pk) {
+        m_pk = pk;
+    }
+
+    
+    
+    
     /**
      * 
      * @return Junction string

@@ -52,14 +52,14 @@ public class SectionIT {
     }
 
     /**
-     * Test of getRoadId method, of class Section.
+     * Test of getRoadName method, of class Section.
      */
     @Test
     public void testGetRoadId() {
         System.out.println("getRoadId");
         Section instance = new Section();
         String expResult = "";
-        String result = instance.getRoadId();
+        String result = instance.getRoadName();
         assertEquals(expResult, result);
     }
 
@@ -266,14 +266,14 @@ public class SectionIT {
     }
 
     /**
-     * Test of setRoadId method, of class Section.
+     * Test of setRoadName method, of class Section.
      */
     @Test
     public void testSetRoadId() {
         System.out.println("setRoadId");
         String roadId = "";
         Section instance = new Section();
-        instance.setRoadId(roadId);
+        instance.setRoadName(roadId);
 
     }
     

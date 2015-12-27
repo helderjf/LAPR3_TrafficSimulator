@@ -88,7 +88,7 @@ public class ResultFastestPath implements SimulationResult {
             results.append(" ---> ");
             results.append(it.getEndingNode().toString());
             results.append("  @  ");
-            results.append(it.getRoadId());
+            results.append(it.getRoadName());
             results.append(" Travel time: ");
             
             int i = m_path.indexOf(it);

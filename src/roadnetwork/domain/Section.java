@@ -14,8 +14,9 @@ import java.util.Objects;
  */
 public class Section {
     
-    private int id;
-    private String roadId;
+    
+    private int m_pk;
+    private String roadName;
     private Junction beginningNode;
     private Junction endingNode;
     private SectionTypology typology;
@@ -29,8 +30,8 @@ public class Section {
      */
     public Section()
     {
-        this.id = 0;
-        this.roadId = ""; 
+        
+        this.roadName = ""; 
         this.beginningNode = null;
         this.endingNode = null;
         this.direction = null;
@@ -43,8 +44,7 @@ public class Section {
 
     /**
      * 
-     * @param id id of section
-     * @param roadId roadId of section
+     * @param roadId roadName of section
      * @param beginningNode beginningNode
      * @param endingNode endingNode
      * @param typology Typology (regular road, urban road/street, express road, controlled-access highway)
@@ -53,9 +53,9 @@ public class Section {
      * @param wind Wind direction (angle) and speed (m/s) relative to section direct direction (probability distributions)
      * @param segmentsList segmentsList
      */
-    public Section(int id, String roadId, Junction beginningNode, Junction endingNode, SectionTypology typology, Direction direction, double toll, Wind wind, ArrayList<Segment> segmentsList) {
-        this.id = id;
-        this.roadId = roadId;
+    public Section(String roadId, Junction beginningNode, Junction endingNode, SectionTypology typology, Direction direction, double toll, Wind wind, ArrayList<Segment> segmentsList) {
+        
+        this.roadName = roadId;
         this.beginningNode = beginningNode;
         this.endingNode = endingNode;
         this.typology = typology;
@@ -74,8 +74,8 @@ public class Section {
         s.beginningNode = this.beginningNode;
         s.direction = this.direction;
         s.endingNode = this.endingNode;
-        s.id = this.id;
-        s.roadId = this.roadId;
+        s.m_pk = this.m_pk;
+        s.roadName = this.roadName;
         s.toll = this.toll;
         s.typology = this.typology;
         s.wind = this.wind;
@@ -84,18 +84,18 @@ public class Section {
 
     /**
      * 
-     * @return section id
+     * @return section m_pk
      */
     public int getId() {
-        return id;
+        return m_pk;
     }
 
     /**
      * 
-     * @return roadId
+     * @return roadName
      */
-    public String getRoadId() {
-        return roadId;
+    public String getRoadName() {
+        return roadName;
     }
     
     
@@ -218,10 +218,10 @@ public class Section {
             return false;
         }
         final Section other = (Section) obj;
-        if (this.id != other.id) {
+        if (this.m_pk != other.m_pk) {
             return false;
         }
-        if (!Objects.equals(this.roadId, other.roadId)) {
+        if (!Objects.equals(this.roadName, other.roadName)) {
             return false;
         }
         if (!Objects.equals(this.beginningNode, other.beginningNode)) {
@@ -254,19 +254,29 @@ public class Section {
      */
     @Override
     public String toString() {
-        return "Section{" + "id=" + id + ", roadId=" + getRoadId() + ", beginningNode=" + beginningNode + ", endingNode=" + endingNode + ", typology=" + typology + ", direction=" + direction + ", toll=" + toll + ", windDirection=" + wind + ", segmentsList=" + segmentsList + '}';
+        return "Section{" + "id=" + m_pk + ", roadId=" + getRoadName() + ", beginningNode=" + beginningNode + ", endingNode=" + endingNode + ", typology=" + typology + ", direction=" + direction + ", toll=" + toll + ", windDirection=" + wind + ", segmentsList=" + segmentsList + '}';
     }
 
     /**
-     * @param roadId the roadId to set
+     * @param roadId the roadName to set
      */
-    public void setRoadId(String roadId) {
-        this.roadId = roadId;
+    public void setRoadName(String roadId) {
+        this.roadName = roadId;
     }
 
     SectionTypology getSectionType() {
         return typology;
     }
+
+    public void setPK(int pk) {
+        m_pk=pk;
+    }
+
+    public int getPK() {
+        return m_pk;
+    }
+    
+    
 
   
 }

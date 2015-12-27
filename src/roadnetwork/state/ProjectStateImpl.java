@@ -86,5 +86,15 @@ public class ProjectStateImpl implements ProjectState {
         return false;
     }
 
+    @Override
+    public boolean hasRoadNetwork() {
+        return false;
+    }
+
+    @Override
+    public boolean hasVehicles() {
+        return false;
+    }
+
 
 }

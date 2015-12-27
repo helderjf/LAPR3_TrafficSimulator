@@ -77,14 +77,14 @@ public class CombustionVehicleIT {
     }
 
     /**
-     * Test of setGearRatio method, of class CombustionVehicle.
+     * Test of setGearList method, of class CombustionVehicle.
      */
     @Test
     public void testSetGearRatio() {
         System.out.println("setGearRatio");
         HashMap<Integer, Double> gearRatio = null;
         CombustionVehicle instance = new CombustionVehicle();
-        instance.setGearRatio(gearRatio);
+        instance.setGearList(gearRatio);
 
     }
 

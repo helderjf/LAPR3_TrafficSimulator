@@ -107,7 +107,7 @@ public class ImportXML implements Import {
         //definir road name
         Element domElement = (Element)node;
         String roadName = domElement.getElementsByTagName("road").item(0).getNodeValue();
-        section.setRoadId(roadName);
+        section.setRoadName(roadName);
         
         //definir typology
         String typology = domElement.getElementsByTagName("typology").item(0).getNodeValue();
@@ -157,12 +157,12 @@ public class ImportXML implements Import {
         int  numberVehicles = Integer.parseInt(domElement.getElementsByTagName("number_vehicles").item(0).getNodeValue());
         
         segment.setIndex(Integer.parseInt(segmentIndex));
-        segment.setInitial_Height(Double.parseDouble(segmentHeight));
+        segment.setInitialHeight(Double.parseDouble(segmentHeight));
         segment.setSlope(Double.parseDouble(segmentSlope));
         segment.setLenght(Double.parseDouble(segmentLength));
         segment.setMax_Velocity(Double.parseDouble(maxVelocity));
         segment.setMin_Velocity(Double.parseDouble(minVelocity));
-        //segment.setRrc(segmentRrc);
+        //segment.setRcc(segmentRrc);
         segment.setNumber_vehicles(numberVehicles);
         
         return segment;
@@ -251,8 +251,8 @@ public class ImportXML implements Import {
         vehicle.setType(type);
         vehicle.setMass(Double.parseDouble(mass));
         vehicle.setLoad(Double.parseDouble(load));
-        vehicle.setDrag_Coefficient(Double.parseDouble(drag));
-        vehicle.setRrc(Double.parseDouble(rrc));
+        vehicle.setDragCoefficient(Double.parseDouble(drag));
+        vehicle.setRcc(Double.parseDouble(rrc));
         vehicle.setWheelSize(Double.parseDouble(wheelSize));
         vehicle.setTorque(Double.parseDouble(torque));
         vehicle.setConsuption(Double.parseDouble(consumption));

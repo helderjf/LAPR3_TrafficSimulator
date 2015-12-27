@@ -10,5 +10,7 @@ package roadnetwork.domain;
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public enum SectionTypology {
-    regularroad, urbanroad, urbanstreet, street, expressroad, controlledaccess_highway, highway
+    regular_road, urban_road, urban_street, street, expressroad, controlled_access_highway, highway;
+
+    
 }

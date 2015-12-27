@@ -27,7 +27,11 @@ public class ProjectStateVehiclesAssignedSaved extends ProjectStateImpl {
         return true;
     }
     
-    
+
+    @Override
+    public boolean hasVehicles() {
+        return true;
+    }
     
     
 

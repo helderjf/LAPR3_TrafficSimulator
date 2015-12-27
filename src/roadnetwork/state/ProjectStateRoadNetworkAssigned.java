@@ -25,4 +25,9 @@ public class ProjectStateRoadNetworkAssigned extends ProjectStateImpl {
         return true;
     }
 
+    @Override
+    public boolean hasRoadNetwork() {
+        return true;
+    }
+
 }

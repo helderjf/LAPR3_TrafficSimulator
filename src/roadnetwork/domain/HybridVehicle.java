@@ -13,13 +13,14 @@ import java.util.HashMap;
  */
 public class HybridVehicle extends Vehicle implements Electric , Combustion{
 
+    private int m_pk;
 
-    public HybridVehicle(String id, String name, String description, double mass, String type, double load, 
-            double drag_Coefficient, double maxSpeed, double rrc, double wheelSize, HashMap<String, Double> velocityLimit, 
+    public HybridVehicle(String name, String description, double mass, String type, double load, 
+            double drag_Coefficient, double maxSpeed, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, 
             double torque, double mostEfficientRPM, double consuption, double minRPM, double maxRPM, 
             double finalDriveRatio) {
-        super(id, name, description, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit, torque, 
-                mostEfficientRPM, consuption, minRPM, maxRPM, finalDriveRatio);
+        super(name, description, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit, 
+                 minRPM, maxRPM, finalDriveRatio);
     }
     
     

@@ -37,7 +37,7 @@ public class SaveProjectController {
 
         if (m_project.hasPK()) {
             //TO DO IMPLEMENTAR METODO ABAIXO
-           // aux = m_writer.updateProject(m_project);
+           aux = m_writer.updateProject(m_project);
         } else {
             aux = m_writer.saveNewProject(m_project);
         }

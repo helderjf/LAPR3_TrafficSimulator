@@ -16,24 +16,21 @@ import java.util.Objects;
 
 public class Vehicle {
       
-    private String id;
+    private int m_pk;
     private String name;
     private String description;
     private double mass;
     private String type;
     private double load;
-    private double drag_Coefficient;
+    private double dragCoefficient;
     private double maxSpeed;
     private double rrc;
     private double wheelSize;
-    private HashMap<String,Double> velocityLimit;
-    private double torque;
-    private double mostEfficientRPM;
-    private double consuption;
+    private HashMap<SectionTypology,Double> velocityLimit;
     private double minRPM;
     private double maxRPM;
     private double finalDriveRatio;
-    //private ArrayList<Double> gearList;
+
 
     
             
@@ -43,29 +40,23 @@ public class Vehicle {
      */
     public Vehicle()
     {
-        this.id = "";
         this.name = "";
         this.description = "";
         this.mass = 0;
         this.type = "";
         this.load = 0;
-        this.drag_Coefficient = 0;
+        this.dragCoefficient = 0;
         this.maxSpeed=0;
         this.rrc = 0;
         this.wheelSize = 0;
         this.velocityLimit = null;
-        this.torque = 0;
-        this.mostEfficientRPM = 0;
-        this.consuption = 0;
         this.minRPM = 0;
         this.maxRPM = 0;
         this.finalDriveRatio = 0;
-        //this.gearList = null;
     }
 
     /**
      * 
-     * @param id id
      * @param name name
      * @param description description
      * @param mass mass
@@ -76,35 +67,26 @@ public class Vehicle {
      * @param rrc rrc
      * @param wheelSize wheelSize diameter
      * @param velocityLimit velocityLimit
-     * @param torque torque
-     * @param mostEfficientRPM mostEfficientRPM
-     * @param consuption consuption
      * @param minRPM minRPM
      * @param maxRPM maxRPM
      * @param finalDriveRatio finalDriveRatio 
-     //* @param gearList gearList 
      */
-    public Vehicle(String id, String name, String description, double mass, String type, double load, double drag_Coefficient, double maxSpeed,
-                    double rrc, double wheelSize, HashMap<String,Double> velocityLimit, double torque, double mostEfficientRPM,
-                    double consuption, double minRPM, double maxRPM, double finalDriveRatio) {
-        this.id = id;
+    public Vehicle(String name, String description, double mass, String type, double load, double drag_Coefficient, double maxSpeed,
+                    double rrc, double wheelSize, HashMap<SectionTypology,Double> velocityLimit,
+                    double minRPM, double maxRPM, double finalDriveRatio) {
         this.name = name;
         this.description = description;
         this.mass = mass;
         this.type = type;
         this.load = load;
-        this.drag_Coefficient = drag_Coefficient;
+        this.dragCoefficient = drag_Coefficient;
         this.maxSpeed=maxSpeed;
         this.rrc = rrc;
         this.wheelSize = wheelSize;
         this.velocityLimit = velocityLimit;
-        this.torque = torque;
-        this.mostEfficientRPM = mostEfficientRPM;
-        this.consuption = consuption;
         this.minRPM = minRPM;
         this.maxRPM = maxRPM;
         this.finalDriveRatio = finalDriveRatio;
-        //this.gearList = gearList;
    
     }
     
@@ -112,42 +94,37 @@ public class Vehicle {
      * 
      * @param v Vechicle copy 
      */
-    public Vehicle(Vehicle v)
+    public Vehicle(Vehicle v)//TO DO alterar isto. está ao contrário
     {
-        v.id = this.id;
         v.name = this.name;
         v.description = this.description;
         v.mass = this.mass;
         v.type = this.type;
         v.load = this.load;
-        v.drag_Coefficient = this.drag_Coefficient;
+        v.dragCoefficient = this.dragCoefficient;
         v.maxSpeed = this.maxSpeed;
         v.rrc = this.rrc;
         v.wheelSize = this.wheelSize;
         v.velocityLimit = this.velocityLimit;
-        v.torque = this.torque;
-        v.mostEfficientRPM = this.mostEfficientRPM;
-        v.consuption = this.consuption;
         v.minRPM = this.minRPM;
         v.maxRPM = this.maxRPM;
         v.finalDriveRatio = this.finalDriveRatio;
-        
     }
 
     /**
      * 
-     * @return id
+     * @return m_pk
      */
-    public String getId() {
-        return id;
+    public int getPK() {
+        return m_pk;
     }
 
     /**
      * 
-     * @param id id
+     * @param pk m_pk
      */
-    public void setId(String id) {
-        this.id = id;
+    public void setPK(int pk) {
+        this.m_pk = pk;
     }
 
     /**
@@ -210,16 +187,16 @@ public class Vehicle {
      * 
      * @return frag coefficient
      */
-    public double getDrag_Coefficient() {
-        return drag_Coefficient;
+    public double getDragCoefficient() {
+        return dragCoefficient;
     }
 
     /**
      * 
-     * @param drag_Coefficient drag_Coefficient
+     * @param drag_Coefficient dragCoefficient
      */
-    public void setDrag_Coefficient(double drag_Coefficient) {
-        this.drag_Coefficient = drag_Coefficient;
+    public void setDragCoefficient(double drag_Coefficient) {
+        this.dragCoefficient = drag_Coefficient;
     }
 
     /**
@@ -258,7 +235,7 @@ public class Vehicle {
      * 
      * @return rrc
      */
-    public double getRrc() {
+    public double getRcc() {
         return rrc;
     }
 
@@ -266,7 +243,7 @@ public class Vehicle {
      * 
      * @param rrc rrc
      */
-    public void setRrc(double rrc) {
+    public void setRcc(double rrc) {
         this.rrc = rrc;
     }
 
@@ -290,7 +267,7 @@ public class Vehicle {
      * 
      * @return velocitylimit
      */
-    public HashMap<String, Double> getVelocityLimit() {
+    public HashMap<SectionTypology, Double> getVelocityLimit() {
         return velocityLimit;
     }
 
@@ -298,57 +275,10 @@ public class Vehicle {
      * 
      * @param velocityLimit velocityLimit
      */
-    public void setVelocityLimit(HashMap<String, Double> velocityLimit) {
+    public void setVelocityLimit(HashMap<SectionTypology, Double> velocityLimit) {
         this.velocityLimit = velocityLimit;
     }
 
-    /**
-     * 
-     * @return torque
-     */
-    public double getTorque() {
-        return torque;
-    }
-
-    /**
-     * 
-     * @param torque torque
-     */
-    public void setTorque(double torque) {
-        this.torque = torque;
-    }
-
-    /**
-     * 
-     * @return MostEfficientRPM
-     */
-    public double getMostEfficientRPM() {
-        return mostEfficientRPM;
-    }
-
-    /**
-     * 
-     * @param mostEfficientRPM MostEfficientRPM
-     */
-    public void setMostEfficientRPM(double mostEfficientRPM) {
-        this.mostEfficientRPM = mostEfficientRPM;
-    }
-
-    /**
-     * 
-     * @return consuption
-     */
-    public double getConsuption() {
-        return consuption;
-    }
-
-    /**
-     * 
-     * @param consuption consuption
-     */
-    public void setConsuption(double consuption) {
-        this.consuption = consuption;
-    }
 
     /**
      * 
@@ -411,20 +341,6 @@ public class Vehicle {
     public void setDescription(String description) {
         this.description = description;
     }
-//
-//    /**
-//     * @return the gearList
-//     */
-//    public ArrayList<Double> getGearList() {
-//        return gearList;
-//    }
-//
-//    /**
-//     * @param gearList the gearList to set
-//     */
-//    public void setGearList(ArrayList<Double> gearList) {
-//        this.gearList = gearList;
-//    }
 
     /**
      * @param type the type to set
@@ -439,7 +355,7 @@ public class Vehicle {
      * @return 
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) {//to do completar para os novos atributos
         if (obj == null) {
             return false;
         }
@@ -447,7 +363,7 @@ public class Vehicle {
             return false;
         }
         final Vehicle other = (Vehicle) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.m_pk, other.m_pk)) {
             return false;
         }
         if (!Objects.equals(this.name, other.name)) {
@@ -462,7 +378,7 @@ public class Vehicle {
         if (Double.doubleToLongBits(this.load) != Double.doubleToLongBits(other.load)) {
             return false;
         }
-        if (Double.doubleToLongBits(this.drag_Coefficient) != Double.doubleToLongBits(other.drag_Coefficient)) {
+        if (Double.doubleToLongBits(this.dragCoefficient) != Double.doubleToLongBits(other.dragCoefficient)) {
             return false;
         }
         if (Double.doubleToLongBits(this.maxSpeed) != Double.doubleToLongBits(other.maxSpeed)) {
@@ -475,15 +391,6 @@ public class Vehicle {
             return false;
         }
         if (!Objects.equals(this.velocityLimit, other.velocityLimit)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.torque) != Double.doubleToLongBits(other.torque)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.mostEfficientRPM) != Double.doubleToLongBits(other.mostEfficientRPM)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.consuption) != Double.doubleToLongBits(other.consuption)) {
             return false;
         }
         if (Double.doubleToLongBits(this.minRPM) != Double.doubleToLongBits(other.minRPM)) {
@@ -511,28 +418,25 @@ public class Vehicle {
      */
     @Override
     public String toString() {
-        return "Vehicle " + id + " - " + name;
+        return "Vehicle " + m_pk + " - " + name;
     }
     
      /**
      * 
      * @return Vehicle data
      */
-    public String showData() {
+    public String showData() {//completar para os novos atributos
         return "Vehicle: \n"
-                + "id= " + id + "\n"
+                + "id= " + m_pk + "\n"
                 + "name= " + name + "\n"
                 + "mass= " + mass + "\n"
                 + "type= " + getType() + "\n"
                 + "load= " + load + "\n"
-                + "drag_Coefficient= " + drag_Coefficient + "\n"
+                + "drag_Coefficient= " + dragCoefficient + "\n"
                 + "maxSpeed=" + maxSpeed + "\n"
                 + "rrc=" + rrc + "\n"
                 + "wheelSize=" + wheelSize + "\n"
                 + "velocityLimit=" + velocityLimit + "\n"
-                + "torque=" + torque + "\n"
-                + "mostEfficientRPM=" + mostEfficientRPM + "\n"
-                + "consuption=" + consuption + "\n"
                 + "minRPM=" + minRPM + "\n"
                 + "maxRPM=" + maxRPM + "\n"
                 + "finalDriveRatio=" + finalDriveRatio;

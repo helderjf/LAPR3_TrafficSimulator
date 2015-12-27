@@ -16,9 +16,8 @@ public class ElectricVehicle extends Vehicle implements Electric{
     
     /**
      * 
-     * @param id id of Electric Vehicles
-     * @param name name of Electric Vehicles
-     * @param description description of Electric Vehicles
+     * @param name name of Electric Vehicle
+     * @param description description of Electric Vehicle
      * @param mass mass of Electric Vehicles
      * @param type type of Electric Vehicles
      * @param load load of Electric Vehicles
@@ -27,9 +26,6 @@ public class ElectricVehicle extends Vehicle implements Electric{
      * @param rrc rrc of Electric Vehicles
      * @param wheelSize wheelSize of Electric Vehicles
      * @param velocityLimit velocityLimit of Electric Vehicles
-     * @param torque torque of Electric Vehicles
-     * @param mostEfficientRPM mostEfficientRPM of Electric Vehicles
-     * @param consuption consuption of Electric Vehicles
      * @param minRPM minRPM of Electric Vehicles
      * @param maxRPM maxRPM of Electric Vehicles
      * @param finalDriveRatio finalDriveRatio of Electric Vehicles
@@ -37,11 +33,11 @@ public class ElectricVehicle extends Vehicle implements Electric{
 
     
     public ElectricVehicle(String id, String name, String description, double mass, String type, double load, 
-            double drag_Coefficient, double maxSpeed, double rrc, double wheelSize, HashMap<String, Double> velocityLimit, 
-            double torque, double mostEfficientRPM, double consuption, double minRPM, double maxRPM, 
+            double drag_Coefficient, double maxSpeed, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, 
+            double minRPM, double maxRPM, 
             double finalDriveRatio){
-        super(id, name, description, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit, 
-                torque, mostEfficientRPM, consuption, minRPM, maxRPM, finalDriveRatio);
+        super(name, description, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit, 
+                minRPM, maxRPM, finalDriveRatio);
  };
 
     public ElectricVehicle() {

@@ -40,7 +40,7 @@ public class ExportCSV {
             file.append("\n");
             int index = 0;
             for (Section section : result.getPath()) {
-                file.append(section.getRoadId());
+                file.append(section.getRoadName());
                 file.append(';');
                 file.append(section.getBeginningNode().getJunctionId());
                 file.append(';');

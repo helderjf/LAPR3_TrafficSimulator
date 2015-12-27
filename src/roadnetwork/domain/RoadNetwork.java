@@ -46,6 +46,14 @@ public class RoadNetwork {
     public void setPK(int pk) {
         m_PK = pk;
     }
+
+    public void setName(String name) {
+        m_name=name;
+    }
+
+    public void setDescription(String description) {
+        m_description=description;
+    }
     
     
     

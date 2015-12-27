@@ -30,6 +30,14 @@ public class ProjectStateSimulationReady extends ProjectStateImpl {
         return true;
     }    
     
-    
+    @Override
+    public boolean hasRoadNetwork() {
+        return true;
+    }
+
+    @Override
+    public boolean hasVehicles() {
+        return true;
+    }       
 
 }

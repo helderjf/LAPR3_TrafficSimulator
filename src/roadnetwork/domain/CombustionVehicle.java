@@ -5,6 +5,7 @@
  */
 package roadnetwork.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -13,15 +14,14 @@ import java.util.Objects;
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public class CombustionVehicle extends Vehicle implements Combustion {
-    
+
+    private int m_pk;
     private String fuel;
-    private HashMap<Integer,Double> gearRatio;
-
-
+    private ArrayList<Double> gearList;
+    private ArrayList<Throttle> throttleList;
 
     /**
-     * 
-     * @param id id of CombustionVehicle
+     *
      * @param name name of CombustionVehicle
      * @param description description of Vehicle
      * @param mass mass of CombustionVehicle
@@ -33,27 +33,30 @@ public class CombustionVehicle extends Vehicle implements Combustion {
      * @param wheelSize wheelSize of CombustionVehicle
      * @param velocityLimit velocityLimit of CombustionVehicle
      * @param torque torque of CombustionVehicle
-     * @param fuel fuel of CombustionVehicle 
+     * @param fuel fuel of CombustionVehicle
      * @param consuption consuption of CombustionVehicle
      * @param mostEfficientRPM mostEfficientRPM of CombustionVehicle
      * @param minRPM minRPM of CombustionVehicle
      * @param maxRPM maxRPM of CombustionVehicle
      * @param finalDriveRatio finalDriveRatio of CombustionVehicle
-     * @param gearRatio gearRatio of CombustionVehicle
+     * @param gearList
+     * @param throttleList
      */
-    public CombustionVehicle(String id, String name, String description, double mass, String type, double load, 
-            double drag_Coefficient, double maxSpeed, double rrc, double wheelSize, HashMap<String, Double> velocityLimit, 
-            double torque, double mostEfficientRPM, double consuption, double minRPM, double maxRPM, 
-            double finalDriveRatio, String fuel, HashMap<Integer,Double> gearRatio) {
-        super(id, name, description, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit, 
-                torque, mostEfficientRPM, consuption, minRPM, maxRPM, finalDriveRatio);
+    public CombustionVehicle(String name, String description, double mass, String type, double load,
+            double drag_Coefficient, double maxSpeed, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit,
+            double torque, double mostEfficientRPM, double consuption, double minRPM, double maxRPM,
+            double finalDriveRatio, String fuel, ArrayList<Double> gearList, ArrayList<Throttle> throttleList) {
+        super(name, description, mass, type, load, drag_Coefficient, maxSpeed, rrc, wheelSize, velocityLimit,
+                minRPM, maxRPM, finalDriveRatio);
         this.fuel = fuel;
-        this.gearRatio = gearRatio;
+        this.gearList = gearList;
+        this.throttleList = throttleList;
     }
+
     
-    
-    
-    public CombustionVehicle(){ };
+    public CombustionVehicle() {
+    }
+
 
     /**
      * 
@@ -64,7 +67,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
     }
 
     /**
-     * 
+     *
      * @param fuel fuel
      */
     public void setFuel(String fuel) {
@@ -72,31 +75,45 @@ public class CombustionVehicle extends Vehicle implements Combustion {
     }
 
     /**
-     * 
-     * @return gearRatio
+     *
+     * @return gearList
      */
-    public HashMap<Integer,Double> getGearRatio() {
-        return gearRatio;
+    public ArrayList<Double> getGearList() {
+        return gearList;
     }
 
     /**
-     * 
+     *
      * @param gearRatio gearRatio
      */
-    public void setGearRatio(HashMap<Integer,Double> gearRatio) {
-        this.gearRatio = gearRatio;
+    public void setGearList(ArrayList<Double> gearList) {
+        this.gearList = gearList;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        return hash;
+    public ArrayList<Throttle> getThrottleList() {
+        return throttleList;
     }
+
+    public void setThrottleList(ArrayList<Throttle> throttleList) {
+        this.throttleList = throttleList;
+    }
+
+    public int getPK() {
+        return m_pk;
+    }
+
+    public void setPK(int pk) {
+        this.m_pk = pk;
+    }
+    
+    
+    
+    
 
     /**
-     * 
+     *
      * @param obj object
-     * @return 
+     * @return
      */
     @Override
     public boolean equals(Object obj) {
@@ -110,15 +127,10 @@ public class CombustionVehicle extends Vehicle implements Combustion {
         if (!Objects.equals(this.fuel, other.fuel)) {
             return false;
         }
-        if (!Objects.equals(this.gearRatio, other.gearRatio)) {
+        if (!Objects.equals(this.gearList, other.gearList)) {
             return false;
         }
         return true;
     }
-    
-    
 
-
-    
-    
 }

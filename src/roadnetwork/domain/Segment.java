@@ -11,9 +11,9 @@ package roadnetwork.domain;
  */
 public class Segment {
     
-    private int id;
+    //private int id;
     private int index;
-    private double initial_Height;
+    private double initialHeight;
     private double slope;
     private double lenght;
     private double max_Velocity;
@@ -28,7 +28,7 @@ public class Segment {
     public Segment()
     {
         this.index = 0;
-        this.initial_Height = 0;
+        this.initialHeight = 0;
         this.lenght = 0;
         this.max_Vehicles = 0;
         this.min_Velocity = 0;
@@ -40,7 +40,7 @@ public class Segment {
     /**
      * 
      * @param index index
-     * @param initial_Height initial_Height
+     * @param initial_Height initialHeight
      * @param slope slope
      * @param lenght lenght
      * @param max_Velocity max_Velocity
@@ -50,7 +50,7 @@ public class Segment {
     public Segment(int index, double initial_Height, double slope, double lenght, double max_Velocity, double min_Velocity, double max_Vehicles) {
 
         this.index = index;
-        this.initial_Height = initial_Height;
+        this.initialHeight = initial_Height;
         this.slope = slope;
         this.lenght = lenght;
         this.max_Velocity = max_Velocity;
@@ -66,7 +66,7 @@ public class Segment {
     public Segment(Segment s)
     {
         s.index = this.index;
-        s.initial_Height = this.initial_Height;
+        s.initialHeight = this.initialHeight;
         s.lenght = this.lenght;
         s.max_Vehicles = this.max_Vehicles;
         s.max_Velocity = this.max_Velocity;
@@ -97,16 +97,16 @@ public class Segment {
      * 
      * @return returns initial height
      */
-    public double getInitial_Height() {
-        return initial_Height;
+    public double getInitialHeight() {
+        return initialHeight;
     }
 
     /**
      * 
-     * @param initial_Height receives initial_Height
+     * @param initial_Height receives initialHeight
      */
-    public void setInitial_Height(double initial_Height) {
-        this.initial_Height = initial_Height;
+    public void setInitialHeight(double initial_Height) {
+        this.initialHeight = initial_Height;
     }
 
     /**
@@ -218,13 +218,13 @@ public class Segment {
             return false;
         }
         final Segment other = (Segment) obj;
-        if (this.id != other.id) {
-            return false;
-        }
+//        if (this.id != other.id) {
+//            return false;
+//        }
         if (this.index != other.index) {
             return false;
         }
-        if (Double.doubleToLongBits(this.initial_Height) != Double.doubleToLongBits(other.initial_Height)) {
+        if (Double.doubleToLongBits(this.initialHeight) != Double.doubleToLongBits(other.initialHeight)) {
             return false;
         }
         if (Double.doubleToLongBits(this.slope) != Double.doubleToLongBits(other.slope)) {
@@ -250,7 +250,11 @@ public class Segment {
 
     @Override
     public String toString() {
-        return "Segment{" + "id=" + id + ", index=" + index + ", initial_Height=" + initial_Height + ", slope=" + slope + ", lenght=" + lenght + ", max_Velocity=" + max_Velocity + ", min_Velocity=" + min_Velocity + ", max_Vehicles=" + max_Vehicles + ", number_vehicles=" + number_vehicles + '}';
+        return "Segment{" + "index=" + index + ", initial_Height=" + initialHeight + ", slope=" + slope + ", lenght=" + lenght + ", max_Velocity=" + max_Velocity + ", min_Velocity=" + min_Velocity + ", max_Vehicles=" + max_Vehicles + ", number_vehicles=" + number_vehicles + '}';
+    }
+
+    public void setPK(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
   
 }

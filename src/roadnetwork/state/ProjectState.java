@@ -33,5 +33,9 @@ public interface ProjectState {
 
     public boolean projectSaved();
 
+    public boolean hasRoadNetwork();
+
+    public boolean hasVehicles();
+
 }
     
