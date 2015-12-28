@@ -314,6 +314,18 @@ public class Vehicle {
     public void setType(String type) {
         this.type = type;
     }
+
+    public double getFrontalArea() {
+        return frontalArea;
+    }
+
+    public void setFrontalArea(double frontalArea) {
+        this.frontalArea = frontalArea;
+    }
+    
+    
+    
+    
     
     /**
      * 

@@ -5,7 +5,6 @@
  */
 package data.access.layer;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,7 +16,6 @@ import roadnetwork.domain.Project;
 import roadnetwork.domain.Regime;
 import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.Section;
-import roadnetwork.domain.SectionTypology;
 import roadnetwork.domain.Segment;
 import roadnetwork.domain.Throttle;
 import roadnetwork.domain.Vehicle;
@@ -53,22 +51,25 @@ public class ProjectWriter {
         m_project = project;
 
         if (!saveNewProjectProperties()) {
+            m_dao.rollback();
             return false;
         }
 
         if (m_project.hasRoadNetwork()) {
             if (!saveNewProjectRoadNetwork()) {
+                m_dao.rollback();
                 return false;
             }
         }
 
         if (m_project.hasVehicles()) {
             if (!saveNewProjectVehicles()) {
+                m_dao.rollback();
                 return false;
             }
 
         }
-
+        m_dao.commit();
         return true;//TO DO fazer verificação
     }
 
@@ -141,7 +142,7 @@ public class ProjectWriter {
     }
 
     private boolean saveNewProjectSectionSegments(int sectionPK, ArrayList<Segment> segmentList) {
-        for (Segment segment : segmentList) {//TO DO verificação de que não index de segmentos repetidos para a mesma section
+        for (Segment segment : segmentList) {//TO DO verificação de que não ha index de segmentos repetidos para a mesma section
             if (m_dao.saveNewSegment(
                     sectionPK,
                     segment.getIndex(),
@@ -169,28 +170,36 @@ public class ProjectWriter {
                     vehicle.getMass(),
                     vehicle.getLoad(),
                     vehicle.getDragCoefficient(),
+                    vehicle.getFrontalArea(),
                     vehicle.getRcc(),
                     vehicle.getWheelSize(),
                     vehicle.getFinalDriveRatio(),
                     vehicle.getMaxRPM(),
                     vehicle.getMinRPM()
             );
-
+            if (vehiclePK == -1) {
+                return false;
+            }
             vehicle.setPK(vehiclePK);
 
             saveNewVehicleVelocityLimits(vehicle);
 
             if (vehicle instanceof CombustionVehicle) {
-                saveNewCombustionVehicle(vehicle);
-            }else if(vehicle instanceof HybridVehicle){
-                saveNewHybridVehicle(vehicle);
-            }else if (vehicle instanceof ElectricVehicle){
-                saveNewElectricVehicle(vehicle);
+                if (!saveNewCombustionVehicle(vehicle)) {
+                    return false;
+                }
+            } else if (vehicle instanceof HybridVehicle) {
+                if (!saveNewHybridVehicle(vehicle)) {
+                    return false;
+                }
+            } else if (vehicle instanceof ElectricVehicle) {
+                if (!saveNewElectricVehicle(vehicle)) {
+                    return false;
+                }
             }
 
-
-
         }
+        return true;
     }
 
     private boolean saveNewVehicleVelocityLimits(Vehicle vehicle) {
@@ -199,7 +208,8 @@ public class ProjectWriter {
         Iterator it = limits.keySet().iterator();
         while (it.hasNext()) {
             String typology = it.next().toString();
-            if (m_dao.saveNewVehicleVelocityLimits(vehicle.getPK(), typology, limits.get(typology)) == -1) {
+            double testlimits = limits.get(typology);
+            if (m_dao.saveNewVehicleVelocityLimits(vehicle.getPK(), typology, limits.get(typology)) != 1) {
                 return false;
             }
         }
@@ -207,43 +217,57 @@ public class ProjectWriter {
     }
 
     private boolean saveNewCombustionVehicle(Vehicle vehicle) {
-        
-        
-            m_dao.saveNewCombustionVehicle(vehicle.getPK(),((CombustionVehicle)vehicle).getFuel());
-            saveNewVehicleGears(vehicle);
-            saveNewVehicleThrottle(vehicle);
+
+        if (m_dao.saveNewCombustionVehicle(vehicle.getPK(), ((CombustionVehicle) vehicle).getFuel()) != 1) {
+            return false;
+        }
+        return (saveNewVehicleGears(vehicle)
+                && saveNewVehicleThrottle(vehicle));
     }
 
     private boolean saveNewHybridVehicle(Vehicle vehicle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (m_dao.saveNewHybridVehicle(vehicle.getPK()) != 1) {
+            return false;
+        }
+        return true;
     }
 
     private boolean saveNewElectricVehicle(Vehicle vehicle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void saveNewVehicleGears(Vehicle vehicle) {
-        ArrayList<Double> gears = ((CombustionVehicle)vehicle).getGearList();//TO DO alterar para a interface cmobustion, quando soublermos se o hybrid tambem vai ter gears
-        for(Double ratio : gears){
-            m_dao.saveNewVehicleGear(vehicle.getPK(),gears.indexOf(ratio)+1,ratio);
+        if (m_dao.saveNewElectricVehicle(vehicle.getPK()) != 1) {
+            return false;
         }
+        return true;
     }
 
-    private void saveNewVehicleThrottle(Vehicle vehicle) {
-        ArrayList<Throttle> throttleList = ((CombustionVehicle)vehicle).getThrottleList();//TO DO alterar para a interface cmobustion, quando soublermos se o hybrid tambem vai ter gears
-        for(Throttle throttle : throttleList){
+    private boolean saveNewVehicleGears(Vehicle vehicle) {
+        ArrayList<Double> gears = ((CombustionVehicle) vehicle).getGearList();//TO DO alterar para a interface cmobustion, quando soublermos se o hybrid tambem vai ter gears
+        for (Double ratio : gears) {
+            if (m_dao.saveNewVehicleGear(vehicle.getPK(), gears.indexOf(ratio) + 1, ratio) != 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean saveNewVehicleThrottle(Vehicle vehicle) {
+        ArrayList<Throttle> throttleList = ((CombustionVehicle) vehicle).getThrottleList();//TO DO alterar para a interface cmobustion, quando soublermos se o hybrid tambem vai ter gears
+        for (Throttle throttle : throttleList) {
             ArrayList<Regime> regimeList = throttle.getRegimeList();
-            for(Regime regime : regimeList){
-                m_dao.saveNewVehicleRegime(
+            for (Regime regime : regimeList) {
+                if (m_dao.saveNewVehicleRegime(
                         vehicle.getPK(),
-                        throttleList.indexOf(throttle)+1,
-                        regimeList.indexOf(regime)+1,
+                        throttle.getID(),
+                        regimeList.indexOf(regime) + 1,
                         regime.getTorque(),
                         regime.getRPMLow(),
                         regime.getRPMHigh(),
-                        regime.getSfc());
+                        regime.getSfc()) != 1) {
+                    return false;
+                }
+
             }
         }
+        return true;
     }
 
 }

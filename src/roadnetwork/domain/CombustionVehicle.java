@@ -31,10 +31,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
      * @param rrc rrc of CombustionVehicle
      * @param wheelSize wheelSize of CombustionVehicle
      * @param velocityLimit velocityLimit of CombustionVehicle
-     * @param torque torque of CombustionVehicle
      * @param fuel fuel of CombustionVehicle
-     * @param consuption consuption of CombustionVehicle
-     * @param mostEfficientRPM mostEfficientRPM of CombustionVehicle
      * @param minRPM minRPM of CombustionVehicle
      * @param maxRPM maxRPM of CombustionVehicle
      * @param finalDriveRatio finalDriveRatio of CombustionVehicle
@@ -43,7 +40,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
      */
     public CombustionVehicle(String name, String description, double mass, String type, double load,
             double drag_Coefficient, double frontalArea, double rrc, double wheelSize, HashMap<String, Double> velocityLimit,
-            double torque, double mostEfficientRPM, double consuption, double minRPM, double maxRPM,
+            double minRPM, double maxRPM,
             double finalDriveRatio, String fuel, ArrayList<Double> gearList, ArrayList<Throttle> throttleList) {
         super(name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
                 minRPM, maxRPM, finalDriveRatio);

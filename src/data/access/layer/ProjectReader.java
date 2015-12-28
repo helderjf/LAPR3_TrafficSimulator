@@ -97,8 +97,8 @@ public class ProjectReader {
         roadNetwork1.setNodeList(nodeList);
         roadNetwork1.setSectionList(completeSectionList);
 
-        HashMap velocityLimit = new HashMap();
-        velocityLimit.put(highway, 60);
+        HashMap <String,Double>velocityLimit = new HashMap();
+        velocityLimit.put("highway", 60d);
         ArrayList<Double> gearList = new ArrayList();
         gearList.add(3.5);
         gearList.add(2.5);
@@ -113,7 +113,7 @@ public class ProjectReader {
         lr1.add(r2);
         lr1.add(r3);
         Throttle t1 = new Throttle("25", lr1);
-        
+
         Regime r4 = new Regime(135, 1000, 2499, 5.2);
         Regime r5 = new Regime(150, 2500, 3999, 3.2);
         Regime r6 = new Regime(140, 4000, 5500, 8.2);
@@ -122,7 +122,7 @@ public class ProjectReader {
         lr2.add(r5);
         lr2.add(r6);
         Throttle t2 = new Throttle("50", lr2);
-        
+
         Regime r7 = new Regime(200, 1000, 2499, 2.2);
         Regime r8 = new Regime(240, 2500, 3999, 1.2);
         Regime r9 = new Regime(190, 4000, 5500, 4.2);
@@ -131,14 +131,28 @@ public class ProjectReader {
         lr3.add(r8);
         lr3.add(r9);
         Throttle t3 = new Throttle("100", lr3);
-        
+
         ArrayList<Throttle> throttleList1 = new ArrayList();
         throttleList1.add(t1);
         throttleList1.add(t2);
         throttleList1.add(t3);
-        
-        Vehicle vehicle1 = new CombustionVehicle("dummy1", "descricao", 1400, "car", 120, 0.35, 150, 0.01, 0.5, velocityLimit,
-                250, 2500, 8.2, 1000, 5500, 2.6, "gasoline", gearList,throttleList1);
+
+        Vehicle vehicle1 = new CombustionVehicle("dummy1", //name
+                "descricao", //descricao
+                1400, //mass
+                "car",//type
+                120,//load
+                0.35,//drag
+                1.8,//frontal area
+                0.01,//rcc
+                0.5,//wheel size
+                velocityLimit,//
+                5500,//max rpm
+                1000,//min rpm
+                2.6,//final drive ratio
+                "gasoline",//fuel
+                gearList,
+                throttleList1);
 
         ArrayList<Vehicle> vehicleList = new ArrayList();
         vehicleList.add(vehicle1);

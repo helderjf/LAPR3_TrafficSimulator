@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import roadnetwork.domain.SectionDirection;
@@ -42,6 +41,7 @@ public class DataAccessObject {
 
         try {
             m_connection = DriverManager.getConnection(m_dbUrl, m_user, m_pass);
+            m_connection.setAutoCommit(false);
             System.out.println("Connection to database successfull");
             return true;
         } catch (SQLException ex) {
@@ -49,6 +49,28 @@ public class DataAccessObject {
             return false;
         }
 
+    }
+
+    public boolean commit() {
+        try {
+            m_connection.commit();
+            System.out.println("commit :-)");
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccessObject.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public boolean rollback() {
+        try {
+            m_connection.rollback();
+            System.out.println("rollback :-(");
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccessObject.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 
     public ArrayList<String> getProjectsIDList() {
@@ -242,6 +264,7 @@ public class DataAccessObject {
             double mass,
             double load,
             double dragCoefficient,
+            double frontalArea,
             double rcc,
             double wheelSize,
             double finalDriveRatio,
@@ -255,7 +278,7 @@ public class DataAccessObject {
             }
 
             //create statement
-            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_VEHICLE(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_VEHICLE(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             statement.setInt(1, projectPK);
             statement.setString(2, name);
             statement.setString(3, description);
@@ -263,17 +286,18 @@ public class DataAccessObject {
             statement.setDouble(5, mass);
             statement.setDouble(6, load);
             statement.setDouble(7, dragCoefficient);
-            statement.setDouble(8, rcc);
-            statement.setDouble(9, wheelSize);
-            statement.setDouble(10, finalDriveRatio);
-            statement.setDouble(11, maxRPM);
-            statement.setDouble(12, minRPM);
-            statement.registerOutParameter(13, Types.INTEGER);
+            statement.setDouble(8, frontalArea);
+            statement.setDouble(9, rcc);
+            statement.setDouble(10, wheelSize);
+            statement.setDouble(11, finalDriveRatio);
+            statement.setDouble(12, maxRPM);
+            statement.setDouble(13, minRPM);
+            statement.registerOutParameter(14, Types.INTEGER);
 
             //execute statement
             statement.execute();
 
-            return statement.getInt(10);
+            return statement.getInt(14);
 
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -283,8 +307,8 @@ public class DataAccessObject {
     }
 
     int saveNewVehicleVelocityLimits(int vehiclePK, String typology, Double speed) {
-        
-                try {
+
+        try {
             if (m_connection == null) {
                 if (!connect()) {
                     return -1;//returns -1 so the caller knows the connection failed
@@ -292,10 +316,38 @@ public class DataAccessObject {
             }
 
             //create statement
-            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_VEHICLE(?,?,?)}");
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_VEHICLE_VEL_LIMIT(?,?,?,?)}");
             statement.setInt(1, vehiclePK);
             statement.setString(2, typology);
             statement.setDouble(3, speed);
+            statement.registerOutParameter(4, Types.INTEGER);
+            //execute statement
+            statement.execute();
+
+            if (statement.getInt(4) != 1) {
+                return -1;
+            }
+
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+
+    }
+
+    public int saveNewCombustionVehicle(int vehiclePK, String fuel) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_COMBUSTION_V(?,?)}");
+            statement.setInt(1, vehiclePK);
+            statement.setString(2, fuel);
 
             //execute statement
             statement.execute();
@@ -307,10 +359,110 @@ public class DataAccessObject {
             return -1;
         }
 
-        
-        
-        
-        
+    }
+
+    public int saveNewHybridVehicle(int vehiclePK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_HYBRID_V(?)}");
+            statement.setInt(1, vehiclePK);
+
+            //execute statement
+            statement.execute();
+
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+
+    }
+
+    public int saveNewElectricVehicle(int vehiclePK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_ELECTRIC_V(?)}");
+            statement.setInt(1, vehiclePK);
+
+            //execute statement
+            statement.execute();
+
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+
+    }
+
+    public int saveNewVehicleGear(int vehiclePK, int gear, Double ratio) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_VEHICLE_GEAR(?,?,?)}");
+            statement.setInt(1, vehiclePK);
+            statement.setInt(2, gear);
+            statement.setDouble(3, ratio);
+
+            //execute statement
+            statement.execute();
+
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
+
+    public int saveNewVehicleRegime(int vehiclePK,
+            String throttleId,
+            int regimeId,
+            double torque,
+            double rpmLow,
+            double rpmHigh,
+            double sfc) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_VEHICLE_THROTTLE(?,?,?,?,?,?,?)}");
+            statement.setInt(1, vehiclePK);
+            statement.setString(2, throttleId);
+            statement.setInt(3, regimeId);
+            statement.setDouble(4, torque);
+            statement.setDouble(5, rpmLow);
+            statement.setDouble(6, rpmHigh);
+            statement.setDouble(7, sfc);
+
+            //execute statement
+            statement.execute();
+
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
     }
 
 }
