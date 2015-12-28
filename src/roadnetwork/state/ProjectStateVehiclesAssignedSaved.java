@@ -26,13 +26,16 @@ public class ProjectStateVehiclesAssignedSaved extends ProjectStateImpl {
     public boolean isSaved() {
         return true;
     }
-    
 
     @Override
     public boolean hasVehicles() {
         return true;
     }
-    
-    
+
+    @Override
+    public boolean propertiesChanged() {
+        ProjectState ns = new ProjectStateVehiclesAssigned(m_project);
+        return m_project.setState(ns);
+    }
 
 }

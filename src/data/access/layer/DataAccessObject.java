@@ -87,12 +87,6 @@ public class DataAccessObject {
         return pidl;
     }
 
-    public boolean makeProjectActive() {
-        //TODO load project
-
-        return true;
-    }
-
     public int saveNewProject(String projectName, String projectDescription, String projectState) {
         try {
             if (m_connection == null) {
@@ -463,6 +457,158 @@ public class DataAccessObject {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
+    }
+
+    int updateProject(int projectPK, String projectName, String projectDescription, String projectState) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    System.out.println("conexao not ok");
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            //create statement
+            CallableStatement statement = m_connection.prepareCall("{call UPDATE_PROJECT(?,?,?,?)}");
+            statement.setInt(1, projectPK);
+            statement.setString(2, projectName);
+            statement.setString(3, projectDescription);
+            statement.setString(4, projectState);
+
+            //execute statement
+            statement.execute();
+
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
+
+    int updateRoadNetwork(int roadNetworkPK, String roadNetworkName, String roadNetworkDescription) {
+
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            //create statement
+            CallableStatement statement = m_connection.prepareCall("{call UPDATE_ROAD_NETWORK(?,?,?)}");
+            statement.setInt(1, roadNetworkPK);
+            statement.setString(2, roadNetworkName);
+            statement.setString(3, roadNetworkDescription);
+
+            //execute statement
+            statement.execute();
+
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
+
+    int updateNode(int nodePK, String nodeName) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            //create statement
+            CallableStatement statement = m_connection.prepareCall("{call UPDATE_NODE(?,?)}");
+            statement.setInt(1, nodePK);
+            statement.setString(2, nodeName);
+
+            //execute statement
+            statement.execute();
+
+            return 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
+
+    int updateSection(
+            int sectionPK,
+            String roadName,
+            int beginningNode,
+            int endingNode,
+            SectionTypology typology,
+            SectionDirection direction,
+            double toll,
+            double windDirection,
+            double windVelocity) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            //create statement
+            CallableStatement statement = m_connection.prepareCall("{call UPDATE_SECTION(?,?,?,?,?,?,?,?,?)}");
+            statement.setInt(1, sectionPK);
+            statement.setString(2, roadName);
+            statement.setInt(3, beginningNode);
+            statement.setInt(4, endingNode);
+            statement.setString(5, typology.toString());
+            statement.setString(6, direction.toString());
+            statement.setDouble(7, toll);
+            statement.setDouble(8, windDirection);
+            statement.setDouble(9, windVelocity);
+
+            //execute statement
+            statement.execute();
+
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
+
+    int updateSegment(int sectionPK, 
+            int segmentIndex, 
+            double initialHeight, 
+            double slope, 
+            double lenght,
+            double maxVelocity, 
+            double minVelocity,
+            double maxVehicles) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            CallableStatement statement = m_connection.prepareCall("{call UPDATE_SEGMENT(?,?,?,?,?,?,?,?)}");
+            statement.setInt(1, segmentIndex);
+            statement.setInt(2, sectionPK);
+            statement.setDouble(3, initialHeight);
+            statement.setDouble(4, slope);
+            statement.setDouble(5, lenght);
+            statement.setDouble(6, maxVelocity);
+            statement.setDouble(7, minVelocity);
+            statement.setDouble(8, maxVehicles);
+
+            statement.execute();
+
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+
     }
 
 }

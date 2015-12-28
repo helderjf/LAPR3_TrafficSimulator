@@ -12,18 +12,18 @@ import java.util.ArrayList;
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public class RoadNetwork {
-    
+
     private int m_PK;
     private String m_name;
     private String m_description;
     private ArrayList<Junction> m_nodeList;
     private ArrayList<Section> m_sectionList;
-    
+
     public ArrayList<Junction> getNodeList() {
         return m_nodeList;
     }
-    
-    public ArrayList<Section> getSectionList(){
+
+    public ArrayList<Section> getSectionList() {
         return m_sectionList;
     }
 
@@ -47,16 +47,20 @@ public class RoadNetwork {
         m_PK = pk;
     }
 
+    public int getPK() {
+        return m_PK;
+    }
+
     public void setName(String name) {
-        m_name=name;
+        m_name = name;
     }
 
     public void setDescription(String description) {
-        m_description=description;
+        m_description = description;
     }
-    
-    
-    
-    
-    
+
+    public boolean hasPK() {
+        return m_PK != 0;
+    }
+
 }

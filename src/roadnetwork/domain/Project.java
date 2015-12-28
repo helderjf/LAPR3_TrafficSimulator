@@ -123,6 +123,11 @@ public class Project {
     public void setPK(int pk) {
         m_PK=pk;
     }
+    
+    public int getPK(){
+        return m_PK;
+    }
+    
 
     public boolean hasRoadNetwork() {
         return m_state.hasRoadNetwork();

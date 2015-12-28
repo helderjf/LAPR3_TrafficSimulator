@@ -27,4 +27,10 @@ public class ProjectStateEmptySaved extends ProjectStateImpl {
         return true;
     }
 
+    @Override
+    public boolean propertiesChanged() {
+        ProjectState ns = new ProjectStateEmpty(m_project);
+        return m_project.setState(ns);
+    }
+
 }

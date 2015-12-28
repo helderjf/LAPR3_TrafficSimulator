@@ -7,11 +7,9 @@ package roadnetwork.domain;
 
 import data.access.layer.ProjectReader;
 import data.access.layer.DataAccessObject;
-import java.util.ArrayList;
 import IO.ExportCSV;
 import data.access.layer.ProjectWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -23,8 +21,8 @@ public class Manager {
     private Project m_currentProject;
     private DataAccessObject m_dataAccessObject;
     private ArrayList<BestPathAlgorithm> m_algorithmsList;
-    private ProjectReader m_projectReader;
-    private ProjectWriter m_projectWriter;
+    //private ProjectReader m_projectReader;
+    //private ProjectWriter m_projectWriter;
     
     
     
@@ -32,8 +30,7 @@ public class Manager {
         m_name=name;
         m_dataAccessObject=new DataAccessObject("jdbc:oracle:thin:@localhost:1521:XE", "grupo60", "pass60");
         m_algorithmsList= new ArrayList<>();
-        m_projectReader = new ProjectReader();
-        m_projectWriter = new ProjectWriter(m_dataAccessObject);
+        //m_projectReader = new ProjectReader();
         m_algorithmsList.add(new FastestPathAlgorithm());
         m_algorithmsList.add(new MostEfficientPath());
         
@@ -68,7 +65,7 @@ public class Manager {
     }
 
     public ProjectReader getProjectReader() {
-        return m_projectReader;
+        return new ProjectReader(m_dataAccessObject);
     }
 
     public boolean setCurrentProject(Project project) {
@@ -77,7 +74,8 @@ public class Manager {
     }
 
     public ProjectWriter getProjectWriter() {
-        return m_projectWriter;
+        return new ProjectWriter(m_dataAccessObject);
+
     }
     
     

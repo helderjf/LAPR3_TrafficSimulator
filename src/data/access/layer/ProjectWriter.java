@@ -28,19 +28,6 @@ public class ProjectWriter {
 
     private DataAccessObject m_dao;
     private Project m_project;
-    private int m_projectPK;
-    private String m_projectState;
-    private String m_projectName;
-    private String m_projectDescription;
-
-    private RoadNetwork m_roadNetwork;
-    private String m_roadNetworkName;
-    private String m_roadNetworkDescription;
-    private int m_roadNetworkPK;
-
-    private ArrayList<Junction> m_nodeList;
-    private ArrayList<Section> m_sectionList;
-    private ArrayList<Vehicle> m_vehicleList;
 
     public ProjectWriter(DataAccessObject dao) {
         m_dao = dao;
@@ -73,14 +60,42 @@ public class ProjectWriter {
         return true;//TO DO fazer verificação
     }
 
-    private boolean saveNewProjectProperties() {
-        m_projectName = m_project.getName();
-        m_projectDescription = m_project.getDescription();
-        m_projectState = m_project.getState().getClass().getSimpleName();
+    public boolean updateProject(Project project) {
 
-        m_projectPK = m_dao.saveNewProject(m_projectName, m_projectDescription, m_projectState);
-        if (m_projectPK != 0) {
-            m_project.setPK(m_projectPK);
+        m_project = project;
+
+        if (!updateProjectProperties()) {
+            m_dao.rollback();
+            return false;
+        }
+
+        if (m_project.hasRoadNetwork()) {
+            if (!updateProjectRoadNetwork()) {
+                m_dao.rollback();
+                return false;
+            }
+        }
+
+        if (m_project.hasVehicles()) {
+            if (!updateProjectVehicles()) {
+                m_dao.rollback();
+                return false;
+            }
+
+        }
+
+        m_dao.commit();
+        return true;
+    }
+
+    private boolean saveNewProjectProperties() {
+        String projectName = m_project.getName();
+        String projectDescription = m_project.getDescription();
+        String projectState = m_project.getState().getClass().getSimpleName();
+
+        int projectPK = m_dao.saveNewProject(projectName, projectDescription, projectState);
+        if (projectPK != -1) {
+            m_project.setPK(projectPK);
             return true;
         } else {
             return false;
@@ -89,26 +104,26 @@ public class ProjectWriter {
     }
 
     private boolean saveNewProjectRoadNetwork() {
-        m_roadNetwork = m_project.getRoadNetwork();
+        RoadNetwork roadNetwork = m_project.getRoadNetwork();
 
-        m_roadNetworkName = m_roadNetwork.getName();
-        m_roadNetworkDescription = m_roadNetwork.getDescription();
+        String roadNetworkName = roadNetwork.getName();
+        String roadNetworkDescription = roadNetwork.getDescription();
 
-        m_roadNetworkPK = m_dao.saveNewRoadNetwork(m_projectPK, m_roadNetworkName, m_roadNetworkDescription);
+        int roadNetworkPK = m_dao.saveNewRoadNetwork(m_project.getPK(), roadNetworkName, roadNetworkDescription);
 
-        if (m_roadNetworkPK == 0) {
+        if (roadNetworkPK == 0) {
             return false;
         } else {
-            m_roadNetwork.setPK(m_roadNetworkPK);
-            return (saveNewProjectNodeList()
-                    && saveNewProjectRoadNetworkSections());
+            roadNetwork.setPK(roadNetworkPK);
+            return (saveNewProjectNodeList(roadNetwork)
+                    && saveNewProjectRoadNetworkSections(roadNetwork));
         }
     }
 
-    private boolean saveNewProjectNodeList() {
-        m_nodeList = m_roadNetwork.getNodeList();
-        for (Junction it : m_nodeList) {
-            it.setPK(m_dao.saveNewNode(m_roadNetworkPK, it.getJunctionId()));
+    private boolean saveNewProjectNodeList(RoadNetwork roadNetwork) {
+        ArrayList<Junction> nodeList = roadNetwork.getNodeList();
+        for (Junction it : nodeList) {
+            it.setPK(m_dao.saveNewNode(roadNetwork.getPK(), it.getJunctionId()));
             if (it.getPK() == 0) {
                 return false;
             }
@@ -116,11 +131,11 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean saveNewProjectRoadNetworkSections() {
-        m_sectionList = m_roadNetwork.getSectionList();
-        for (Section section : m_sectionList) {
+    private boolean saveNewProjectRoadNetworkSections(RoadNetwork roadNetwork) {
+        ArrayList<Section> sectionList = roadNetwork.getSectionList();
+        for (Section section : sectionList) {
             section.setPK(m_dao.saveNewSection(
-                    m_roadNetworkPK,
+                    roadNetwork.getPK(),
                     section.getRoadName(),
                     section.getBeginningNode().getPK(),
                     section.getEndingNode().getPK(),
@@ -160,45 +175,55 @@ public class ProjectWriter {
     }
 
     private boolean saveNewProjectVehicles() {
-        m_vehicleList = m_project.getVehicleList();
-        for (Vehicle vehicle : m_vehicleList) {
-            int vehiclePK = m_dao.saveNewVehicle(
-                    m_projectPK,
-                    vehicle.getName(),
-                    vehicle.getDescription(),
-                    vehicle.getType(),
-                    vehicle.getMass(),
-                    vehicle.getLoad(),
-                    vehicle.getDragCoefficient(),
-                    vehicle.getFrontalArea(),
-                    vehicle.getRcc(),
-                    vehicle.getWheelSize(),
-                    vehicle.getFinalDriveRatio(),
-                    vehicle.getMaxRPM(),
-                    vehicle.getMinRPM()
-            );
-            if (vehiclePK == -1) {
+        ArrayList<Vehicle> vehicleList = m_project.getVehicleList();
+        for (Vehicle vehicle : vehicleList) {
+            if (!saveNewVehicle(vehicle)) {
                 return false;
             }
-            vehicle.setPK(vehiclePK);
-
-            saveNewVehicleVelocityLimits(vehicle);
-
-            if (vehicle instanceof CombustionVehicle) {
-                if (!saveNewCombustionVehicle(vehicle)) {
-                    return false;
-                }
-            } else if (vehicle instanceof HybridVehicle) {
-                if (!saveNewHybridVehicle(vehicle)) {
-                    return false;
-                }
-            } else if (vehicle instanceof ElectricVehicle) {
-                if (!saveNewElectricVehicle(vehicle)) {
-                    return false;
-                }
-            }
-
         }
+        return true;
+    }
+
+    private boolean saveNewVehicle(Vehicle vehicle) {
+        int vehiclePK = m_dao.saveNewVehicle(
+                m_project.getPK(),
+                vehicle.getName(),
+                vehicle.getDescription(),
+                vehicle.getType(),
+                vehicle.getMass(),
+                vehicle.getLoad(),
+                vehicle.getDragCoefficient(),
+                vehicle.getFrontalArea(),
+                vehicle.getRcc(),
+                vehicle.getWheelSize(),
+                vehicle.getFinalDriveRatio(),
+                vehicle.getMaxRPM(),
+                vehicle.getMinRPM()
+        );
+
+        if (vehiclePK == -1) {
+            return false;
+        }
+
+        vehicle.setPK(vehiclePK);
+        if (!saveNewVehicleVelocityLimits(vehicle)) {
+            return false;
+        }
+
+        if (vehicle instanceof CombustionVehicle) {
+            if (!saveNewCombustionVehicle(vehicle)) {
+                return false;
+            }
+        } else if (vehicle instanceof HybridVehicle) {
+            if (!saveNewHybridVehicle(vehicle)) {
+                return false;
+            }
+        } else if (vehicle instanceof ElectricVehicle) {
+            if (!saveNewElectricVehicle(vehicle)) {
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -208,7 +233,6 @@ public class ProjectWriter {
         Iterator it = limits.keySet().iterator();
         while (it.hasNext()) {
             String typology = it.next().toString();
-            double testlimits = limits.get(typology);
             if (m_dao.saveNewVehicleVelocityLimits(vehicle.getPK(), typology, limits.get(typology)) != 1) {
                 return false;
             }
@@ -266,6 +290,104 @@ public class ProjectWriter {
                 }
 
             }
+        }
+        return true;
+    }
+
+    private boolean updateProjectProperties() {
+        int projectPK = m_project.getPK();
+        String projectName = m_project.getName();
+        String projectDescription = m_project.getDescription();
+        String projectState = m_project.getState().getClass().getSimpleName();
+
+        if (m_dao.updateProject(projectPK, projectName, projectDescription, projectState) == -1) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean updateProjectRoadNetwork() {
+        RoadNetwork roadNetwork = m_project.getRoadNetwork();
+
+        if (!roadNetwork.hasPK()) {
+            return saveNewProjectRoadNetwork();
+        }
+
+        
+        //we can comment out this section, because a road network, once saved, will never be changed
+        int roadNetworkPK = roadNetwork.getPK();
+        String roadNetworkName = roadNetwork.getName();
+        String roadNetworkDescription = roadNetwork.getDescription();
+
+        if (m_dao.updateRoadNetwork(roadNetwork.getPK(), roadNetworkName, roadNetworkDescription) == -1) {
+            return false;
+        } else {
+            return (updateNodeList(roadNetwork)
+                    && updateRoadNetworkSections(roadNetwork));
+        }
+    }
+
+    private boolean updateNodeList(RoadNetwork roadNetwork) {
+        ArrayList<Junction> nodeList = roadNetwork.getNodeList();
+        for (Junction it : nodeList) {
+            if (m_dao.updateNode(it.getPK(), it.getJunctionId()) == -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean updateRoadNetworkSections(RoadNetwork roadNetwork) {
+        ArrayList<Section> sectionList = roadNetwork.getSectionList();
+        for (Section section : sectionList) {
+            if (m_dao.updateSection(
+                    section.getPK(),
+                    section.getRoadName(),
+                    section.getBeginningNode().getPK(),
+                    section.getEndingNode().getPK(),
+                    section.getTypology(),
+                    section.getDirection(),
+                    section.getToll(),
+                    section.getWind().getAngle(),
+                    section.getWind().getVelocity()) == -1) {
+                return false;
+            }
+
+            ArrayList<Segment> segmentList = section.getSegmentsList();
+            if (!updateSectionSegments(section.getPK(), segmentList)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean updateSectionSegments(int sectionPK, ArrayList<Segment> segmentList) {
+        for (Segment segment : segmentList) {//TO DO verificação de que não ha index de segmentos repetidos para a mesma section
+            if (m_dao.updateSegment(
+                    sectionPK,
+                    segment.getIndex(),
+                    segment.getInitialHeight(),
+                    segment.getSlope(),
+                    segment.getLenght(),
+                    segment.getMax_Velocity(),
+                    segment.getMin_Velocity(),
+                    segment.getMax_Vehicles()
+            ) == -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean updateProjectVehicles() {
+        ArrayList<Vehicle> vehicleList = m_project.getVehicleList();
+        for (Vehicle vehicle : vehicleList) {
+            if (!vehicle.hasPK()) {
+                if (!saveNewVehicle(vehicle)) {
+                    return false;
+                }
+            }
+
         }
         return true;
     }

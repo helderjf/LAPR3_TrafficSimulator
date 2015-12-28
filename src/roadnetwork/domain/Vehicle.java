@@ -12,9 +12,8 @@ import java.util.Objects;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-
 public class Vehicle {
-      
+
     private int m_pk;
     private String name;
     private String description;
@@ -25,20 +24,16 @@ public class Vehicle {
     private double frontalArea;
     private double rrc;
     private double wheelSize;
-    private HashMap<String,Double> velocityLimit;
+    private HashMap<String, Double> velocityLimit;
     private double minRPM;
     private double maxRPM;
     private double finalDriveRatio;
 
-
-    
-            
-
     /**
-     * 
+     *
      */
-    public Vehicle()
-    {
+    public Vehicle() {
+        this.m_pk = 0;
         this.name = "";
         this.description = "";
         this.mass = 0;
@@ -54,46 +49,49 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @param name name
      * @param description description
      * @param mass mass
      * @param type type
      * @param load load
-     * @param drag_Coefficient drag coefficient 
-     * @param frontalArea 
+     * @param drag_Coefficient drag coefficient
+     * @param frontalArea
      * @param rrc rrc
      * @param wheelSize wheelSize diameter
      * @param velocityLimit
      * @param minRPM minRPM
      * @param maxRPM maxRPM
-     * @param finalDriveRatio finalDriveRatio 
+     * @param finalDriveRatio finalDriveRatio
      */
-    public Vehicle(String name, String description, double mass, String type, double load, double drag_Coefficient, 
-                    double frontalArea, double rrc, double wheelSize, HashMap<String,Double> velocityLimit,
-                    double minRPM, double maxRPM, double finalDriveRatio) {
+    public Vehicle(String name, String description, double mass, String type, double load, double drag_Coefficient,
+            double frontalArea, double rrc, double wheelSize, HashMap<String, Double> velocityLimit,
+            double minRPM, double maxRPM, double finalDriveRatio) {
+        
+        this.m_pk = 0;
         this.name = name;
         this.description = description;
         this.mass = mass;
         this.type = type;
         this.load = load;
         this.dragCoefficient = drag_Coefficient;
-        this.frontalArea=frontalArea;
+        this.frontalArea = frontalArea;
         this.rrc = rrc;
         this.wheelSize = wheelSize;
         this.velocityLimit = velocityLimit;
         this.minRPM = minRPM;
         this.maxRPM = maxRPM;
         this.finalDriveRatio = finalDriveRatio;
-   
+
     }
-    
+
     /**
-     * 
-     * @param v Vechicle copy 
+     *
+     * @param v Vechicle copy
      */
     public Vehicle(Vehicle v)//TO DO alterar isto. está ao contrário
     {
+        
         v.name = this.name;
         v.description = this.description;
         v.mass = this.mass;
@@ -110,7 +108,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @return m_pk
      */
     public int getPK() {
@@ -118,7 +116,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @param pk m_pk
      */
     public void setPK(int pk) {
@@ -126,7 +124,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @return name
      */
     public String getName() {
@@ -134,7 +132,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @param name name
      */
     public void setName(String name) {
@@ -142,7 +140,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @return mass
      */
     public double getMass() {
@@ -150,7 +148,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @param mass mass
      */
     public void setMass(double mass) {
@@ -158,7 +156,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public String getType() {
@@ -166,7 +164,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @return load
      */
     public double getLoad() {
@@ -174,7 +172,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @param load load
      */
     public void setLoad(double load) {
@@ -182,7 +180,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @return frag coefficient
      */
     public double getDragCoefficient() {
@@ -190,7 +188,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @param drag_Coefficient dragCoefficient
      */
     public void setDragCoefficient(double drag_Coefficient) {
@@ -198,7 +196,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @return rrc
      */
     public double getRcc() {
@@ -206,7 +204,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @param rrc rrc
      */
     public void setRcc(double rrc) {
@@ -214,7 +212,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @return wheelsize
      */
     public double getWheelSize() {
@@ -222,7 +220,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @param wheelSize wheelsize
      */
     public void setWheelSize(double wheelSize) {
@@ -230,7 +228,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @return velocitylimit
      */
     public HashMap<String, Double> getVelocityLimit() {
@@ -238,16 +236,15 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @param velocityLimit velocityLimit
      */
     public void setVelocityLimit(HashMap<String, Double> velocityLimit) {
         this.velocityLimit = velocityLimit;
     }
 
-
     /**
-     * 
+     *
      * @return minrpm
      */
     public double getMinRPM() {
@@ -255,7 +252,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @param minRPM minrpm
      */
     public void setMinRPM(double minRPM) {
@@ -263,7 +260,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @return maxrpm
      */
     public double getMaxRPM() {
@@ -271,7 +268,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @param maxRPM maxrpm
      */
     public void setMaxRPM(double maxRPM) {
@@ -279,7 +276,7 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @return FinalDriveRatio
      */
     public double getFinalDriveRatio() {
@@ -287,14 +284,14 @@ public class Vehicle {
     }
 
     /**
-     * 
+     *
      * @param finalDriveRatio FinalDriveRatio
      */
     public void setFinalDriveRatio(double finalDriveRatio) {
         this.finalDriveRatio = finalDriveRatio;
     }
-    
-        /**
+
+    /**
      * @return the description
      */
     public String getDescription() {
@@ -322,15 +319,11 @@ public class Vehicle {
     public void setFrontalArea(double frontalArea) {
         this.frontalArea = frontalArea;
     }
-    
-    
-    
-    
-    
+
     /**
-     * 
+     *
      * @param obj object
-     * @return 
+     * @return
      */
     @Override
     public boolean equals(Object obj) {//to do completar para os novos atributos
@@ -380,24 +373,22 @@ public class Vehicle {
         return true;
     }
 
-    public double Energy()
-    {
-        
+    public double Energy() {
+
         return 0;
     }
-    
-    
+
     /**
-     * 
+     *
      * @return Vehicle string
      */
     @Override
     public String toString() {
         return "Vehicle " + m_pk + " - " + name;
     }
-    
-     /**
-     * 
+
+    /**
+     *
      * @return Vehicle data
      */
     public String showData() {//completar para os novos atributos
@@ -415,9 +406,9 @@ public class Vehicle {
                 + "maxRPM=" + maxRPM + "\n"
                 + "finalDriveRatio=" + finalDriveRatio;
     }
-    
-    
 
+    public boolean hasPK() {
+        return m_pk != 0;
+    }
 
-  
 }

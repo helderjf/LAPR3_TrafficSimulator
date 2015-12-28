@@ -253,8 +253,6 @@ public class Segment {
         return "Segment{" + "index=" + index + ", initial_Height=" + initialHeight + ", slope=" + slope + ", lenght=" + lenght + ", max_Velocity=" + max_Velocity + ", min_Velocity=" + min_Velocity + ", max_Vehicles=" + max_Vehicles + ", number_vehicles=" + number_vehicles + '}';
     }
 
-    public void setPK(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
   
 }

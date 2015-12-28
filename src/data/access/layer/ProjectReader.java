@@ -29,8 +29,12 @@ import roadnetwork.state.ProjectStateSimulationReady;
  */
 public class ProjectReader {
 
-    public ProjectReader() {
-
+    private DataAccessObject m_dao;
+    
+    
+    
+    public ProjectReader(DataAccessObject dao) {
+        m_dao=dao;
     }
 
     public Project getProjectByID(String pid) {
