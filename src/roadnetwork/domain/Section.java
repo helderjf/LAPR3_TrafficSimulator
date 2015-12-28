@@ -13,8 +13,7 @@ import java.util.Objects;
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public class Section {
-    
-    
+
     private int m_pk;
     private String roadName;
     private Junction beginningNode;
@@ -26,12 +25,11 @@ public class Section {
     private ArrayList<Segment> segmentsList;
 
     /**
-     * 
+     *
      */
-    public Section()
-    {
-        
-        this.roadName = ""; 
+    public Section() {
+
+        this.roadName = "";
         this.beginningNode = null;
         this.endingNode = null;
         this.direction = null;
@@ -39,22 +37,25 @@ public class Section {
         this.typology = null;
         this.wind = null;
         this.segmentsList = null;
-        
+
     }
 
     /**
-     * 
+     *
      * @param roadId roadName of section
      * @param beginningNode beginningNode
      * @param endingNode endingNode
-     * @param typology Typology (regular road, urban road/street, express road, controlled-access highway)
-     * @param direction SectionDirection (direct – beginning to	end; reverse – end to beginning,	bidirectional)
+     * @param typology Typology (regular road, urban road/street, express road,
+     * controlled-access highway)
+     * @param direction SectionDirection (direct – beginning to	end; reverse –
+     * end to beginning,	bidirectional)
      * @param toll Toll	(may be	zero)
-     * @param wind Wind direction (angle) and speed (m/s) relative to section direct direction (probability distributions)
+     * @param wind Wind direction (angle) and speed (m/s) relative to section
+     * direct direction (probability distributions)
      * @param segmentsList segmentsList
      */
     public Section(String roadId, Junction beginningNode, Junction endingNode, SectionTypology typology, SectionDirection direction, double toll, Wind wind, ArrayList<Segment> segmentsList) {
-        
+
         this.roadName = roadId;
         this.beginningNode = beginningNode;
         this.endingNode = endingNode;
@@ -64,13 +65,32 @@ public class Section {
         this.wind = wind;
         this.segmentsList = segmentsList;
     }
-    
+
+    public Section(int m_pk,
+            String roadName,
+            Junction beginningNode,
+            Junction endingNode,
+            SectionTypology typology,
+            SectionDirection direction,
+            double toll,
+            Wind wind,
+            ArrayList<Segment> segmentsList) {
+        this.m_pk = m_pk;
+        this.roadName = roadName;
+        this.beginningNode = beginningNode;
+        this.endingNode = endingNode;
+        this.typology = typology;
+        this.direction = direction;
+        this.toll = toll;
+        this.wind = wind;
+        this.segmentsList = segmentsList;
+    }
+
     /**
-     * 
+     *
      * @param s Section copy
      */
-    public Section(Section s)
-    {
+    public Section(Section s) {
         s.beginningNode = this.beginningNode;
         s.direction = this.direction;
         s.endingNode = this.endingNode;
@@ -83,7 +103,7 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @return section m_pk
      */
     public int getId() {
@@ -91,25 +111,23 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @return roadName
      */
     public String getRoadName() {
         return roadName;
     }
-    
-    
 
     /**
-     * 
+     *
      * @return BeginningNode
      */
     public Junction getBeginningNode() {
         return beginningNode;
     }
-    
+
     /**
-     * 
+     *
      * @param beginningNode beginningNode
      */
     public void setBeginningNode(Junction beginningNode) {
@@ -117,7 +135,7 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @return EndingNode
      */
     public Junction getEndingNode() {
@@ -125,7 +143,7 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @param endingNode endingNode
      */
     public void setEndingNode(Junction endingNode) {
@@ -133,7 +151,7 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @return Typology
      */
     public SectionTypology getTypology() {
@@ -141,7 +159,7 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @param typology Typology
      */
     public void setTypology(SectionTypology typology) {
@@ -149,7 +167,7 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @return direction
      */
     public SectionDirection getDirection() {
@@ -157,7 +175,7 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @param direction direction
      */
     public void setDirection(SectionDirection direction) {
@@ -165,7 +183,7 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @return toll
      */
     public double getToll() {
@@ -173,7 +191,7 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @param toll toll
      */
     public void setToll(double toll) {
@@ -181,7 +199,7 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @return wind
      */
     public Wind getWind() {
@@ -189,7 +207,7 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @param wind wind
      */
     public void setWind(Wind wind) {
@@ -205,7 +223,7 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @param obj object
      * @return result
      */
@@ -249,7 +267,7 @@ public class Section {
     }
 
     /**
-     * 
+     *
      * @return Section string
      */
     @Override
@@ -269,14 +287,11 @@ public class Section {
     }
 
     public void setPK(int pk) {
-        m_pk=pk;
+        m_pk = pk;
     }
 
     public int getPK() {
         return m_pk;
     }
-    
-    
 
-  
 }

@@ -49,13 +49,37 @@ public class CombustionVehicle extends Vehicle implements Combustion {
         this.throttleList = throttleList;
     }
 
-    
+    public CombustionVehicle(
+            int pk,
+            String name,
+            String description,
+            double mass,
+            String type,
+            double load,
+            double drag_Coefficient,
+            double frontalArea,
+            double rrc,
+            double wheelSize,
+            HashMap<String, Double> velocityLimit,
+            double minRPM,
+            double maxRPM,
+            double finalDriveRatio,
+            String fuel,
+            ArrayList<Double> gearList,
+            ArrayList<Throttle> throttleList) {
+
+        super(pk, name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
+                minRPM, maxRPM, finalDriveRatio);
+        this.fuel = fuel;
+        this.gearList = gearList;
+        this.throttleList = throttleList;
+    }
+
     public CombustionVehicle() {
     }
 
-
     /**
-     * 
+     *
      * @return fuel of CombustionVehicle
      */
     public String getFuel() {
@@ -93,9 +117,6 @@ public class CombustionVehicle extends Vehicle implements Combustion {
     public void setThrottleList(ArrayList<Throttle> throttleList) {
         this.throttleList = throttleList;
     }
-    
-    
-    
 
     /**
      *

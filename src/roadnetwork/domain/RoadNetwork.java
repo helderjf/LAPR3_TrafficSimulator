@@ -63,4 +63,13 @@ public class RoadNetwork {
         return m_PK != 0;
     }
 
+    public Junction getNodeByPK(int pk) {
+        for (Junction it : m_nodeList) {
+            if (it.getPK() == pk) {
+                return it;
+            }
+        }
+        return null;
+    }
+
 }

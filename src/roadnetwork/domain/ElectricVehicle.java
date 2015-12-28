@@ -11,11 +11,10 @@ import java.util.HashMap;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ElectricVehicle extends Vehicle implements Electric{
+public class ElectricVehicle extends Vehicle implements Electric {
 
-    
     /**
-     * 
+     *
      * @param name name of Electric Vehicle
      * @param description description of Electric Vehicle
      * @param mass mass of Electric Vehicles
@@ -30,21 +29,47 @@ public class ElectricVehicle extends Vehicle implements Electric{
      * @param maxRPM maxRPM of Electric Vehicles
      * @param finalDriveRatio finalDriveRatio of Electric Vehicles
      */
-
-    
-    public ElectricVehicle(String name, String description, double mass, String type, double load, 
-            double drag_Coefficient, double frontalArea, double rrc, double wheelSize, HashMap<String, Double> velocityLimit, 
-            double minRPM, double maxRPM, 
-            double finalDriveRatio){
-        super(name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit, 
+    public ElectricVehicle(
+            String name,
+            String description,
+            double mass,
+            String type,
+            double load,
+            double drag_Coefficient,
+            double frontalArea,
+            double rrc,
+            double wheelSize,
+            HashMap<String, Double> velocityLimit,
+            double minRPM,
+            double maxRPM,
+            double finalDriveRatio) {
+        super(name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
                 minRPM, maxRPM, finalDriveRatio);
- };
-
-    public ElectricVehicle() {
     }
 
+    public ElectricVehicle(
+            int pk,
+            String name,
+            String description,
+            double mass,
+            String type,
+            double load,
+            double drag_Coefficient,
+            double frontalArea,
+            double rrc,
+            double wheelSize,
+            HashMap<String, Double> velocityLimit,
+            double minRPM,
+            double maxRPM,
+            double finalDriveRatio) {
+        super(pk, name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
+                minRPM, maxRPM, finalDriveRatio);
+    }
+
+ 
+
     /**
-     * 
+     *
      * @return string ElectricVehicle
      */
     @Override
@@ -52,7 +77,4 @@ public class ElectricVehicle extends Vehicle implements Electric{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
-    
 }

@@ -16,42 +16,41 @@ import data.access.layer.ProjectReader;
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public class OpenProjectController {
-    
+
     Manager m_manager;
-    DataAccessObject m_dataAccessLayer;
-    ProjectReader m_projectFactory;
+    ProjectReader m_projectReader;
+    ArrayList<String> m_projectNameList;
     Project m_project;
-    
-    
+
     /**
-     * 
+     *
      * @param manager manager of project
      */
-    public OpenProjectController(Manager manager){
-        m_manager=manager;
+    public OpenProjectController(Manager manager) {
+        m_manager = manager;
     }
-    
+
     /**
-     * 
+     *
      * @return ProjectsIDList
      */
-    public ArrayList<String> getProjectsIDList(){
-        m_dataAccessLayer=m_manager.getdataAccessLayer();
-        return m_dataAccessLayer.getProjectsIDList();
+    public ArrayList<String> getExistentProjects() {
+        m_projectReader = m_manager.getProjectReader();
+        return m_projectReader.getOrderedProjectList();
     }
-    
+
     /**
-     * 
-     * @param pid project id
+     *
+     * @param projectName Project Name
      * @return make ProjectActive
      */
-    public boolean selectProject(String pid){
-        m_projectFactory = m_manager.getProjectReader();
-        
-        m_project=m_projectFactory.getProjectByID(pid);
-        
-        
+    public boolean selectProject(String projectName) {
+
+        m_project = m_projectReader.getProjectByName(projectName);
+        if (m_project == null) {
+            return false;
+        }
         return m_manager.setCurrentProject(m_project);
     }
-    
+
 }

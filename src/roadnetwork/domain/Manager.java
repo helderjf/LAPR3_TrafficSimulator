@@ -10,6 +10,7 @@ import data.access.layer.DataAccessObject;
 import IO.ExportCSV;
 import data.access.layer.ProjectWriter;
 import java.util.ArrayList;
+import roadnetwork.factory.ProjectStateFactory;
 
 /**
  *
@@ -65,7 +66,7 @@ public class Manager {
     }
 
     public ProjectReader getProjectReader() {
-        return new ProjectReader(m_dataAccessObject);
+        return new ProjectReader(m_dataAccessObject, new ProjectStateFactory());
     }
 
     public boolean setCurrentProject(Project project) {

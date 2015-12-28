@@ -11,7 +11,7 @@ import roadnetwork.controllers.OpenProjectController;
 
 /**
  *
- * @author josemiranda
+ * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public class OpenProjectFrame extends javax.swing.JFrame {
 
@@ -28,7 +28,7 @@ public class OpenProjectFrame extends javax.swing.JFrame {
         m_mainFrame=frame;
         
         m_openProjectController=new OpenProjectController(m_mainFrame.getManager());
-        m_projectsIDList = m_openProjectController.getProjectsIDList();
+        m_projectsIDList = m_openProjectController.getExistentProjects();
         
         if (m_projectsIDList.isEmpty()) {
             JOptionPane.showMessageDialog(this, "There are no projects available");

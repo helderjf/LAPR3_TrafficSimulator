@@ -15,6 +15,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import oracle.jdbc.OracleTypes;
 import roadnetwork.domain.SectionDirection;
 import roadnetwork.domain.SectionTypology;
 
@@ -575,12 +576,12 @@ public class DataAccessObject {
         }
     }
 
-    int updateSegment(int sectionPK, 
-            int segmentIndex, 
-            double initialHeight, 
-            double slope, 
+    int updateSegment(int sectionPK,
+            int segmentIndex,
+            double initialHeight,
+            double slope,
             double lenght,
-            double maxVelocity, 
+            double maxVelocity,
             double minVelocity,
             double maxVehicles) {
         try {
@@ -607,6 +608,62 @@ public class DataAccessObject {
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
+        }
+
+    }
+
+    ArrayList<String> getOrderdProjectList() {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_ORDERED_PROJECT_LIST(?)}");
+            statement.registerOutParameter(1, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            m_output = (ResultSet) statement.getObject(1);
+
+            ArrayList<String> projectList = new ArrayList();
+            while (m_output.next()) {
+                projectList.add(m_output.getString(2));
+            }
+
+            return projectList;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns -1 so the caller knows the connection failed
+        }
+
+    }
+
+    ResultSet getProjectProperties(String projectName) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_PROJECT_PROPERTIES(?)}");
+            statement.registerOutParameter(1, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet projectProperties = (ResultSet) statement.getObject(1);
+
+            return projectProperties;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns -1 so the caller knows the connection failed
         }
 
     }

@@ -67,8 +67,29 @@ public class Vehicle {
     public Vehicle(String name, String description, double mass, String type, double load, double drag_Coefficient,
             double frontalArea, double rrc, double wheelSize, HashMap<String, Double> velocityLimit,
             double minRPM, double maxRPM, double finalDriveRatio) {
-        
+
         this.m_pk = 0;
+        this.name = name;
+        this.description = description;
+        this.mass = mass;
+        this.type = type;
+        this.load = load;
+        this.dragCoefficient = drag_Coefficient;
+        this.frontalArea = frontalArea;
+        this.rrc = rrc;
+        this.wheelSize = wheelSize;
+        this.velocityLimit = velocityLimit;
+        this.minRPM = minRPM;
+        this.maxRPM = maxRPM;
+        this.finalDriveRatio = finalDriveRatio;
+
+    }
+
+    public Vehicle(int pk, String name, String description, double mass, String type, double load, double drag_Coefficient,
+            double frontalArea, double rrc, double wheelSize, HashMap<String, Double> velocityLimit,
+            double minRPM, double maxRPM, double finalDriveRatio) {
+
+        this.m_pk = pk;
         this.name = name;
         this.description = description;
         this.mass = mass;
@@ -91,7 +112,7 @@ public class Vehicle {
      */
     public Vehicle(Vehicle v)//TO DO alterar isto. está ao contrário
     {
-        
+
         v.name = this.name;
         v.description = this.description;
         v.mass = this.mass;

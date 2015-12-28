@@ -137,4 +137,12 @@ public class Project {
         return m_state.hasVehicles();
     }
 
+    public void addVehicleList(ArrayList<Vehicle> vehicleList) {
+        if(m_vehicleList==null){
+            m_vehicleList=vehicleList;
+        }else{
+            m_vehicleList.addAll(vehicleList);
+        }
+    }
+
 }

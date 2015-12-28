@@ -13,9 +13,14 @@ public class Junction {
     
     private int m_pk;
     private String junctionId;
+
     
-
-
+    
+    public Junction(int pk, String name) {
+        this.m_pk = pk;
+        this.junctionId = name;
+    }
+    
     /**
      * 
      */
