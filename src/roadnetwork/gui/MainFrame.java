@@ -132,6 +132,16 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
 
         jMenu3.setText("File");
         jMenuBar2.add(jMenu3);
@@ -242,6 +252,38 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu2.add(jMenuItem7);
 
         jMenuBar1.add(jMenu2);
+
+        jMenu7.setText("Simulations");
+
+        jMenuItem9.setText("Create Simulation");
+        jMenu7.add(jMenuItem9);
+
+        jMenuItem12.setText("Open Simulation");
+        jMenu7.add(jMenuItem12);
+
+        jMenuItem13.setText("Run Simulation");
+        jMenu7.add(jMenuItem13);
+
+        jMenu8.setText("Simulation Runs");
+
+        jMenuItem14.setText("View Runs");
+        jMenu8.add(jMenuItem14);
+
+        jMenuItem16.setText("Export Run Results");
+        jMenu8.add(jMenuItem16);
+
+        jMenuItem15.setText("Delete Runs");
+        jMenu8.add(jMenuItem15);
+
+        jMenu7.add(jMenu8);
+
+        jMenuItem10.setText("Copy Simulation");
+        jMenu7.add(jMenuItem10);
+
+        jMenuItem11.setText("Properties");
+        jMenu7.add(jMenuItem11);
+
+        jMenuBar1.add(jMenu7);
 
         setJMenuBar(jMenuBar1);
 
@@ -437,10 +479,19 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -448,6 +499,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
