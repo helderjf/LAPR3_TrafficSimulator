@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ResultFastestPath implements SimulationResult {
+public class ResultFastestPath implements Result {
 
     private Junction m_originNode;
     private Junction m_destinyNode;

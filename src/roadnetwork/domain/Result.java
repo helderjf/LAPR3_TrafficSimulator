@@ -9,19 +9,8 @@ package roadnetwork.domain;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class Simulation {
+public interface Result {
     
-    private int m_pk;
-    private String m_name;
-    private String m_description;
-
-    public Simulation() {
-    }
-
-    
-    
-    
-    
-    
+    public String printResults();
     
 }

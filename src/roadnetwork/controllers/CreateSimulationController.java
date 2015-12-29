@@ -3,14 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package roadnetwork.domain;
+package roadnetwork.controllers;
+
+import roadnetwork.domain.Manager;
 
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public interface SimulationResult {
+public class CreateSimulationController {
     
-    public String printResults();
+    private Manager m_manager;
+    
+    public CreateSimulationController(Manager manager){
+        m_manager=manager;
+    }
+    
     
 }

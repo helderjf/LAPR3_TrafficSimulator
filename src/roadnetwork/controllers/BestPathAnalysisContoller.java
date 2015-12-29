@@ -7,22 +7,21 @@ package roadnetwork.controllers;
 
 import IO.ExportCSV;
 import java.util.ArrayList;
-import java.util.List;
 import roadnetwork.domain.BestPathAlgorithm;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Junction;
 import roadnetwork.domain.Project;
 import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.ResultFastestPath;
-import roadnetwork.domain.Simulation;
-import roadnetwork.domain.SimulationResult;
+import roadnetwork.domain.StaticAnalysis;
+import roadnetwork.domain.Result;
 import roadnetwork.domain.Vehicle;
 
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class BestPathSimulationContoller {
+public class BestPathAnalysisContoller {
 
     private Manager m_manager;
     private Project m_project;
@@ -32,14 +31,14 @@ public class BestPathSimulationContoller {
     private Junction m_originJunction;
     private Junction m_destinationJunction;
     private BestPathAlgorithm m_bpAlgorithm;
-    private ResultFastestPath m_simulationResult;
+    private ResultFastestPath m_analysisResult;
     private ExportCSV m_csv;
 
     /**
      *
      * @param manager manager of project
      */
-    public BestPathSimulationContoller(Manager manager) {
+    public BestPathAnalysisContoller(Manager manager) {
         m_manager = manager;
 
     }
@@ -52,16 +51,16 @@ public class BestPathSimulationContoller {
         return false;
     }
 
-    public boolean newSimulation() {
+    public boolean newAnalysis() {
 
-        return m_project.canSimulate();
+        return m_project.canAnalyse();
     }
 
     /**
      *
      * @return VehicleList
      */
-    public ArrayList<Vehicle> newBestPathSimulation() {
+    public ArrayList<Vehicle> newBestPathAnalysis() {
 
         return m_project.getVehicleList();
 
@@ -98,7 +97,7 @@ public class BestPathSimulationContoller {
      * @param oj Junction1
      * @param dj Junction2
      */
-    public void setSimulationNodes(Junction oj, Junction dj) {
+    public void setAnalysisNodes(Junction oj, Junction dj) {
         m_originJunction = oj;
         m_destinationJunction = dj;
     }
@@ -121,16 +120,16 @@ public class BestPathSimulationContoller {
 
     /**
      *
-     * @return simulation run
+     * @return analysis run
      */
-    public SimulationResult runSimulation() {
-        Simulation simulation = m_project.newBestPathSimulation(m_roadNetwork,
+    public Result runAnalysis() {
+        StaticAnalysis analisys = m_project.newBestPathAnalysis(m_roadNetwork,
                 m_originJunction,
                 m_destinationJunction,
                 m_bpAlgorithm,
                 m_vehicle);
-        m_simulationResult = (ResultFastestPath) simulation.run();
-        return m_simulationResult;
+        m_analysisResult = (ResultFastestPath) analisys.run();
+        return m_analysisResult;
     }
 
     /**
@@ -140,7 +139,7 @@ public class BestPathSimulationContoller {
      */
     public boolean exportResultsCSV(String fileName) {
         m_csv = m_manager.newCSV(fileName);
-        return m_csv.export(m_simulationResult);
+        return m_csv.export(m_analysisResult);
     }
 
 }

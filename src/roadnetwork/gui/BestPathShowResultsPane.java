@@ -5,8 +5,8 @@
  */
 package roadnetwork.gui;
 
-import roadnetwork.controllers.BestPathSimulationContoller;
-import roadnetwork.domain.SimulationResult;
+import roadnetwork.controllers.BestPathAnalysisContoller;
+import roadnetwork.domain.Result;
 
 /**
  *
@@ -15,15 +15,15 @@ import roadnetwork.domain.SimulationResult;
 public class BestPathShowResultsPane extends javax.swing.JPanel {
     
     BestPathAnalysisFrame m_ancestorFrame;
-    BestPathSimulationContoller m_bpBestPathSimulationContoller;
-    SimulationResult m_results;
+    BestPathAnalysisContoller m_bpBestPathAnalysisContoller;
+    Result m_results;
 
     /**
      * Creates new form BestPathShowResultsPane
      */
-    public BestPathShowResultsPane(BestPathAnalysisFrame ancestor, BestPathSimulationContoller controller, SimulationResult results) {
+    public BestPathShowResultsPane(BestPathAnalysisFrame ancestor, BestPathAnalysisContoller controller, Result results) {
         m_ancestorFrame = ancestor;
-        m_bpBestPathSimulationContoller = controller;
+        m_bpBestPathAnalysisContoller = controller;
         m_results = results;
         initComponents();
     }
@@ -111,7 +111,7 @@ public class BestPathShowResultsPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        m_bpBestPathSimulationContoller.exportResultsCSV("resultados");
+        m_bpBestPathAnalysisContoller.exportResultsCSV("resultados");
         m_ancestorFrame.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 

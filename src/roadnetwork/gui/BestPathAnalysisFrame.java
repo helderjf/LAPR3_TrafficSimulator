@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import roadnetwork.controllers.BestPathSimulationContoller;
+import roadnetwork.controllers.BestPathAnalysisContoller;
 import roadnetwork.domain.BestPathAlgorithm;
 import roadnetwork.domain.Junction;
 import roadnetwork.domain.RoadNetwork;
-import roadnetwork.domain.SimulationResult;
+import roadnetwork.domain.Result;
 import roadnetwork.domain.Vehicle;
 
 /**
@@ -23,11 +23,11 @@ import roadnetwork.domain.Vehicle;
 public class BestPathAnalysisFrame extends javax.swing.JFrame {
 
     MainFrame m_mainFrame;
-    BestPathSimulationContoller m_bpSimulationController;
+    BestPathAnalysisContoller m_bestPathAnalysisController;
     ArrayList<Vehicle> m_vehiclesList;
     RoadNetwork m_roadNetwork;
     ArrayList<Junction> m_nodesList;
-    SimulationResult m_results;
+    Result m_results;
 
     /**
      * Creates new form JanelaBestPathAnalysis
@@ -36,7 +36,7 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
      */
     public BestPathAnalysisFrame(MainFrame frame) {
         m_mainFrame = frame;
-        m_bpSimulationController = new BestPathSimulationContoller(m_mainFrame.getManager());
+        m_bestPathAnalysisController = new BestPathAnalysisContoller(m_mainFrame.getManager());
 
         run();
 
@@ -44,12 +44,12 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
 
     private void run() {
 
-        if (!m_bpSimulationController.projectActive()) {
-            JOptionPane.showMessageDialog(this, "Can't create Simulation. There is no active project.", "No active project", JOptionPane.INFORMATION_MESSAGE);
+        if (!m_bestPathAnalysisController.projectActive()) {
+            JOptionPane.showMessageDialog(this, "Can't analyse network. There is no active project.", "No active project", JOptionPane.INFORMATION_MESSAGE);
             setVisible(false);
-        } else if (m_bpSimulationController.newSimulation()) {
+        } else if (m_bestPathAnalysisController.newAnalysis()) {
             //get the active project's list of vehicles
-            m_vehiclesList = m_bpSimulationController.newBestPathSimulation();
+            m_vehiclesList = m_bestPathAnalysisController.newBestPathAnalysis();
 
             initComponents();
             setLocationRelativeTo(null);
@@ -58,7 +58,7 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
 
             setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(m_mainFrame, "The active project can not be simulated at this point!", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(m_mainFrame, "The active project can not be analysed at this point!", "Error", JOptionPane.WARNING_MESSAGE);
             setVisible(false);
         }
     }
@@ -134,13 +134,13 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void setVehicle(Vehicle v) {
-        m_bpSimulationController.setVehicle(v);
+        m_bestPathAnalysisController.setVehicle(v);
         setChooseNodesPane();
     }
 
     public void setChooseNodesPane() {
-        m_roadNetwork = m_bpSimulationController.getRoadNetwork();
-        m_nodesList = m_bpSimulationController.getNodeList();
+        m_roadNetwork = m_bestPathAnalysisController.getRoadNetwork();
+        m_nodesList = m_bestPathAnalysisController.getNodeList();
 
         this.setContentPane(new BestPathChooseNodesPane(this, m_nodesList));
         this.revalidate();
@@ -148,25 +148,25 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
 
     public void setChooseAlgorithmPane() {
 
-        this.setContentPane(new BestPathChooseAlgorithmPane(this, m_bpSimulationController.getBestPathAlgorithms()));
+        this.setContentPane(new BestPathChooseAlgorithmPane(this, m_bestPathAnalysisController.getBestPathAlgorithms()));
         this.revalidate();
     }
 
-    public void runSimulation() {
-        m_results = m_bpSimulationController.runSimulation();
-        setContentPane(new BestPathShowResultsPane(this, m_bpSimulationController, m_results));
+    public void runAnalysis() {
+        m_results = m_bestPathAnalysisController.runAnalysis();
+        setContentPane(new BestPathShowResultsPane(this, m_bestPathAnalysisController, m_results));
         this.revalidate();
     }
 
-    void setSimulationNodes(Junction originNode, Junction destinyNode) {
-        m_bpSimulationController.setSimulationNodes(originNode, destinyNode);
+    void setAnalysisNodes(Junction originNode, Junction destinyNode) {
+        m_bestPathAnalysisController.setAnalysisNodes(originNode, destinyNode);
         setChooseAlgorithmPane();
 
     }
 
     void setAlgorithm(BestPathAlgorithm algorithm) {
-        m_bpSimulationController.setAlgorithm(algorithm);
-        runSimulation();
+        m_bestPathAnalysisController.setAlgorithm(algorithm);
+        runAnalysis();
     }
 
 }

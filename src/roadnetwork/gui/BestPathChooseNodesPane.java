@@ -7,7 +7,7 @@ package roadnetwork.gui;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import roadnetwork.controllers.BestPathSimulationContoller;
+import roadnetwork.controllers.BestPathAnalysisContoller;
 import roadnetwork.domain.Junction;
 import roadnetwork.domain.RoadNetwork;
 
@@ -130,7 +130,7 @@ public class BestPathChooseNodesPane extends javax.swing.JPanel {
             if(jList1.getSelectedValue() == jList2.getSelectedValue()){
                 JOptionPane.showMessageDialog(this,"Origin and destiny nodes can not be the same");
             }else{
-                m_ancestorFrame.setSimulationNodes((Junction)jList1.getSelectedValue(), (Junction)jList2.getSelectedValue());
+                m_ancestorFrame.setAnalysisNodes((Junction)jList1.getSelectedValue(), (Junction)jList2.getSelectedValue());
             }
         }else{
             JOptionPane.showMessageDialog(this,"You must select two nodes");

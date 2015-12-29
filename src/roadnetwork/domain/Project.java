@@ -74,9 +74,9 @@ public class Project {
         this.m_vehicleList = m_vehicleList;
     }
 
-    public Simulation newBestPathSimulation(RoadNetwork rn, Junction oj,
+    public StaticAnalysis newBestPathAnalysis(RoadNetwork rn, Junction oj,
             Junction dj, BestPathAlgorithm alg, Vehicle v) {
-        return new Simulation(rn, oj, dj, alg, v);
+        return new StaticAnalysis(rn, oj, dj, alg, v);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class Project {
                 && m_state.projectCreated();
     }
 
-    public boolean canSimulate() {
+    public boolean canAnalyse() {
         return m_state.canAnalyse();
     }
 
@@ -146,5 +146,13 @@ public class Project {
             m_vehicleList.addAll(vehicleList);
         }
     }
+    
+    public void setActiveSimulation(Simulation s){
+        m_activeSimulation=s;
+    }
+    
+    
+    
+    
 
 }
