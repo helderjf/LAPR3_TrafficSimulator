@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public class Throttle {
     
-    private int m_pk;
     private String m_id;
     private ArrayList<Regime> m_regimeList;
 
@@ -24,10 +23,7 @@ public class Throttle {
         m_id = id;
         m_regimeList = regimeList;
     }
-
-    public int getPK() {
-        return m_pk;
-    }
+    
 
     public String getID() {
         return m_id;
@@ -37,9 +33,6 @@ public class Throttle {
         return m_regimeList;
     }
 
-    public void setPK(int pk) {
-        m_pk = pk;
-    }
 
     public void setID(String id) {
         m_id = id;

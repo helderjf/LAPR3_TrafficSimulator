@@ -15,6 +15,7 @@ import roadnetwork.domain.HybridVehicle;
 import roadnetwork.domain.SectionDirection;
 import roadnetwork.domain.Junction;
 import roadnetwork.domain.Project;
+import roadnetwork.domain.Regime;
 import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.Section;
 import roadnetwork.domain.SectionTypology;
@@ -46,7 +47,7 @@ public class ProjectReader {
     }
 
     public ArrayList<String> getOrderedProjectList() {
-        m_projectNameList = m_dao.getOrderdProjectList();
+        m_projectNameList = m_dao.getOrderedProjectList();
         return m_projectNameList;
     }
 
@@ -73,16 +74,16 @@ public class ProjectReader {
 
     private boolean getProjectProperties(String projectName) {
         try {
-            ResultSet output = m_dao.getProjectProperties(projectName);
+            ResultSet properties = m_dao.getProjectProperties(projectName);
 
-            if (output == null) {
+            if (properties == null) {
                 return false;
             }
 
-            m_project.setPK(output.getInt(1));
-            m_project.setName(output.getString(2));
-            m_project.setDescription(output.getString(3));
-            String s = output.getString(4);
+            m_project.setPK(properties.getInt(1));
+            m_project.setName(properties.getString(2));
+            m_project.setDescription(properties.getString(3));
+            String s = properties.getString(4);
             m_project.setState(m_stateFactory.getProjectState(s, m_project));
             return true;
         } catch (SQLException ex) {
@@ -95,11 +96,14 @@ public class ProjectReader {
         try {
             RoadNetwork roadNetwork = new RoadNetwork();
 
-            ResultSet output = m_dao.getRoadNetwork(m_project.getPK());
+            ResultSet rnData = m_dao.getRoadNetwork(m_project.getPK());
+            if (rnData == null) {
+                return false;
+            }
 
-            roadNetwork.setPK(output.getInt(1));
-            roadNetwork.setName(output.getString(2));
-            roadNetwork.setDescription(output.getString(3));
+            roadNetwork.setPK(rnData.getInt(1));
+            roadNetwork.setName(rnData.getString(2));
+            roadNetwork.setDescription(rnData.getString(3));
 
             m_project.setRoadNetwork(roadNetwork);
 
@@ -115,6 +119,9 @@ public class ProjectReader {
 
         try {
             ResultSet nodes = m_dao.getRoadNetworkNodes(roadNetwork.getPK());
+            if (nodes == null) {
+                return false;
+            }
 
             ArrayList<Junction> nodeList = new ArrayList();
             while (nodes.next()) {
@@ -122,7 +129,6 @@ public class ProjectReader {
             }
 
             roadNetwork.setNodeList(nodeList);
-
             return true;
 
         } catch (SQLException ex) {
@@ -136,6 +142,9 @@ public class ProjectReader {
         try {
 
             ResultSet sections = m_dao.getRoadNetworkSections(roadNetwork.getPK());
+            if (sections == null) {
+                return false;
+            }
 
             ArrayList<Section> sectionList = new ArrayList();
             while (sections.next()) {
@@ -157,6 +166,8 @@ public class ProjectReader {
                         segmentList
                 ));
             }
+            roadNetwork.setSectionList(sectionList);
+            return true;
 
         } catch (SQLException ex) {
             System.out.println("Road Network sections not retrieved");
@@ -167,6 +178,10 @@ public class ProjectReader {
     private ArrayList<Segment> getSegments(int sectionPK) {
         try {
             ResultSet segments = m_dao.getSectionSegments(sectionPK);
+            if (segments == null) {
+                return null;
+            }
+
             ArrayList<Segment> segmentList = new ArrayList();
             while (segments.next()) {
                 segmentList.add(new Segment(
@@ -208,10 +223,14 @@ public class ProjectReader {
     private boolean setCombustionVehicles(int projectPK) {
         try {
             ResultSet combustionVehicles = m_dao.getCombustionVehicles(projectPK);
+            if (combustionVehicles == null) {
+                return false;
+            }
+
             ArrayList<Vehicle> combustionVehiclesList = new ArrayList();
             while (combustionVehicles.next()) {
 
-                ArrayList<Throttle> throttleList = getThrotleList(combustionVehicles.getInt("ID_VEHICLE"));
+                ArrayList<Throttle> throttleList = getThrottleList(combustionVehicles.getInt("ID_VEHICLE"));
                 ArrayList<Double> gearList = getGearList(combustionVehicles.getInt("ID_VEHICLE"));
                 HashMap<String, Double> velocityLimits = getVelocityLimits(combustionVehicles.getInt("ID_VEHICLE"));
 
@@ -248,10 +267,14 @@ public class ProjectReader {
     private boolean setHybridVehicles(int projectPK) {
         try {
             ResultSet hybridVehicles = m_dao.getHybridVehicles(projectPK);
+            if (hybridVehicles == null) {
+                return false;
+            }
+
             ArrayList<Vehicle> hybridVehiclesList = new ArrayList();
             while (hybridVehicles.next()) {
 
-              //  ArrayList<Throttle> throttleList = getThrotleList(combustionVehicles.getInt("ID_VEHICLE"));
+                //  ArrayList<Throttle> throttleList = getThrotleList(combustionVehicles.getInt("ID_VEHICLE"));
                 //  ArrayList<Double> gearList = getGearList(combustionVehicles.getInt("ID_VEHICLE"));
                 HashMap<String, Double> velocityLimits = getVelocityLimits(hybridVehicles.getInt("ID_VEHICLE"));
 
@@ -289,10 +312,14 @@ public class ProjectReader {
     private boolean setElectricVehicles(int projectPK) {
         try {
             ResultSet electricVehicles = m_dao.getElectricVehicles(projectPK);
+            if (electricVehicles == null) {
+                return false;
+            }
+
             ArrayList<Vehicle> electricVehiclesList = new ArrayList();
             while (electricVehicles.next()) {
 
-              //  ArrayList<Throttle> throttleList = getThrotleList(combustionVehicles.getInt("ID_VEHICLE"));
+                //  ArrayList<Throttle> throttleList = getThrotleList(combustionVehicles.getInt("ID_VEHICLE"));
                 //  ArrayList<Double> gearList = getGearList(combustionVehicles.getInt("ID_VEHICLE"));
                 HashMap<String, Double> velocityLimits = getVelocityLimits(electricVehicles.getInt("ID_VEHICLE"));
 
@@ -328,14 +355,92 @@ public class ProjectReader {
 
     }
 
-    private ArrayList<Throttle> getThrotleList(int aInt) {
-        try{
-            ResultSet 
-        }catch (SQLException ex) {
-            System.out.println("Hybrid vehicles not retrieved");
+    private ArrayList<Throttle> getThrottleList(int vehiclePK) {
+        try {
+            ResultSet throttles = m_dao.getVehicleThrottles(vehiclePK);
+            if (throttles == null) {
+                return null;
+            }
+
+            ArrayList<Throttle> throttleList = new ArrayList();
+            while (throttles.next()) {
+                throttleList.add(new Throttle(
+                        throttles.getString("ID_TRHOTTLE"),
+                        getThrottleRegimes(vehiclePK, throttles.getString("ID_TRHOTTLE")))
+                );
+            }
+            
+            return throttleList;
+            
+        } catch (SQLException ex) {
+            System.out.println("Throttle list not retrieved");
             return null;
         }
-        
+
+    }
+
+    private ArrayList<Regime> getThrottleRegimes(int vehiclePK, String throttleID) {
+        try {
+            ResultSet regimes = m_dao.getThrottleRegimes(vehiclePK, throttleID);
+            if (regimes == null) {
+                return null;
+            }
+
+            ArrayList<Regime> regimesList = new ArrayList();
+            while (regimes.next()) {
+                regimesList.add(
+                        new Regime(
+                                regimes.getInt("ID_REGIME"),
+                                regimes.getDouble("TORQUE"),
+                                regimes.getDouble("RPM_LOW"),
+                                regimes.getDouble("RPM_HIGH"),
+                                regimes.getDouble("SFC")
+                        ));
+            }
+            return regimesList;
+        } catch (SQLException ex) {
+            System.out.println("Regimes not retrieved");
+            return null;
+        }
+    }
+
+    private ArrayList<Double> getGearList(int vehiclePK) {
+        try {
+            ResultSet gears = m_dao.getVehicleGears(vehiclePK);
+            if (gears == null) {
+                return null;
+            }
+
+            ArrayList<Double> gearList = new ArrayList();
+            while (gears.next()) {
+                gearList.add(gears.getDouble("RATIO"));
+            }
+            return gearList;
+
+        } catch (SQLException ex) {
+            System.out.println("Gear list not retrieved");
+            return null;
+        }
+    }
+
+    private HashMap<String, Double> getVelocityLimits(int vehiclePK) {
+        try {
+            ResultSet limits = m_dao.getVehicleVelocityLimits(vehiclePK);
+            if (limits == null) {
+                return null;
+            }
+
+            HashMap<String, Double> velocityLimits = new HashMap();
+            while (limits.next()) {
+                velocityLimits.put(limits.getString(1), limits.getDouble(2));
+            }
+
+            return velocityLimits;
+
+        } catch (SQLException ex) {
+            System.out.println("Velocity Limits not retrieved");
+            return null;
+        }
     }
 
 }

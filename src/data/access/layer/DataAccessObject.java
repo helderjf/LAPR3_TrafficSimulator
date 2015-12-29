@@ -612,7 +612,7 @@ public class DataAccessObject {
 
     }
 
-    ArrayList<String> getOrderdProjectList() {
+    ArrayList<String> getOrderedProjectList() {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -652,8 +652,9 @@ public class DataAccessObject {
             }
 
             //criar statement
-            CallableStatement statement = m_connection.prepareCall("{call GET_PROJECT_PROPERTIES(?)}");
-            statement.registerOutParameter(1, OracleTypes.CURSOR);
+            CallableStatement statement = m_connection.prepareCall("{call GET_PROJECT_PROPERTIES(?,?)}");
+            statement.setString(1, projectName);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
 
             //executar query
             statement.execute();
@@ -663,9 +664,285 @@ public class DataAccessObject {
             return projectProperties;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
-            return null;//returns -1 so the caller knows the connection failed
+            return null;//returns null so the caller knows the connection failed
         }
 
+    }
+
+    ResultSet getRoadNetwork(int projectPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_PROJECT_ROAD_NETWORK(?,?)}");
+            statement.setInt(1, projectPK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet roadNetwork = (ResultSet) statement.getObject(1);
+
+            return roadNetwork;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    ResultSet getRoadNetworkNodes(int roadNetworkPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_ROAD_NETWORK_NODES(?,?)}");
+            statement.setInt(1, roadNetworkPK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet nodes = (ResultSet) statement.getObject(1);
+
+            return nodes;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    ResultSet getRoadNetworkSections(int roadNetworkPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_ROAD_NETWORK_SECTIONS(?,?)}");
+            statement.setInt(1, roadNetworkPK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet sections = (ResultSet) statement.getObject(1);
+
+            return sections;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    ResultSet getSectionSegments(int sectionPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_SECTION_SEGMENTS(?,?)}");
+            statement.setInt(1, sectionPK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet segments = (ResultSet) statement.getObject(1);
+
+            return segments;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    ResultSet getCombustionVehicles(int projectPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_PROJECT_COMB_VEHICLES(?,?)}");
+            statement.setInt(1, projectPK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet combVehicles = (ResultSet) statement.getObject(1);
+
+            return combVehicles;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    ResultSet getHybridVehicles(int projectPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_PROJECT_HYBR_VEHICLES(?,?)}");
+            statement.setInt(1, projectPK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet hybrVehicles = (ResultSet) statement.getObject(1);
+
+            return hybrVehicles;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    ResultSet getElectricVehicles(int projectPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_PROJECT_ELEC_VEHICLES(?,?)}");
+            statement.setInt(1, projectPK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet elecVehicles = (ResultSet) statement.getObject(1);
+
+            return elecVehicles;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    ResultSet getVehicleThrottles(int vehiclePK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_VEHICLE_THROTTLES(?,?)}");
+            statement.setInt(1, vehiclePK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet throttles = (ResultSet) statement.getObject(1);
+
+            return throttles;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    ResultSet getThrottleRegimes(int vehiclePK, String throttleID) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_VEHICLE_THROTTLE_REGIMES(?,?,?)}");
+            statement.setInt(1, vehiclePK);
+            statement.setString(1, throttleID);
+            statement.registerOutParameter(3, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet regimes = (ResultSet) statement.getObject(1);
+
+            return regimes;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    ResultSet getVehicleGears(int vehiclePK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_VEHICLE_GEARS(?,?)}");
+            statement.setInt(1, vehiclePK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet gears = (ResultSet) statement.getObject(1);
+
+            return gears;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    ResultSet getVehicleVelocityLimits(int vehiclePK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_VEHICLE_VEL_LIMITS(?,?)}");
+            statement.setInt(1, vehiclePK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet limits = (ResultSet) statement.getObject(1);
+
+            return limits;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
     }
 
 }

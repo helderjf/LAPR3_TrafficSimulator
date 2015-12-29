@@ -26,6 +26,15 @@ public class Regime {
         m_rpmHigh = rpmHigh;
         m_sfc = sfc;
     }
+    
+        public Regime(int pk, double torque, double rpmLow, double rpmHigh, double sfc) {
+        m_pk=pk;
+        m_torque = torque;
+        m_rpmLow = rpmLow;
+        m_rpmHigh = rpmHigh;
+        m_sfc = sfc;
+    }
+    
 
     public int getPK() {
         return m_pk;
