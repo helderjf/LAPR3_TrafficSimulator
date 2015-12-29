@@ -224,7 +224,7 @@ public class ImportXML implements Import {
             String limit = velocityLimit.getElementsByTagName("limit").item(0).getNodeValue();
             HashMap<String,Double> hash = new HashMap();
             hash.put(segment, Double.parseDouble(limit));
-            vehicle.setVelocityLimit(hash);
+            vehicle.setVelocityLimits(hash);
         }
 
         //GET ENERGY

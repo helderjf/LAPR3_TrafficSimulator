@@ -21,7 +21,7 @@ public interface ProjectState {
     
     public boolean canEditProperties();
     
-    public boolean canSimulate();
+    public boolean canAnalyse();
     
     public boolean vadidate();        
 

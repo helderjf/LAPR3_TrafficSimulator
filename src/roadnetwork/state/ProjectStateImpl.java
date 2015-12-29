@@ -49,7 +49,7 @@ public class ProjectStateImpl implements ProjectState {
     }
 
     @Override
-    public boolean canSimulate() {
+    public boolean canAnalyse() {
         return false;
     }
 

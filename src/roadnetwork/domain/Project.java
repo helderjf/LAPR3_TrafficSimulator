@@ -23,6 +23,8 @@ public class Project {
     private String m_description;
     private RoadNetwork m_roadNetwork;
     private ArrayList<Vehicle> m_vehicleList;
+    private ArrayList<Simulation> m_simulationList;//all simulations
+    private Simulation m_activeSimulation;//active simulation
     private ProjectState m_state;
 
     public Project() {
@@ -89,7 +91,7 @@ public class Project {
     }
 
     public boolean canSimulate() {
-        return m_state.canSimulate();
+        return m_state.canAnalyse();
     }
 
     public boolean canEditProperties() {

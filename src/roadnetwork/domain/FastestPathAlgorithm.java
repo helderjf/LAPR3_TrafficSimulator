@@ -29,7 +29,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
             sectionTime.add(calculateTravelTime(s, vehicle));
         }
 
-        return constructResults(originNode, destinyNode, fastestPath,fastestPathLength,sectionTime);
+        return constructResults(originNode, destinyNode, fastestPath, fastestPathLength, sectionTime);
     }
 
     private void graphConstruction(RoadNetwork rn, Vehicle vehicle) {
@@ -52,7 +52,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     }
 
     /**
-     * 
+     *
      * @param section section
      * @param vehicle vehicle
      * @return return total time by section
@@ -61,22 +61,22 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
 
         ArrayList<Segment> segmentList = section.getSegmentsList();
         double time = 0; //in seconds
+        
         for (Segment it : segmentList) {
-            double maxVel;
-            SectionTypology type = section.getSectionType();
-            double vehicleSpeedLimit = 500;
-            if (vehicle.getVelocityLimit().get(String.valueOf(type)) != null) {
-            double teste = vehicle.getVelocityLimit().get(String.valueOf(type));
-                vehicleSpeedLimit = vehicle.getVelocityLimit().get(String.valueOf(type));
-            }
-
-            if (it.getMax_Velocity() <= vehicleSpeedLimit) {
-                maxVel = it.getMax_Velocity();
-            } else {
-                maxVel = vehicleSpeedLimit;
-            }
+            
             double lenght = it.getLenght();
-            time += lenght * 3600 / maxVel;
+            double travelSpeed;
+            SectionTypology type = section.getSectionType();
+            
+            //determin if the vehicle maximum speed for this section is inferior to the section speed limit
+            if (vehicle.getVelocityLimits().containsKey(String.valueOf(type))
+                    && vehicle.getVelocityLimit(type)< it.getMax_Velocity()) {
+                travelSpeed = vehicle.getVelocityLimit(type);
+            }else{
+                travelSpeed= it.getMax_Velocity();
+            }
+            
+            time += lenght * 3600 / travelSpeed;
         }
         return time;
 

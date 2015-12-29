@@ -252,7 +252,7 @@ public class Vehicle {
      *
      * @return velocitylimit
      */
-    public HashMap<String, Double> getVelocityLimit() {
+    public HashMap<String, Double> getVelocityLimits() {
         return velocityLimit;
     }
 
@@ -260,9 +260,14 @@ public class Vehicle {
      *
      * @param velocityLimit velocityLimit
      */
-    public void setVelocityLimit(HashMap<String, Double> velocityLimit) {
+    public void setVelocityLimits(HashMap<String, Double> velocityLimit) {
         this.velocityLimit = velocityLimit;
     }
+    
+    public double getVelocityLimit(SectionTypology typology){
+        return velocityLimit.get(String.valueOf(typology));
+    }
+    
 
     /**
      *

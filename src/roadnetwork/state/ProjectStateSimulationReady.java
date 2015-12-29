@@ -18,7 +18,7 @@ public class ProjectStateSimulationReady extends ProjectStateImpl {
     }
 
     @Override
-    public boolean canSimulate() {
+    public boolean canAnalyse() {
         return true;
     }
     

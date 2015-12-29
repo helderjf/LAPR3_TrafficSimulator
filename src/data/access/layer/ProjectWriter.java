@@ -229,7 +229,7 @@ public class ProjectWriter {
 
     private boolean saveNewVehicleVelocityLimits(Vehicle vehicle) {
 
-        HashMap<String, Double> limits = vehicle.getVelocityLimit();
+        HashMap<String, Double> limits = vehicle.getVelocityLimits();
         Iterator it = limits.keySet().iterator();
         while (it.hasNext()) {
             String typology = it.next().toString();
