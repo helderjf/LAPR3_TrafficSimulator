@@ -469,4 +469,8 @@ public class ProjectReader {
         return true;
     }
 
+    public boolean simulationExists(int pk, String simulationName) {
+        
+    }
+
 }

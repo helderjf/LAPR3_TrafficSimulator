@@ -21,15 +21,15 @@ public class ProjectStateSimulationReady extends ProjectStateImpl {
     public boolean canAnalyse() {
         return true;
     }
-    
+
     @Override
     public boolean projectSaved() {
-        
+
         ProjectState ns = new ProjectStateSimulationReadySaved(m_project);
         m_project.setState(ns);
         return true;
-    }    
-    
+    }
+
     @Override
     public boolean hasRoadNetwork() {
         return true;
@@ -38,6 +38,11 @@ public class ProjectStateSimulationReady extends ProjectStateImpl {
     @Override
     public boolean hasVehicles() {
         return true;
-    }       
+    }
+
+    @Override
+    public boolean canSimulate() {
+        return true;
+    }
 
 }

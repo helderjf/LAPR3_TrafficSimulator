@@ -150,6 +150,22 @@ public class Project {
     public void setActiveSimulation(Simulation s){
         m_activeSimulation=s;
     }
+
+    public boolean canSimulate() {
+        return m_state.canSimulate();
+    }
+    
+    public boolean simulationExists(String simulationName){
+        for(Simulation it: m_simulationList){
+            if(it.getName().trim().equals(simulationName))
+                return true;
+        }
+        return false;
+    }
+
+    public Simulation newSimulation(String simulationName, String description) {
+        return new Simulation(simulationName, description);
+    }
     
     
     
