@@ -54,4 +54,8 @@ public class EditProjectPropertiesController {
         return m_project.propertiesChanged();
     }
 
+    public boolean nameExists(String name) {
+        return m_manager.getProjectReader().projectNameExists(name);
+    }
+
 }

@@ -69,4 +69,8 @@ public class NewProjectFrame extends javax.swing.JFrame {
             setVisible(false);
         }
     }
+
+    boolean nameExists(String name) {
+        return m_newProjectController.nameExists(name);
+    }
 }

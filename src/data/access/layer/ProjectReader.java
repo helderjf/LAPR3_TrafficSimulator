@@ -462,4 +462,11 @@ public class ProjectReader {
         }
     }
 
+    public boolean projectNameExists(String name) {
+        if (m_dao.projectNameExists(name) == 0) {
+            return false;
+        }
+        return true;
+    }
+
 }

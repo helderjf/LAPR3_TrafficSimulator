@@ -44,4 +44,8 @@ public class NewProjectController {
         
     }
 
+    public boolean nameExists(String name) {
+        return m_manager.getProjectReader().projectNameExists(name);
+    }
+
 }

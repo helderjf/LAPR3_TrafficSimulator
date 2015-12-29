@@ -113,7 +113,8 @@ public class DataAccessObject {
             return statement.getInt(4);
 
         } catch (SQLException ex) {
-            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+            //Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
     }
@@ -942,6 +943,30 @@ public class DataAccessObject {
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    int projectNameExists(String projectName) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call CHECK_PROJECT_EXISTS(?,?)}");
+            statement.setString(1, projectName);
+            statement.registerOutParameter(2, Types.INTEGER);
+
+            //executar query
+            statement.execute();
+
+            return statement.getInt(2);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;//returns null so the caller knows the connection failed
         }
     }
 

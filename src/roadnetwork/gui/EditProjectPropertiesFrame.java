@@ -88,4 +88,8 @@ public class EditProjectPropertiesFrame extends javax.swing.JFrame {
             setVisible(false);
         }
     }
+
+    boolean nameExists(String name) {
+        return m_EditProjectPropertiesController.nameExists(name);
+    }
 }

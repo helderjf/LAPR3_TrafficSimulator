@@ -16,14 +16,14 @@ public class EditProjectPropertiesPane extends javax.swing.JPanel {
     EditProjectPropertiesFrame m_ancestor;
     String m_oldName;
     String m_oldDescription;
-    
+
     /**
      * Creates new form EditProjectPropertiesPane
      */
     public EditProjectPropertiesPane(EditProjectPropertiesFrame ancestor, String pname, String pdesc) {
-        m_ancestor=ancestor;
-        m_oldName=pname;
-        m_oldDescription=pdesc;
+        m_ancestor = ancestor;
+        m_oldName = pname;
+        m_oldDescription = pdesc;
         initComponents();
     }
 
@@ -110,7 +110,12 @@ public class EditProjectPropertiesPane extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (!jTextField1.getText().replace(" ", "").equals("") && !jTextPane1.getText().replace(" ", "").equals("")) {
-            m_ancestor.newProperties(jTextField1.getText().trim(), jTextPane1.getText().trim());
+            if (!m_ancestor.nameExists(jTextField1.getText().trim())) {
+                m_ancestor.newProperties(jTextField1.getText().trim(), jTextPane1.getText().trim());
+            } else {
+                JOptionPane.showMessageDialog(this, "A project with the name name already exists.\n"
+                        + "Please choose a different name");
+            }
         } else {
             JOptionPane.showMessageDialog(this, "You must enter a project name and a project description.");
         }
