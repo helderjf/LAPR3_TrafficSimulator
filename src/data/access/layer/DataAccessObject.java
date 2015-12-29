@@ -970,4 +970,29 @@ public class DataAccessObject {
         }
     }
 
+    int simulationExists(int projectPK, String simulationName) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call CHECK_SIMULATION_EXISTS(?,?,?)}");
+            statement.setInt(1, projectPK);
+            statement.setString(2, simulationName);
+            statement.registerOutParameter(3, Types.INTEGER);
+
+            //executar query
+            statement.execute();
+
+            return statement.getInt(3);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;//returns null so the caller knows the connection failed
+        }
+    }
+
 }
