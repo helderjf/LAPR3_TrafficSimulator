@@ -6,7 +6,6 @@
 package roadnetwork.controllers;
 
 import java.util.ArrayList;
-import data.access.layer.DataAccessObject;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 import data.access.layer.ProjectReader;

@@ -659,7 +659,7 @@ public class DataAccessObject {
             //executar query
             statement.execute();
 
-            ResultSet projectProperties = (ResultSet) statement.getObject(1);
+            ResultSet projectProperties = (ResultSet) statement.getObject(2);
 
             return projectProperties;
         } catch (SQLException ex) {
@@ -685,7 +685,7 @@ public class DataAccessObject {
             //executar query
             statement.execute();
 
-            ResultSet roadNetwork = (ResultSet) statement.getObject(1);
+            ResultSet roadNetwork = (ResultSet) statement.getObject(2);
 
             return roadNetwork;
         } catch (SQLException ex) {
@@ -710,7 +710,7 @@ public class DataAccessObject {
             //executar query
             statement.execute();
 
-            ResultSet nodes = (ResultSet) statement.getObject(1);
+            ResultSet nodes = (ResultSet) statement.getObject(2);
 
             return nodes;
         } catch (SQLException ex) {
@@ -735,7 +735,7 @@ public class DataAccessObject {
             //executar query
             statement.execute();
 
-            ResultSet sections = (ResultSet) statement.getObject(1);
+            ResultSet sections = (ResultSet) statement.getObject(2);
 
             return sections;
         } catch (SQLException ex) {
@@ -760,7 +760,7 @@ public class DataAccessObject {
             //executar query
             statement.execute();
 
-            ResultSet segments = (ResultSet) statement.getObject(1);
+            ResultSet segments = (ResultSet) statement.getObject(2);
 
             return segments;
         } catch (SQLException ex) {
@@ -785,7 +785,7 @@ public class DataAccessObject {
             //executar query
             statement.execute();
 
-            ResultSet combVehicles = (ResultSet) statement.getObject(1);
+            ResultSet combVehicles = (ResultSet) statement.getObject(2);
 
             return combVehicles;
         } catch (SQLException ex) {
@@ -810,7 +810,7 @@ public class DataAccessObject {
             //executar query
             statement.execute();
 
-            ResultSet hybrVehicles = (ResultSet) statement.getObject(1);
+            ResultSet hybrVehicles = (ResultSet) statement.getObject(2);
 
             return hybrVehicles;
         } catch (SQLException ex) {
@@ -835,7 +835,7 @@ public class DataAccessObject {
             //executar query
             statement.execute();
 
-            ResultSet elecVehicles = (ResultSet) statement.getObject(1);
+            ResultSet elecVehicles = (ResultSet) statement.getObject(2);
 
             return elecVehicles;
         } catch (SQLException ex) {
@@ -860,7 +860,7 @@ public class DataAccessObject {
             //executar query
             statement.execute();
 
-            ResultSet throttles = (ResultSet) statement.getObject(1);
+            ResultSet throttles = (ResultSet) statement.getObject(2);
 
             return throttles;
         } catch (SQLException ex) {
@@ -880,13 +880,13 @@ public class DataAccessObject {
             //criar statement
             CallableStatement statement = m_connection.prepareCall("{call GET_VEHICLE_THROTTLE_REGIMES(?,?,?)}");
             statement.setInt(1, vehiclePK);
-            statement.setString(1, throttleID);
+            statement.setString(2, throttleID);
             statement.registerOutParameter(3, OracleTypes.CURSOR);
 
             //executar query
             statement.execute();
 
-            ResultSet regimes = (ResultSet) statement.getObject(1);
+            ResultSet regimes = (ResultSet) statement.getObject(3);
 
             return regimes;
         } catch (SQLException ex) {
@@ -911,7 +911,7 @@ public class DataAccessObject {
             //executar query
             statement.execute();
 
-            ResultSet gears = (ResultSet) statement.getObject(1);
+            ResultSet gears = (ResultSet) statement.getObject(2);
 
             return gears;
         } catch (SQLException ex) {
@@ -936,7 +936,7 @@ public class DataAccessObject {
             //executar query
             statement.execute();
 
-            ResultSet limits = (ResultSet) statement.getObject(1);
+            ResultSet limits = (ResultSet) statement.getObject(2);
 
             return limits;
         } catch (SQLException ex) {

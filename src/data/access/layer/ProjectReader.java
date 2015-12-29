@@ -53,7 +53,7 @@ public class ProjectReader {
 
     public Project getProjectByName(String projectName) {
         m_project = new Project();
-        if (getProjectProperties(projectName)) {
+        if (!getProjectProperties(projectName)) {
             return null;
         }
 
@@ -80,6 +80,7 @@ public class ProjectReader {
                 return false;
             }
 
+            properties.next();
             m_project.setPK(properties.getInt(1));
             m_project.setName(properties.getString(2));
             m_project.setDescription(properties.getString(3));
@@ -88,6 +89,7 @@ public class ProjectReader {
             return true;
         } catch (SQLException ex) {
             System.out.println("Project properties not retrieved");
+            System.out.println(ex);
             return false;
         }
     }
@@ -101,6 +103,7 @@ public class ProjectReader {
                 return false;
             }
 
+            rnData.next();
             roadNetwork.setPK(rnData.getInt(1));
             roadNetwork.setName(rnData.getString(2));
             roadNetwork.setDescription(rnData.getString(3));
@@ -111,6 +114,7 @@ public class ProjectReader {
 
         } catch (SQLException ex) {
             System.out.println("Project Road Network not retrieved");
+            System.out.println(ex);
             return false;
         }
     }
@@ -133,6 +137,7 @@ public class ProjectReader {
 
         } catch (SQLException ex) {
             System.out.println("Road Network nodes not retrieved");
+            System.out.println(ex);
             return false;
         }
 
@@ -171,6 +176,7 @@ public class ProjectReader {
 
         } catch (SQLException ex) {
             System.out.println("Road Network sections not retrieved");
+            System.out.println(ex);
             return false;
         }
     }
@@ -185,7 +191,7 @@ public class ProjectReader {
             ArrayList<Segment> segmentList = new ArrayList();
             while (segments.next()) {
                 segmentList.add(new Segment(
-                        segments.getInt("SEGMENT_ID"),//index
+                        segments.getInt("SEGMENT_INDEX"),//index
                         segments.getDouble("INITIAL_HEIGHT"),//initial height
                         segments.getDouble("SLOPE"),//slope
                         segments.getDouble("LENGHT"),//lenght
@@ -198,6 +204,7 @@ public class ProjectReader {
             return segmentList;
         } catch (SQLException ex) {
             System.out.println("Section segments not retrieved");
+            System.out.println(ex);
             return null;
         }
     }
@@ -233,6 +240,11 @@ public class ProjectReader {
                 ArrayList<Throttle> throttleList = getThrottleList(combustionVehicles.getInt("ID_VEHICLE"));
                 ArrayList<Double> gearList = getGearList(combustionVehicles.getInt("ID_VEHICLE"));
                 HashMap<String, Double> velocityLimits = getVelocityLimits(combustionVehicles.getInt("ID_VEHICLE"));
+                if (throttleList == null
+                        || gearList == null
+                        || velocityLimits == null) {
+                    return false;
+                }
 
                 combustionVehiclesList.add(new CombustionVehicle(
                         combustionVehicles.getInt("ID_VEHICLE"),
@@ -260,6 +272,7 @@ public class ProjectReader {
             return true;
         } catch (SQLException ex) {
             System.out.println("Combustion vehicles not retrieved");
+            System.out.println(ex);
             return false;
         }
     }
@@ -305,6 +318,7 @@ public class ProjectReader {
 
         } catch (SQLException ex) {
             System.out.println("Hybrid vehicles not retrieved");
+            System.out.println(ex);
             return false;
         }
     }
@@ -350,6 +364,7 @@ public class ProjectReader {
 
         } catch (SQLException ex) {
             System.out.println("Hybrid vehicles not retrieved");
+            System.out.println(ex);
             return false;
         }
 
@@ -365,15 +380,16 @@ public class ProjectReader {
             ArrayList<Throttle> throttleList = new ArrayList();
             while (throttles.next()) {
                 throttleList.add(new Throttle(
-                        throttles.getString("ID_TRHOTTLE"),
-                        getThrottleRegimes(vehiclePK, throttles.getString("ID_TRHOTTLE")))
+                        throttles.getString("ID_THROTTLE"),
+                        getThrottleRegimes(vehiclePK, throttles.getString("ID_THROTTLE")))
                 );
             }
-            
+
             return throttleList;
-            
+
         } catch (SQLException ex) {
             System.out.println("Throttle list not retrieved");
+            System.out.println(ex);
             return null;
         }
 
@@ -400,6 +416,7 @@ public class ProjectReader {
             return regimesList;
         } catch (SQLException ex) {
             System.out.println("Regimes not retrieved");
+            System.out.println(ex);
             return null;
         }
     }
@@ -419,6 +436,7 @@ public class ProjectReader {
 
         } catch (SQLException ex) {
             System.out.println("Gear list not retrieved");
+            System.out.println(ex);
             return null;
         }
     }
@@ -439,6 +457,7 @@ public class ProjectReader {
 
         } catch (SQLException ex) {
             System.out.println("Velocity Limits not retrieved");
+            System.out.println(ex);
             return null;
         }
     }
