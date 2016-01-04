@@ -43,4 +43,9 @@ public class ProjectStateSimulationReadySaved extends ProjectStateImpl {
         return m_project.setState(ns);
     }
 
+    @Override
+    public boolean canSimulate() {
+        return true;
+    }
+
 }

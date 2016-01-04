@@ -96,5 +96,10 @@ public class ProjectStateImpl implements ProjectState {
         return false;
     }
 
+    @Override
+    public boolean canSimulate() {
+        return false;
+    }
+
 
 }
