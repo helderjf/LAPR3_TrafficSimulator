@@ -120,7 +120,7 @@ public class BestPathAnalysisContoller {
 
     /**
      *
-     * @return analysis run
+     * @return analysis runSingleVehicle
      */
     public Result runAnalysis() {
         StaticAnalysis analisys = m_project.newBestPathAnalysis(m_roadNetwork,
@@ -128,7 +128,7 @@ public class BestPathAnalysisContoller {
                 m_destinationJunction,
                 m_bpAlgorithm,
                 m_vehicle);
-        m_analysisResult = (ResultFastestPath) analisys.run();
+        m_analysisResult = (ResultFastestPath) analisys.runSingleVehicle();
         return m_analysisResult;
     }
 

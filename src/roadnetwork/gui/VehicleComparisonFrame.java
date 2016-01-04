@@ -5,6 +5,11 @@
  */
 package roadnetwork.gui;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import roadnetwork.controllers.VehiclesComparisonAnalysisController;
+import roadnetwork.domain.Vehicle;
+
 /**
  *
  * @author josemiranda
@@ -12,6 +17,8 @@ package roadnetwork.gui;
 public class VehicleComparisonFrame extends javax.swing.JFrame {
 
     MainFrame m_mainFrame;
+    VehiclesComparisonAnalysisController m_vComparisonAnalysisController;
+    ArrayList<Vehicle> m_vehiclesList;
     
     /**
      * Creates new form JanelaVehicleComparison
@@ -19,9 +26,32 @@ public class VehicleComparisonFrame extends javax.swing.JFrame {
      */
     public VehicleComparisonFrame(MainFrame frame) {
         m_mainFrame=frame;
-        initComponents();
-        setLocationRelativeTo(null);
-        setVisible(true);
+        m_vComparisonAnalysisController = new VehiclesComparisonAnalysisController(m_mainFrame.getManager());
+        
+        run();
+    }
+    
+    private void run(){
+        if (!m_vComparisonAnalysisController.projectActive()) {
+            JOptionPane.showMessageDialog(this, "Can't analyse network. There is no active project.", "No active project", JOptionPane.INFORMATION_MESSAGE);
+            setVisible(false);
+        } else if (m_vComparisonAnalysisController.newAnalysis()) {
+            //get the active project's list of vehicles
+            m_vehiclesList = m_vComparisonAnalysisController.newVehicleComparisonAnalysis();
+            initComponents();
+            setLocationRelativeTo(null);
+
+            setContentPane(new VehicleComparisonChooseVehiclesPane(this, m_vehiclesList));
+            pack();
+            setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(m_mainFrame, "The active project can not be analysed at this point!", "Error", JOptionPane.WARNING_MESSAGE);
+            setVisible(false);
+        }
+    }
+    
+    public void setVehiclesList(ArrayList<Vehicle> vlist){
+        m_vComparisonAnalysisController.setVehiclesList(vlist);
     }
 
     /**
