@@ -44,7 +44,8 @@ public class StaticAnalysis {
     public ArrayList<Result> runComparison(){
         ArrayList<Result> resultsList = new ArrayList<>();
         for (Vehicle v: m_vehiclesList) {
-            resultsList.add(runEachVehicle(v));
+            Result res = runEachVehicle(v);
+            resultsList.add(res);
         }
         return resultsList;
     }

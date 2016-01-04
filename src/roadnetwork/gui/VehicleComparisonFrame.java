@@ -8,6 +8,9 @@ package roadnetwork.gui;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.VehiclesComparisonAnalysisController;
+import roadnetwork.domain.BestPathAlgorithm;
+import roadnetwork.domain.Junction;
+import roadnetwork.domain.Result;
 import roadnetwork.domain.Vehicle;
 
 /**
@@ -19,6 +22,10 @@ public class VehicleComparisonFrame extends javax.swing.JFrame {
     MainFrame m_mainFrame;
     VehiclesComparisonAnalysisController m_vComparisonAnalysisController;
     ArrayList<Vehicle> m_vehiclesList;
+    ArrayList<Junction> m_nodesList;
+    ArrayList<BestPathAlgorithm> m_algList;
+    ArrayList<Result> m_analysisResults;
+    
     
     /**
      * Creates new form JanelaVehicleComparison
@@ -51,7 +58,41 @@ public class VehicleComparisonFrame extends javax.swing.JFrame {
     }
     
     public void setVehiclesList(ArrayList<Vehicle> vlist){
-        m_vComparisonAnalysisController.setVehiclesList(vlist);
+        m_vComparisonAnalysisController.setSelectedVehiclesList(vlist);
+        setChooseNodesPane();
+    }
+    
+    public void setChooseNodesPane(){
+        m_nodesList=m_vComparisonAnalysisController.getNodeList();
+        
+        this.setContentPane(new VehicleComparisonChooseNodesPane(this, m_nodesList));
+        pack();
+        this.revalidate();
+    }
+    
+    public void setAnalysisNodes(Junction on, Junction dn){
+        m_vComparisonAnalysisController.setAnalysisNodes(on, dn);
+        setChooseAlgorithmPane();
+    }
+    
+    public void setChooseAlgorithmPane(){
+        m_algList=m_vComparisonAnalysisController.getBestPathAlgorithms();
+        
+        this.setContentPane(new VehicleComparisonChooseAlgorithmPane(this, m_algList));
+        pack();
+        this.revalidate();
+    }
+    
+    public void setAlgorithm(BestPathAlgorithm bpa){
+        m_vComparisonAnalysisController.setBestPathAlgorithm(bpa);
+        runAnalysis();
+    }
+    
+    public void runAnalysis(){
+        m_analysisResults=m_vComparisonAnalysisController.runAnalysis();
+        this.setContentPane(new VehicleComparisonShowResultsPane(this, m_analysisResults));
+        pack();
+        this.revalidate();
     }
 
     /**

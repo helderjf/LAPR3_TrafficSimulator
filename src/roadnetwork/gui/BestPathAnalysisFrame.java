@@ -139,7 +139,6 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
     }
 
     public void setChooseNodesPane() {
-        m_roadNetwork = m_bestPathAnalysisController.getRoadNetwork();
         m_nodesList = m_bestPathAnalysisController.getNodeList();
 
         this.setContentPane(new BestPathChooseNodesPane(this, m_nodesList));

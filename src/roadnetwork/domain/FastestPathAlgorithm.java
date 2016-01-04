@@ -29,7 +29,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
             sectionTime.add(calculateTravelTime(s, vehicle));
         }
 
-        return constructResults(originNode, destinyNode, fastestPath, fastestPathLength, sectionTime);
+        return constructResults(originNode, destinyNode, fastestPath, fastestPathLength, sectionTime, vehicle);
     }
 
     private void graphConstruction(RoadNetwork rn, Vehicle vehicle) {
@@ -79,11 +79,12 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
 
     }
 
-    private ResultFastestPath constructResults(Junction origin, Junction destiny, ArrayList<Section> fastestPath, double fastestPathLength, ArrayList<Double> sectionTime) {
+    private ResultFastestPath constructResults(Junction origin, Junction destiny, ArrayList<Section> fastestPath, double fastestPathLength, ArrayList<Double> sectionTime, Vehicle vehicle) {
         ResultFastestPath simResult = new ResultFastestPath(origin, destiny);
         simResult.setPath(fastestPath);
         simResult.setLength(fastestPathLength);
         simResult.setSectionWeight(sectionTime);
+        simResult.setVehicle(vehicle);
         return simResult;
     }
 

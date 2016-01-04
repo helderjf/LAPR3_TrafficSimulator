@@ -76,18 +76,10 @@ public class BestPathAnalysisContoller {
 
     /**
      *
-     * @return roadNetwork
-     */
-    public RoadNetwork getRoadNetwork() {
-        m_roadNetwork = m_project.getRoadNetwork();
-        return m_roadNetwork;
-    }
-
-    /**
-     *
      * @return nodeList
      */
     public ArrayList<Junction> getNodeList() {
+        m_roadNetwork = m_project.getRoadNetwork();
         m_nodeList = m_roadNetwork.getNodeList();
         return m_nodeList;
     }

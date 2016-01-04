@@ -125,7 +125,7 @@ public class VehicleComparisonChooseNodesPane extends javax.swing.JPanel {
             if(jList1.getSelectedValue() == jList2.getSelectedValue()){
                 JOptionPane.showMessageDialog(this,"Origin and destiny nodes can not be the same");
             }else{
-                
+                m_ancestorFrame.setAnalysisNodes((Junction) jList1.getSelectedValue(), (Junction) jList2.getSelectedValue());
             }
         }else{
             JOptionPane.showMessageDialog(this,"You must select two nodes");

@@ -10,7 +10,9 @@ import roadnetwork.domain.BestPathAlgorithm;
 import roadnetwork.domain.Junction;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
+import roadnetwork.domain.Result;
 import roadnetwork.domain.RoadNetwork;
+import roadnetwork.domain.StaticAnalysis;
 import roadnetwork.domain.Vehicle;
 
 /**
@@ -21,12 +23,14 @@ public class VehiclesComparisonAnalysisController {
     
     Manager m_manager;
     Project m_project;
-    ArrayList<Vehicle> m_vehiclesList;
+    ArrayList<Vehicle> m_selectedVehiclesList;
     RoadNetwork m_roadNetwork;
     ArrayList<Junction> m_nodeList;
     Junction m_originJunction;
     Junction m_destinyJunction;
     BestPathAlgorithm m_bpAlgorithm;
+    StaticAnalysis m_staticAnalysis;
+    ArrayList<Result> m_analysisResults;
     
     
     public VehiclesComparisonAnalysisController(Manager manager){
@@ -49,8 +53,8 @@ public class VehiclesComparisonAnalysisController {
         return m_project.getVehicleList();
     }
     
-    public void setVehiclesList(ArrayList<Vehicle> vlst){
-        m_vehiclesList=vlst;
+    public void setSelectedVehiclesList(ArrayList<Vehicle> vlst){
+        m_selectedVehiclesList=vlst;
     }
     
     public ArrayList<Junction> getNodeList(){
@@ -72,9 +76,11 @@ public class VehiclesComparisonAnalysisController {
         m_bpAlgorithm=bpa;
     }
     
-    public void runAnalysis(){
-        
-    
+    public ArrayList<Result> runAnalysis(){
+        m_staticAnalysis= m_project.newComparisonStaticAnalysis(m_roadNetwork, m_originJunction, 
+                m_destinyJunction, m_bpAlgorithm, m_selectedVehiclesList);
+        m_analysisResults=m_staticAnalysis.runComparison();
+        return m_analysisResults;
     }
     
 }

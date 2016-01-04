@@ -78,6 +78,11 @@ public class Project {
             Junction dj, BestPathAlgorithm alg, Vehicle v) {
         return new StaticAnalysis(rn, oj, dj, alg, v);
     }
+    
+    public StaticAnalysis newComparisonStaticAnalysis(RoadNetwork rn, Junction oj,
+            Junction dj, BestPathAlgorithm alg, ArrayList<Vehicle> vlst){
+        return new StaticAnalysis(rn, oj, dj, alg, vlst);
+    }
 
     @Override
     public String toString() {

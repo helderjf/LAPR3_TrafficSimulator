@@ -18,6 +18,7 @@ public class ResultFastestPath implements Result {
     private ArrayList<Section> m_path;
     private double m_length;
     private ArrayList<Double> m_sectionWeight;
+    private Vehicle m_vehicle;
 
     public ResultFastestPath(Junction origin, Junction destiny) {
         m_originNode = origin;
@@ -44,6 +45,10 @@ public class ResultFastestPath implements Result {
     public ArrayList<Double> getSectionWeight() {
         return m_sectionWeight;
     }
+    
+    public Vehicle getVehicle(){
+        return m_vehicle;
+    }
 
     /**
      * @param m_path the m_path to set
@@ -57,6 +62,10 @@ public class ResultFastestPath implements Result {
      */
     public void setLength(double m_length) {
         this.m_length = m_length;
+    }
+    
+    public void setVehicle(Vehicle vehicle){
+        m_vehicle=vehicle;
     }
 
     /**
@@ -83,6 +92,9 @@ public class ResultFastestPath implements Result {
     @Override
     public String printResults() {
         StringBuilder results = new StringBuilder();
+        results.append("#Vehicle: ");
+        results.append(m_vehicle.getName());
+        results.append("#\n");
         for(Section it : m_path){
             results.append(it.getBeginningNode().toString());
             results.append(" ---> ");
