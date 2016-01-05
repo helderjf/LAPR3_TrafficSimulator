@@ -19,7 +19,6 @@ public class Segment {
     private double max_Velocity;
     private double min_Velocity;
     private double max_Vehicles;
-    private int number_vehicles;
 
 
     /**
@@ -34,7 +33,6 @@ public class Segment {
         this.min_Velocity = 0;
         this.max_Velocity = 0;
         this.slope = 0;
-        this.number_vehicles = 0;
     }
     
     /**
@@ -56,7 +54,6 @@ public class Segment {
         this.max_Velocity = max_Velocity;
         this.min_Velocity = min_Velocity;
         this.max_Vehicles = max_Vehicles;
-        this.number_vehicles = number_vehicles;
     }
     
     /**
@@ -72,7 +69,6 @@ public class Segment {
         s.max_Velocity = this.max_Velocity;
         s.min_Velocity = this.min_Velocity;
         s.slope = this.slope;
-        s.number_vehicles = this.number_vehicles;
     }
 
 
@@ -188,20 +184,7 @@ public class Segment {
     public void setMax_Vehicles(double max_Vehicles) {
         this.max_Vehicles = max_Vehicles;
     }
-    
-    /**
-     * @return the number_vehicles
-     */
-    public int getNumber_vehicles() {
-        return number_vehicles;
-    }
 
-    /**
-     * @param number_vehicles the number_vehicles to set
-     */
-    public void setNumber_vehicles(int number_vehicles) {
-        this.number_vehicles = number_vehicles;
-    }
 
 
     /**
@@ -242,15 +225,13 @@ public class Segment {
         if (Double.doubleToLongBits(this.max_Vehicles) != Double.doubleToLongBits(other.max_Vehicles)) {
             return false;
         }
-        if (this.number_vehicles != other.number_vehicles) {
-            return false;
-        }
+
         return true;
     }
 
     @Override
     public String toString() {
-        return "Segment{" + "index=" + index + ", initial_Height=" + initialHeight + ", slope=" + slope + ", lenght=" + lenght + ", max_Velocity=" + max_Velocity + ", min_Velocity=" + min_Velocity + ", max_Vehicles=" + max_Vehicles + ", number_vehicles=" + number_vehicles + '}';
+        return "Segment{" + "index=" + index + ", initial_Height=" + initialHeight + ", slope=" + slope + ", lenght=" + lenght + ", max_Velocity=" + max_Velocity + ", min_Velocity=" + min_Velocity + ", max_Vehicles=" + max_Vehicles  + '}';
     }
 
 
