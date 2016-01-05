@@ -140,7 +140,7 @@
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="jMenu8">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Simulation Runs"/>
+                <Property name="text" type="java.lang.String" value="Simulation Run(s)"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="jMenuItem14">

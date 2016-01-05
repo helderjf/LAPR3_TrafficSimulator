@@ -264,7 +264,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem13.setText("Run Simulation");
         jMenu7.add(jMenuItem13);
 
-        jMenu8.setText("Simulation Runs");
+        jMenu8.setText("Simulation Run(s)");
 
         jMenuItem14.setText("View Runs");
         jMenu8.add(jMenuItem14);
