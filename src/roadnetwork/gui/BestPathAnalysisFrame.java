@@ -153,7 +153,7 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
 
     public void runAnalysis() {
         m_results = m_bestPathAnalysisController.runAnalysis();
-        setContentPane(new BestPathShowResultsPane(this, m_bestPathAnalysisController, m_results));
+        setContentPane(new BestPathShowResultsPane(this, m_results));
         this.revalidate();
     }
 
@@ -166,6 +166,10 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
     void setAlgorithm(BestPathAlgorithm algorithm) {
         m_bestPathAnalysisController.setAlgorithm(algorithm);
         runAnalysis();
+    }
+    
+    public boolean exportGlobalResultsHTML(String fileName){
+        return m_bestPathAnalysisController.exportGlobalResultsHTML(fileName);
     }
 
 }

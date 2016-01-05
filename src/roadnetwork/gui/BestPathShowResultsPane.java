@@ -5,6 +5,7 @@
  */
 package roadnetwork.gui;
 
+import javax.swing.JOptionPane;
 import roadnetwork.controllers.BestPathAnalysisContoller;
 import roadnetwork.domain.Result;
 
@@ -15,15 +16,13 @@ import roadnetwork.domain.Result;
 public class BestPathShowResultsPane extends javax.swing.JPanel {
     
     BestPathAnalysisFrame m_ancestorFrame;
-    BestPathAnalysisContoller m_bpBestPathAnalysisContoller;
     Result m_results;
 
     /**
      * Creates new form BestPathShowResultsPane
      */
-    public BestPathShowResultsPane(BestPathAnalysisFrame ancestor, BestPathAnalysisContoller controller, Result results) {
+    public BestPathShowResultsPane(BestPathAnalysisFrame ancestor, Result results) {
         m_ancestorFrame = ancestor;
-        m_bpBestPathAnalysisContoller = controller;
         m_results = results;
         initComponents();
     }
@@ -111,7 +110,12 @@ public class BestPathShowResultsPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        m_bpBestPathAnalysisContoller.exportResultsCSV("resultados");
+        boolean flag = m_ancestorFrame.exportGlobalResultsHTML("GlobalResults");
+        if (flag=false) {
+            JOptionPane.showMessageDialog(this,"Error : Unable to export results.");
+        } else{
+            JOptionPane.showMessageDialog(this,"Results correctely exported.");
+        }
         m_ancestorFrame.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 

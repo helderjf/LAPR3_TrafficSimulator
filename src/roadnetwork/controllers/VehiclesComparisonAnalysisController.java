@@ -5,6 +5,7 @@
  */
 package roadnetwork.controllers;
 
+import IO.ExportHTML;
 import java.util.ArrayList;
 import roadnetwork.domain.BestPathAlgorithm;
 import roadnetwork.domain.Junction;
@@ -81,6 +82,11 @@ public class VehiclesComparisonAnalysisController {
                 m_destinyJunction, m_bpAlgorithm, m_selectedVehiclesList);
         m_analysisResults=m_staticAnalysis.runComparison();
         return m_analysisResults;
+    }
+    
+    public boolean exportGlobalResultsHTML(String fileName){
+        ExportHTML html= m_manager.newHTML(fileName);
+        return html.exportGlobalResults(m_analysisResults);
     }
     
 }

@@ -8,6 +8,7 @@ package roadnetwork.domain;
 import data.access.layer.ProjectReader;
 import data.access.layer.DataAccessObject;
 import IO.ExportCSV;
+import IO.ExportHTML;
 import data.access.layer.ProjectWriter;
 import java.util.ArrayList;
 import roadnetwork.factory.ProjectStateFactory;
@@ -77,6 +78,10 @@ public class Manager {
     public ProjectWriter getProjectWriter() {
         return new ProjectWriter(m_dataAccessObject);
 
+    }
+    
+    public ExportHTML newHTML(String fileName){
+        return new ExportHTML(fileName);
     }
     
     

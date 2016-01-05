@@ -94,6 +94,10 @@ public class VehicleComparisonFrame extends javax.swing.JFrame {
         pack();
         this.revalidate();
     }
+    
+    public boolean exportGlobalResultsHTML(String fileName){
+        return m_vComparisonAnalysisController.exportGlobalResultsHTML(fileName);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -6,6 +6,7 @@
 package roadnetwork.controllers;
 
 import IO.ExportCSV;
+import IO.ExportHTML;
 import java.util.ArrayList;
 import roadnetwork.domain.BestPathAlgorithm;
 import roadnetwork.domain.Manager;
@@ -129,9 +130,16 @@ public class BestPathAnalysisContoller {
      * @param fileName name of file
      * @return exportation
      */
-    public boolean exportResultsCSV(String fileName) {
+    public boolean exportGlobalResultsCSV(String fileName) {
         m_csv = m_manager.newCSV(fileName);
         return m_csv.export(m_analysisResult);
+    }
+    
+    public boolean exportGlobalResultsHTML(String fileName){
+        ExportHTML html = new ExportHTML(fileName);
+        ArrayList<Result> results = new ArrayList<>();
+        results.add(m_analysisResult);
+        return html.exportGlobalResults(results);
     }
 
 }

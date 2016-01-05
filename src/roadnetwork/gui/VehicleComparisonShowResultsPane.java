@@ -6,6 +6,7 @@
 package roadnetwork.gui;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import roadnetwork.domain.Result;
 
 /**
@@ -112,7 +113,13 @@ public class VehicleComparisonShowResultsPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        boolean flag = m_ancestorFrame.exportGlobalResultsHTML("GlobalResults");
+        if (flag=false) {
+            JOptionPane.showMessageDialog(this,"Error : Unable to export results.");
+        } else{
+            JOptionPane.showMessageDialog(this,"Results correctely exported.");
+        }
+        m_ancestorFrame.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
