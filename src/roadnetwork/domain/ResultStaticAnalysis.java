@@ -17,9 +17,11 @@ public class ResultStaticAnalysis implements Result {
     private Junction m_destinyNode;
     private ArrayList<Section> m_path;
     private double m_length;
-    private ArrayList<Double> m_sectionWeight;
+    private ArrayList<Double> m_sectionTravelTime;
     private ArrayList<Junction> m_pathNodes;
     private Vehicle m_vehicle;
+    private ArrayList<Double> m_sectionEnergyConsumption;
+    private ArrayList<Double> m_sectionToolCosts;
 
     public ResultStaticAnalysis(Junction origin, Junction destiny) {
         m_originNode = origin;
@@ -41,10 +43,10 @@ public class ResultStaticAnalysis implements Result {
     }
 
     /**
-     * @return the m_sectionWeight
+     * @return the m_sectionTravelTime
      */
     public ArrayList<Double> getSectionWeight() {
-        return m_sectionWeight;
+        return m_sectionTravelTime;
     }
     
     public Junction getOriginNode() {
@@ -61,6 +63,14 @@ public class ResultStaticAnalysis implements Result {
     
     public Vehicle getVehicle(){
         return m_vehicle;
+    }
+    
+    public ArrayList<Double> getEnergyConsumption(){
+        return m_sectionEnergyConsumption;
+    }
+    
+    public ArrayList<Double> getToolCosts(){
+        return m_sectionToolCosts;
     }
 
     /**
@@ -84,12 +94,20 @@ public class ResultStaticAnalysis implements Result {
     public void setVehicle(Vehicle vehicle){
         m_vehicle=vehicle;
     }
+    
+    public void setEnergyConsumption(ArrayList<Double> energyConsumption){
+        m_sectionEnergyConsumption=energyConsumption;
+    }
+    
+    public void setToolCosts(ArrayList<Double> sectionToolCosts){
+        m_sectionToolCosts=sectionToolCosts;
+    }
 
     /**
-     * @param m_sectionWeight the m_sectionWeight to set
+     * @param sectionTravelTime the m_sectionTravelTime to set
      */
-    public void setSectionWeight(ArrayList<Double> m_sectionWeight) {
-        this.m_sectionWeight = m_sectionWeight;
+    public void setSectionTravelTime(ArrayList<Double> sectionTravelTime) {
+        this.m_sectionTravelTime = sectionTravelTime;
     }
 
 
@@ -115,7 +133,7 @@ public class ResultStaticAnalysis implements Result {
             results.append(it.getRoadName());
             results.append(" Travel time: ");
             
-            results.append(m_sectionWeight.get(i)/60);
+            results.append(m_sectionTravelTime.get(i)/60);
             results.append(" minutes");
             
             results.append("\n");

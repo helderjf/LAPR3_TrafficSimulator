@@ -16,36 +16,52 @@ import java.util.ArrayList;
 public class FastestPathAlgorithm implements BestPathAlgorithm {
 
     Graph<Junction, Section> m_graph;
+    RoadNetwork m_roadNetwork;
+    Junction m_originNode;
+    Junction m_destinyNode;
+    Vehicle m_vehicle;
+    ArrayList<Section> m_fastestPath;
+    ArrayList<Junction> m_fastestPathNodes;
+    double m_fastestPathLength;
+    ArrayList<Double> m_sectionEnergyConsumption;
+    ArrayList<Double> m_sectionTime;
+    ArrayList<Double> m_sectionToolCosts;
 
     @Override
     public ResultStaticAnalysis bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
         m_graph = new Graph<>(true);
-        graphConstruction(roadNetwork, vehicle);
-        ArrayList<Section> fastestPath = new ArrayList<>();
-        ArrayList<Junction> fastestPathNodes=new ArrayList<>();
-        double fastestPathLength = GraphAlgorithms.getShortestPathLength(m_graph, originNode, destinyNode, fastestPath, fastestPathNodes);
+        m_roadNetwork=roadNetwork;
+        m_originNode=originNode;
+        m_destinyNode=destinyNode;
+        m_vehicle=vehicle;
+        m_fastestPath = new ArrayList<>();
+        m_fastestPathNodes=new ArrayList<>();
+        
+        graphConstruction(m_roadNetwork, m_vehicle);
+        
+        m_fastestPathLength = GraphAlgorithms.getShortestPathLength(
+                m_graph, m_originNode, m_destinyNode, m_fastestPath, m_fastestPathNodes);
 
-        ArrayList<Double> sectionTime = new ArrayList<>();
-        for (Section s : fastestPath) {
-            sectionTime.add(calculateTravelTime(s, vehicle));
-        }
+        calculateSectionEnergyConsumption();
+        calculateSectionTime();
+        calculateSectionToolCosts();
 
-        return constructResults(originNode, destinyNode, fastestPath, fastestPathLength, sectionTime, fastestPathNodes, vehicle);
+        return constructResults();
     }
 
     private void graphConstruction(RoadNetwork rn, Vehicle vehicle) {
         for (Section sec : rn.getSectionList()) {
-            addConection(sec, vehicle);
+            addConection(sec);
         }
     }
 
-    private void addConection(Section section, Vehicle vehicle) {
+    private void addConection(Section section) {
         if (section.getDirection().equals(SectionDirection.unidirectional)) {
-            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section, vehicle));
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section));
 
         } else if (section.getDirection().equals(SectionDirection.bidirectional)) {
-            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section, vehicle));
-            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section, vehicle));
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section));
+            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section));
         }
     }
 
@@ -55,7 +71,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
      * @param vehicle vehicle
      * @return return total time by section
      */
-    private double calculateTravelTime(Section section, Vehicle vehicle) {
+    private double calculateTravelTime(Section section) {
 
         ArrayList<Segment> segmentList = section.getSegmentsList();
         double time = 0; //in seconds
@@ -67,9 +83,9 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
             SectionTypology type = section.getSectionType();
             
             //determin if the vehicle maximum speed for this section is inferior to the section speed limit
-            if (vehicle.getVelocityLimits().containsKey(String.valueOf(type))
-                    && vehicle.getVelocityLimit(type)< it.getMax_Velocity()) {
-                travelSpeed = vehicle.getVelocityLimit(type);
+            if (m_vehicle.getVelocityLimits().containsKey(String.valueOf(type))
+                    && m_vehicle.getVelocityLimit(type)< it.getMax_Velocity()) {
+                travelSpeed = m_vehicle.getVelocityLimit(type);
             }else{
                 travelSpeed= it.getMax_Velocity();
             }
@@ -79,16 +95,36 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         return time;
 
     }
-
-    private ResultStaticAnalysis constructResults(Junction origin, Junction destiny, ArrayList<Section> fastestPath, 
-            double fastestPathLength, ArrayList<Double> sectionTime, ArrayList<Junction> fastestPathNodes, Vehicle vehicle) {
+    
+    private void calculateSectionEnergyConsumption(){
+        m_sectionEnergyConsumption = new ArrayList<>();
+        //TODO
         
-        ResultStaticAnalysis simResult = new ResultStaticAnalysis(origin, destiny);
-        simResult.setPath(fastestPath);
-        simResult.setLength(fastestPathLength);
-        simResult.setSectionWeight(sectionTime);
-        simResult.setPathNodes(fastestPathNodes);
-        simResult.setVehicle(vehicle);
+    }
+    
+    private void calculateSectionTime(){
+        m_sectionTime=new ArrayList<>();
+        for (Section s : m_fastestPath) {
+            m_sectionTime.add(calculateTravelTime(s));
+        }
+    }
+    
+    private void calculateSectionToolCosts(){
+        for (Section s : m_fastestPath) {
+            m_sectionToolCosts.add(s.getToll());
+        }
+    }
+
+    private ResultStaticAnalysis constructResults() {
+        
+        ResultStaticAnalysis simResult = new ResultStaticAnalysis(m_originNode, m_destinyNode);
+        simResult.setPath(m_fastestPath);
+        simResult.setLength(m_fastestPathLength);
+        simResult.setSectionTravelTime(m_sectionTime);
+        simResult.setPathNodes(m_fastestPathNodes);
+        simResult.setVehicle(m_vehicle);
+        simResult.setEnergyConsumption(m_sectionEnergyConsumption);
+        simResult.setToolCosts(m_sectionToolCosts);
         return simResult;
     }
 
