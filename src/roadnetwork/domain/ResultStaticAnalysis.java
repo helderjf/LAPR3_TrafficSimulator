@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class ResultFastestPath implements Result {
+public class ResultStaticAnalysis implements Result {
 
     private Junction m_originNode;
     private Junction m_destinyNode;
@@ -21,7 +21,7 @@ public class ResultFastestPath implements Result {
     private ArrayList<Junction> m_pathNodes;
     private Vehicle m_vehicle;
 
-    public ResultFastestPath(Junction origin, Junction destiny) {
+    public ResultStaticAnalysis(Junction origin, Junction destiny) {
         m_originNode = origin;
         m_destinyNode = destiny;
     }

@@ -124,7 +124,7 @@ public class FastestPathAlgorithmTest {
         FastestPathAlgorithm instance = new FastestPathAlgorithm();
         ArrayList<Section> expResult = new ArrayList<>();
         expResult.add(section3);
-        ResultFastestPath result = instance.bestPath(roadNetwork1, node1, node2, vehicle1);
+        ResultStaticAnalysis result = instance.bestPath(roadNetwork1, node1, node2, vehicle1);
         assertEquals(expResult, result.getPath());
     }
 

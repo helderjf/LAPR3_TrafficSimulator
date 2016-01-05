@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import roadnetwork.domain.Section;
-import roadnetwork.domain.ResultFastestPath;
+import roadnetwork.domain.ResultStaticAnalysis;
 
 /**
  *
@@ -23,7 +23,7 @@ public class ExportCSV {
         m_fileName = name+".csv";
     }
 
-    public boolean export(ResultFastestPath result) {
+    public boolean export(ResultStaticAnalysis result) {
         boolean flag = true;
         try {
             FileWriter file = new FileWriter(new File(m_fileName));

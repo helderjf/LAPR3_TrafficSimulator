@@ -20,6 +20,7 @@ public class StaticAnalysis {
     private BestPathAlgorithm m_algorithm;
     private Result m_results;
     private ArrayList<Vehicle> m_vehiclesList;
+    private ArrayList<Result> m_resultsComparison;
     
     public StaticAnalysis(RoadNetwork rn, Junction oj, 
             Junction dj, BestPathAlgorithm alg, Vehicle v){
@@ -42,12 +43,12 @@ public class StaticAnalysis {
     }
     
     public ArrayList<Result> runComparison(){
-        ArrayList<Result> resultsList = new ArrayList<>();
+        m_resultsComparison = new ArrayList<>();
         for (Vehicle v: m_vehiclesList) {
             Result res = runEachVehicle(v);
-            resultsList.add(res);
+            m_resultsComparison.add(res);
         }
-        return resultsList;
+        return m_resultsComparison;
     }
     
     

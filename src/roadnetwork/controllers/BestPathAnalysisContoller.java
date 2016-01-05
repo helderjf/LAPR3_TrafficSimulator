@@ -13,7 +13,7 @@ import roadnetwork.domain.Manager;
 import roadnetwork.domain.Junction;
 import roadnetwork.domain.Project;
 import roadnetwork.domain.RoadNetwork;
-import roadnetwork.domain.ResultFastestPath;
+import roadnetwork.domain.ResultStaticAnalysis;
 import roadnetwork.domain.StaticAnalysis;
 import roadnetwork.domain.Result;
 import roadnetwork.domain.Vehicle;
@@ -32,7 +32,7 @@ public class BestPathAnalysisContoller {
     private Junction m_originJunction;
     private Junction m_destinationJunction;
     private BestPathAlgorithm m_bpAlgorithm;
-    private ResultFastestPath m_analysisResult;
+    private ResultStaticAnalysis m_analysisResult;
     private ExportCSV m_csv;
 
     /**
@@ -121,7 +121,7 @@ public class BestPathAnalysisContoller {
                 m_destinationJunction,
                 m_bpAlgorithm,
                 m_vehicle);
-        m_analysisResult = (ResultFastestPath) analisys.runSingleVehicle();
+        m_analysisResult = (ResultStaticAnalysis) analisys.runSingleVehicle();
         return m_analysisResult;
     }
 

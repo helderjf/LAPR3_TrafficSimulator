@@ -18,7 +18,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     Graph<Junction, Section> m_graph;
 
     @Override
-    public ResultFastestPath bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
+    public ResultStaticAnalysis bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
         m_graph = new Graph<>(true);
         graphConstruction(roadNetwork, vehicle);
         ArrayList<Section> fastestPath = new ArrayList<>();
@@ -80,10 +80,10 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
 
     }
 
-    private ResultFastestPath constructResults(Junction origin, Junction destiny, ArrayList<Section> fastestPath, 
+    private ResultStaticAnalysis constructResults(Junction origin, Junction destiny, ArrayList<Section> fastestPath, 
             double fastestPathLength, ArrayList<Double> sectionTime, ArrayList<Junction> fastestPathNodes, Vehicle vehicle) {
         
-        ResultFastestPath simResult = new ResultFastestPath(origin, destiny);
+        ResultStaticAnalysis simResult = new ResultStaticAnalysis(origin, destiny);
         simResult.setPath(fastestPath);
         simResult.setLength(fastestPathLength);
         simResult.setSectionWeight(sectionTime);

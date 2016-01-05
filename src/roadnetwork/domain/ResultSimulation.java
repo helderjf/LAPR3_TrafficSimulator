@@ -7,21 +7,13 @@ package roadnetwork.domain;
 
 /**
  *
- * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
+ * @author josemiranda
  */
-public class MostEfficientPath implements BestPathAlgorithm{
+public class ResultSimulation implements Result{
 
     @Override
-    public ResultStaticAnalysis bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
+    public String printResults() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public String toString() {
-        return "Most efficient path";
-    }
-    
-    
-    
     
 }
