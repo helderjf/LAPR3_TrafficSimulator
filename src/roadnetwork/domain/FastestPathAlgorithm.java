@@ -22,14 +22,15 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         m_graph = new Graph<>(true);
         graphConstruction(roadNetwork, vehicle);
         ArrayList<Section> fastestPath = new ArrayList<>();
-        double fastestPathLength = GraphAlgorithms.getShortestPathLength(m_graph, originNode, destinyNode, fastestPath);
+        ArrayList<Junction> fastestPathNodes=new ArrayList<>();
+        double fastestPathLength = GraphAlgorithms.getShortestPathLength(m_graph, originNode, destinyNode, fastestPath, fastestPathNodes);
 
         ArrayList<Double> sectionTime = new ArrayList<>();
         for (Section s : fastestPath) {
             sectionTime.add(calculateTravelTime(s, vehicle));
         }
 
-        return constructResults(originNode, destinyNode, fastestPath, fastestPathLength, sectionTime, vehicle);
+        return constructResults(originNode, destinyNode, fastestPath, fastestPathLength, sectionTime, fastestPathNodes, vehicle);
     }
 
     private void graphConstruction(RoadNetwork rn, Vehicle vehicle) {
@@ -79,11 +80,14 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
 
     }
 
-    private ResultFastestPath constructResults(Junction origin, Junction destiny, ArrayList<Section> fastestPath, double fastestPathLength, ArrayList<Double> sectionTime, Vehicle vehicle) {
+    private ResultFastestPath constructResults(Junction origin, Junction destiny, ArrayList<Section> fastestPath, 
+            double fastestPathLength, ArrayList<Double> sectionTime, ArrayList<Junction> fastestPathNodes, Vehicle vehicle) {
+        
         ResultFastestPath simResult = new ResultFastestPath(origin, destiny);
         simResult.setPath(fastestPath);
         simResult.setLength(fastestPathLength);
         simResult.setSectionWeight(sectionTime);
+        simResult.setPathNodes(fastestPathNodes);
         simResult.setVehicle(vehicle);
         return simResult;
     }

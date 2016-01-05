@@ -18,6 +18,7 @@ public class ResultFastestPath implements Result {
     private ArrayList<Section> m_path;
     private double m_length;
     private ArrayList<Double> m_sectionWeight;
+    private ArrayList<Junction> m_pathNodes;
     private Vehicle m_vehicle;
 
     public ResultFastestPath(Junction origin, Junction destiny) {
@@ -46,6 +47,18 @@ public class ResultFastestPath implements Result {
         return m_sectionWeight;
     }
     
+    public Junction getOriginNode() {
+        return m_originNode;
+    }
+
+    public Junction getDestinyNode() {
+        return m_destinyNode;
+    }
+    
+    public ArrayList<Junction> getPathNodes(){
+        return m_pathNodes;
+    }
+    
     public Vehicle getVehicle(){
         return m_vehicle;
     }
@@ -64,6 +77,10 @@ public class ResultFastestPath implements Result {
         this.m_length = m_length;
     }
     
+    public void setPathNodes(ArrayList<Junction> pathNodes){
+        m_pathNodes=pathNodes;
+    }
+    
     public void setVehicle(Vehicle vehicle){
         m_vehicle=vehicle;
     }
@@ -75,13 +92,6 @@ public class ResultFastestPath implements Result {
         this.m_sectionWeight = m_sectionWeight;
     }
 
-    public Junction getOriginNode() {
-        return m_originNode;
-    }
-
-    public Junction getDestinyNode() {
-        return m_destinyNode;
-    }
 
     @Override
     public String toString() {
@@ -96,14 +106,15 @@ public class ResultFastestPath implements Result {
         results.append(m_vehicle.getName());
         results.append("#\n");
         for(Section it : m_path){
-            results.append(it.getBeginningNode().toString());
+            int i = m_path.indexOf(it);
+            
+            results.append(m_pathNodes.get(i).toString());
             results.append(" ---> ");
-            results.append(it.getEndingNode().toString());
+            results.append(m_pathNodes.get(i+1).toString());
             results.append("  @  ");
             results.append(it.getRoadName());
             results.append(" Travel time: ");
             
-            int i = m_path.indexOf(it);
             results.append(m_sectionWeight.get(i)/60);
             results.append(" minutes");
             
