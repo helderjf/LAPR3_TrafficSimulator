@@ -88,7 +88,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
         }
     }
     
-    private double gravitationalForce(double targetThrottle, double targetRegime, int targetGear)
+    private double gravitationalForce(double targetThrottle, double targetRegime, int targetGearIndex)
     {
         
         //estruturas de auxilio:
@@ -98,7 +98,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
         Throttle actualThrottle = null;
         Regime actualRegime = null;
         
-                for(Throttle t : throttleList)
+        for(Throttle t : throttleList)
         {
             if(t.equals(targetThrottle))
             {
@@ -116,14 +116,20 @@ public class MostEfficientPath implements BestPathAlgorithm{
         
         CombustionVehicle cv = (CombustionVehicle) m_vehicle;
         
+        //m_vehicle.
+        
+        ArrayList<Double> actuaGearList = null;
+        
         
         
         
         
         //Variaveis necessárias para o calculo da Força Gravitacional:
         double torque = actualRegime.getTorque();
-        double finalDriveRatio = m_vehicle.getFinalDriveRatio();
-        
+        double finalDriveRatio = cv.getFinalDriveRatio();
+        double gearRatio = actuaGearList.get(targetGearIndex);
+        double radiusTire = cv.getRadiusOfTire();
+        double rrc = cv.
 
         
         
