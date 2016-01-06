@@ -28,7 +28,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
     ArrayList<Double> m_sectionTollCosts;
     
     private final double gravity = 9.81; // m^2
-    private final double densityOfAir = 1.225 // kg/m3
+    private final double densityOfAir = 1.225; // kg/m3
 
 
     @Override
@@ -88,25 +88,19 @@ public class MostEfficientPath implements BestPathAlgorithm{
         }
     }
     
-    private double gravitationalForce(double throttleTarget, double targetRegime)
+    private double gravitationalForce(double targetThrottle, double targetRegime, int targetGear)
     {
+        
+        //estruturas de auxilio:
         ArrayList<Throttle> throttleList = null;
         ArrayList<Regime> regimeList = null;
         
         Throttle actualThrottle = null;
         Regime actualRegime = null;
         
-        //Variaveis necessárias para o calculo da Força Gravitacional:
-        double torque = actualRegime.getTorque();
-        double finalDriveRatio = m_vehicle.
-
-        
-        
-        
-        
-        for(Throttle t : throttleList)
+                for(Throttle t : throttleList)
         {
-            if(t.equals(throttleTarget))
+            if(t.equals(targetThrottle))
             {
                 actualThrottle = t;
             }
@@ -119,6 +113,23 @@ public class MostEfficientPath implements BestPathAlgorithm{
                 actualRegime = r;
             }
         }
+        
+        CombustionVehicle cv = (CombustionVehicle) m_vehicle;
+        
+        
+        
+        
+        
+        //Variaveis necessárias para o calculo da Força Gravitacional:
+        double torque = actualRegime.getTorque();
+        double finalDriveRatio = m_vehicle.getFinalDriveRatio();
+        
+
+        
+        
+        
+        
+
         
         
         
