@@ -108,7 +108,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
         simResult.setPathNodes(m_fastestPathNodes);
         simResult.setVehicle(m_vehicle);
         simResult.setEnergyConsumption(m_sectionEnergyConsumption);
-        simResult.setToolCosts(m_sectionTollCosts);
+        simResult.setTollCosts(m_sectionTollCosts);
         return simResult;
     }
 
