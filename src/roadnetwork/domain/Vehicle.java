@@ -404,16 +404,6 @@ public class Vehicle {
         return 0;
     }
 
-    public double getRrc() {
-        return rrc;
-    }
-
-    public void setRrc(double rrc) {
-        this.rrc = rrc;
-    }
-    
-    
-
     /**
      *
      * @return Vehicle string

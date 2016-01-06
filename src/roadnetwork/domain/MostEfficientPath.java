@@ -46,7 +46,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
         m_fastestPathLength = GraphAlgorithms.getShortestPathLength(
                 m_graph, m_originNode, m_destinyNode, m_fastestPath, m_fastestPathNodes);
 
-        calculateSectionEnergyConsumption();
+        calculateSectionsEnergyConsumption();
         calculateSectionTime();
         calculateSectionTollCosts();
 
@@ -61,11 +61,11 @@ public class MostEfficientPath implements BestPathAlgorithm{
 
     private void addConection(Section section) {
         if (section.getDirection().equals(SectionDirection.unidirectional)) {
-            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateEnergyConsumption(section));
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateSectionEnergyConsumption(section));
 
         } else if (section.getDirection().equals(SectionDirection.bidirectional)) {
-            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateEnergyConsumption(section));
-            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateEnergyConsumption(section));
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateSectionEnergyConsumption(section));
+            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateSectionEnergyConsumption(section));
         }
     }
 
@@ -75,16 +75,16 @@ public class MostEfficientPath implements BestPathAlgorithm{
      * @param vehicle vehicle
      * @return return total time by section
      */
-    private double calculateEnergyConsumption(Section section) {
+    private double calculateSectionEnergyConsumption(Section section) {
 
         //TODO
         return 0;
     }
     
-    private void calculateSectionEnergyConsumption(){
+    private void calculateSectionsEnergyConsumption(){
         m_sectionEnergyConsumption = new ArrayList<>();
         for (Section s : m_fastestPath) {
-            m_sectionEnergyConsumption.add(calculateEnergyConsumption(s));
+            m_sectionEnergyConsumption.add(calculateSectionEnergyConsumption(s));
         }
     }
     
@@ -114,28 +114,35 @@ public class MostEfficientPath implements BestPathAlgorithm{
             }
         }
         
-        CombustionVehicle cv = (CombustionVehicle) m_vehicle;
+        CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
         
         //m_vehicle.
         
         ArrayList<Double> actuaGearList = null;
         
         
-        
-        
-        
         //Variaveis necessárias para o calculo da Força Gravitacional:
         double torque = actualRegime.getTorque();
-        double finalDriveRatio = cv.getFinalDriveRatio();
+        double finalDriveRatio = combustionVehicle.getFinalDriveRatio();
         double gearRatio = actuaGearList.get(targetGearIndex);
-        double radiusTire = cv.getRadiusOfTire();
-        double rrc = cv.
-
+        double radiusTire = combustionVehicle.getRadiusOfTire();
+        double rrc = combustionVehicle.getRcc();
+        double mass = combustionVehicle.getMass();
+        double dragCoefficient = combustionVehicle.getDragCoefficient();
+        double frontalArea = combustionVehicle.getFrontalArea();
         
         
         
         
-
+        return 0;
+    }
+    
+    private double linearVelocity()
+    {
+        CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
+        
+        double radiusTire = combustionVehicle.getRadiusOfTire();
+        
         
         
         
