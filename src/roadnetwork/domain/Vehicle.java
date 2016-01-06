@@ -40,9 +40,10 @@ public class Vehicle {
         this.type = "";
         this.load = 0;
         this.dragCoefficient = 0;
+        this.frontalArea = 0;
         this.rrc = 0;
         this.wheelSize = 0;
-        this.velocityLimit = null;
+        this.velocityLimit = new HashMap<>();
         this.minRPM = 0;
         this.maxRPM = 0;
         this.finalDriveRatio = 0;
@@ -402,6 +403,10 @@ public class Vehicle {
     public double Energy() {
 
         return 0;
+    }
+    
+    public void addVelocityLimit(String segment_type, double limit){
+        velocityLimit.put(segment_type, limit);
     }
 
     /**

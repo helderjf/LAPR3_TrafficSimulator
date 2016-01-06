@@ -75,7 +75,8 @@ public class CombustionVehicle extends Vehicle implements Combustion {
         this.throttleList = throttleList;
     }
 
-    public CombustionVehicle() {
+    public CombustionVehicle(String fuel) {
+        this.fuel = fuel;
     }
 
     /**
