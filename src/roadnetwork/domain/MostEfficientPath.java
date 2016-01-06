@@ -25,7 +25,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
     double m_fastestPathLength;
     ArrayList<Double> m_sectionEnergyConsumption;
     ArrayList<Double> m_sectionTime;
-    ArrayList<Double> m_sectionToolCosts;
+    ArrayList<Double> m_sectionTollCosts;
 
     @Override
     public ResultStaticAnalysis bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
@@ -44,7 +44,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
 
         calculateSectionEnergyConsumption();
         calculateSectionTime();
-        calculateSectionToolCosts();
+        calculateSectionTollCosts();
 
         return constructResults();
     }
@@ -74,7 +74,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
     private double calculateEnergyConsumption(Section section) {
 
         //TODO
-
+        return 0;
     }
     
     private void calculateSectionEnergyConsumption(){
@@ -92,9 +92,10 @@ public class MostEfficientPath implements BestPathAlgorithm{
     }
     
     
-    private void calculateSectionToolCosts(){
+    private void calculateSectionTollCosts(){
+        m_sectionTollCosts=new ArrayList<>();
         for (Section s : m_fastestPath) {
-            m_sectionToolCosts.add(s.getToll());
+            m_sectionTollCosts.add(s.getToll());
         }
     }
 
@@ -107,7 +108,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
         simResult.setPathNodes(m_fastestPathNodes);
         simResult.setVehicle(m_vehicle);
         simResult.setEnergyConsumption(m_sectionEnergyConsumption);
-        simResult.setToolCosts(m_sectionToolCosts);
+        simResult.setToolCosts(m_sectionTollCosts);
         return simResult;
     }
 
