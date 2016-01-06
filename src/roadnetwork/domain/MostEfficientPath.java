@@ -26,6 +26,10 @@ public class MostEfficientPath implements BestPathAlgorithm{
     ArrayList<Double> m_sectionEnergyConsumption;
     ArrayList<Double> m_sectionTime;
     ArrayList<Double> m_sectionTollCosts;
+    
+    private final double gravity = 9.81; // m^2
+    private final double densityOfAir = 1.225 // kg/m3
+
 
     @Override
     public ResultStaticAnalysis bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
@@ -82,6 +86,43 @@ public class MostEfficientPath implements BestPathAlgorithm{
         for (Section s : m_fastestPath) {
             m_sectionEnergyConsumption.add(calculateEnergyConsumption(s));
         }
+    }
+    
+    private double gravitationalForce(double throttleTarget, double targetRegime)
+    {
+        ArrayList<Throttle> throttleList = null;
+        ArrayList<Regime> regimeList = null;
+        
+        Throttle actualThrottle = null;
+        Regime actualRegime = null;
+        
+        //Variaveis necessárias para o calculo da Força Gravitacional:
+        double torque = actualRegime.getTorque();
+        double finalDriveRatio = m_vehicle.
+
+        
+        
+        
+        
+        for(Throttle t : throttleList)
+        {
+            if(t.equals(throttleTarget))
+            {
+                actualThrottle = t;
+            }
+        }
+        
+        for(Regime r : regimeList)
+        {
+            if(r.equals(targetRegime))
+            {
+                actualRegime = r;
+            }
+        }
+        
+        
+        
+        return 0;
     }
     
     private void calculateSectionTime(){
