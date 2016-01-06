@@ -404,6 +404,16 @@ public class Vehicle {
         return 0;
     }
 
+    public double getRrc() {
+        return rrc;
+    }
+
+    public void setRrc(double rrc) {
+        this.rrc = rrc;
+    }
+    
+    
+
     /**
      *
      * @return Vehicle string
@@ -435,6 +445,11 @@ public class Vehicle {
 
     public boolean hasPK() {
         return m_pk != 0;
+    }
+    
+    public double getRadiusOfTire()
+    {
+        return wheelSize / 2;
     }
 
 }

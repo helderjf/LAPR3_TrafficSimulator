@@ -26,6 +26,10 @@ public class MostEfficientPath implements BestPathAlgorithm{
     ArrayList<Double> m_sectionEnergyConsumption;
     ArrayList<Double> m_sectionTime;
     ArrayList<Double> m_sectionTollCosts;
+    
+    private final double gravity = 9.81; // m^2
+    private final double densityOfAir = 1.225; // kg/m3
+
 
     @Override
     public ResultStaticAnalysis bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
@@ -84,6 +88,60 @@ public class MostEfficientPath implements BestPathAlgorithm{
         }
     }
     
+    private double gravitationalForce(double targetThrottle, double targetRegime, int targetGearIndex)
+    {
+        
+        //estruturas de auxilio:
+        ArrayList<Throttle> throttleList = null;
+        ArrayList<Regime> regimeList = null;
+        
+        Throttle actualThrottle = null;
+        Regime actualRegime = null;
+        
+        for(Throttle t : throttleList)
+        {
+            if(t.equals(targetThrottle))
+            {
+                actualThrottle = t;
+            }
+        }
+        
+        for(Regime r : regimeList)
+        {
+            if(r.equals(targetRegime))
+            {
+                actualRegime = r;
+            }
+        }
+        
+        CombustionVehicle cv = (CombustionVehicle) m_vehicle;
+        
+        //m_vehicle.
+        
+        ArrayList<Double> actuaGearList = null;
+        
+        
+        
+        
+        
+        //Variaveis necessárias para o calculo da Força Gravitacional:
+        double torque = actualRegime.getTorque();
+        double finalDriveRatio = cv.getFinalDriveRatio();
+        double gearRatio = actuaGearList.get(targetGearIndex);
+        double radiusTire = cv.getRadiusOfTire();
+        double rrc = cv.
+
+        
+        
+        
+        
+
+        
+        
+        
+        return 0;
+    }
+    
     private void calculateSectionTime(){
         m_sectionTime=new ArrayList<>();
         
@@ -108,7 +166,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
         simResult.setPathNodes(m_fastestPathNodes);
         simResult.setVehicle(m_vehicle);
         simResult.setEnergyConsumption(m_sectionEnergyConsumption);
-        simResult.setToolCosts(m_sectionTollCosts);
+        simResult.setTollCosts(m_sectionTollCosts);
         return simResult;
     }
 

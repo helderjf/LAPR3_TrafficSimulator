@@ -21,7 +21,7 @@ public class ResultStaticAnalysis implements Result {
     private ArrayList<Junction> m_pathNodes;
     private Vehicle m_vehicle;
     private ArrayList<Double> m_sectionEnergyConsumption;
-    private ArrayList<Double> m_sectionToolCosts;
+    private ArrayList<Double> m_sectionTollCosts;
 
     public ResultStaticAnalysis(Junction origin, Junction destiny) {
         m_originNode = origin;
@@ -69,8 +69,8 @@ public class ResultStaticAnalysis implements Result {
         return m_sectionEnergyConsumption;
     }
     
-    public ArrayList<Double> getToolCosts(){
-        return m_sectionToolCosts;
+    public ArrayList<Double> getTollCosts(){
+        return m_sectionTollCosts;
     }
 
     /**
@@ -99,8 +99,8 @@ public class ResultStaticAnalysis implements Result {
         m_sectionEnergyConsumption=energyConsumption;
     }
     
-    public void setToolCosts(ArrayList<Double> sectionToolCosts){
-        m_sectionToolCosts=sectionToolCosts;
+    public void setTollCosts(ArrayList<Double> sectionTollCosts){
+        m_sectionTollCosts=sectionTollCosts;
     }
 
     /**
@@ -136,6 +136,7 @@ public class ResultStaticAnalysis implements Result {
             results.append(m_sectionTravelTime.get(i)/60);
             results.append(" minutes");
             
+            results.append(" " + "(Toll: "+m_sectionTollCosts.get(i).toString() + ")");
             results.append("\n");
         }
         return results.toString();
