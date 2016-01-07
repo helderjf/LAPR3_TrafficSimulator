@@ -86,14 +86,14 @@ public class MostEfficientPath implements BestPathAlgorithm{
         ArrayList<Segment> segmentList = section.getSegmentsList();
         
         double vehicleVelocity;
-        
-        
+        double relativeVelocityWindInfluence;
+        double gravitationalForce;
         
         for (Segment it : segmentList) {
             
             vehicleVelocity = vehicleVelocity(section,it);
-            
-            
+            relativeVelocityWindInfluence = relativeVelocityWindInfluence(section, vehicleVelocity);
+            //gravitationalForce = gravitationalForce()
             
         }
 
@@ -108,7 +108,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
     }
     
     //07-01-2016
-    private double gravitationalForce(double targetThrottle, double targetRegime, int targetGearIndex)
+    private double gravitationalForce(double throttle, double regime, int gearIndex, Section section, Segment segment, double relativeVelocityWindInfluence)
     {
         
         //estruturas de auxilio:
@@ -120,7 +120,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
         
         for(Throttle t : throttleList)
         {
-            if(t.equals(targetThrottle))
+            if(t.equals(throttle))
             {
                 actualThrottle = t;
             }
@@ -128,15 +128,14 @@ public class MostEfficientPath implements BestPathAlgorithm{
         
         for(Regime r : regimeList)
         {
-            if(r.equals(targetRegime))
+            if(r.equals(regime))
             {
                 actualRegime = r;
             }
         }
         
         CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
-        
-        //m_vehicle.
+      
         
         ArrayList<Double> actuaGearList = null;
         
@@ -144,17 +143,20 @@ public class MostEfficientPath implements BestPathAlgorithm{
         //Variaveis necessárias para o calculo da Força Gravitacional:
         double torque = actualRegime.getTorque();
         double finalDriveRatio = combustionVehicle.getFinalDriveRatio();
-        double gearRatio = actuaGearList.get(targetGearIndex);
+        double gearRatio = actuaGearList.get(gearIndex);
         double radiusTire = combustionVehicle.getRadiusOfTire();
         double rrc = combustionVehicle.getRcc();
         double mass = combustionVehicle.getMass();
         double dragCoefficient = combustionVehicle.getDragCoefficient();
         double frontalArea = combustionVehicle.getFrontalArea();
         
+        double gravitationalForcePart1 = rrc * mass * gravity * Math.cos(segment.getSlope());
+        double gravitationalForcePart2 = 0.5 * dragCoefficient * frontalArea * densityOfAir * Math.pow(relativeVelocityWindInfluence, 2);
+        double gravitationalForcePart3 = mass * gravity * Math.sin(segment.getSlope());
         
+        double gravitationalForce = gravitationalForcePart1 + gravitationalForcePart2 + gravitationalForcePart3;
         
-        
-        return 0;
+        return gravitationalForce;
     }
     
     
@@ -204,8 +206,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
         double windSpeed = w.getVelocity();
         double windAngle = w.getAngle();
         
-        
-        return 0;      
+        return vehicleVelocity + windSpeed * Math.cos(windAngle);      
     }
     
     
