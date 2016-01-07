@@ -5,6 +5,7 @@
  */
 package IO;
 
+import roadnetwork.domain.TimeUnit;
 import java.io.File;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
@@ -13,7 +14,7 @@ import org.w3c.dom.*;
  *
  * @author antonio
  */
-public class ImportSimulationXML {
+public class ImportSimulationXML implements TimeUnit {
 
     private final String EXPECTED_FILE_EXTENSION = "xml";
 
@@ -57,6 +58,12 @@ public class ImportSimulationXML {
         return doc;
     }
 
+    
+    /**
+     * 
+     * @param filePath
+     * @return 
+     */
     public boolean read(String filePath) {
         file = readFile(filePath);
         if (file == null) // FICHEIRO NÃO ENCONTRADO
@@ -125,5 +132,23 @@ public class ImportSimulationXML {
 
         }
         return true;
+    }
+    
+    /**
+     * converts given arrival rate (in any time unit) to vehicles per second
+     * @param arrivalString - is the read value from the data file
+     * @return return - the number of vehicles to be injected into a node per second -1 in case of and error
+     */
+    public double arrivalRateInVehiclesPerSeconds(String arrivalString){
+        String[] split = arrivalString.split(" ");
+        if(split.length!=2)
+            return -1;
+        int vehicleValue = Integer.parseInt(split[0]);
+        String[] split2 = split[1].split("/");
+        if(split2.length!=2)
+            return -1;
+        String timeUnit = split2[1];
+        int rate = Integer.parseInt(split2[0]);
+        return vehicleValue/(double)(rate*TIME_UNIT_IN_SECONDS.get(timeUnit));
     }
 }
