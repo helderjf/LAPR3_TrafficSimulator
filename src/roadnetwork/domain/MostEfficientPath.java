@@ -33,7 +33,8 @@ public class MostEfficientPath implements BestPathAlgorithm{
 
 
     //@Override
-    public ResultStaticAnalysis bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
+    @Override
+    public ResultStaticAnalysis getBestPathResults(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
         m_graph = new Graph<>(true);
         m_roadNetwork=roadNetwork;
         m_originNode=originNode;
@@ -248,15 +249,10 @@ public class MostEfficientPath implements BestPathAlgorithm{
     }
 
     @Override
-    public Result getBestPathResults(Junction originNode, Junction destinyNode, Vehicle vehicle) {
+    public ArrayList<PathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public ArrayList<PathParcel> getBestPath(Junction originNode, Junction destinyNode, Vehicle vehicle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     
     
     
