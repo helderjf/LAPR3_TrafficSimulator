@@ -14,7 +14,8 @@ public class PathParcel {
     Section m_section;
     Segment m_segment;
     SimDirection m_direction;
-    Double m_exitTime;
+    Double m_theoriticalExitTime;
+    Double _realExitTime;
 
     
     
