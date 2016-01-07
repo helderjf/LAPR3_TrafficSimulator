@@ -239,7 +239,7 @@ public class ProjectReader {
 
                 ArrayList<Throttle> throttleList = getThrottleList(combustionVehicles.getInt("ID_VEHICLE"));
                 ArrayList<Double> gearList = getGearList(combustionVehicles.getInt("ID_VEHICLE"));
-                HashMap<String, Double> velocityLimits = getVelocityLimits(combustionVehicles.getInt("ID_VEHICLE"));
+                HashMap<SectionTypology, Double> velocityLimits = getVelocityLimits(combustionVehicles.getInt("ID_VEHICLE"));
                 if (throttleList == null
                         || gearList == null
                         || velocityLimits == null) {
@@ -289,7 +289,7 @@ public class ProjectReader {
 
                 //  ArrayList<Throttle> throttleList = getThrotleList(combustionVehicles.getInt("ID_VEHICLE"));
                 //  ArrayList<Double> gearList = getGearList(combustionVehicles.getInt("ID_VEHICLE"));
-                HashMap<String, Double> velocityLimits = getVelocityLimits(hybridVehicles.getInt("ID_VEHICLE"));
+                HashMap<SectionTypology, Double> velocityLimits = getVelocityLimits(hybridVehicles.getInt("ID_VEHICLE"));
 
                 hybridVehiclesList.add(new HybridVehicle(
                         hybridVehicles.getInt("ID_VEHICLE"),
@@ -335,7 +335,7 @@ public class ProjectReader {
 
                 //  ArrayList<Throttle> throttleList = getThrotleList(combustionVehicles.getInt("ID_VEHICLE"));
                 //  ArrayList<Double> gearList = getGearList(combustionVehicles.getInt("ID_VEHICLE"));
-                HashMap<String, Double> velocityLimits = getVelocityLimits(electricVehicles.getInt("ID_VEHICLE"));
+                HashMap<SectionTypology, Double> velocityLimits = getVelocityLimits(electricVehicles.getInt("ID_VEHICLE"));
 
                 electricVehiclesList.add(new ElectricVehicle(
                         electricVehicles.getInt("ID_VEHICLE"),
@@ -441,16 +441,16 @@ public class ProjectReader {
         }
     }
 
-    private HashMap<String, Double> getVelocityLimits(int vehiclePK) {
+    private HashMap<SectionTypology, Double> getVelocityLimits(int vehiclePK) {
         try {
             ResultSet limits = m_dao.getVehicleVelocityLimits(vehiclePK);
             if (limits == null) {
                 return null;
             }
 
-            HashMap<String, Double> velocityLimits = new HashMap();
+            HashMap<SectionTypology, Double> velocityLimits = new HashMap();
             while (limits.next()) {
-                velocityLimits.put(limits.getString(1), limits.getDouble(2));
+                velocityLimits.put(SectionTypology.valueOf(limits.getString(1)), limits.getDouble(2));
             }
 
             return velocityLimits;

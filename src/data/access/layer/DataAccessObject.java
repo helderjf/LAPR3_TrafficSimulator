@@ -302,7 +302,7 @@ public class DataAccessObject {
 
     }
 
-    int saveNewVehicleVelocityLimits(int vehiclePK, String typology, Double speed) {
+    int saveNewVehicleVelocityLimits(int vehiclePK, SectionTypology typology, Double speed) {
 
         try {
             if (m_connection == null) {
@@ -314,7 +314,7 @@ public class DataAccessObject {
             //create statement
             CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_VEHICLE_VEL_LIMIT(?,?,?,?)}");
             statement.setInt(1, vehiclePK);
-            statement.setString(2, typology);
+            statement.setString(2, typology.toString());
             statement.setDouble(3, speed);
             statement.registerOutParameter(4, Types.INTEGER);
             //execute statement
