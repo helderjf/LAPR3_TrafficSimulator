@@ -5,11 +5,9 @@
  */
 package IO;
 
-import com.sun.jmx.mbeanserver.Util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.*;
@@ -27,24 +25,38 @@ public class ImportXML implements Import {
     
     public ImportXML(File file){
         inputFile = file;
-        xmlDocument = documentBuilder (inputFile);
+        xmlDocument = documentBuilder();
         assert (xmlDocument != null);
     }
     
+
     @Override
-    public ArrayList<String> importNodes() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String[] importRoadNetwork() {
+        
+        Node rootNode = xmlDocument.getDocumentElement(); 
+        NodeList nList = rootNode.getChildNodes();
+        
+        String[] characteristics = new String[2];
+        
+        characteristics[0] = nList.item(0).getAttributes().getNamedItem("id").getNodeValue();
+        characteristics[1] = nList.item(0).getAttributes().getNamedItem("description").getNodeValue();
+        
+        return characteristics;
+    }
+    
+    @Override
+    public ArrayList<Junction> importNodes() {
         
         Node rootNode = xmlDocument.getDocumentElement(); 
         NodeList nList = rootNode.getChildNodes();
 
-        ArrayList<String> list = new ArrayList();
+        ArrayList<Junction> list = new ArrayList();
         
         for (int i = 0; i < nList.getLength(); i++) {
             Node childNode = nList.item(i);
             if (childNode.getNodeName().equals("node_list")) { //tratar lista de nos
                 for (int j = 0; j < childNode.getChildNodes().getLength(); j++) {
-                    list.add(childNode.getChildNodes().item(j).getNodeValue());
+                    list.add(new Junction(childNode.getChildNodes().item(j).getAttributes().getNamedItem("id").getNodeValue()));
                 }
             }
         }
@@ -54,7 +66,7 @@ public class ImportXML implements Import {
     
     
     //Criar o documento no formato DOM apartir do ficheiro dado como argumento
-    private Document documentBuilder (File file)
+    private Document documentBuilder ()
     {
         try
         { 
@@ -78,7 +90,7 @@ public class ImportXML implements Import {
 
     @Override
     public ArrayList<Section> importSections() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
         ArrayList<Section> list = new ArrayList();
         
         NodeList sectionList = xmlDocument.getElementsByTagName("section_list");
@@ -141,7 +153,7 @@ public class ImportXML implements Import {
     }
 
     private Segment getSegment(Node segmentNode) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
         Segment segment = new Segment();
         
         Element domElement = (Element) segmentNode;
@@ -169,6 +181,7 @@ public class ImportXML implements Import {
     }
     
     
+    @Override
     public ArrayList<Vehicle> importVehicle()
     {
         ArrayList<Vehicle> list = new ArrayList();
@@ -187,7 +200,7 @@ public class ImportXML implements Import {
     }
 
     private Vehicle getVehicle(Node nodeChild) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
         Vehicle vehicle;
         Element domElementVehicle = (Element)nodeChild;
         

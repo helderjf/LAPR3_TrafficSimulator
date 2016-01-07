@@ -6,7 +6,6 @@
 package IO;
 
 import java.util.ArrayList;
-import org.w3c.dom.*;
 import roadnetwork.domain.*;
 
 /**
@@ -15,12 +14,14 @@ import roadnetwork.domain.*;
  */
 public interface Import {
     
+    public String[] importRoadNetwork();
+    
     /**
      * Import nodes from a file
      * @param path for the file
      * @return ArrayList of nodes names 
      */
-    public ArrayList<String> importNodes();
+    public ArrayList<Junction> importNodes();
     
     /**
      * import sections from an xml file 
