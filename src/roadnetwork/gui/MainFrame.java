@@ -402,8 +402,8 @@ public class MainFrame extends javax.swing.JFrame {
         roadNetwork1.setNodeList(nodeList);
         roadNetwork1.setSectionList(completeSectionList);
 
-        HashMap <String,Double>velocityLimit = new HashMap();
-        velocityLimit.put("highway", 60d);
+        HashMap <SectionTypology,Double>velocityLimit = new HashMap();
+        velocityLimit.put(SectionTypology.highway, 60d);
         ArrayList<Double> gearList = new ArrayList();
         gearList.add(3.5);
         gearList.add(2.5);

@@ -23,7 +23,7 @@ public class HybridVehicle extends Vehicle implements Electric, Combustion {
             double frontalArea, 
             double rrc, 
             double wheelSize,
-            HashMap<String, Double> velocityLimit,
+            HashMap<SectionTypology, Double> velocityLimit,
             double minRPM,
             double maxRPM,
             double finalDriveRatio) {
@@ -42,7 +42,7 @@ public class HybridVehicle extends Vehicle implements Electric, Combustion {
             double frontalArea,
             double rrc,
             double wheelSize,
-            HashMap<String, Double> velocityLimit,
+            HashMap<SectionTypology, Double> velocityLimit,
             double minRPM,
             double maxRPM,
             double finalDriveRatio) {

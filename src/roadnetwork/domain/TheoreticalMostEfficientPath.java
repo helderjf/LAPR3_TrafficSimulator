@@ -14,7 +14,7 @@ import java.util.Iterator;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class MostEfficientPath implements BestPathAlgorithm{
+public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
     
     Graph<Junction, Section> m_graph;
     RoadNetwork m_roadNetwork;
@@ -85,25 +85,20 @@ public class MostEfficientPath implements BestPathAlgorithm{
         double vehicleVelocity;
         double relativeVelocityWindInfluence;
         double gravitationalForce;
+        double workCalculation = 0;
         
-        for (Segment it : segmentList) {
-            
-            vehicleVelocity = vehicleVelocity(section,it);
+        for (Segment segment : segmentList) 
+        {
+            vehicleVelocity = vehicleVelocity(section,segment);
             relativeVelocityWindInfluence = relativeVelocityWindInfluence(section, vehicleVelocity);
-            
-            
-                //gravitationalForce = gravitationalForce()
-            
+            gravitationalForce = gravitationalForce(section,segment,relativeVelocityWindInfluence); 
+            workCalculation += workCalculation(gravitationalForce,segment);
         }
 
-        return 0;
+        return workCalculation;
     }
     
-    private double voidIdealTorque()
-    {
-        return 0;
-    }
-    
+
     private void calculateSectionsEnergyConsumption(){
         m_sectionEnergyConsumption = new ArrayList<>();
         for (Section s : m_fastestPath) {
@@ -111,44 +106,49 @@ public class MostEfficientPath implements BestPathAlgorithm{
         }
     }
     
+    public double workCalculation(double gravitationalForce, Segment segment)
+    {
+        return gravitationalForce * segment.getLenght();
+    }
+    
     //07-01-2016
-    private double gravitationalForce(double throttle, double regime, int gearIndex, Section section, Segment segment, double relativeVelocityWindInfluence)
+    private double gravitationalForce(Section section, Segment segment, double relativeVelocityWindInfluence)
     {
         
         //estruturas de auxilio:
-        ArrayList<Throttle> throttleList = null;
-        ArrayList<Regime> regimeList = null;
-        
-        Throttle actualThrottle = null;
-        Regime actualRegime = null;
-        
-        for(Throttle t : throttleList)
-        {
-            if(t.equals(throttle))
-            {
-                actualThrottle = t;
-            }
-        }
-        
-        for(Regime r : regimeList)
-        {
-            if(r.equals(regime))
-            {
-                actualRegime = r;
-            }
-        }
+//        ArrayList<Throttle> throttleList = null;
+//        ArrayList<Regime> regimeList = null;
+//        
+//        Throttle actualThrottle = null;
+//        Regime actualRegime = null;
+//        
+//        for(Throttle t : throttleList)
+//        {
+//            if(t.equals(throttle))
+//            {
+//                actualThrottle = t;
+//            }
+//        }
+//        
+//        for(Regime r : regimeList)
+//        {
+//            if(r.equals(regime))
+//            {
+//                actualRegime = r;
+//            }
+//        }
         
         CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
       
         
-        ArrayList<Double> actuaGearList = null;
+//        ArrayList<Double> actuaGearList = null;
         
         
         //Variaveis necessárias para o calculo da Força Gravitacional:
-        double torque = actualRegime.getTorque();
-        double finalDriveRatio = combustionVehicle.getFinalDriveRatio();
-        double gearRatio = actuaGearList.get(gearIndex);
-        double radiusTire = combustionVehicle.getRadiusOfTire();
+        //double torque = actualRegime.getTorque();
+        //double finalDriveRatio = combustionVehicle.getFinalDriveRatio();
+        //double gearRatio = actuaGearList.get(gearIndex);
+        //double radiusTire = combustionVehicle.getRadiusOfTire();
         double rrc = combustionVehicle.getRcc();
         double mass = combustionVehicle.getMass();
         double dragCoefficient = combustionVehicle.getDragCoefficient();
@@ -164,6 +164,8 @@ public class MostEfficientPath implements BestPathAlgorithm{
     }
     
     
+    
+    
     //The vehicle will travel at the maximum speed allowed in the road or for the vehicle
     private double vehicleVelocity(Section section, Segment segment)
     {
@@ -174,12 +176,12 @@ public class MostEfficientPath implements BestPathAlgorithm{
         boolean flag = false;
         
         //percorre o hashmap com as velocidades permitidas do veiculo para cada tipologia
-        for (String key : combustionVehicle.getVelocityLimits().keySet())
+        for (SectionTypology key : combustionVehicle.getVelocityLimits().keySet())
         {
             
             //isto não esta bem porque um dos valores e uma string e o outro enum... tenho de validar forma de resolver
             
-            if(section.getTypology().equals(key.toString()))
+            if(section.getTypology().equals(key))
             {
                 limitVechicleSpeed = combustionVehicle.getVelocityLimits().get(key);
                 if(segment.getMax_Velocity() < limitVechicleSpeed)

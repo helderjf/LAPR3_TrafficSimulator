@@ -24,7 +24,7 @@ public class Vehicle {
     private double frontalArea;
     private double rrc;
     private double wheelSize;
-    private HashMap<String, Double> velocityLimit;
+    private HashMap<SectionTypology, Double> velocityLimit;
     private double minRPM;
     private double maxRPM;
     private double finalDriveRatio;
@@ -66,7 +66,7 @@ public class Vehicle {
      * @param finalDriveRatio finalDriveRatio
      */
     public Vehicle(String name, String description, double mass, String type, double load, double drag_Coefficient,
-            double frontalArea, double rrc, double wheelSize, HashMap<String, Double> velocityLimit,
+            double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit,
             double minRPM, double maxRPM, double finalDriveRatio) {
 
         this.m_pk = 0;
@@ -87,7 +87,7 @@ public class Vehicle {
     }
 
     public Vehicle(int pk, String name, String description, double mass, String type, double load, double drag_Coefficient,
-            double frontalArea, double rrc, double wheelSize, HashMap<String, Double> velocityLimit,
+            double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit,
             double minRPM, double maxRPM, double finalDriveRatio) {
 
         this.m_pk = pk;
@@ -253,7 +253,7 @@ public class Vehicle {
      *
      * @return velocitylimit
      */
-    public HashMap<String, Double> getVelocityLimits() {
+    public HashMap<SectionTypology, Double> getVelocityLimits() {
         return velocityLimit;
     }
 
@@ -261,7 +261,7 @@ public class Vehicle {
      *
      * @param velocityLimit velocityLimit
      */
-    public void setVelocityLimits(HashMap<String, Double> velocityLimit) {
+    public void setVelocityLimits(HashMap<SectionTypology, Double> velocityLimit) {
         this.velocityLimit = velocityLimit;
     }
     
@@ -405,7 +405,7 @@ public class Vehicle {
         return 0;
     }
     
-    public void addVelocityLimit(String segment_type, double limit){
+    public void addVelocityLimit(SectionTypology segment_type, double limit){
         velocityLimit.put(segment_type, limit);
     }
 
