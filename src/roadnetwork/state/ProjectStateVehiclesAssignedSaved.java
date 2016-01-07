@@ -37,5 +37,12 @@ public class ProjectStateVehiclesAssignedSaved extends ProjectStateImpl {
         ProjectState ns = new ProjectStateVehiclesAssigned(m_project);
         return m_project.setState(ns);
     }
+    
+    @Override
+    public boolean roadNetworkAssigned(){
+        ProjectState ns = new ProjectStateSimulationReady(m_project);
+        m_project.setState(ns);
+        return true;
+    }
 
 }

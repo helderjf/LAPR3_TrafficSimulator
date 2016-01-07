@@ -238,7 +238,7 @@ public class ImportXML implements Import {
             String segment = ((Element)velocityLimit.getChildNodes().item(0)).getElementsByTagName("segment_type").item(0).getNodeValue();
             //String limit = velocityLimit.getElementsByTagName("limit").item(0).getNodeValue();
             String limit = ((Element)velocityLimit.getChildNodes().item(0)).getElementsByTagName("limit").item(0).getNodeValue();
-            vehicle.addVelocityLimit(segment, Double.parseDouble(limit));
+            vehicle.addVelocityLimit(SectionTypology.valueOf(segment), Double.parseDouble(limit));
         }
 
         //GET ENERGY

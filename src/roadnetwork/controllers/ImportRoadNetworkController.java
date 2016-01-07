@@ -26,7 +26,7 @@ public class ImportRoadNetworkController {
     
     public boolean canImportRoadNetwork(){
         
-        return !m_manager.getCurrentProject().hasRoadNetwork();
+        return m_manager.getCurrentProject().canImportRoadNetwork();
     }
     
     public boolean importRoadNetwork(File file){
@@ -34,9 +34,9 @@ public class ImportRoadNetworkController {
         
         String [] characteristics = importXML.importRoadNetwork();
         ArrayList<Junction> junctions = importXML.importNodes();
-        ArrayList<Section> section = importXML.importSections();
+        ArrayList<Section> sections = importXML.importSections();
         
-        return m_manager.getCurrentProject().createRoadNetwork(characteristics[0], characteristics[1], junctions, section);
+        return m_manager.getCurrentProject().createRoadNetwork(characteristics[0], characteristics[1], junctions, sections);
     }
     
 }

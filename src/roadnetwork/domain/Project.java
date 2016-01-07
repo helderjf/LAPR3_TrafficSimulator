@@ -169,10 +169,17 @@ public class Project {
         return new Simulation(simulationName, description);
     }
     
+    public boolean canImportRoadNetwork(){
+        return m_state.canImportRoadNetwork();
+    }
+    
     public boolean createRoadNetwork(String name, String description, ArrayList<Junction> junctions, ArrayList<Section> sectionList){
         m_roadNetwork = new RoadNetwork(name, description, junctions, sectionList);
         
-        return !(m_roadNetwork.getNodeList().isEmpty() && m_roadNetwork.getSectionList().isEmpty());
+        if( !(m_roadNetwork.getNodeList().isEmpty() || m_roadNetwork.getSectionList().isEmpty())){
+            return m_state.roadNetworkAssigned();
+        }
+        return false;
     }
 
 }

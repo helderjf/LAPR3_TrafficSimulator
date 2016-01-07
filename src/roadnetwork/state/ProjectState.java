@@ -38,6 +38,8 @@ public interface ProjectState {
     public boolean hasVehicles();
 
     public boolean canSimulate();
+    
+    public boolean roadNetworkAssigned();
 
 }
     
