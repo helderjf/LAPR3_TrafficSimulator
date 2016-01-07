@@ -19,6 +19,16 @@ public class RoadNetwork {
     private ArrayList<Junction> m_nodeList;
     private ArrayList<Section> m_sectionList;
 
+    public RoadNetwork(){
+    }
+    
+    public RoadNetwork(String name, String description, ArrayList<Junction> junctions, ArrayList<Section> sectionList) {
+        m_name = name;
+        m_description = description;
+        m_nodeList = junctions;
+        m_sectionList = sectionList;
+    }
+
     public ArrayList<Junction> getNodeList() {
         return m_nodeList;
     }
