@@ -7,7 +7,6 @@ package data.access.layer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import roadnetwork.domain.CombustionVehicle;
 import roadnetwork.domain.ElectricVehicle;
 import roadnetwork.domain.HybridVehicle;
@@ -16,6 +15,7 @@ import roadnetwork.domain.Project;
 import roadnetwork.domain.Regime;
 import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.Section;
+import roadnetwork.domain.SectionTypology;
 import roadnetwork.domain.Segment;
 import roadnetwork.domain.Throttle;
 import roadnetwork.domain.Vehicle;
@@ -229,13 +229,13 @@ public class ProjectWriter {
 
     private boolean saveNewVehicleVelocityLimits(Vehicle vehicle) {
 
-        HashMap<String, Double> limits = vehicle.getVelocityLimits();
-        Iterator it = limits.keySet().iterator();
-        while (it.hasNext()) {
-            String typology = it.next().toString();
+        HashMap<SectionTypology, Double> limits = vehicle.getVelocityLimits();
+
+        for (SectionTypology typology : vehicle.getVelocityLimits().keySet()) {
             if (m_dao.saveNewVehicleVelocityLimits(vehicle.getPK(), typology, limits.get(typology)) != 1) {
                 return false;
             }
+
         }
         return true;
     }
@@ -313,7 +313,6 @@ public class ProjectWriter {
             return saveNewProjectRoadNetwork();
         }
 
-        
         //we can comment out this section, because a road network, once saved, will never be changed
         int roadNetworkPK = roadNetwork.getPK();
         String roadNetworkName = roadNetwork.getName();
