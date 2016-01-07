@@ -5,6 +5,7 @@
  */
 package IO;
 
+import com.sun.jmx.mbeanserver.Util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -124,6 +125,7 @@ public class ImportXML implements Import {
         //definir wind
         String wind_direction = domElement.getElementsByTagName("wind_direction").item(0).getNodeValue();
         String wind_speed = domElement.getElementsByTagName("wind_speed").item(0).getNodeValue();
+        wind_speed = wind_speed.toLowerCase().split("m/s")[0].replace(" ", "");
         section.setWind(new Wind(Double.parseDouble(wind_direction), Double.parseDouble(wind_speed)));  
         
         //definir lista de segment
@@ -148,13 +150,12 @@ public class ImportXML implements Import {
         String segmentSlope = domElement.getElementsByTagName("slope").item(0).getNodeValue();
         segmentSlope = segmentSlope.split("%")[0];
         String segmentLength = domElement.getElementsByTagName("length").item(0).getNodeValue();
-        segmentLength = segmentLength.split("km")[0];
-        double  segmentRrc = Double.parseDouble(domElement.getElementsByTagName("rrc").item(0).getNodeValue());
+        segmentLength = segmentLength.toLowerCase().split("km")[0].replace(" ", "");
         String maxVelocity = domElement.getElementsByTagName("max_velocity").item(0).getNodeValue(); 
-        maxVelocity = maxVelocity.split("km/h")[0];
+        maxVelocity = maxVelocity.toLowerCase().split("km/h")[0].replace(" ", "");
         String minVelocity = domElement.getElementsByTagName("min_velocity").item(0).getNodeValue(); 
-        minVelocity = minVelocity.split("km/h")[0];
-        int  numberVehicles = Integer.parseInt(domElement.getElementsByTagName("number_vehicles").item(0).getNodeValue());
+        minVelocity = minVelocity.toLowerCase().split("km/h")[0].replace(" ", "");
+        String numberVehicles = domElement.getElementsByTagName("number_vehicles").item(0).getNodeValue();
         
         segment.setIndex(Integer.parseInt(segmentIndex));
         segment.setInitialHeight(Double.parseDouble(segmentHeight));
@@ -162,8 +163,7 @@ public class ImportXML implements Import {
         segment.setLenght(Double.parseDouble(segmentLength));
         segment.setMax_Velocity(Double.parseDouble(maxVelocity));
         segment.setMin_Velocity(Double.parseDouble(minVelocity));
-        //segment.setRcc(segmentRrc);
-        segment.setNumber_vehicles(numberVehicles);
+        segment.setMax_Vehicles(Double.parseDouble(numberVehicles));
         
         return segment;
     }
@@ -180,13 +180,13 @@ public class ImportXML implements Import {
         for (int i = 0; i < domVehicleList.getChildNodes().getLength(); i++) {
             
             Node nodeChild = domVehicleList.getChildNodes().item(i);
-            Vehicle vehicle = imporVehicle(nodeChild);
+            Vehicle vehicle = getVehicle(nodeChild);
             list.add(vehicle);
         }
         return list;
     }
 
-    private Vehicle imporVehicle(Node nodeChild) {
+    private Vehicle getVehicle(Node nodeChild) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         Vehicle vehicle;
         Element domElementVehicle = (Element)nodeChild;
@@ -198,7 +198,7 @@ public class ImportXML implements Import {
         String motorization = domElementVehicle.getElementsByTagName("motorization").item(0).getNodeValue();
 
         switch (motorization){
-                case "electic":
+                case "electric":
                     vehicle = new ElectricVehicle();
                 break;
                 case "hybrid":
@@ -206,32 +206,30 @@ public class ImportXML implements Import {
                 break;
                 default:
                     String fuel = domElementVehicle.getElementsByTagName("fuel").item(0).getNodeValue();
-                    vehicle  = new CombustionVehicle();
+                    vehicle = new CombustionVehicle(fuel);
                 break;
                 }
         String mass = domElementVehicle.getElementsByTagName("mass").item(0).getNodeValue();
-        mass = mass.split("kg")[0];
+        mass = mass.toLowerCase().split("kg")[0].replace(" ", "");
         String load = domElementVehicle.getElementsByTagName("load").item(0).getNodeValue();
-        load = load.split("kg")[0];
+        load = load.toLowerCase().split("kg")[0].replace(" ", "");
         String drag = domElementVehicle.getElementsByTagName("drag").item(0).getNodeValue();
+        String frontalArea = domElementVehicle.getElementsByTagName("frontal_Area").item(0).getNodeValue();
         String rrc = domElementVehicle.getElementsByTagName("rrc").item(0).getNodeValue();
         String wheelSize = domElementVehicle.getElementsByTagName("wheel_size").item(0).getNodeValue();
         
         Node velocityLimitList = domElementVehicle.getElementsByTagName("velocity_limit_list").item(0);
         for (int i = 0; i < velocityLimitList.getChildNodes().getLength(); i++) {
             Element velocityLimit = (Element)velocityLimitList.getChildNodes().item(i);
-            String segment = velocityLimit.getElementsByTagName("segment").item(0).getNodeValue();
-            String limit = velocityLimit.getElementsByTagName("limit").item(0).getNodeValue();
-            HashMap<String,Double> hash = new HashMap();
-            hash.put(segment, Double.parseDouble(limit));
-            vehicle.setVelocityLimits(hash);
+            //String segment = velocityLimit.getElementsByTagName("segment_type").item(0).getNodeValue();
+            String segment = ((Element)velocityLimit.getChildNodes().item(0)).getElementsByTagName("segment_type").item(0).getNodeValue();
+            //String limit = velocityLimit.getElementsByTagName("limit").item(0).getNodeValue();
+            String limit = ((Element)velocityLimit.getChildNodes().item(0)).getElementsByTagName("limit").item(0).getNodeValue();
+            vehicle.addVelocityLimit(segment, Double.parseDouble(limit));
         }
 
         //GET ENERGY
         Element energy = (Element)domElementVehicle.getElementsByTagName("energy").item(0);
-        String torque = energy.getElementsByTagName("torque").item(0).getNodeValue();
-        String rpm = energy.getElementsByTagName("rpm").item(0).getNodeValue();
-        String consumption = energy.getElementsByTagName("consumption").item(0).getNodeValue();
         String minRpm = energy.getElementsByTagName("min_rpm").item(0).getNodeValue();
         String maxRpm = energy.getElementsByTagName("max_rpm").item(0).getNodeValue();
         String finalDriveRation = energy.getElementsByTagName("final_drive_ratio").item(0).getNodeValue();
@@ -242,8 +240,23 @@ public class ImportXML implements Import {
             Element domGear = (Element) domGearList.getChildNodes().item(i);
             //int gearId = Integer.parseInt(domGear.getAttribute("id"));
             double ratio = Double.parseDouble(domGear.getFirstChild().getNodeValue());
-
             gearList.add(ratio);
+        }
+        Element domThrottleList = (Element)domElementVehicle.getElementsByTagName("throttle_list").item(0);
+        ArrayList<Throttle> throttleList = new ArrayList();
+        for(int i = 0; i < domThrottleList.getChildNodes().getLength(); i++){
+            Element domThrottle = (Element)domThrottleList.getElementsByTagName("throttle").item(0);
+            Throttle throttle = new Throttle();
+            throttle.setID(domThrottle.getAttribute("id"));
+            for(int j = 0; j < domThrottle.getChildNodes().getLength(); j++){
+                Regime regime = new Regime();
+                regime.setTorque(Double.parseDouble(domThrottle.getElementsByTagName("torque").item(0).getNodeValue()));
+                regime.setM_rpmLow(Double.parseDouble(domThrottle.getElementsByTagName("rpm_low").item(0).getNodeValue()));
+                regime.setM_rpmHigh(Double.parseDouble(domThrottle.getElementsByTagName("rpm_high").item(0).getNodeValue()));
+                regime.setM_sfc(Double.parseDouble(domThrottle.getElementsByTagName("SFC").item(0).getNodeValue()));
+                throttle.addRegime(regime);
+            }
+            throttleList.add(throttle);
         }
         
         vehicle.setName(name);
@@ -252,14 +265,16 @@ public class ImportXML implements Import {
         vehicle.setMass(Double.parseDouble(mass));
         vehicle.setLoad(Double.parseDouble(load));
         vehicle.setDragCoefficient(Double.parseDouble(drag));
+        vehicle.setFrontalArea(Double.parseDouble(frontalArea));
         vehicle.setRcc(Double.parseDouble(rrc));
         vehicle.setWheelSize(Double.parseDouble(wheelSize));
-        vehicle.setTorque(Double.parseDouble(torque));
-        vehicle.setConsuption(Double.parseDouble(consumption));
         vehicle.setMinRPM(Double.parseDouble(minRpm));
         vehicle.setMaxRPM(Double.parseDouble(maxRpm));
         vehicle.setFinalDriveRatio(Double.parseDouble(finalDriveRation));
-        //vehicle.setGearList(gearList);
-        return vehicle;    
+        if(vehicle instanceof CombustionVehicle){
+            ((CombustionVehicle)vehicle).setGearList(gearList);
+            ((CombustionVehicle)vehicle).setThrottleList(throttleList);
+        }
+        return vehicle;
     }
 }

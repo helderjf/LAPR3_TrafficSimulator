@@ -8,6 +8,9 @@ package roadnetwork.domain;
 import graphutils.Graph;
 import graphutils.GraphAlgorithms;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -26,11 +29,17 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     ArrayList<Double> m_sectionEnergyConsumption;
     ArrayList<Double> m_sectionTime;
     ArrayList<Double> m_sectionTollCosts;
-
-    @Override
-    public ResultStaticAnalysis bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
-        m_graph = new Graph<>(true);
+    ArrayList<PathParcel> m_pathParcelList;
+    
+    public FastestPathAlgorithm(){}
+    
+    public FastestPathAlgorithm(RoadNetwork roadNetwork){
         m_roadNetwork=roadNetwork;
+    }
+    
+    @Override
+    public ResultStaticAnalysis getBestPathResults(Junction originNode, Junction destinyNode, Vehicle vehicle) {
+        m_graph = new Graph<>(true);
         m_originNode=originNode;
         m_destinyNode=destinyNode;
         m_vehicle=vehicle;
@@ -47,6 +56,13 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         calculateSectionTollCosts();
 
         return constructResults();
+    }
+    
+    @Override
+    public ArrayList<PathParcel> getBestPath(Junction originNode, Junction destinyNode, Vehicle vehicle){
+        getBestPathResults(originNode, destinyNode, vehicle);
+        calculatePathParcelList();
+        return m_pathParcelList;
     }
 
     private void graphConstruction(RoadNetwork rn, Vehicle vehicle) {
@@ -113,6 +129,59 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         m_sectionTollCosts=new ArrayList<>();
         for (Section s : m_fastestPath) {
             m_sectionTollCosts.add(s.getToll());
+        }
+    }
+    
+    private void calculatePathParcelList(){
+        m_pathParcelList = new ArrayList<>();
+        if (m_originNode.equals(m_fastestPath.get(0).getBeginningNode())) {
+            for (Section section : m_fastestPath) {
+                calculatePathParcel(section, section.getSegmentsList());
+            }
+        } else {
+            for (Section section : m_fastestPath) {
+                ArrayList<Segment> segmentsList=section.getSegmentsList();
+                Collections.reverse(segmentsList);
+                calculatePathParcel(section, segmentsList);
+            }
+        }
+    }
+    
+    private void calculatePathParcel(Section section, ArrayList<Segment> segmentsList){
+        double time = 0; //in seconds
+        for (Segment it : segmentsList) {
+            
+            double lenght = it.getLenght();
+            double travelSpeed;
+            SectionTypology type = section.getSectionType();
+            
+            //determin if the vehicle maximum speed for this section is inferior to the section speed limit
+            if (m_vehicle.getVelocityLimits().containsKey(String.valueOf(type))
+                    && m_vehicle.getVelocityLimit(type)< it.getMax_Velocity()) {
+                travelSpeed = m_vehicle.getVelocityLimit(type);
+            }else{
+                travelSpeed= it.getMax_Velocity();
+            }
+            
+            time += lenght * 3600 / travelSpeed;
+            if (m_pathParcelList!=null) {
+                PathParcel pp = new PathParcel();
+                
+                if (section.getDirection().equals(SectionDirection.unidirectional)) {
+                    pp.setDirection(SimDirection.direct);
+                } else{
+                    if (m_originNode.equals(m_fastestPath.get(0).getBeginningNode())) {
+                        pp.setDirection(SimDirection.direct);
+                    } else{
+                        pp.setDirection(SimDirection.reverse);
+                    }
+                }
+                pp.setSection(section);
+                pp.setSegment(it);
+                pp.setTheoreticalExitTime(lenght * 3600 / travelSpeed);
+                m_pathParcelList.add(pp);
+            }
+            
         }
     }
 

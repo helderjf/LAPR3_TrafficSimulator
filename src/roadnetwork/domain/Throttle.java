@@ -17,6 +17,7 @@ public class Throttle {
     private ArrayList<Regime> m_regimeList;
 
     public Throttle() {
+        m_regimeList = new ArrayList<>();
     }
 
     public Throttle(String id, ArrayList<Regime> regimeList) {
@@ -40,6 +41,10 @@ public class Throttle {
 
     public void setRegimeList(ArrayList<Regime> regimeList) {
         m_regimeList = regimeList;
+    }
+
+    public void addRegime(Regime regime) {
+        m_regimeList.add(regime);
     }
     
     

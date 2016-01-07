@@ -13,6 +13,10 @@ import java.util.HashMap;
  */
 public class ElectricVehicle extends Vehicle implements Electric {
 
+    public ElectricVehicle(){
+        
+    }
+    
     /**
      *
      * @param name name of Electric Vehicle
