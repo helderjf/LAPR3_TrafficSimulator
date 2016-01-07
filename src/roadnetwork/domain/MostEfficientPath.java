@@ -32,7 +32,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
     private final double densityOfAir = 1.225; // kg/m3
 
 
-    @Override
+    //@Override
     public ResultStaticAnalysis bestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
         m_graph = new Graph<>(true);
         m_roadNetwork=roadNetwork;
@@ -70,10 +70,6 @@ public class MostEfficientPath implements BestPathAlgorithm{
         }
     }
     
-    private void runAllSections()
-    {
-        
-    }
 
     /**
      *
@@ -93,10 +89,17 @@ public class MostEfficientPath implements BestPathAlgorithm{
             
             vehicleVelocity = vehicleVelocity(section,it);
             relativeVelocityWindInfluence = relativeVelocityWindInfluence(section, vehicleVelocity);
-            //gravitationalForce = gravitationalForce()
+            
+            
+                //gravitationalForce = gravitationalForce()
             
         }
 
+        return 0;
+    }
+    
+    private double voidIdealTorque()
+    {
         return 0;
     }
     
@@ -242,6 +245,16 @@ public class MostEfficientPath implements BestPathAlgorithm{
     @Override
     public String toString() {
         return "Most efficient path";
+    }
+
+    @Override
+    public Result getBestPathResults(Junction originNode, Junction destinyNode, Vehicle vehicle) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<PathParcel> getBestPath(Junction originNode, Junction destinyNode, Vehicle vehicle) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
