@@ -29,5 +29,12 @@ public class ProjectStateEmpty extends ProjectStateImpl {
         m_project.setState(ns);
         return true;
     }
+    
+    @Override
+    public boolean roadNetworkAssigned(){
+        ProjectState ns = new ProjectStateRoadNetworkAssigned(m_project);
+        m_project.setState(ns);
+        return true;
+    }
 
 }

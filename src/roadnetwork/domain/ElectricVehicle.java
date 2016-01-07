@@ -13,6 +13,10 @@ import java.util.HashMap;
  */
 public class ElectricVehicle extends Vehicle implements Electric {
 
+    public ElectricVehicle(){
+        
+    }
+    
     /**
      *
      * @param name name of Electric Vehicle
@@ -39,7 +43,7 @@ public class ElectricVehicle extends Vehicle implements Electric {
             double frontalArea,
             double rrc,
             double wheelSize,
-            HashMap<String, Double> velocityLimit,
+            HashMap<SectionTypology, Double> velocityLimit,
             double minRPM,
             double maxRPM,
             double finalDriveRatio) {
@@ -58,7 +62,7 @@ public class ElectricVehicle extends Vehicle implements Electric {
             double frontalArea,
             double rrc,
             double wheelSize,
-            HashMap<String, Double> velocityLimit,
+            HashMap<SectionTypology, Double> velocityLimit,
             double minRPM,
             double maxRPM,
             double finalDriveRatio) {

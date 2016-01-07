@@ -5,10 +5,7 @@
  */
 package roadnetwork.domain;
 
-import java.io.File;
 import java.util.ArrayList;
-import IO.*;
-import org.w3c.dom.*;
 import roadnetwork.state.ProjectState;
 import roadnetwork.state.ProjectStateCreated;
 
@@ -172,8 +169,17 @@ public class Project {
         return new Simulation(simulationName, description);
     }
     
+    public boolean canImportRoadNetwork(){
+        return m_state.canImportRoadNetwork();
+    }
     
-    
-    
+    public boolean createRoadNetwork(String name, String description, ArrayList<Junction> junctions, ArrayList<Section> sectionList){
+        m_roadNetwork = new RoadNetwork(name, description, junctions, sectionList);
+        
+        if( !(m_roadNetwork.getNodeList().isEmpty() || m_roadNetwork.getSectionList().isEmpty())){
+            return m_state.roadNetworkAssigned();
+        }
+        return false;
+    }
 
 }

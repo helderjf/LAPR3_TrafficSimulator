@@ -101,5 +101,10 @@ public class ProjectStateImpl implements ProjectState {
         return false;
     }
 
+    @Override
+    public boolean roadNetworkAssigned() {
+        return false;
+    }
+
 
 }

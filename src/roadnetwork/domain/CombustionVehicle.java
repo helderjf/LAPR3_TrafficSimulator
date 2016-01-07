@@ -39,7 +39,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
      * @param throttleList
      */
     public CombustionVehicle(String name, String description, double mass, String type, double load,
-            double drag_Coefficient, double frontalArea, double rrc, double wheelSize, HashMap<String, Double> velocityLimit,
+            double drag_Coefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit,
             double minRPM, double maxRPM,
             double finalDriveRatio, String fuel, ArrayList<Double> gearList, ArrayList<Throttle> throttleList) {
         super(name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
@@ -60,7 +60,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
             double frontalArea,
             double rrc,
             double wheelSize,
-            HashMap<String, Double> velocityLimit,
+            HashMap<SectionTypology, Double> velocityLimit,
             double minRPM,
             double maxRPM,
             double finalDriveRatio,
@@ -75,7 +75,8 @@ public class CombustionVehicle extends Vehicle implements Combustion {
         this.throttleList = throttleList;
     }
 
-    public CombustionVehicle() {
+    public CombustionVehicle(String fuel) {
+        this.fuel = fuel;
     }
 
     /**

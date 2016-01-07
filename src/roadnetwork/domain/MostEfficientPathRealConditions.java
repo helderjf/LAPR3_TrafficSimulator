@@ -9,14 +9,12 @@ import graphutils.Graph;
 import graphutils.GraphAlgorithms;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
- * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
+ * @author josemiranda
  */
-public class FastestPathAlgorithm implements BestPathAlgorithm {
+public class MostEfficientPathRealConditions implements BestPathAlgorithm{
 
     Graph<Junction, Section> m_graph;
     RoadNetwork m_roadNetwork;
@@ -30,8 +28,6 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     ArrayList<Double> m_sectionTime;
     ArrayList<Double> m_sectionTollCosts;
     ArrayList<PathParcel> m_pathParcelList;
-    
-    public FastestPathAlgorithm(){}
     
     @Override
     public ResultStaticAnalysis getBestPathResults(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
@@ -70,56 +66,31 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
 
     private void addConection(Section section) {
         if (section.getDirection().equals(SectionDirection.unidirectional)) {
-            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section));
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateSectionEnergyConsumption(section));
 
         } else if (section.getDirection().equals(SectionDirection.bidirectional)) {
-            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section));
-            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section));
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateSectionEnergyConsumption(section));
+            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateSectionEnergyConsumption(section));
         }
-    }
-
-    /**
-     *
-     * @param section section
-     * @param vehicle vehicle
-     * @return return total time by section
-     */
-    private double calculateTravelTime(Section section) {
-
-        ArrayList<Segment> segmentList = section.getSegmentsList();
-        double time = 0; //in seconds
-        
-        for (Segment it : segmentList) {
-            
-            double lenght = it.getLenght();
-            double travelSpeed;
-            SectionTypology type = section.getSectionType();
-            
-            //determin if the vehicle maximum speed for this section is inferior to the section speed limit
-            if (m_vehicle.getVelocityLimits().containsKey(String.valueOf(type))
-                    && m_vehicle.getVelocityLimit(type)< it.getMax_Velocity()) {
-                travelSpeed = m_vehicle.getVelocityLimit(type);
-            }else{
-                travelSpeed= it.getMax_Velocity();
-            }
-            
-            time += lenght * 3600 / travelSpeed;
-        }
-        return time;
-
     }
     
-//    private void calculateSectionEnergyConsumption(){
-//        m_sectionEnergyConsumption = new ArrayList<>();
-//        //TODO
-//        
-//    }
+    private double calculateSectionEnergyConsumption(Section section) {
+        //TODO
+        return 0;
+    }
+    
+    private void calculateSectionsEnergyConsumption(){
+        m_sectionEnergyConsumption = new ArrayList<>();
+        for (Section s : m_fastestPath) {
+            m_sectionEnergyConsumption.add(calculateSectionEnergyConsumption(s));
+        }
+    }
     
     private void calculateSectionTime(){
         m_sectionTime=new ArrayList<>();
-        for (Section s : m_fastestPath) {
-            m_sectionTime.add(calculateTravelTime(s));
-        }
+        
+        //TODO
+        
     }
     
     private void calculateSectionTollCosts(){
@@ -194,10 +165,4 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         simResult.setTollCosts(m_sectionTollCosts);
         return simResult;
     }
-
-    @Override
-    public String toString() {
-        return "Fastest path";
-    }
-
 }

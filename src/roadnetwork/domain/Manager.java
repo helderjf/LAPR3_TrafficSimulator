@@ -34,7 +34,7 @@ public class Manager {
         m_algorithmsList= new ArrayList<>();
         //m_projectReader = new ProjectReader();
         m_algorithmsList.add(new FastestPathAlgorithm());
-        m_algorithmsList.add(new MostEfficientPath());
+        m_algorithmsList.add(new TheoreticalMostEfficientPath());
         
     }
 
