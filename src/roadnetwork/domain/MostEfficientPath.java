@@ -8,6 +8,7 @@ package roadnetwork.domain;
 import graphutils.Graph;
 import graphutils.GraphAlgorithms;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -68,6 +69,11 @@ public class MostEfficientPath implements BestPathAlgorithm{
             m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateSectionEnergyConsumption(section));
         }
     }
+    
+    private void runAllSections()
+    {
+        
+    }
 
     /**
      *
@@ -77,7 +83,20 @@ public class MostEfficientPath implements BestPathAlgorithm{
      */
     private double calculateSectionEnergyConsumption(Section section) {
 
-        //TODO
+        ArrayList<Segment> segmentList = section.getSegmentsList();
+        
+        double vehicleVelocity;
+        
+        
+        
+        for (Segment it : segmentList) {
+            
+            vehicleVelocity = vehicleVelocity(section,it);
+            
+            
+            
+        }
+
         return 0;
     }
     
@@ -88,6 +107,7 @@ public class MostEfficientPath implements BestPathAlgorithm{
         }
     }
     
+    //07-01-2016
     private double gravitationalForce(double targetThrottle, double targetRegime, int targetGearIndex)
     {
         
@@ -137,17 +157,58 @@ public class MostEfficientPath implements BestPathAlgorithm{
         return 0;
     }
     
-    private double linearVelocity()
+    
+    //The vehicle will travel at the maximum speed allowed in the road or for the vehicle
+    private double vehicleVelocity(Section section, Segment segment)
     {
         CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
         
-        double radiusTire = combustionVehicle.getRadiusOfTire();
+        // velocidade maxima do veiculo para a section onde se encontra
+        double limitVechicleSpeed = 0;
+        boolean flag = false;
         
+        //percorre o hashmap com as velocidades permitidas do veiculo para cada tipologia
+        for (String key : combustionVehicle.getVelocityLimits().keySet())
+        {
+            
+            //isto não esta bem porque um dos valores e uma string e o outro enum... tenho de validar forma de resolver
+            
+            if(section.getTypology().equals(key.toString()))
+            {
+                limitVechicleSpeed = combustionVehicle.getVelocityLimits().get(key);
+                if(segment.getMax_Velocity() < limitVechicleSpeed)
+                {
+                    // assegura que a velocidade maxima do veiculo nao excede o limite permitido pelo segmento
+                    limitVechicleSpeed = segment.getMax_Velocity();
+                }
+                
+                flag = true;
+            }
+        }
         
+        // se ele não entrou no metodo acima não existia velocidade limite definida para o veiculo para aquela tipologia
+        // assim sendo a velocidade maxima passa a ser a máxima permitida no segmento
+        if(!flag)
+        {
+            limitVechicleSpeed = segment.getMax_Velocity();
+        }
         
-        
-        return 0;
+        return limitVechicleSpeed;
+
     }
+    
+    //Influence of Wind Velocity
+    private double relativeVelocityWindInfluence(Section section, double vehicleVelocity)
+    {
+        Wind w = section.getWind();
+        double windSpeed = w.getVelocity();
+        double windAngle = w.getAngle();
+        
+        
+        return 0;      
+    }
+    
+    
     
     private void calculateSectionTime(){
         m_sectionTime=new ArrayList<>();
