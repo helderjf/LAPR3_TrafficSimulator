@@ -53,11 +53,11 @@ public class StaticAnalysis {
     
     
     public Result runSingleVehicle(){
-        return m_algorithm.bestPath(m_roaNetwork, m_originNode, m_destinyNode, m_vehicle);
+        return m_algorithm.getBestPathResults(m_roaNetwork, m_originNode, m_destinyNode, m_vehicle);
     }
     
     private Result runEachVehicle(Vehicle vehicle){
-        return m_algorithm.bestPath(m_roaNetwork, m_originNode, m_destinyNode, vehicle);
+        return m_algorithm.getBestPathResults(m_roaNetwork, m_originNode, m_destinyNode, vehicle);
     }
     
 }

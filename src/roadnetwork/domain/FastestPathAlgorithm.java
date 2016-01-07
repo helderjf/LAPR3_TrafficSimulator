@@ -33,13 +33,10 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     
     public FastestPathAlgorithm(){}
     
-    public FastestPathAlgorithm(RoadNetwork roadNetwork){
-        m_roadNetwork=roadNetwork;
-    }
-    
     @Override
-    public ResultStaticAnalysis getBestPathResults(Junction originNode, Junction destinyNode, Vehicle vehicle) {
+    public ResultStaticAnalysis getBestPathResults(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
         m_graph = new Graph<>(true);
+        m_roadNetwork=roadNetwork;
         m_originNode=originNode;
         m_destinyNode=destinyNode;
         m_vehicle=vehicle;
@@ -59,8 +56,8 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     }
     
     @Override
-    public ArrayList<PathParcel> getBestPath(Junction originNode, Junction destinyNode, Vehicle vehicle){
-        getBestPathResults(originNode, destinyNode, vehicle);
+    public ArrayList<PathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle){
+        getBestPathResults(roadNetwork, originNode, destinyNode, vehicle);
         calculatePathParcelList();
         return m_pathParcelList;
     }
