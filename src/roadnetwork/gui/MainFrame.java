@@ -5,9 +5,11 @@
  */
 package roadnetwork.gui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import roadnetwork.controllers.ImportRoadNetworkController;
 import roadnetwork.controllers.SaveProjectController;
 import roadnetwork.domain.CombustionVehicle;
 import roadnetwork.domain.Junction;
@@ -38,6 +40,7 @@ public class MainFrame extends javax.swing.JFrame {
     private ImportVehiclesFrame m_importVehiclesFrame;
     private BestPathAnalysisFrame m_bestPathAnalysisFrame;
     private VehicleComparisonFrame m_vehicleComparisonFrame;
+    private ImportRoadNetworkFrame m_importRoadNetworkFrame;
 
     /**
      * Creates new form JanelaPrincipal
@@ -63,6 +66,11 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void copyProject() {
         m_copyProjectFrame = new CopyProjectFrame(this);
+        revalidate();
+    }
+    
+    private void importRoadNetwork(){
+        m_importRoadNetworkFrame = new ImportRoadNetworkFrame(this);
         revalidate();
     }
 
@@ -127,6 +135,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -214,6 +223,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem3);
+
+        jMenuItem17.setText("Import Road Network");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem17);
 
         jMenuItem5.setText("Import Vehicles");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -474,6 +491,10 @@ public class MainFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        importRoadNetwork();
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -496,6 +517,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

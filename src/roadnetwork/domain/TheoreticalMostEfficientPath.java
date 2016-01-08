@@ -48,7 +48,6 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
         m_fastestPathLength = GraphAlgorithms.getShortestPathLength(
                 m_graph, m_originNode, m_destinyNode, m_fastestPath, m_fastestPathNodes);
 
-        calculateSectionsEnergyConsumption();
         calculateSectionTime();
         calculateSectionTollCosts();
 
@@ -99,13 +98,6 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
     }
     
 
-    private void calculateSectionsEnergyConsumption(){
-        m_sectionEnergyConsumption = new ArrayList<>();
-        for (Section s : m_fastestPath) {
-            m_sectionEnergyConsumption.add(calculateSectionEnergyConsumption(s));
-        }
-    }
-    
     public double workCalculation(double gravitationalForce, Segment segment)
     {
         return gravitationalForce * segment.getLenght();
@@ -138,21 +130,17 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
 //            }
 //        }
         
-        CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
-      
-        
 //        ArrayList<Double> actuaGearList = null;
-        
         
         //Variaveis necessárias para o calculo da Força Gravitacional:
         //double torque = actualRegime.getTorque();
-        //double finalDriveRatio = combustionVehicle.getFinalDriveRatio();
+        //double finalDriveRatio = m_vehicle.getFinalDriveRatio();
         //double gearRatio = actuaGearList.get(gearIndex);
-        //double radiusTire = combustionVehicle.getRadiusOfTire();
-        double rrc = combustionVehicle.getRcc();
-        double mass = combustionVehicle.getMass();
-        double dragCoefficient = combustionVehicle.getDragCoefficient();
-        double frontalArea = combustionVehicle.getFrontalArea();
+        //double radiusTire = m_vehicle.getRadiusOfTire();
+        double rrc = m_vehicle.getRcc();
+        double mass = m_vehicle.getMass();
+        double dragCoefficient = m_vehicle.getDragCoefficient();
+        double frontalArea = m_vehicle.getFrontalArea();
         
         double gravitationalForcePart1 = rrc * mass * gravity * Math.cos(segment.getSlope());
         double gravitationalForcePart2 = 0.5 * dragCoefficient * frontalArea * densityOfAir * Math.pow(relativeVelocityWindInfluence, 2);
@@ -167,41 +155,20 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
     
     
     //The vehicle will travel at the maximum speed allowed in the road or for the vehicle
-    private double vehicleVelocity(Section section, Segment segment)
-    {
-        CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
-        
-        // velocidade maxima do veiculo para a section onde se encontra
-        double limitVechicleSpeed = 0;
-        boolean flag = false;
-        
-        //percorre o hashmap com as velocidades permitidas do veiculo para cada tipologia
-        for (SectionTypology key : combustionVehicle.getVelocityLimits().keySet())
-        {
-            
-            //isto não esta bem porque um dos valores e uma string e o outro enum... tenho de validar forma de resolver
-            
-            if(section.getTypology().equals(key))
-            {
-                limitVechicleSpeed = combustionVehicle.getVelocityLimits().get(key);
-                if(segment.getMax_Velocity() < limitVechicleSpeed)
-                {
-                    // assegura que a velocidade maxima do veiculo nao excede o limite permitido pelo segmento
-                    limitVechicleSpeed = segment.getMax_Velocity();
-                }
-                
-                flag = true;
-            }
+    private double vehicleVelocity(Section section, Segment segment) {
+
+        double travelSpeed;
+        SectionTypology type = section.getSectionType();
+
+        //determin if the vehicle maximum speed for this section is inferior to the section speed limit
+        if (m_vehicle.getVelocityLimits().containsKey(type)
+                && m_vehicle.getVelocityLimit(type) < segment.getMax_Velocity()) {
+            travelSpeed = m_vehicle.getVelocityLimit(type);
+        } else {
+            travelSpeed = segment.getMax_Velocity();
         }
-        
-        // se ele não entrou no metodo acima não existia velocidade limite definida para o veiculo para aquela tipologia
-        // assim sendo a velocidade maxima passa a ser a máxima permitida no segmento
-        if(!flag)
-        {
-            limitVechicleSpeed = segment.getMax_Velocity();
-        }
-        
-        return limitVechicleSpeed;
+
+        return travelSpeed;
 
     }
     
