@@ -182,4 +182,8 @@ public class Project {
         return false;
     }
 
+    public Simulation getCurrentSimulation() {
+        return m_activeSimulation;
+    }
+
 }

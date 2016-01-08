@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package roadnetwork.state;
+package roadnetwork.domain;
 
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public interface SimulationState {
-
-    public boolean canRunSimulation();
-    
+public class TrafficRecord {
+    //TO DO implement
 }
