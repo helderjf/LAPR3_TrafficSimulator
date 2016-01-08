@@ -346,6 +346,8 @@ public class Vehicle {
     public void setFrontalArea(double frontalArea) {
         this.frontalArea = frontalArea;
     }
+    
+    
 
     /**
      *
