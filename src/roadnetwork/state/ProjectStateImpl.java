@@ -106,5 +106,10 @@ public class ProjectStateImpl implements ProjectState {
         return false;
     }
 
+    @Override
+    public boolean vehiclesAssigned() {
+        return false;
+    }
+
 
 }

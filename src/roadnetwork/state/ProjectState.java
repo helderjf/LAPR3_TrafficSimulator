@@ -40,6 +40,8 @@ public interface ProjectState {
     public boolean canSimulate();
     
     public boolean roadNetworkAssigned();
+    
+    public boolean vehiclesAssigned();
 
 }
     

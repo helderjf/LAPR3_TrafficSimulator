@@ -37,6 +37,14 @@ public class Simulation {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public boolean canRunSimulation() {
+        return m_state.canRunSimulation();
+    }
+
+    public SimulationRun newSimulationRun(RoadNetwork roadNetwork, String runName, double runDuration, double runTimeStep) {
+        return new SimulationRun(runName,runDuration,runTimeStep,roadNetwork);
+    }
+
     
     
     

@@ -266,7 +266,7 @@ public class Vehicle {
     }
     
     public double getVelocityLimit(SectionTypology typology){
-        return velocityLimit.get(String.valueOf(typology));
+        return velocityLimit.get(typology);
     }
     
 
