@@ -118,6 +118,8 @@ public class CombustionVehicle extends Vehicle implements Combustion {
     public void setThrottleList(ArrayList<Throttle> throttleList) {
         this.throttleList = throttleList;
     }
+    
+    
 
     /**
      *
@@ -140,6 +142,21 @@ public class CombustionVehicle extends Vehicle implements Combustion {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public EngineEfficiency getEngineEfficiency() {
+        
+        for (int key_idGear : gearList.keySet()) {  
+        
+            for(Throttle throttle : throttleList)
+            {
+
+            }
+            
+        }
+        
+        return null;
     }
 
 }
