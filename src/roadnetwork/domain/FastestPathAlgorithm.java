@@ -96,7 +96,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
             SectionTypology type = section.getSectionType();
             
             //determin if the vehicle maximum speed for this section is inferior to the section speed limit
-            if (m_vehicle.getVelocityLimits().containsKey(String.valueOf(type))
+            if (m_vehicle.getVelocityLimits().containsKey(type)
                     && m_vehicle.getVelocityLimit(type)< it.getMax_Velocity()) {
                 travelSpeed = m_vehicle.getVelocityLimit(type);
             }else{
