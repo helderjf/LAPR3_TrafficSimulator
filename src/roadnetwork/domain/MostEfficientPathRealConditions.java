@@ -27,7 +27,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     ArrayList<Double> m_sectionEnergyConsumption;
     ArrayList<Double> m_sectionTime;
     ArrayList<Double> m_sectionTollCosts;
-    ArrayList<PathParcel> m_pathParcelList;
+    ArrayList<SimPathParcel> m_pathParcelList;
     
     @Override
     public ResultStaticAnalysis getBestPathResults(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
@@ -52,7 +52,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     }
     
     @Override
-    public ArrayList<PathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle){
+    public ArrayList<SimPathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle){
         getBestPathResults(roadNetwork, originNode, destinyNode, vehicle);
         calculatePathParcelList();
         return m_pathParcelList;
@@ -133,7 +133,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
             
             time += lenght * 3600 / travelSpeed;
             if (m_pathParcelList!=null) {
-                PathParcel pp = new PathParcel();
+                SimPathParcel pp = new SimPathParcel();
                 
                 if (section.getDirection().equals(SectionDirection.unidirectional)) {
                     pp.setDirection(SimDirection.direct);

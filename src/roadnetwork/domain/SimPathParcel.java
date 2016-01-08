@@ -9,7 +9,7 @@ package roadnetwork.domain;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class PathParcel {
+public class SimPathParcel {
     
     private Section m_section;
     private Segment m_segment;
