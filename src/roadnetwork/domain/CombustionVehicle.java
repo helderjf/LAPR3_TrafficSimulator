@@ -151,7 +151,10 @@ public class CombustionVehicle extends Vehicle implements Combustion {
         
             for(Throttle throttle : throttleList)
             {
-
+                for(Regime regime : throttle.getRegimeList())
+                {
+                    
+                }
             }
             
         }
