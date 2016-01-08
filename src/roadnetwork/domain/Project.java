@@ -181,6 +181,19 @@ public class Project {
         }
         return false;
     }
+    
+    public boolean canImportVehicles() {
+        return m_state.canImportVehicles();
+    }
+
+    public boolean createVehicleList(ArrayList<Vehicle> vehicleList) {
+        m_vehicleList = vehicleList;
+        
+        if( !vehicleList.isEmpty()){
+            return m_state.vehiclesAssigned();
+        }
+        return false;
+    }
 
     public Simulation getCurrentSimulation() {
         return m_activeSimulation;

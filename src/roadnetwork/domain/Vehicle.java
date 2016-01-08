@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class Vehicle {
+public abstract class Vehicle {
 
     private int m_pk;
     private String name;
@@ -346,6 +346,9 @@ public class Vehicle {
     public void setFrontalArea(double frontalArea) {
         this.frontalArea = frontalArea;
     }
+    
+    public abstract EngineEfficiency getEngineEfficiency();
+
 
     /**
      *

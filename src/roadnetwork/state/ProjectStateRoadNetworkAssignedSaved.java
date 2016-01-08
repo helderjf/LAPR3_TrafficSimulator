@@ -16,6 +16,11 @@ public class ProjectStateRoadNetworkAssignedSaved extends ProjectStateImpl {
     public ProjectStateRoadNetworkAssignedSaved(Project p) {
         super(p);
     }
+    
+    @Override
+    public boolean canImportVehicles(){
+        return true;
+    }
 
     @Override
     public boolean isSaved() {
@@ -31,6 +36,13 @@ public class ProjectStateRoadNetworkAssignedSaved extends ProjectStateImpl {
     public boolean propertiesChanged() {
         ProjectState ns = new ProjectStateRoadNetworkAssigned(m_project);
         return m_project.setState(ns);
+    }
+    
+    @Override
+    public boolean vehiclesAssigned(){
+        ProjectState ns = new ProjectStateSimulationReady(m_project);
+        m_project.setState(ns);
+        return true;
     }
 
 }

@@ -34,5 +34,5 @@ public interface Import {
      * import vehicles from an xml file
      * @return ArrayList of vehicles
      */
-    public ArrayList<Vehicle> importVehicle();
+    public ArrayList<Vehicle> importVehicles();
 }

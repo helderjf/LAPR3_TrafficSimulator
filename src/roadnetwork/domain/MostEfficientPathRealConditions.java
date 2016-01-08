@@ -9,6 +9,7 @@ import graphutils.Graph;
 import graphutils.GraphAlgorithms;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 /**
  *
@@ -27,6 +28,10 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     ArrayList<Double> m_sectionEnergyConsumption;
     ArrayList<Double> m_sectionTime;
     ArrayList<Double> m_sectionTollCosts;
+    ArrayList<PathParcel> m_pathParcelList;
+    
+    private final double gravity = 9.81; // m^2
+    private final double densityOfAir = 1.225; // kg/m3
     ArrayList<SimPathParcel> m_pathParcelList;
     
     @Override
@@ -75,9 +80,39 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     }
     
     private double calculateSectionEnergyConsumption(Section section) {
-        //TODO
+        
+        ArrayList<Segment> segmentList = section.getSegmentsList();
+        
+        double vehicleVelocity;
+        double relativeVelocityWindInfluence;
+        double gravitationalForce;
+        double workCalculation = 0;
+        
+        if(m_vehicle instanceof CombustionVehicle)
+        {
+            CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
+            
+            HashMap<Integer,Double> gearList = combustionVehicle.getGearList();
+            int lastGear = gearList.size();
+
+            
+            for (Segment segment : segmentList) 
+            {
+                for(int gear = lastGear; gear > 0; gear++)
+                {
+                    
+                }
+            }
+            
+            
+        }
+        
+
+
         return 0;
+
     }
+       
     
     private void calculateSectionsEnergyConsumption(){
         m_sectionEnergyConsumption = new ArrayList<>();
@@ -86,6 +121,146 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
         }
     }
     
+    ///////////////////****Physics Formulas ***********//////
+    
+    
+    private double vehicleForce(int gearIndex, Throttle throttle, Regime regime, Section section, Segment segment, double relativeVelocityWindInfluence)
+    {
+        
+        ArrayList<Throttle> throttleList = null;
+        ArrayList<Regime> regimeList = null;
+        
+        Throttle actualThrottle = null;
+        Regime actualRegime = null;
+        
+        for(Throttle t : throttleList)
+        {
+            if(t.equals(throttle))
+            {
+                actualThrottle = t;
+            }
+        }
+        
+        for(Regime r : regimeList)
+        {
+            if(r.equals(regime))
+            {
+                actualRegime = r;
+            }
+        }
+        
+        double vehicleForce = 0;
+        
+        if(m_vehicle instanceof CombustionVehicle)
+        {
+            CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
+            
+                       
+            HashMap<Integer,Double> actuaGearList = combustionVehicle.getGearList();
+           
+            double torque = actualRegime.getTorque();
+            double finalDriveRatio = m_vehicle.getFinalDriveRatio();
+            double gearRatio = actuaGearList.get(gearIndex);
+            double radiusTire = m_vehicle.getRadiusOfTire();
+           
+            vehicleForce = (torque * finalDriveRatio * gearRatio) / radiusTire;
+  
+        }
+        
+        return vehicleForce;
+    }
+    
+
+    private double resistanceForces(Section section, Segment segment, double relativeVelocityWindInfluence)
+    {
+        
+        ArrayList<Double> actuaGearList = null;
+        
+        double rrc = m_vehicle.getRcc();
+        double mass = m_vehicle.getMass();
+        double dragCoefficient = m_vehicle.getDragCoefficient();
+        double frontalArea = m_vehicle.getFrontalArea();
+        
+        double gravitationalForcePart1 = rrc * mass * gravity * Math.cos(segment.getSlope());
+        double gravitationalForcePart2 = 0.5 * dragCoefficient * frontalArea * densityOfAir * Math.pow(relativeVelocityWindInfluence, 2);
+        double gravitationalForcePart3 = mass * gravity * Math.sin(segment.getSlope());
+        
+        double gravitationalForce = gravitationalForcePart1 + gravitationalForcePart2 + gravitationalForcePart3;
+        
+        return gravitationalForce;
+    }
+    
+    
+    //The vehicle will travel at the maximum speed allowed in the road or for the vehicle
+    private double vehicleVelocity(int gearIndex, Regime regime, Section section, Segment segment) {
+
+        double mediaRPM = (regime.getRPMHigh() + regime.getRPMLow()) / 2;
+        
+        double vehicleVelocity = 0;
+        
+        if(m_vehicle instanceof CombustionVehicle)
+        {
+            CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
+            
+            HashMap<Integer,Double> actuaGearList = combustionVehicle.getGearList();
+
+            double gearRatio = actuaGearList.get(gearIndex);
+            
+            vehicleVelocity = (2 * Math.PI * mediaRPM) / (60 * m_vehicle.getFinalDriveRatio() * gearRatio);
+
+        }
+ 
+        return vehicleVelocity;
+
+    }
+    
+    //Influence of Wind Velocity
+    private double relativeVelocityWindInfluence(Section section, double vehicleVelocity)
+    {
+        Wind w = section.getWind();
+        double windSpeed = w.getVelocity();
+        double windAngle = w.getAngle();
+        
+        return vehicleVelocity + windSpeed * Math.cos(windAngle);      
+    }
+    
+    private double powerCalculation(int gearIndex, Throttle throttle, Regime regime)
+    {
+        ArrayList<Throttle> throttleList = null;
+        ArrayList<Regime> regimeList = null;
+        
+        Throttle actualThrottle = null;
+        Regime actualRegime = null;
+        
+        for(Throttle t : throttleList)
+        {
+            if(t.equals(throttle))
+            {
+                actualThrottle = t;
+            }
+        }
+        
+        for(Regime r : regimeList)
+        {
+            if(r.equals(regime))
+            {
+                actualRegime = r;
+            }
+        }
+        
+        double torque = actualRegime.getTorque();
+        
+        double mediaRPM = (regime.getRPMHigh() + regime.getRPMLow()) / 2;
+        
+        double power = 2 * Math.PI * torque * (mediaRPM / 60);
+        
+        return power;
+    }
+
+    /////*******//////
+    
+
+
     private void calculateSectionTime(){
         m_sectionTime=new ArrayList<>();
         

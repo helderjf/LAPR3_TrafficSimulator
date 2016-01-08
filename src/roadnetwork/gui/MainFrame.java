@@ -5,11 +5,9 @@
  */
 package roadnetwork.gui;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-import roadnetwork.controllers.ImportRoadNetworkController;
 import roadnetwork.controllers.SaveProjectController;
 import roadnetwork.domain.CombustionVehicle;
 import roadnetwork.domain.Junction;
@@ -421,11 +419,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         HashMap <SectionTypology,Double>velocityLimit = new HashMap();
         velocityLimit.put(SectionTypology.highway, 60d);
-        ArrayList<Double> gearList = new ArrayList();
-        gearList.add(3.5);
-        gearList.add(2.5);
-        gearList.add(1.25);
-        gearList.add(0.9);
+        HashMap<Integer,Double> gearList = new HashMap<>();
+        gearList.put(1,3.5);
+        gearList.put(2,2.5);
+        gearList.put(3,1.25);
+        gearList.put(4,0.9);
 
         Regime r1 = new Regime(85, 1000, 2499, 8.2);
         Regime r2 = new Regime(95, 2500, 3999, 6.2);
