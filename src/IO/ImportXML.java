@@ -8,6 +8,7 @@ package IO;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.*;
@@ -248,12 +249,12 @@ public class ImportXML implements Import {
         String finalDriveRation = energy.getElementsByTagName("final_drive_ratio").item(0).getNodeValue();
         
         Element domGearList = (Element)domElementVehicle.getElementsByTagName("gear_list").item(0);
-        ArrayList<Double> gearList = new ArrayList();
+        HashMap<Integer, Double> gearList = new HashMap<>();
         for (int i = 0; i < domGearList.getChildNodes().getLength(); i++) {
             Element domGear = (Element) domGearList.getChildNodes().item(i);
-            //int gearId = Integer.parseInt(domGear.getAttribute("id"));
+            int gearId = Integer.parseInt(domGear.getAttribute("id"));
             double ratio = Double.parseDouble(domGear.getFirstChild().getNodeValue());
-            gearList.add(ratio);
+            gearList.put(gearId, ratio);
         }
         Element domThrottleList = (Element)domElementVehicle.getElementsByTagName("throttle_list").item(0);
         ArrayList<Throttle> throttleList = new ArrayList();
