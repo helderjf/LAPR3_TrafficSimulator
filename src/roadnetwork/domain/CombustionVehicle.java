@@ -16,7 +16,7 @@ import java.util.Objects;
 public class CombustionVehicle extends Vehicle implements Combustion {
 
     private String fuel;
-    private ArrayList<Double> gearList;
+    private HashMap<Integer,Double> gearList;
     private ArrayList<Throttle> throttleList;
 
     /**
@@ -41,7 +41,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
     public CombustionVehicle(String name, String description, double mass, String type, double load,
             double drag_Coefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit,
             double minRPM, double maxRPM,
-            double finalDriveRatio, String fuel, ArrayList<Double> gearList, ArrayList<Throttle> throttleList) {
+            double finalDriveRatio, String fuel, HashMap<Integer,Double> gearList, ArrayList<Throttle> throttleList) {
         super(name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
                 minRPM, maxRPM, finalDriveRatio);
         this.fuel = fuel;
@@ -65,7 +65,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
             double maxRPM,
             double finalDriveRatio,
             String fuel,
-            ArrayList<Double> gearList,
+            HashMap<Integer,Double> gearList,
             ArrayList<Throttle> throttleList) {
 
         super(pk, name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
@@ -99,7 +99,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
      *
      * @return gearList
      */
-    public ArrayList<Double> getGearList() {
+    public HashMap<Integer,Double> getGearList() {
         return gearList;
     }
 
@@ -107,7 +107,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
      *
      * @param gearList
      */
-    public void setGearList(ArrayList<Double> gearList) {
+    public void setGearList(HashMap<Integer,Double> gearList) {
         this.gearList = gearList;
     }
 

@@ -8,6 +8,7 @@ package IO;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.*;
@@ -97,8 +98,7 @@ public class ImportXML implements Import {
         
         for (int i = 0; i < sectionList.getLength(); i++) {
             Node childNode = sectionList.item(i);
-            Section section  = getSection(childNode);
-            list.add(section);
+            list.add(getSection(childNode));
         }
         return list;
     }
@@ -145,8 +145,7 @@ public class ImportXML implements Import {
         ArrayList<Segment> segmentList = new ArrayList();
         for (int i = 0; i < domSegmentList.getLength(); i++) {
             Node segmentNode = domSegmentList.item(i);
-            Segment segment = getSegment(segmentNode);
-            segmentList.add(segment);
+            segmentList.add(getSegment(segmentNode));
         }
         section.setSegmentsList(segmentList);
         return section;
@@ -193,8 +192,7 @@ public class ImportXML implements Import {
         for (int i = 0; i < domVehicleList.getChildNodes().getLength(); i++) {
             
             Node nodeChild = domVehicleList.getChildNodes().item(i);
-            Vehicle vehicle = getVehicle(nodeChild);
-            list.add(vehicle);
+            list.add(getVehicle(nodeChild));
         }
         return list;
     }
@@ -248,12 +246,12 @@ public class ImportXML implements Import {
         String finalDriveRation = energy.getElementsByTagName("final_drive_ratio").item(0).getNodeValue();
         
         Element domGearList = (Element)domElementVehicle.getElementsByTagName("gear_list").item(0);
-        ArrayList<Double> gearList = new ArrayList();
+        HashMap<Integer, Double> gearList = new HashMap<>();
         for (int i = 0; i < domGearList.getChildNodes().getLength(); i++) {
             Element domGear = (Element) domGearList.getChildNodes().item(i);
-            //int gearId = Integer.parseInt(domGear.getAttribute("id"));
+            int gearId = Integer.parseInt(domGear.getAttribute("id"));
             double ratio = Double.parseDouble(domGear.getFirstChild().getNodeValue());
-            gearList.add(ratio);
+            gearList.put(gearId, ratio);
         }
         Element domThrottleList = (Element)domElementVehicle.getElementsByTagName("throttle_list").item(0);
         ArrayList<Throttle> throttleList = new ArrayList();
