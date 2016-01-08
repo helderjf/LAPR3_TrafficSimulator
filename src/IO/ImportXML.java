@@ -98,8 +98,7 @@ public class ImportXML implements Import {
         
         for (int i = 0; i < sectionList.getLength(); i++) {
             Node childNode = sectionList.item(i);
-            Section section  = getSection(childNode);
-            list.add(section);
+            list.add(getSection(childNode));
         }
         return list;
     }
@@ -146,8 +145,7 @@ public class ImportXML implements Import {
         ArrayList<Segment> segmentList = new ArrayList();
         for (int i = 0; i < domSegmentList.getLength(); i++) {
             Node segmentNode = domSegmentList.item(i);
-            Segment segment = getSegment(segmentNode);
-            segmentList.add(segment);
+            segmentList.add(getSegment(segmentNode));
         }
         section.setSegmentsList(segmentList);
         return section;
@@ -194,8 +192,7 @@ public class ImportXML implements Import {
         for (int i = 0; i < domVehicleList.getChildNodes().getLength(); i++) {
             
             Node nodeChild = domVehicleList.getChildNodes().item(i);
-            Vehicle vehicle = getVehicle(nodeChild);
-            list.add(vehicle);
+            list.add(getVehicle(nodeChild));
         }
         return list;
     }
