@@ -17,8 +17,8 @@ public class RoadNetwork {
     private int m_PK;
     private String m_name;
     private String m_description;
-    private List<Junction> m_nodeList;
-    private List<Section> m_sectionList;
+    private ArrayList<Junction> m_nodeList;
+    private ArrayList<Section> m_sectionList;
 
     /**
      *
@@ -50,7 +50,7 @@ public class RoadNetwork {
      *
      * @return
      */
-    public List<Junction> getNodeList() {
+    public ArrayList<Junction> getNodeList() {
         return m_nodeList;
     }
 
@@ -58,7 +58,7 @@ public class RoadNetwork {
      *
      * @return
      */
-    public List<Section> getSectionList() {
+    public ArrayList<Section> getSectionList() {
         return m_sectionList;
     }
 
