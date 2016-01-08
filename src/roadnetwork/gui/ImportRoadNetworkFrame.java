@@ -6,6 +6,7 @@
 package roadnetwork.gui;
 
 import java.io.File;
+import javax.swing.JOptionPane;
 import roadnetwork.controllers.ImportRoadNetworkController;
 
 /**
@@ -13,26 +14,21 @@ import roadnetwork.controllers.ImportRoadNetworkController;
  * @author Tiago
  */
 public class ImportRoadNetworkFrame extends javax.swing.JFrame {
+
     MainFrame m_mainFrame;
     ImportRoadNetworkController m_importRNController;
 
-    /**
-     * Creates new form importRoadVehiclesFrame
-     */
-    public ImportRoadNetworkFrame() {
-        initComponents();
-    }
-
     ImportRoadNetworkFrame(MainFrame frame) {
-        m_mainFrame=frame;
+        m_mainFrame = frame;
         m_importRNController = new ImportRoadNetworkController(m_mainFrame.getManager());
-        if(m_importRNController.canImportRoadNetwork()){
-            //
+        if (m_importRNController.canImportRoadNetwork()) {
+            initComponents();
+            setContentPane(new ImportRoadNetworkPane(this));
+            setLocationRelativeTo(null);
+            setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Error: Road Network file already imported!", "Error: Import Road Network", JOptionPane.ERROR);
         }
-        initComponents();
-        setContentPane(new ImportRoadNetworkPane(this));
-        setLocationRelativeTo(null);
-        setVisible(true);
     }
 
     /**
@@ -61,8 +57,12 @@ public class ImportRoadNetworkFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    void importRoadNetwork(File file){
-        boolean bool = m_importRNController.importRoadNetwork(file);
+    void importRoadNetwork(File file) {
+        if(m_importRNController.importRoadNetwork(file)){
+            JOptionPane.showMessageDialog(this, "File succefully imported!", "Import Road Network", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, "Error: Road Network file not imported. Please try with a correct file!", "Error: Import Road Network", JOptionPane.ERROR);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

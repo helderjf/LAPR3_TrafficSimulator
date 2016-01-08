@@ -182,7 +182,7 @@ public class ImportXML implements Import {
     
     
     @Override
-    public ArrayList<Vehicle> importVehicle()
+    public ArrayList<Vehicle> importVehicles()
     {
         ArrayList<Vehicle> list = new ArrayList();
         

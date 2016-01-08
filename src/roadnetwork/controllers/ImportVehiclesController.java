@@ -5,10 +5,33 @@
  */
 package roadnetwork.controllers;
 
+import IO.ImportXML;
+import java.io.File;
+import java.util.ArrayList;
+import roadnetwork.domain.Manager;
+import roadnetwork.domain.Vehicle;
+
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public class ImportVehiclesController {
+    private Manager m_manager;
+
+    public ImportVehiclesController(Manager manager) {
+        m_manager = manager;
+    }
+
+    public boolean canImportVehicles() {
+        return m_manager.getCurrentProject().canImportVehicles();
+    }
+
+    public boolean importVehicles(File file) {
+        ImportXML importXML = new ImportXML(file);
+        
+        ArrayList<Vehicle> vehicleList = importXML.importVehicles();
+        
+        return m_manager.getCurrentProject().createVehicleList(vehicleList);
+    }
     
 }

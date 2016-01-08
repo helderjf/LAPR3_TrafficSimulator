@@ -5,11 +5,9 @@
  */
 package roadnetwork.gui;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-import roadnetwork.controllers.ImportRoadNetworkController;
 import roadnetwork.controllers.SaveProjectController;
 import roadnetwork.domain.CombustionVehicle;
 import roadnetwork.domain.Junction;
