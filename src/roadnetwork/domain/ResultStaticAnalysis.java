@@ -15,7 +15,7 @@ public class ResultStaticAnalysis implements Result {
 
     private Junction m_originNode;
     private Junction m_destinyNode;
-    private ArrayList<Section> m_path;
+    private ArrayList<PathParcel> m_path;
     private double m_length;
     private ArrayList<Double> m_sectionTravelTime;
     private ArrayList<Junction> m_pathNodes;
@@ -31,7 +31,7 @@ public class ResultStaticAnalysis implements Result {
     /**
      * @return the m_path
      */
-    public ArrayList<Section> getPath() {
+    public ArrayList<PathParcel> getPath() {
         return m_path;
     }
 
@@ -74,10 +74,10 @@ public class ResultStaticAnalysis implements Result {
     }
 
     /**
-     * @param m_path the m_path to set
+     * @param path the m_path to set
      */
-    public void setPath(ArrayList<Section> m_path) {
-        this.m_path = m_path;
+    public void setPath(ArrayList<PathParcel> path) {
+        this.m_path = path;
     }
 
     /**
@@ -123,14 +123,14 @@ public class ResultStaticAnalysis implements Result {
         results.append("#Vehicle: ");
         results.append(m_vehicle.getName());
         results.append("#\n");
-        for(Section it : m_path){
+        for(PathParcel it : m_path){
             int i = m_path.indexOf(it);
             
             results.append(m_pathNodes.get(i).toString());
             results.append(" ---> ");
             results.append(m_pathNodes.get(i+1).toString());
             results.append("  @  ");
-            results.append(it.getRoadName());
+            results.append(it.getSection().getRoadName());
             results.append(" Travel time: ");
             
             results.append(m_sectionTravelTime.get(i)/60);

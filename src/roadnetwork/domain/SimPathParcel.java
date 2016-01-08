@@ -7,55 +7,74 @@ package roadnetwork.domain;
 
 /**
  *
- * @author josemiranda
+ * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class StaticPathParcel implements PathParcel{
+public class SimPathParcel {
     
     private Section m_section;
+    private Segment m_segment;
     private SimDirection m_direction;
-    
-    public StaticPathParcel(Section section){
-        m_section=section;
-    }
-    
-    public StaticPathParcel(Section section, SimDirection direction){
-        m_section=section;
-        m_direction=direction;
-    }
+    private Double m_theoreticalExitTime;
+
     /**
      * @return the m_section
      */
-    @Override
     public Section getSection() {
         return m_section;
     }
-    
+
+    /**
+     * @return the m_segment
+     */
+    public Segment getSegment() {
+        return m_segment;
+    }
+
     /**
      * @return the m_direction
      */
-    @Override
     public SimDirection getDirection() {
         return m_direction;
     }
-    
+
+    /**
+     * @return the m_theoreticalExitTime
+     */
+    public Double getTheoreticalExitTime() {
+        return m_theoreticalExitTime;
+    }
+
     /**
      * @param m_section the m_section to set
      */
     public void setSection(Section m_section) {
         this.m_section = m_section;
     }
-    
+
+    /**
+     * @param m_segment the m_segment to set
+     */
+    public void setSegment(Segment m_segment) {
+        this.m_segment = m_segment;
+    }
+
     /**
      * @param m_direction the m_direction to set
      */
-    @Override
     public void setDirection(SimDirection m_direction) {
         this.m_direction = m_direction;
     }
 
-    @Override
-    public PathParcel createReversePP() {
-        return new StaticPathParcel(this.getSection());
+    /**
+     * @param m_exitTime the m_theoreticalExitTime to set
+     */
+    public void setTheoreticalExitTime(Double m_exitTime) {
+        this.m_theoreticalExitTime = m_exitTime;
     }
     
+    
+    
+    
+    
+ 
 }
