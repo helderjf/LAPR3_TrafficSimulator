@@ -86,57 +86,48 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     }
     
     private double calculateSectionEnergyConsumption(PathParcel pathParcel) {
-        
+
         ArrayList<Segment> segmentList = pathParcel.getSection().getSegmentsList();
-        
+
         double vehicleVelocity = 0;
         double relativeVelocityWindInfluence = 0;
         double resistanceForce = 0;
         double vehicleForce = 0;
-        double work = 0;
-        
-        if(m_vehicle instanceof CombustionVehicle)
-        {
-            CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
-              
-            List<EngineEfficiency> EngineEfficiencyList = new ArrayList<>();
-            
-            EngineEfficiency engineEfficiency = new EngineEfficiency();
-            
-            //vai percorrer todas as performances ordenadas de motor calculadas para cada Throttle Ratio e Gear Ratio
- 
-            for (Segment segment : segmentList) 
-            {
-                for(EngineEfficiency engineEfficiencyTemporary : EngineEfficiencyList)
-                {
+        double power = 0;
 
+        if (m_vehicle instanceof CombustionVehicle) {
+            CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
+
+            List<EngineEfficiency> engineEfficiencyList = combustionVehicle.getEngineEfficiency();
+
+            EngineEfficiency engineEfficiency = new EngineEfficiency();
+            boolean forceFlag = false;
+            //vai percorrer todas as performances ordenadas de motor calculadas para cada Throttle Ratio e Gear Ratio
+
+            for (Segment segment : segmentList) {
+                for (EngineEfficiency engineEfficiencyTemporary : engineEfficiencyList) {
                     vehicleVelocity = vehicleVelocity(engineEfficiencyTemporary);
                     relativeVelocityWindInfluence = relativeVelocityWindInfluence(pathParcel.getSection(), vehicleVelocity);
-                    resistanceForce = resistanceForces(segment,relativeVelocityWindInfluence); 
+                    resistanceForce = resistanceForces(segment, relativeVelocityWindInfluence);
                     vehicleForce = vehicleForces(engineEfficiencyTemporary);
 
                     //se verdadeiro o veiculo anda
-                    if(vehicleForce > resistanceForce)
-                    {
-                        engineEfficiency = engineEfficiencyTemporary;
-                    }
-                    else
-                    {
-                        // o veiculo não tem força suficiente...
+                    if (vehicleForce > resistanceForce) {
+                        forceFlag = true;
+                        engineEfficiency=engineEfficiencyTemporary;
+                        break;
                     }
                 }
-                
-                    vehicleVelocity = vehicleVelocity(engineEfficiency);
-                    relativeVelocityWindInfluence = relativeVelocityWindInfluence(pathParcel.getSection(), vehicleVelocity);
-                    resistanceForce = resistanceForces(segment,relativeVelocityWindInfluence); 
-                    vehicleForce = vehicleForces(engineEfficiency);
+                if (forceFlag = false) {
+                    power = Double.MAX_VALUE;
+                } else {
+                    power += segmentPowerCalculation(engineEfficiency)*3.6;
                     
-                    work += workCalculation(resistanceForce,segment);
+                }
             }
-                
         }
-
-        return work;
+        
+        return power;
     }
        
     
@@ -229,7 +220,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
         return resistanceForce * segment.getLenght();
     }
     
-    private double powerCalculation(EngineEfficiency engineEfficiency)
+    private double segmentPowerCalculation(EngineEfficiency engineEfficiency)
     {
 
         double torque = engineEfficiency.getTorque();
@@ -315,7 +306,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     private ResultStaticAnalysis constructResults() {
         
         ResultStaticAnalysis simResult = new ResultStaticAnalysis(m_originNode, m_destinyNode);
-        //simResult.setPath(m_bestPath);
+        simResult.setPath(m_bestPath);
         simResult.setLength(m_bestPathLength);
         simResult.setSectionTravelTime(m_sectionTime);
         simResult.setPathNodes(m_bestPathNodes);
