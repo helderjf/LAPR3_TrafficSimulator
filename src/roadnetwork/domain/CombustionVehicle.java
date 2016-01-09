@@ -150,7 +150,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
     @Override
     public List<EngineEfficiency> getEngineEfficiency() {
         
-        EngineEfficiency engineEfficiency = new EngineEfficiency();
+        //EngineEfficiency engineEfficiency = new EngineEfficiency();
         ArrayList<EngineEfficiency> engineEfficiencyList = new ArrayList<>();
         
         
@@ -161,6 +161,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
             {
                 for(Regime regime : throttle.getRegimeList())
                 {
+                    EngineEfficiency engineEfficiency = new EngineEfficiency();
                     engineEfficiency.setGear(key_idGear);
                     engineEfficiency.setGearRatio(gearList.get(key_idGear));
                     engineEfficiency.setThrottleRatio(throttle.getID());
@@ -170,9 +171,8 @@ public class CombustionVehicle extends Vehicle implements Combustion {
                     engineEfficiency.setM_rpmHigh(regime.getRPMHigh());
                       
                     engineEfficiency.setResult(gearList.get(key_idGear)*regime.getTorque());
-                           
-                }
-                engineEfficiencyList.add(engineEfficiency);
+                    engineEfficiencyList.add(engineEfficiency);
+                }           
             }     
         }
         
