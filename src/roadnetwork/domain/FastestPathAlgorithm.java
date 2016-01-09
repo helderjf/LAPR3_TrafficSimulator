@@ -184,7 +184,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
                 }
                 pp.setSection(section);
                 pp.setSegment(it);
-                pp.setTheoreticalExitTime(lenght * 3600 / travelSpeed);
+                pp.setTheoreticalTravelTime(lenght * 3600 / travelSpeed);
                 m_simPathParcelList.add(pp);
             }
             

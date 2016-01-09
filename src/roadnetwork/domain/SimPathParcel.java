@@ -17,6 +17,8 @@ public class SimPathParcel implements PathParcel{
     private double m_theoreticalTravelTime;
     private double m_simInTime;
     private double m_simExitTime;
+    private double m_theoreticalEnergyConsumption;
+    private double m_tollCosts;
 
     public SimPathParcel(Section section){
         m_section=section;
@@ -26,6 +28,7 @@ public class SimPathParcel implements PathParcel{
     /**
      * @return the m_section
      */
+    @Override
     public Section getSection() {
         return m_section;
     }
@@ -40,6 +43,7 @@ public class SimPathParcel implements PathParcel{
     /**
      * @return the m_direction
      */
+    @Override
     public SimDirection getDirection() {
         return m_direction;
     }
@@ -47,7 +51,8 @@ public class SimPathParcel implements PathParcel{
     /**
      * @return the m_theoreticalTravelTime
      */
-    public Double getTheoreticalTravelTime() {
+    @Override
+    public double getTheoreticalTravelTime() {
         return m_theoreticalTravelTime;
     }
 
@@ -68,6 +73,7 @@ public class SimPathParcel implements PathParcel{
     /**
      * @param m_direction the m_direction to set
      */
+    @Override
     public void setDirection(SimDirection m_direction) {
         this.m_direction = m_direction;
     }
@@ -75,7 +81,8 @@ public class SimPathParcel implements PathParcel{
       /**
      * @param time
      */
-    public void setTheoreticalExitTime(double time) {
+    @Override
+    public void setTheoreticalTravelTime(double time) {
         this.m_theoreticalTravelTime = time;
     }
 
@@ -94,6 +101,26 @@ public class SimPathParcel implements PathParcel{
     @Override
     public PathParcel createReversePP() {
         return new SimPathParcel(this.getSection());
+    }
+
+    @Override
+    public double getTheoreticalEnergyConsumption() {
+        return m_theoreticalEnergyConsumption;
+    }
+
+    @Override
+    public void setTheoreticalEnergyConsumption(double energyConsumption) {
+        m_theoreticalEnergyConsumption=energyConsumption;
+    }
+
+    @Override
+    public double getTollCosts() {
+        return m_tollCosts;
+    }
+
+    @Override
+    public void setTollCosts(double tollCosts) {
+        m_tollCosts=tollCosts;
     }
     
     
