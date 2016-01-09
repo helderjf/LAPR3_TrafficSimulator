@@ -247,6 +247,8 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
             }
         }
         
+        
+        
         double torque = actualRegime.getTorque();
         
         double mediaRPM = (regime.getRPMHigh() + regime.getRPMLow()) / 2;
@@ -306,23 +308,23 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
             }
             
             time += lenght * 3600 / travelSpeed;
-            if (m_pathParcelList!=null) {
-                SimPathParcel pp = new SimPathParcel();
-                
-                if (section.getDirection().equals(SectionDirection.unidirectional)) {
-                    pp.setDirection(SimDirection.direct);
-                } else{
-                    if (m_originNode.equals(m_fastestPath.get(0).getBeginningNode())) {
-                        pp.setDirection(SimDirection.direct);
-                    } else{
-                        pp.setDirection(SimDirection.reverse);
-                    }
-                }
-                pp.setSection(section);
-                pp.setSegment(it);
-                pp.setTheoreticalExitTime(lenght * 3600 / travelSpeed);
-                m_pathParcelList.add(pp);
-            }
+//            if (m_pathParcelList!=null) {
+//                SimPathParcel pp = new SimPathParcel();
+//                
+//                if (section.getDirection().equals(SectionDirection.unidirectional)) {
+//                    pp.setDirection(SimDirection.direct);
+//                } else{
+//                    if (m_originNode.equals(m_fastestPath.get(0).getBeginningNode())) {
+//                        pp.setDirection(SimDirection.direct);
+//                    } else{
+//                        pp.setDirection(SimDirection.reverse);
+//                    }
+//                }
+//                pp.setSection(section);
+//                pp.setSegment(it);
+//                pp.setTheoreticalExitTime(lenght * 3600 / travelSpeed);
+//                m_pathParcelList.add(pp);
+//            }
             
         }
     }
@@ -330,7 +332,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     private ResultStaticAnalysis constructResults() {
         
         ResultStaticAnalysis simResult = new ResultStaticAnalysis(m_originNode, m_destinyNode);
-        simResult.setPath(m_fastestPath);
+        //simResult.setPath(m_fastestPath);
         simResult.setLength(m_fastestPathLength);
         simResult.setSectionTravelTime(m_sectionTime);
         simResult.setPathNodes(m_fastestPathNodes);

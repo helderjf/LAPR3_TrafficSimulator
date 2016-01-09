@@ -8,6 +8,7 @@ package IO;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import roadnetwork.domain.PathParcel;
 import roadnetwork.domain.Section;
 import roadnetwork.domain.ResultStaticAnalysis;
 
@@ -39,12 +40,12 @@ public class ExportCSV {
             file.append(';');
             file.append("\n");
             int index = 0;
-            for (Section section : result.getPath()) {
-                file.append(section.getRoadName());
+            for (PathParcel pp : result.getPath()) {
+                file.append(pp.getSection().getRoadName());
                 file.append(';');
-                file.append(section.getBeginningNode().getJunctionId());
+                file.append(pp.getSection().getBeginningNode().getJunctionId());
                 file.append(';');
-                file.append(section.getEndingNode().getJunctionId());
+                file.append(pp.getSection().getEndingNode().getJunctionId());
                 file.append(';');
                 Double time = result.getSectionWeight().get(index)/60;
                 file.append(time.toString());

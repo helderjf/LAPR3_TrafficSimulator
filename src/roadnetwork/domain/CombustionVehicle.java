@@ -162,8 +162,15 @@ public class CombustionVehicle extends Vehicle implements Combustion {
                 for(Regime regime : throttle.getRegimeList())
                 {
                     engineEfficiency.setGear(key_idGear);
+                    engineEfficiency.setGearRatio(gearList.get(key_idGear));
                     engineEfficiency.setThrottleRatio(throttle.getID());
-                    engineEfficiency.setResult(gearList.get(key_idGear)*regime.getTorque());                 
+                    engineEfficiency.setTorque(regime.getTorque());
+                    engineEfficiency.setM_sfc(regime.getSfc());
+                    engineEfficiency.setM_rpmLow(regime.getRPMLow());
+                    engineEfficiency.setM_rpmHigh(regime.getRPMHigh());
+                      
+                    engineEfficiency.setResult(gearList.get(key_idGear)*regime.getTorque());
+                           
                 }
                 engineEfficiencyList.add(engineEfficiency);
             }     

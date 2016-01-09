@@ -7,45 +7,43 @@ package roadnetwork.domain;
 
 /**
  *
- * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
+ * @author josemiranda
  */
-public class SimPathParcel implements PathParcel{
+public class StaticPathParcel implements PathParcel{
     
     private Section m_section;
-    private Segment m_segment;
     private SimDirection m_direction;
+    
+    public StaticPathParcel(Section section){
+        m_section=section;
+    }
+    
+    public StaticPathParcel(Section section, SimDirection direction){
+        m_section=section;
+        m_direction=direction;
+    }
     private double m_theoreticalTravelTime;
     private double m_simInTime;
     private double m_simExitTime;
 
-    public SimPathParcel(Section section){
-        m_section=section;
-    }
-    
-    
     /**
      * @return the m_section
      */
+    @Override
     public Section getSection() {
         return m_section;
     }
-
-    /**
-     * @return the m_segment
-     */
-    public Segment getSegment() {
-        return m_segment;
-    }
-
+    
     /**
      * @return the m_direction
      */
+    @Override
     public SimDirection getDirection() {
         return m_direction;
     }
 
     /**
-     * @return the m_theoreticalTravelTime
+     * @return the m_theoreticalExitTime
      */
     public Double getTheoreticalTravelTime() {
         return m_theoreticalTravelTime;
@@ -57,48 +55,19 @@ public class SimPathParcel implements PathParcel{
     public void setSection(Section m_section) {
         this.m_section = m_section;
     }
-
-    /**
-     * @param m_segment the m_segment to set
-     */
-    public void setSegment(Segment m_segment) {
-        this.m_segment = m_segment;
-    }
-
+    
     /**
      * @param m_direction the m_direction to set
      */
+    @Override
     public void setDirection(SimDirection m_direction) {
         this.m_direction = m_direction;
     }
 
-      /**
-     * @param time
-     */
-    public void setTheoreticalExitTime(double time) {
-        this.m_theoreticalTravelTime = time;
-    }
-
-    double getSimInTime() {
-        return m_simInTime;
-    }
-
-    void setSimExitTime(double time) {
-        m_simExitTime=time;
-    }
-    
-    double getSimExitTime(){
-        return m_simExitTime;
-    }
-
     @Override
     public PathParcel createReversePP() {
-        return new SimPathParcel(this.getSection());
+        return new StaticPathParcel(this.getSection());
     }
+
     
-    
-    
-    
-    
- 
 }
