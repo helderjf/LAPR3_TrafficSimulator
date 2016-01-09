@@ -53,7 +53,6 @@ public class RunSimulationController {
         m_simulationRun = m_simulation.newSimulationRun(m_roadNetwork,runName,runDuration,runTimeStep,bpm);
         m_simulationRun.start();
         
-        
     }
     
     
