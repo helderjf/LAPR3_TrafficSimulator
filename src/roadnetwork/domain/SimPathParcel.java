@@ -9,8 +9,8 @@ package roadnetwork.domain;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class SimPathParcel implements PathParcel{
-    
+public class SimPathParcel implements PathParcel {
+
     private Section m_section;
     private Segment m_segment;
     private SimDirection m_direction;
@@ -20,11 +20,10 @@ public class SimPathParcel implements PathParcel{
     private double m_theoreticalEnergyConsumption;
     private double m_tollCosts;
 
-    public SimPathParcel(Section section){
-        m_section=section;
+    public SimPathParcel(Section section) {
+        m_section = section;
     }
-    
-    
+
     /**
      * @return the m_section
      */
@@ -78,7 +77,7 @@ public class SimPathParcel implements PathParcel{
         this.m_direction = m_direction;
     }
 
-      /**
+    /**
      * @param time
      */
     @Override
@@ -91,11 +90,15 @@ public class SimPathParcel implements PathParcel{
     }
 
     void setSimExitTime(double time) {
-        m_simExitTime=time;
+        m_simExitTime = time;
     }
-    
-    double getSimExitTime(){
+
+    double getSimExitTime() {
         return m_simExitTime;
+    }
+
+    void setSimInTime(double time) {
+        m_simInTime = time;
     }
 
     @Override
@@ -110,7 +113,7 @@ public class SimPathParcel implements PathParcel{
 
     @Override
     public void setTheoreticalEnergyConsumption(double energyConsumption) {
-        m_theoreticalEnergyConsumption=energyConsumption;
+        m_theoreticalEnergyConsumption = energyConsumption;
     }
 
     @Override
@@ -120,12 +123,7 @@ public class SimPathParcel implements PathParcel{
 
     @Override
     public void setTollCosts(double tollCosts) {
-        m_tollCosts=tollCosts;
+        m_tollCosts = tollCosts;
     }
-    
-    
-    
-    
-    
- 
+
 }

@@ -36,6 +36,33 @@ public class SimVehicle {
         
         return true;
     }
+    
+    double getWaitingTime(double currentTime){
+        return (currentTime-m_currentPos.getSimInTime()-m_currentPos.getTheoreticalTravelTime());
+    }
+    
+    public double getArrivalTime(){
+        return (m_currentPos.getSimInTime()+m_currentPos.getTheoreticalTravelTime());//TODO verificar se é mesmo isto (em princípio nao)
+    }
+
+    SimPathParcel getNextPos() {
+        return m_nextPos;
+    }
+
+    void crossToNextPos(double currentTime) {
+        m_currentPos.setSimExitTime(currentTime);
+        m_nextPos.setSimInTime(currentTime);
+        
+        
+        m_currentPos = m_nextPos;
+        if(m_path.indexOf(m_nextPos)==m_path.size()){
+            m_nextPos=null;
+        }else{
+            m_nextPos=m_path.get(m_path.indexOf(m_nextPos)+1);
+        }
+        
+        
+    }
 
 
 }
