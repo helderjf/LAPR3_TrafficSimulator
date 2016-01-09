@@ -12,7 +12,7 @@ package roadnetwork.domain;
 public class EngineEfficiency {
     
     private int gear;
-    private String throttleRacio;
+    private String throttleRatio;
     private double result;
     
 
@@ -24,12 +24,12 @@ public class EngineEfficiency {
         this.gear = gear;
     }
 
-    public String getThrottleRacio() {
-        return throttleRacio;
+    public String getThrottleRatio() {
+        return throttleRatio;
     }
 
-    public void setThrottleRacio(String throttleRacio) {
-        this.throttleRacio = throttleRacio;
+    public void setThrottleRatio(String throttleRatio) {
+        this.throttleRatio = throttleRatio;
     }
 
     public double getResult() {
