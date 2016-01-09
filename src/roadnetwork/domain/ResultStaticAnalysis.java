@@ -17,11 +17,9 @@ public class ResultStaticAnalysis implements Result {
     private Junction m_destinyNode;
     private ArrayList<PathParcel> m_path;
     private double m_length;
-    private ArrayList<Double> m_sectionTravelTime;
     private ArrayList<Junction> m_pathNodes;
     private Vehicle m_vehicle;
     private ArrayList<Double> m_sectionEnergyConsumption;
-    private ArrayList<Double> m_sectionTollCosts;
 
     public ResultStaticAnalysis(Junction origin, Junction destiny) {
         m_originNode = origin;
@@ -42,12 +40,6 @@ public class ResultStaticAnalysis implements Result {
         return m_length;
     }
 
-    /**
-     * @return the m_sectionTravelTime
-     */
-    public ArrayList<Double> getSectionWeight() {
-        return m_sectionTravelTime;
-    }
     
     public Junction getOriginNode() {
         return m_originNode;
@@ -69,10 +61,6 @@ public class ResultStaticAnalysis implements Result {
         return m_sectionEnergyConsumption;
     }
     
-    public ArrayList<Double> getTollCosts(){
-        return m_sectionTollCosts;
-    }
-
     /**
      * @param path the m_path to set
      */
@@ -99,18 +87,6 @@ public class ResultStaticAnalysis implements Result {
         m_sectionEnergyConsumption=energyConsumption;
     }
     
-    public void setTollCosts(ArrayList<Double> sectionTollCosts){
-        m_sectionTollCosts=sectionTollCosts;
-    }
-
-    /**
-     * @param sectionTravelTime the m_sectionTravelTime to set
-     */
-    public void setSectionTravelTime(ArrayList<Double> sectionTravelTime) {
-        this.m_sectionTravelTime = sectionTravelTime;
-    }
-
-
     @Override
     public String toString() {
         return "Fastest path between " + m_originNode.toString() + " and " + m_destinyNode.toString() + " is:\n"
@@ -133,11 +109,12 @@ public class ResultStaticAnalysis implements Result {
             results.append(it.getSection().getRoadName());
             results.append(" Travel time: ");
             
-            results.append(m_sectionTravelTime.get(i)/60);
-            results.append(" minutes");
+            results.append(it.getTheoreticalTravelTime()/60);
+            results.append(" minutes ");
             
-            results.append(" " + "(Toll: "+m_sectionTollCosts.get(i).toString() + ")");
-            results.append("\n");
+            results.append("(Toll: ");
+                   results.append(it.getTollCosts());
+            results.append(")\n");
         }
         return results.toString();
     }
