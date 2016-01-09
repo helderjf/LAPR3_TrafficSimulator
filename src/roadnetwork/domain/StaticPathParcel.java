@@ -13,6 +13,10 @@ public class StaticPathParcel implements PathParcel{
     
     private Section m_section;
     private SimDirection m_direction;
+    private double m_theoreticalTravelTime;
+    private double m_theoreticalEnergyConsumption;
+    private double m_tollCosts;
+    
     
     public StaticPathParcel(Section section){
         m_section=section;
@@ -22,9 +26,7 @@ public class StaticPathParcel implements PathParcel{
         m_section=section;
         m_direction=direction;
     }
-    private double m_theoreticalTravelTime;
-    private double m_simInTime;
-    private double m_simExitTime;
+    
 
     /**
      * @return the m_section
@@ -43,12 +45,27 @@ public class StaticPathParcel implements PathParcel{
     }
 
     /**
-     * @return the m_theoreticalExitTime
+     * @return the m_travelTime
      */
-    public Double getTheoreticalTravelTime() {
+    @Override
+    public double getTheoreticalTravelTime() {
         return m_theoreticalTravelTime;
     }
 
+    /**
+     * @return the m_energyConsumption
+     */
+    public double getTheoreticalEnergyConsumption() {
+        return m_theoreticalEnergyConsumption;
+    }
+
+    /**
+     * @return the m_tollCosts
+     */
+    public double getTollCosts() {
+        return m_tollCosts;
+    }
+    
     /**
      * @param m_section the m_section to set
      */
@@ -63,11 +80,32 @@ public class StaticPathParcel implements PathParcel{
     public void setDirection(SimDirection m_direction) {
         this.m_direction = m_direction;
     }
+    
+    /**
+     * @param m_travelTime the m_travelTime to set
+     */
+    @Override
+    public void setTheoreticalTravelTime(double m_travelTime) {
+        this.m_theoreticalTravelTime = m_travelTime;
+    }
+
+    /**
+     * @param energyConsumption the energyConsumption to set
+     */
+    public void setTheoreticalEnergyConsumption(double energyConsumption) {
+        this.m_theoreticalEnergyConsumption = energyConsumption;
+    }
+
+    /**
+     * @param tollCosts the tollCosts to set
+     */
+    public void setTollCosts(double tollCosts) {
+        this.m_tollCosts = tollCosts;
+    }
 
     @Override
     public PathParcel createReversePP() {
         return new StaticPathParcel(this.getSection());
     }
 
-    
 }

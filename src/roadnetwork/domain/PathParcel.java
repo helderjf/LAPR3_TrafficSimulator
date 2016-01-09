@@ -14,5 +14,11 @@ public interface PathParcel {
     public Section getSection();
     public SimDirection getDirection();
     public void setDirection(SimDirection direction);
+    public double getTheoreticalTravelTime();
+    public void setTheoreticalTravelTime(double time);
+    public double getTheoreticalEnergyConsumption();
+    public void setTheoreticalEnergyConsumption(double energyConsumption);
+    public double getTollCosts();
+    public void setTollCosts(double tollCosts);
     public PathParcel createReversePP();
 }

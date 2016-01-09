@@ -83,50 +83,5 @@ public class SimSegmentsManager {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public class WaitingTimeComparator implements Comparator {
-
-        @Override
-        public int compare(Object o1, Object o2) {
-
-            SimSegment s1 = (SimSegment) o1;
-            SimSegment s2 = (SimSegment) o2;
-            if (s1.getVehicleQueue().peek().getArrivalTime() >= s2.getVehicleQueue().peek().getArrivalTime()) {
-                return 1;
-            }
-            return -1;
-
-        }
-
-    }
-
-    private ArrayList<SimSegment> orderSegmentsByWaitingVehicles(ArrayList<SimSegment> simSegsWithWaitingVehicle) {
-
-        SimSegment[] simSegmentsArr = (SimSegment[]) simSegsWithWaitingVehicle.toArray();
-        Arrays.sort(simSegmentsArr, new WaitingTimeComparator());
-
-        ArrayList<SimSegment> orderedSimSegments = new ArrayList();
-
-        int j = 0;
-        if (simSegmentsArr.length != 0) {
-            j = simSegmentsArr.length;
-        }
-
-        for (int i = j; i < simSegmentsArr.length; i++) {
-            orderedSimSegments.add(simSegmentsArr[i]);
-        }
-
-        return orderedSimSegments;
-    }
-
-    private SimSegment getSimSegmentByParcel(SimPathParcel parcel) {
-
-        for (SimSegment simSeg : m_simSegmentsList) {
-            if (simSeg.getSegment() == parcel.getSegment()
-                    && simSeg.getDirection() == parcel.getDirection()) {
-                return simSeg;
-            }
-        }
-        return null;
-    }
 
 }
