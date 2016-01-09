@@ -14,7 +14,9 @@ public class SimPathParcel {
     private Section m_section;
     private Segment m_segment;
     private SimDirection m_direction;
-    private Double m_theoreticalExitTime;
+    private double m_theoreticalTravelTime;
+    private double m_simInTime;
+    private double m_simExitTime;
 
     /**
      * @return the m_section
@@ -40,8 +42,8 @@ public class SimPathParcel {
     /**
      * @return the m_theoreticalExitTime
      */
-    public Double getTheoreticalExitTime() {
-        return m_theoreticalExitTime;
+    public Double getTheoreticalTravelTime() {
+        return m_theoreticalTravelTime;
     }
 
     /**
@@ -69,7 +71,11 @@ public class SimPathParcel {
      * @param m_exitTime the m_theoreticalExitTime to set
      */
     public void setTheoreticalExitTime(Double m_exitTime) {
-        this.m_theoreticalExitTime = m_exitTime;
+        this.m_theoreticalTravelTime = m_exitTime;
+    }
+
+    double getSimInTime() {
+        return m_simInTime;
     }
     
     
