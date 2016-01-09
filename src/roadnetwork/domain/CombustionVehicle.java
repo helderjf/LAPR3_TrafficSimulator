@@ -7,6 +7,7 @@ package roadnetwork.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -145,7 +146,9 @@ public class CombustionVehicle extends Vehicle implements Combustion {
     }
 
     @Override
-    public EngineEfficiency getEngineEfficiency() {
+    public List<EngineEfficiency> getEngineEfficiency() {
+        
+        EngineEfficiency engineEfficiency = new EngineEfficiency();
         
         for (int key_idGear : gearList.keySet()) {  
         
@@ -153,7 +156,10 @@ public class CombustionVehicle extends Vehicle implements Combustion {
             {
                 for(Regime regime : throttle.getRegimeList())
                 {
-                    
+                    engineEfficiency.setGear(key_idGear);
+                    engineEfficiency.setThrottleRacio(throttle.getID());
+                    engineEfficiency.setResult(gearList.get(key_idGear)*regime.getTorque());
+        
                 }
             }
             

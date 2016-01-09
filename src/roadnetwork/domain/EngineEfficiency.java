@@ -7,8 +7,37 @@ package roadnetwork.domain;
 
 /**
  *
- * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
+ * @author Andre
  */
 public class EngineEfficiency {
     
+    private int gear;
+    private String throttleRacio;
+    private double result;
+    
+
+    public int getGear() {
+        return gear;
+    }
+
+    public void setGear(int gear) {
+        this.gear = gear;
+    }
+
+    public String getThrottleRacio() {
+        return throttleRacio;
+    }
+
+    public void setThrottleRacio(String throttleRacio) {
+        this.throttleRacio = throttleRacio;
+    }
+
+    public double getResult() {
+        return result;
+    }
+
+    public void setResult(double result) {
+        this.result = result;
+    }
+
 }

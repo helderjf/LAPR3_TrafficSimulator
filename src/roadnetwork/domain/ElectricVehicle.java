@@ -6,6 +6,7 @@
 package roadnetwork.domain;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -82,7 +83,7 @@ public class ElectricVehicle extends Vehicle implements Electric {
     }
 
     @Override
-    public EngineEfficiency getEngineEfficiency() {
+    public List<EngineEfficiency> getEngineEfficiency() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
