@@ -66,7 +66,7 @@ public class SimSegmentsManager {
 
     private SimSegment getEarliestWaitingVehicleKey(HashMap<SimSegment, SimVehicle> waitingVehicles) {
         
-        
+        SimSegment simSeg = waitingVehicles.
         
     }
 
