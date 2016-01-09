@@ -93,7 +93,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
         double relativeVelocityWindInfluence = 0;
         double resistanceForce = 0;
         double vehicleForce = 0;
-        double power = 0;
+        double consumption = 0;
 
         if (m_vehicle instanceof CombustionVehicle) {
             CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
@@ -119,15 +119,31 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
                     }
                 }
                 if (forceFlag = false) {
-                    power = Double.MAX_VALUE;
+                    consumption = Double.MAX_VALUE;
                 } else {
-                    power += segmentPowerCalculation(engineEfficiency)*3.6;
+
+                    consumption += segmentPowerCalculation(engineEfficiency)*
+                            3.6*engineEfficiency.getM_sfc()*calculateTravelTime(pathParcel.getSection(),vehicleVelocity);
                     
                 }
             }
         }
         
-        return power;
+        return consumption;
+    }
+    
+    private double calculateTravelTime(Section section, double vehicleVelocity){
+        ArrayList<Segment> segmentList = section.getSegmentsList();
+        double time = 0; //in seconds
+        
+        for (Segment it : segmentList) {
+            
+            double lenght = it.getLenght();
+            SectionTypology type = section.getSectionType();
+            
+            time += lenght * 3600 / relativeVelocityWindInfluence(section,vehicleVelocity);
+        }
+        return time;
     }
        
     
