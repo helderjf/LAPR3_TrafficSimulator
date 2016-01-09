@@ -95,6 +95,10 @@ public class SimPathParcel implements PathParcel{
     public PathParcel createReversePP() {
         return new SimPathParcel(this.getSection());
     }
+
+    void setSimInTime(double time) {
+        m_simInTime = time;
+    }
     
     
     
