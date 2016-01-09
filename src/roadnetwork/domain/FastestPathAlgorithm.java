@@ -18,12 +18,12 @@ import java.util.Map;
  */
 public class FastestPathAlgorithm implements BestPathAlgorithm {
 
-    Graph<Junction, Section> m_graph;
+    Graph<Junction, PathParcel> m_graph;
     RoadNetwork m_roadNetwork;
     Junction m_originNode;
     Junction m_destinyNode;
     Vehicle m_vehicle;
-    ArrayList<Section> m_fastestPath;
+    ArrayList<PathParcel> m_fastestPath;
     ArrayList<Junction> m_fastestPathNodes;
     double m_fastestPathLength;
     ArrayList<Double> m_sectionEnergyConsumption;
@@ -43,7 +43,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         m_fastestPath = new ArrayList<>();
         m_fastestPathNodes=new ArrayList<>();
         
-        graphConstruction(m_roadNetwork, m_vehicle);
+        staticGraphConstruction(m_roadNetwork, m_vehicle);
         
         m_fastestPathLength = GraphAlgorithms.getShortestPathLength(
                 m_graph, m_originNode, m_destinyNode, m_fastestPath, m_fastestPathNodes);
@@ -62,19 +62,28 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         return m_pathParcelList;
     }
 
-    private void graphConstruction(RoadNetwork rn, Vehicle vehicle) {
+    private void staticGraphConstruction(RoadNetwork rn, Vehicle vehicle) {
         for (Section sec : rn.getSectionList()) {
-            addConection(sec);
+            StaticPathParcel spp = new StaticPathParcel(sec);
+            addConection(spp);
+        }
+    }
+    
+    private void simGraphConstruction(RoadNetwork rn, Vehicle vehicle){
+        for (Section sec : rn.getSectionList()) {
+            SimPathParcel spp = new SimPathParcel(sec);
+            addConection(spp);
         }
     }
 
-    private void addConection(Section section) {
+    private void addConection(PathParcel pp) {
+        Section section = pp.getSection();
         if (section.getDirection().equals(SectionDirection.unidirectional)) {
-            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section));
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), pp, calculateTravelTime(pp.getSection()));
 
         } else if (section.getDirection().equals(SectionDirection.bidirectional)) {
-            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateTravelTime(section));
-            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateTravelTime(section));
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), pp, calculateTravelTime(pp.getSection()));
+            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), pp, calculateTravelTime(pp.getSection()));
         }
     }
 
@@ -117,29 +126,29 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     
     private void calculateSectionTime(){
         m_sectionTime=new ArrayList<>();
-        for (Section s : m_fastestPath) {
-            m_sectionTime.add(calculateTravelTime(s));
+        for (PathParcel s : m_fastestPath) {
+            m_sectionTime.add(calculateTravelTime(s.getSection()));
         }
     }
     
     private void calculateSectionTollCosts(){
         m_sectionTollCosts=new ArrayList<>();
-        for (Section s : m_fastestPath) {
-            m_sectionTollCosts.add(s.getToll());
+        for (PathParcel s : m_fastestPath) {
+            m_sectionTollCosts.add(s.getSection().getToll());
         }
     }
     
     private void calculatePathParcelList(){
         m_pathParcelList = new ArrayList<>();
-        if (m_originNode.equals(m_fastestPath.get(0).getBeginningNode())) {
-            for (Section section : m_fastestPath) {
-                calculatePathParcel(section, section.getSegmentsList());
+        if (m_originNode.equals(m_fastestPath.get(0).getSection().getBeginningNode())) {
+            for (PathParcel pp : m_fastestPath) {
+                calculatePathParcel(pp.getSection(), pp.getSection().getSegmentsList());
             }
         } else {
-            for (Section section : m_fastestPath) {
-                ArrayList<Segment> segmentsList=section.getSegmentsList();
+            for (PathParcel pp : m_fastestPath) {
+                ArrayList<Segment> segmentsList=pp.getSection().getSegmentsList();
                 Collections.reverse(segmentsList);
-                calculatePathParcel(section, segmentsList);
+                calculatePathParcel(pp.getSection(), segmentsList);
             }
         }
     }
@@ -162,12 +171,12 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
             
             time += lenght * 3600 / travelSpeed;
             if (m_pathParcelList!=null) {
-                SimPathParcel pp = new SimPathParcel();
+                SimPathParcel pp = new SimPathParcel(section);
                 
                 if (section.getDirection().equals(SectionDirection.unidirectional)) {
                     pp.setDirection(SimDirection.direct);
                 } else{
-                    if (m_originNode.equals(m_fastestPath.get(0).getBeginningNode())) {
+                    if (m_originNode.equals(m_fastestPath.get(0).getSection().getBeginningNode())) {
                         pp.setDirection(SimDirection.direct);
                     } else{
                         pp.setDirection(SimDirection.reverse);

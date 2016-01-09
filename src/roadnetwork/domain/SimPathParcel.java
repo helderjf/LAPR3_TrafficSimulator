@@ -9,13 +9,18 @@ package roadnetwork.domain;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class SimPathParcel {
+public class SimPathParcel implements PathParcel{
     
     private Section m_section;
     private Segment m_segment;
     private SimDirection m_direction;
     private Double m_theoreticalExitTime;
 
+    public SimPathParcel(Section section){
+        m_section=section;
+    }
+    
+    
     /**
      * @return the m_section
      */
@@ -70,6 +75,11 @@ public class SimPathParcel {
      */
     public void setTheoreticalExitTime(Double m_exitTime) {
         this.m_theoreticalExitTime = m_exitTime;
+    }
+
+    @Override
+    public PathParcel createReversePP() {
+        return new SimPathParcel(this.getSection());
     }
     
     
