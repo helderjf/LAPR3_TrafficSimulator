@@ -32,6 +32,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     
     private final double gravity = 9.81; // m^2
     private final double densityOfAir = 1.225; // kg/m3
+    ArrayList<SimPathParcel> m_pathParcelList;
     
     @Override
     public ResultStaticAnalysis getBestPathResults(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
@@ -56,7 +57,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     }
     
     @Override
-    public ArrayList<PathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle){
+    public ArrayList<SimPathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle){
         getBestPathResults(roadNetwork, originNode, destinyNode, vehicle);
         calculatePathParcelList();
         return m_pathParcelList;
@@ -307,7 +308,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
             
             time += lenght * 3600 / travelSpeed;
             if (m_pathParcelList!=null) {
-                PathParcel pp = new PathParcel();
+                SimPathParcel pp = new SimPathParcel();
                 
                 if (section.getDirection().equals(SectionDirection.unidirectional)) {
                     pp.setDirection(SimDirection.direct);

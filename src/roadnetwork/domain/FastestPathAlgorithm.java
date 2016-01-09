@@ -29,7 +29,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     ArrayList<Double> m_sectionEnergyConsumption;
     ArrayList<Double> m_sectionTime;
     ArrayList<Double> m_sectionTollCosts;
-    ArrayList<PathParcel> m_pathParcelList;
+    ArrayList<SimPathParcel> m_pathParcelList;
     
     public FastestPathAlgorithm(){}
     
@@ -56,7 +56,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     }
     
     @Override
-    public ArrayList<PathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle){
+    public ArrayList<SimPathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle){
         getBestPathResults(roadNetwork, originNode, destinyNode, vehicle);
         calculatePathParcelList();
         return m_pathParcelList;
@@ -162,7 +162,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
             
             time += lenght * 3600 / travelSpeed;
             if (m_pathParcelList!=null) {
-                PathParcel pp = new PathParcel();
+                SimPathParcel pp = new SimPathParcel();
                 
                 if (section.getDirection().equals(SectionDirection.unidirectional)) {
                     pp.setDirection(SimDirection.direct);

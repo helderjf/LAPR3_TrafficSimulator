@@ -1,0 +1,28 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package roadnetwork.domain;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
+ */
+public class SimVehiclesGenerator {
+    
+    
+    public SimVehiclesGenerator(double timeStep, ArrayList<TrafficPattern> trafficPattern, BestPathAlgorithm bestPathAlgorithm){
+        
+        
+        
+        
+    }
+
+    ArrayList<SimVehicle> generateNextStepVehicles() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+}

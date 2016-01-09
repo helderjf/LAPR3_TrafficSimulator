@@ -5,6 +5,8 @@
  */
 package roadnetwork.controllers;
 
+import java.util.ArrayList;
+import roadnetwork.domain.BestPathAlgorithm;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 import roadnetwork.domain.RoadNetwork;
@@ -40,10 +42,16 @@ public class RunSimulationController {
 
     }
 
+    ArrayList<BestPathAlgorithm> getBestPathMethods(){
+        return m_manager.getAlgorithmsList();
+        
+    }
     
-    public void setRunData(String runName, double runDuration, double runTimeStep){
+    
+    public void setRunData(String runName, double runDuration, double runTimeStep, BestPathAlgorithm bpm){
         m_roadNetwork=m_project.getRoadNetwork();
-        m_simulationRun = m_simulation.newSimulationRun(m_roadNetwork,runName,runDuration,runTimeStep);
+        m_simulationRun = m_simulation.newSimulationRun(m_roadNetwork,runName,runDuration,runTimeStep,bpm);
+        m_simulationRun.start();
         
         
     }

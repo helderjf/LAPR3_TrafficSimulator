@@ -33,7 +33,7 @@ public interface BestPathAlgorithm {
      * @param vehicle
      * @return
      */
-    public ArrayList<PathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, 
+    public ArrayList<SimPathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, 
             Junction destinyNode, 
             Vehicle vehicle);
     

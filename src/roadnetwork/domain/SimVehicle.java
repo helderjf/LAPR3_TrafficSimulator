@@ -16,8 +16,8 @@ public class SimVehicle {
     private Vehicle m_vehicle;
     private Junction m_originNode;
     private Junction m_destinyNode;
-    private ArrayList<PathParcel> m_path;
-    private PathParcel m_currentPos;
-    private PathParcel m_nextPos;
+    private ArrayList<SimPathParcel> m_path;
+    private SimPathParcel m_currentPos;
+    private SimPathParcel m_nextPos;
     
 }
