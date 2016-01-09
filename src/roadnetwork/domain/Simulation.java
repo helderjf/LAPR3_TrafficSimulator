@@ -5,6 +5,7 @@
  */
 package roadnetwork.domain;
 
+import java.util.ArrayList;
 import roadnetwork.state.SimulationState;
 import roadnetwork.state.SimulationStateCreated;
 
@@ -18,6 +19,7 @@ public class Simulation {
     private String m_name;
     private String m_description;
     private SimulationState m_state;
+    private ArrayList<TrafficPattern> m_trafficPatternList;
 
     public Simulation() {
         m_state = new SimulationStateCreated(this);
@@ -41,8 +43,8 @@ public class Simulation {
         return m_state.canRunSimulation();
     }
 
-    public SimulationRun newSimulationRun(RoadNetwork roadNetwork, String runName, double runDuration, double runTimeStep) {
-        return new SimulationRun(runName,runDuration,runTimeStep,roadNetwork);
+    public SimulationRun newSimulationRun(RoadNetwork roadNetwork, String runName, double runDuration, double runTimeStep, BestPathAlgorithm bpm) {
+        return new SimulationRun(runName,runDuration,runTimeStep,roadNetwork, m_trafficPatternList,bpm);
     }
 
     

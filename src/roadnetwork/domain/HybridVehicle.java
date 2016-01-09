@@ -61,4 +61,9 @@ public class HybridVehicle extends Vehicle implements Electric, Combustion {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public EngineEfficiency getEngineEfficiency() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
