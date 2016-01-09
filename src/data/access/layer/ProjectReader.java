@@ -246,25 +246,25 @@ public class ProjectReader {
                     return false;
                 }
 
-                combustionVehiclesList.add(new CombustionVehicle(
-                        combustionVehicles.getInt("ID_VEHICLE"),
-                        combustionVehicles.getString("NAME"),
-                        combustionVehicles.getString("DESCRIPTION"),
-                        combustionVehicles.getDouble("MASS"),
-                        combustionVehicles.getString("TYPE"),
-                        combustionVehicles.getDouble("LOAD"),
-                        combustionVehicles.getDouble("DRAG_COEF"),
-                        combustionVehicles.getDouble("FRONTAL_AREA"),
-                        combustionVehicles.getDouble("RRC"),
-                        combustionVehicles.getDouble("WHEEL_SIZE"),
-                        velocityLimits,
-                        combustionVehicles.getDouble("RPM_MIN"),
-                        combustionVehicles.getDouble("RPM_MAX"),
-                        combustionVehicles.getDouble("FINAL_DRIVE_RATIO"),
-                        combustionVehicles.getString("FUEL"),
-                        gearList,
-                        throttleList
-                ));
+//                combustionVehiclesList.add(new CombustionVehicle(
+//                        combustionVehicles.getInt("ID_VEHICLE"),
+//                        combustionVehicles.getString("NAME"),
+//                        combustionVehicles.getString("DESCRIPTION"),
+//                        combustionVehicles.getDouble("MASS"),
+//                        combustionVehicles.getString("TYPE"),
+//                        combustionVehicles.getDouble("LOAD"),
+//                        combustionVehicles.getDouble("DRAG_COEF"),
+//                        combustionVehicles.getDouble("FRONTAL_AREA"),
+//                        combustionVehicles.getDouble("RRC"),
+//                        combustionVehicles.getDouble("WHEEL_SIZE"),
+//                        velocityLimits,
+//                        combustionVehicles.getDouble("RPM_MIN"),
+//                        combustionVehicles.getDouble("RPM_MAX"),
+//                        combustionVehicles.getDouble("FINAL_DRIVE_RATIO"),
+//                        combustionVehicles.getString("FUEL"),
+//                        gearList,
+//                        throttleList
+//                ));
             }
 
             m_project.addVehicleList(combustionVehiclesList);

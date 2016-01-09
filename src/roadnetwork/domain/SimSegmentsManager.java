@@ -36,11 +36,11 @@ public class SimSegmentsManager {
 
         HashMap<SimSegment, SimVehicle> waitingVehicles = new HashMap();
 
-        for (SimSegment simSeg : m_simSegmentsList) {
-            if (simSeg.getFirstWaitingVehicle(currentTime) != null) {
-                waitingVehicles.put(simSeg, simSeg.getFirstWaitingVehicle(currentTime));
-            }
-        }
+//        for (SimSegment simSeg : m_simSegmentsList) {
+//            if (simSeg.getFirstWaitingVehicle(currentTime) != null) {
+//                waitingVehicles.put(simSeg, simSeg.getFirstWaitingVehicle(currentTime));
+//            }
+//        }
         
         boolean vehicleUpdated = true;
         
@@ -49,7 +49,7 @@ public class SimSegmentsManager {
             
             vehicleUpdated=false;
             
-            SimSegment simSeg = getEarliestWaitingVehicleKey(waitingVehicles);
+//            SimSegment simSeg = getEarliestWaitingVehicleKey(waitingVehicles);
             
             
         }
@@ -64,10 +64,10 @@ public class SimSegmentsManager {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private SimSegment getEarliestWaitingVehicleKey(HashMap<SimSegment, SimVehicle> waitingVehicles) {
-        
-        
-        
-    }
+//    private SimSegment getEarliestWaitingVehicleKey(HashMap<SimSegment, SimVehicle> waitingVehicles) {
+//        
+//        
+//        
+//    }
 
 }

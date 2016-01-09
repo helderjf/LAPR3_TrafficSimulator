@@ -264,12 +264,12 @@ public class ProjectWriter {
     }
 
     private boolean saveNewVehicleGears(Vehicle vehicle) {
-        ArrayList<Double> gears = ((CombustionVehicle) vehicle).getGearList();//TO DO alterar para a interface cmobustion, quando soublermos se o hybrid tambem vai ter gears
-        for (Double ratio : gears) {
-            if (m_dao.saveNewVehicleGear(vehicle.getPK(), gears.indexOf(ratio) + 1, ratio) != 1) {
-                return false;
-            }
-        }
+//        ArrayList<Double> gears = ((CombustionVehicle) vehicle).getGearList();//TO DO alterar para a interface cmobustion, quando soublermos se o hybrid tambem vai ter gears
+//        for (Double ratio : gears) {
+//            if (m_dao.saveNewVehicleGear(vehicle.getPK(), gears.indexOf(ratio) + 1, ratio) != 1) {
+//                return false;
+//            }
+//        }
         return true;
     }
 

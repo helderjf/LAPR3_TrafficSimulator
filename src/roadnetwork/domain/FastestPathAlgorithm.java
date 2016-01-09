@@ -79,10 +79,14 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     private void addConection(PathParcel pp) {
         Section section = pp.getSection();
         if (section.getDirection().equals(SectionDirection.unidirectional)) {
+            pp.setDirection(SimDirection.direct);
             m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), pp, calculateTravelTime(pp.getSection()));
 
         } else if (section.getDirection().equals(SectionDirection.bidirectional)) {
+            pp.setDirection(SimDirection.direct);
             m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), pp, calculateTravelTime(pp.getSection()));
+            PathParcel ppRev = pp.createReversePP();
+            ppRev.setDirection(SimDirection.reverse);
             m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), pp, calculateTravelTime(pp.getSection()));
         }
     }
