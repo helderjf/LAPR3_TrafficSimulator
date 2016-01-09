@@ -28,11 +28,11 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     ArrayList<Double> m_sectionEnergyConsumption;
     ArrayList<Double> m_sectionTime;
     ArrayList<Double> m_sectionTollCosts;
-    ArrayList<PathParcel> m_pathParcelList;
+    ArrayList<SimPathParcel> m_pathParcelList;
     
     private final double gravity = 9.81; // m^2
     private final double densityOfAir = 1.225; // kg/m3
-    ArrayList<SimPathParcel> m_pathParcelList;
+
     
     @Override
     public ResultStaticAnalysis getBestPathResults(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
