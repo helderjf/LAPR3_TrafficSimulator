@@ -6,7 +6,8 @@
 package roadnetwork.domain;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -35,39 +36,97 @@ public class SimSegmentsManager {
     void updateCrossingVehicles(double currentTime) {
 
         HashMap<SimSegment, SimVehicle> waitingVehicles = new HashMap();
-
-//        for (SimSegment simSeg : m_simSegmentsList) {
-//            if (simSeg.getFirstWaitingVehicle(currentTime) != null) {
-//                waitingVehicles.put(simSeg, simSeg.getFirstWaitingVehicle(currentTime));
-//            }
-//        }
+        ArrayList<SimSegment> simSegsWithWaitingVehicle=new ArrayList();
         
-        boolean vehicleUpdated = true;
-        
-        
-        while(vehicleUpdated==true){
-            
-            vehicleUpdated=false;
-            
-//            SimSegment simSeg = getEarliestWaitingVehicleKey(waitingVehicles);
-            
-            
+        for (SimSegment simSeg : m_simSegmentsList) {
+            if (simSeg.getFirstWaitingVehicle(currentTime) != null) {
+                waitingVehicles.put(simSeg, simSeg.getFirstWaitingVehicle(currentTime));
+                simSegsWithWaitingVehicle.add(simSeg);
+            }
         }
-        
-        
-        
-        
+
+        ArrayList<SimSegment> simSegsOrderedByWaitingVehicle = orderSegmentsByWaitingVehicles(simSegsWithWaitingVehicle);
+
+        boolean vehicleUpdated = true;
+
+        while (vehicleUpdated == true) {
+
+            vehicleUpdated = false;
+
+            SimVehicle currSegVehicle;
+            SimPathParcel nextParcel;
+            SimSegment nextSimSeg;
+            for (SimSegment currSimSeg: simSegsOrderedByWaitingVehicle) {
+                
+                currSegVehicle = currSimSeg.getVehicleQueue().peek();
+                nextParcel = currSegVehicle.getNextPos();
+
+                nextSimSeg = getSimSegmentByParcel(nextParcel);
+                if (nextSimSeg.canInjectVehicle()) {
+                    currSimSeg.popCrossingVehicle(currentTime);
+                    nextSimSeg.injectCrossingVehicle(currentTime,currSegVehicle);
+                    if(currSimSeg.getFirstWaitingVehicle(currentTime)==null){
+                    simSegsOrderedByWaitingVehicle.remove(currSimSeg);
+                    }
+                    
+                    vehicleUpdated=true;
+                    simSegsOrderedByWaitingVehicle=orderSegmentsByWaitingVehicles(simSegsWithWaitingVehicle);
+                }
+
+            }
+
+        }
 
     }
 
-    Collection<? extends SimVehicle> injectNewVehicles(ArrayList<SimVehicle> nextStepVehicles) {
+    ArrayList<SimVehicle> injectNewVehicles(ArrayList<SimVehicle> nextStepVehicles) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-//    private SimSegment getEarliestWaitingVehicleKey(HashMap<SimSegment, SimVehicle> waitingVehicles) {
-//        
-//        
-//        
-//    }
+    public class WaitingTimeComparator implements Comparator {
+
+        @Override
+        public int compare(Object o1, Object o2) {
+
+            SimSegment s1 = (SimSegment) o1;
+            SimSegment s2 = (SimSegment) o2;
+            if (s1.getVehicleQueue().peek().getArrivalTime() >= s2.getVehicleQueue().peek().getArrivalTime()) {
+                return 1;
+            }
+            return -1;
+
+        }
+
+    }
+
+    private ArrayList<SimSegment> orderSegmentsByWaitingVehicles(ArrayList<SimSegment> simSegsWithWaitingVehicle) {
+
+        SimSegment[] simSegmentsArr = (SimSegment[]) simSegsWithWaitingVehicle.toArray();
+        Arrays.sort(simSegmentsArr, new WaitingTimeComparator());
+
+        ArrayList<SimSegment> orderedSimSegments = new ArrayList();
+
+        int j = 0;
+        if (simSegmentsArr.length != 0) {
+            j = simSegmentsArr.length;
+        }
+
+        for (int i = j; i < simSegmentsArr.length; i++) {
+            orderedSimSegments.add(simSegmentsArr[i]);
+        }
+
+        return orderedSimSegments;
+    }
+
+    private SimSegment getSimSegmentByParcel(SimPathParcel parcel) {
+
+        for (SimSegment simSeg : m_simSegmentsList) {
+            if (simSeg.getSegment() == parcel.getSegment()
+                    && simSeg.getDirection() == parcel.getDirection()) {
+                return simSeg;
+            }
+        }
+        return null;
+    }
 
 }
