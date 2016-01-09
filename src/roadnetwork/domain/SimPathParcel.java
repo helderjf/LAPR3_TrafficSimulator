@@ -68,14 +68,22 @@ public class SimPathParcel {
     }
 
     /**
-     * @param m_exitTime the m_theoreticalExitTime to set
+     * @param time
      */
-    public void setTheoreticalExitTime(Double m_exitTime) {
-        this.m_theoreticalTravelTime = m_exitTime;
+    public void setTheoreticalExitTime(double time) {
+        this.m_theoreticalTravelTime = time;
     }
 
     double getSimInTime() {
         return m_simInTime;
+    }
+
+    void setSimExitTime(double time) {
+        m_simExitTime=time;
+    }
+    
+    double getSimExitTime(){
+        return m_simExitTime;
     }
     
     
