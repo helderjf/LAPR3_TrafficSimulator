@@ -6,6 +6,7 @@
 package roadnetwork.domain;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -347,7 +348,7 @@ public abstract class Vehicle {
         this.frontalArea = frontalArea;
     }
     
-    public abstract EngineEfficiency getEngineEfficiency();
+    public abstract List<EngineEfficiency> getEngineEfficiency();
 
 
     /**

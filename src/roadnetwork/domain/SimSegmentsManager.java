@@ -14,14 +14,22 @@ import java.util.Collection;
  */
 public class SimSegmentsManager {
     
-    private RoadNetwork m_roadNetwork;
     
+    
+    private RoadNetwork m_roadNetwork;
+    private ArrayList<SimSegment> m_simSegmentsList;
     public SimSegmentsManager(RoadNetwork roadNetwork){
         //TO DO
     }
 
-    Collection<? extends SimVehicle> popEndingVehicles(double m_currentTime) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    ArrayList<SimVehicle> popEndingVehicles(double currentTime) {
+        
+        ArrayList<SimVehicle> endedVehicles = new ArrayList();
+        
+        for(SimSegment simSeg : m_simSegmentsList){
+            endedVehicles.addAll(simSeg.updateEndingVehicles(currentTime));
+        }
+        return endedVehicles;
     }
 
     void updateCrossingVehicles(double m_currentTime) {

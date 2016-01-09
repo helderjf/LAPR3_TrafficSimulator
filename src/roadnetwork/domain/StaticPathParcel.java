@@ -22,6 +22,10 @@ public class StaticPathParcel implements PathParcel{
         m_section=section;
         m_direction=direction;
     }
+    private double m_theoreticalTravelTime;
+    private double m_simInTime;
+    private double m_simExitTime;
+
     /**
      * @return the m_section
      */
@@ -37,7 +41,14 @@ public class StaticPathParcel implements PathParcel{
     public SimDirection getDirection() {
         return m_direction;
     }
-    
+
+    /**
+     * @return the m_theoreticalExitTime
+     */
+    public Double getTheoreticalTravelTime() {
+        return m_theoreticalTravelTime;
+    }
+
     /**
      * @param m_section the m_section to set
      */
@@ -56,6 +67,15 @@ public class StaticPathParcel implements PathParcel{
     @Override
     public PathParcel createReversePP() {
         return new StaticPathParcel(this.getSection());
+    /**
+     * @param m_exitTime the m_theoreticalExitTime to set
+     */
+    public void setTheoreticalExitTime(Double m_exitTime) {
+        this.m_theoreticalTravelTime = m_exitTime;
+    }
+
+    double getSimInTime() {
+        return m_simInTime;
     }
     
 }
