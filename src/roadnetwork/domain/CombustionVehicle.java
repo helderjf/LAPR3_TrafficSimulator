@@ -151,7 +151,7 @@ public class CombustionVehicle extends Vehicle implements Combustion {
     public List<EngineEfficiency> getEngineEfficiency() {
         
         EngineEfficiency engineEfficiency = new EngineEfficiency();
-        List<EngineEfficiency> engineEfficiencyList = new ArrayList<>();
+        ArrayList<EngineEfficiency> engineEfficiencyList = new ArrayList<>();
         
         
         //preenche a lista com todos as performances
