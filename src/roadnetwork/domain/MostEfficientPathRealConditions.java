@@ -247,6 +247,8 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
             }
         }
         
+        
+        
         double torque = actualRegime.getTorque();
         
         double mediaRPM = (regime.getRPMHigh() + regime.getRPMLow()) / 2;
