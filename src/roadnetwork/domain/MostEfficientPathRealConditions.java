@@ -18,14 +18,14 @@ import java.util.List;
  */
 public class MostEfficientPathRealConditions implements BestPathAlgorithm{
 
-    Graph<Junction, Section> m_graph;
+    Graph<Junction, PathParcel> m_graph;
     RoadNetwork m_roadNetwork;
     Junction m_originNode;
     Junction m_destinyNode;
     Vehicle m_vehicle;
-    ArrayList<Section> m_fastestPath;
-    ArrayList<Junction> m_fastestPathNodes;
-    double m_fastestPathLength;
+    ArrayList<PathParcel> m_bestPath;
+    ArrayList<Junction> m_bestPathNodes;
+    double m_bestPathLength;
     ArrayList<Double> m_sectionEnergyConsumption;
     ArrayList<Double> m_sectionTime;
     ArrayList<Double> m_sectionTollCosts;
@@ -41,13 +41,12 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
         m_originNode=originNode;
         m_destinyNode=destinyNode;
         m_vehicle=vehicle;
-        m_fastestPath = new ArrayList<>();
-        m_fastestPathNodes=new ArrayList<>();
+        m_bestPath = new ArrayList<>();
+        m_bestPathNodes=new ArrayList<>();
         
-        graphConstruction(m_roadNetwork, m_vehicle);
+        staticGraphConstruction(m_roadNetwork, m_vehicle);
         
-        m_fastestPathLength = GraphAlgorithms.getShortestPathLength(
-                m_graph, m_originNode, m_destinyNode, m_fastestPath, m_fastestPathNodes);
+        m_bestPathLength = GraphAlgorithms.getShortestPathLength(m_graph, m_originNode, m_destinyNode, m_bestPath, m_bestPathNodes);
 
         //calculateSectionEnergyConsumption();
         calculateSectionTime();
@@ -63,19 +62,26 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
         return m_pathParcelList;
     }
 
-    private void graphConstruction(RoadNetwork rn, Vehicle vehicle) {
+    private void staticGraphConstruction(RoadNetwork rn, Vehicle vehicle) {
         for (Section sec : rn.getSectionList()) {
-            addConection(sec);
+            StaticPathParcel spp = new StaticPathParcel(sec);
+            addConection(spp);
         }
     }
 
-    private void addConection(Section section) {
+    private void addConection(PathParcel pp) {
+        Section section = pp.getSection();
         if (section.getDirection().equals(SectionDirection.unidirectional)) {
-            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateSectionEnergyConsumption(section));
+            pp.setDirection(SimDirection.direct);
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), pp, calculateSectionEnergyConsumption(pp));
 
         } else if (section.getDirection().equals(SectionDirection.bidirectional)) {
-            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), section, calculateSectionEnergyConsumption(section));
-            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), section, calculateSectionEnergyConsumption(section));
+            pp.setDirection(SimDirection.direct);
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), pp, calculateSectionEnergyConsumption(pp));
+            
+            PathParcel ppRev = pp.createReversePP();
+            ppRev.setDirection(SimDirection.reverse);
+            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), ppRev, calculateSectionEnergyConsumption(ppRev));
         }
     }
     
@@ -136,8 +142,8 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     
     private void calculateSectionsEnergyConsumption(){
         m_sectionEnergyConsumption = new ArrayList<>();
-        for (Section s : m_fastestPath) {
-            m_sectionEnergyConsumption.add(calculateSectionEnergyConsumption(s));
+        for (PathParcel pp : m_bestPath) {
+            m_sectionEnergyConsumption.add(calculateSectionEnergyConsumption(pp));
         }
     }
     
@@ -248,22 +254,22 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     
     private void calculateSectionTollCosts(){
         m_sectionTollCosts=new ArrayList<>();
-        for (Section s : m_fastestPath) {
-            m_sectionTollCosts.add(s.getToll());
+        for (PathParcel pp : m_bestPath) {
+            m_sectionTollCosts.add(pp.getSection().getToll());
         }
     }
     
     private void calculatePathParcelList(){
         m_pathParcelList = new ArrayList<>();
-        if (m_originNode.equals(m_fastestPath.get(0).getBeginningNode())) {
-            for (Section section : m_fastestPath) {
-                calculatePathParcel(section, section.getSegmentsList());
+        if (m_originNode.equals(m_bestPath.get(0).getSection().getBeginningNode())) {
+            for (PathParcel pp : m_bestPath) {
+                calculatePathParcel(pp.getSection(), pp.getSection().getSegmentsList());
             }
         } else {
-            for (Section section : m_fastestPath) {
-                ArrayList<Segment> segmentsList=section.getSegmentsList();
+            for (PathParcel pp : m_bestPath) {
+                ArrayList<Segment> segmentsList=pp.getSection().getSegmentsList();
                 Collections.reverse(segmentsList);
-                calculatePathParcel(section, segmentsList);
+                calculatePathParcel(pp.getSection(), segmentsList);
             }
         }
     }
@@ -277,7 +283,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
             SectionTypology type = section.getSectionType();
             
             //determin if the vehicle maximum speed for this section is inferior to the section speed limit
-            if (m_vehicle.getVelocityLimits().containsKey(String.valueOf(type))
+            if (m_vehicle.getVelocityLimits().containsKey((type))
                     && m_vehicle.getVelocityLimit(type)< it.getMax_Velocity()) {
                 travelSpeed = m_vehicle.getVelocityLimit(type);
             }else{
@@ -285,23 +291,23 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
             }
             
             time += lenght * 3600 / travelSpeed;
-//            if (m_pathParcelList!=null) {
-//                SimPathParcel pp = new SimPathParcel();
-//                
-//                if (section.getDirection().equals(SectionDirection.unidirectional)) {
-//                    pp.setDirection(SimDirection.direct);
-//                } else{
-//                    if (m_originNode.equals(m_fastestPath.get(0).getBeginningNode())) {
-//                        pp.setDirection(SimDirection.direct);
-//                    } else{
-//                        pp.setDirection(SimDirection.reverse);
-//                    }
-//                }
-//                pp.setSection(section);
-//                pp.setSegment(it);
-//                pp.setTheoreticalExitTime(lenght * 3600 / travelSpeed);
-//                m_pathParcelList.add(pp);
-//            }
+            if (m_pathParcelList!=null) {
+                SimPathParcel pp = new SimPathParcel(section);
+                
+                if (section.getDirection().equals(SectionDirection.unidirectional)) {
+                    pp.setDirection(SimDirection.direct);
+                } else{
+                    if (m_originNode.equals(m_bestPath.get(0).getSection().getBeginningNode())) {
+                        pp.setDirection(SimDirection.direct);
+                    } else{
+                        pp.setDirection(SimDirection.reverse);
+                    }
+                }
+                pp.setSection(section);
+                pp.setSegment(it);
+                pp.setTheoreticalExitTime(lenght * 3600 / travelSpeed);
+                m_pathParcelList.add(pp);
+            }
             
         }
     }
@@ -309,10 +315,10 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     private ResultStaticAnalysis constructResults() {
         
         ResultStaticAnalysis simResult = new ResultStaticAnalysis(m_originNode, m_destinyNode);
-        //simResult.setPath(m_fastestPath);
-        simResult.setLength(m_fastestPathLength);
+        //simResult.setPath(m_bestPath);
+        simResult.setLength(m_bestPathLength);
         simResult.setSectionTravelTime(m_sectionTime);
-        simResult.setPathNodes(m_fastestPathNodes);
+        simResult.setPathNodes(m_bestPathNodes);
         simResult.setVehicle(m_vehicle);
         simResult.setEnergyConsumption(m_sectionEnergyConsumption);
         simResult.setTollCosts(m_sectionTollCosts);
