@@ -223,7 +223,7 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
 
     @Override
     public String toString() {
-        return "Most efficient path";
+        return "Theoretical Most Efficient Path";
     }
 
     @Override

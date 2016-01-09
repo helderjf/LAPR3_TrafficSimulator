@@ -324,4 +324,11 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
         simResult.setTollCosts(m_sectionTollCosts);
         return simResult;
     }
+
+    @Override
+    public String toString() {
+        return "Most Efficient Path in Real Conditions";
+    }
+    
+    
 }
