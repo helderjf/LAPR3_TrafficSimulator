@@ -15,6 +15,29 @@ public class TrafficPattern {
     private Junction endNode;
     private Vehicle vehicle;
     private double arrivalRate; //in vehicles/seconds
+
+    
+    
+    public Junction getBeginNode() {
+        return beginNode;
+    }
+
+    public Junction getEndNode() {
+        return endNode;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public double getArrivalRate() {
+        return arrivalRate;
+    }
+    
+    
+    
+    
+    
     
     
     

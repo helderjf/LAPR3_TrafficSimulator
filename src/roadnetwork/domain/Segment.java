@@ -18,7 +18,7 @@ public class Segment {
     private double lenght;
     private double max_Velocity;
     private double min_Velocity;
-    private double max_Vehicles;
+    private int max_Vehicles;
 
 
     /**
@@ -45,7 +45,7 @@ public class Segment {
      * @param min_Velocity min_Velocity
      * @param max_Vehicles max_Vehicles
      */
-    public Segment(int index, double initial_Height, double slope, double lenght, double max_Velocity, double min_Velocity, double max_Vehicles) {
+    public Segment(int index, double initial_Height, double slope, double lenght, double max_Velocity, double min_Velocity, int max_Vehicles) {
 
         this.index = index;
         this.initialHeight = initial_Height;
@@ -173,7 +173,7 @@ public class Segment {
      * 
      * @return return Max_Vehicles
      */
-    public double getMax_Vehicles() {
+    public int getMax_Vehicles() {
         return max_Vehicles;
     }
 
@@ -181,7 +181,7 @@ public class Segment {
      * 
      * @param max_Vehicles max_vehicles
      */
-    public void setMax_Vehicles(double max_Vehicles) {
+    public void setMax_Vehicles(int max_Vehicles) {
         this.max_Vehicles = max_Vehicles;
     }
 

@@ -5,8 +5,10 @@
  */
 package roadnetwork.domain;
 
+import java.util.AbstractQueue;
 import java.util.ArrayList;
 import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  *
@@ -20,6 +22,18 @@ public class SimSegment {
     private Queue<SimVehicle> m_vehicleQueue;
     private ArrayList<TrafficRecord> m_log;
 
+    
+    
+    public SimSegment(Section section,Segment segment,SimDirection direction){
+        m_section=section;
+        m_segment=segment;
+        m_direction=direction;
+        m_vehicleQueue=new ArrayBlockingQueue(segment.getMax_Vehicles());
+        m_log=new ArrayList();
+                
+    }
+    
+    
     ArrayList<SimVehicle> updateEndingVehicles(double currentTime) {
         ArrayList<SimVehicle> endedVehicles = new ArrayList();
 

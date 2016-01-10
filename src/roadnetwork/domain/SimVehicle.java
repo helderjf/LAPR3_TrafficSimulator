@@ -19,7 +19,19 @@ public class SimVehicle {
     private ArrayList<SimPathParcel> m_path;
     private SimPathParcel m_currentPos;
     private SimPathParcel m_nextPos;
+    private double m_injectionTime;
     private boolean ended;
+
+    public SimVehicle(Vehicle vehicle, Junction originNode, Junction destinyNode, ArrayList<SimPathParcel> path, double injectionTime) {
+        m_vehicle = vehicle;
+        m_originNode = originNode;
+        m_destinyNode = destinyNode;
+        m_path = path;
+        m_injectionTime = injectionTime;
+        m_currentPos=null;
+        m_nextPos=null;
+        ended = false;
+    }
     
     
 
@@ -61,8 +73,19 @@ public class SimVehicle {
             m_nextPos=m_path.get(m_path.indexOf(m_nextPos)+1);
         }
         
-        
     }
 
+    public void getStepInjectTime(double stepInjectTime) {
+        m_injectionTime = stepInjectTime;
+    }
+
+    public double getInjectionTime() {
+        return m_injectionTime;
+    }
+
+    
+    
+    
+    
 
 }

@@ -33,7 +33,7 @@ public class SimulationRun {
         m_bestPathMethod = bpMethod;
         
         m_simSegmentsManager = new SimSegmentsManager(roadNetwork);
-        m_simVehiclesGenerator = new SimVehiclesGenerator(timeStep, trafficPattern, m_bestPathMethod);
+        m_simVehiclesGenerator = new SimVehiclesGenerator(m_roadNetwork,timeStep, trafficPattern, m_bestPathMethod);
         
         m_currentTime = 0;
         m_endedVehicles= new ArrayList();
