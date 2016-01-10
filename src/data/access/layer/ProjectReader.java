@@ -197,7 +197,7 @@ public class ProjectReader {
                         segments.getDouble("LENGHT"),//lenght
                         segments.getDouble("MAX_VELOCITY"),// max velocity
                         segments.getDouble("MIN_VELOCITY"),//min velocity
-                        segments.getDouble("MAX_VEHICLES")//max number of vehicles
+                        segments.getInt("MAX_VEHICLES")//max number of vehicles
                 ));
             }
 

@@ -47,7 +47,7 @@ public class ExportCSV {
                 file.append(';');
                 file.append(pp.getSection().getEndingNode().getJunctionId());
                 file.append(';');
-                Double time = result.getSectionWeight().get(index)/60;
+                Double time = pp.getTheoreticalTravelTime()/60;
                 file.append(time.toString());
                 index++;
                 file.append("\n");
