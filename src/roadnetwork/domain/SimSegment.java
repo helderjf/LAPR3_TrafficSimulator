@@ -5,7 +5,6 @@
  */
 package roadnetwork.domain;
 
-import java.util.AbstractQueue;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;

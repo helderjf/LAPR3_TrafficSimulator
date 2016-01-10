@@ -14,9 +14,12 @@ public class SimPathParcel implements PathParcel {
     private Section m_section;
     private Segment m_segment;
     private SimDirection m_direction;
+    
     private double m_theoreticalTravelTime;
     private double m_simInTime;
+    private double m_predictedExitTime;
     private double m_simExitTime;
+    
     private double m_theoreticalEnergyConsumption;
     private double m_tollCosts;
 
