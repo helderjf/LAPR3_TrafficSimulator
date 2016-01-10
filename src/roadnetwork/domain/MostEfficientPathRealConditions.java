@@ -105,6 +105,8 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
             //vai percorrer todas as performances ordenadas de motor calculadas para cada Throttle Ratio e Gear Ratio
 
             for (Segment segment : segmentList) {
+                forceFlag = false;
+                
                 for (EngineEfficiency engineEfficiencyTemporary : engineEfficiencyList) {
                     vehicleVelocity = vehicleVelocity(engineEfficiencyTemporary);
                     relativeVelocityWindInfluence = relativeVelocityWindInfluence(pathParcel.getSection(), vehicleVelocity);
@@ -117,15 +119,18 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
                         engineEfficiency=engineEfficiencyTemporary;
                         break;
                     }
+
                 }
-                if (forceFlag = false) {
+
+                if (forceFlag == false) {
                     consumption = Double.MAX_VALUE;
-                } else {
+                } else 
+                {
 
                     consumption += segmentPowerCalculation(engineEfficiency)*
-                            3.6*engineEfficiency.getM_sfc()*calculateTravelTime(pathParcel.getSection(),vehicleVelocity);
-                    
+                            3.6*engineEfficiency.getM_sfc()*calculateTravelTime(pathParcel.getSection(),vehicleVelocity);  
                 }
+                
             }
         }
         
@@ -324,11 +329,9 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
         ResultStaticAnalysis simResult = new ResultStaticAnalysis(m_originNode, m_destinyNode);
         simResult.setPath(m_bestPath);
         simResult.setLength(m_bestPathLength);
-        simResult.setSectionTravelTime(m_sectionTime);
         simResult.setPathNodes(m_bestPathNodes);
         simResult.setVehicle(m_vehicle);
         simResult.setEnergyConsumption(m_sectionEnergyConsumption);
-        simResult.setTollCosts(m_sectionTollCosts);
         return simResult;
     }
 

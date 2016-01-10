@@ -26,9 +26,6 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     ArrayList<PathParcel> m_fastestPath;
     ArrayList<Junction> m_fastestPathNodes;
     double m_fastestPathLength;
-    ArrayList<Double> m_sectionEnergyConsumption;
-    ArrayList<Double> m_sectionTime;
-    ArrayList<Double> m_sectionTollCosts;
     ArrayList<SimPathParcel> m_simPathParcelList;
     
     public FastestPathAlgorithm(){}
@@ -51,6 +48,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         //calculateSectionEnergyConsumption();
         calculateSectionTime();
         calculateSectionTollCosts();
+        
         //Teste apagar
         calculatePathParcelList();
         //
@@ -76,14 +74,14 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         Section section = pp.getSection();
         if (section.getDirection().equals(SectionDirection.unidirectional)) {
             pp.setDirection(SimDirection.direct);
-            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), pp, calculateTravelTime(pp.getSection()));
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), pp, calculateSectionTravelTime(pp.getSection()));
 
         } else if (section.getDirection().equals(SectionDirection.bidirectional)) {
             pp.setDirection(SimDirection.direct);
-            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), pp, calculateTravelTime(pp.getSection()));
+            m_graph.insertEdge(section.getBeginningNode(), section.getEndingNode(), pp, calculateSectionTravelTime(pp.getSection()));
             PathParcel ppRev = pp.createReversePP();
             ppRev.setDirection(SimDirection.reverse);
-            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), ppRev, calculateTravelTime(ppRev.getSection()));
+            m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), ppRev, calculateSectionTravelTime(ppRev.getSection()));
         }
     }
 
@@ -93,30 +91,35 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
      * @param vehicle vehicle
      * @return return total time by section
      */
-    private double calculateTravelTime(Section section) {
+    private double calculateSectionTravelTime(Section section) {
 
         ArrayList<Segment> segmentList = section.getSegmentsList();
         double time = 0; //in seconds
         
         for (Segment it : segmentList) {
-            
-            double lenght = it.getLenght();
+            time += calculateSegmentTravelTime(section, it);
+        }
+        return time;
+
+    }
+    
+   private double calculateSegmentTravelTime(Section section, Segment segment){
+       double time;
+       double lenght = segment.getLenght();
             double travelSpeed;
             SectionTypology type = section.getSectionType();
             
             //determin if the vehicle maximum speed for this section is inferior to the section speed limit
             if (m_vehicle.getVelocityLimits().containsKey(type)
-                    && m_vehicle.getVelocityLimit(type)< it.getMax_Velocity()) {
+                    && m_vehicle.getVelocityLimit(type)< segment.getMax_Velocity()) {
                 travelSpeed = m_vehicle.getVelocityLimit(type);
             }else{
-                travelSpeed= it.getMax_Velocity();
+                travelSpeed= segment.getMax_Velocity();
             }
             
-            time += lenght * 3600 / travelSpeed;
-        }
-        return time;
-
-    }
+            time = lenght * 3600 / travelSpeed;
+            return time;
+   }
     
 //    private void calculateSectionEnergyConsumption(){
 //        m_sectionEnergyConsumption = new ArrayList<>();
@@ -125,16 +128,14 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
 //    }
     
     private void calculateSectionTime(){
-        m_sectionTime=new ArrayList<>();
-        for (PathParcel s : m_fastestPath) {
-            m_sectionTime.add(calculateTravelTime(s.getSection()));
+        for (PathParcel pp : m_fastestPath) {
+            pp.setTheoreticalTravelTime(calculateSectionTravelTime(pp.getSection()));
         }
     }
     
     private void calculateSectionTollCosts(){
-        m_sectionTollCosts=new ArrayList<>();
-        for (PathParcel s : m_fastestPath) {
-            m_sectionTollCosts.add(s.getSection().getToll());
+        for (PathParcel pp : m_fastestPath) {
+            pp.setTollCosts(pp.getSection().getToll());
         }
     }
     
@@ -152,42 +153,32 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
             }
         }
     }
-    
-    private void calculatePathParcel(Section section, ArrayList<Segment> segmentsList){
-        double time = 0; //in seconds
+   
+    private void calculatePathParcel(Section section, ArrayList<Segment> segmentsList) {
         for (Segment it : segmentsList) {
             
-            double lenght = it.getLenght();
-            double travelSpeed;
-            SectionTypology type = section.getSectionType();
-            
-            //determin if the vehicle maximum speed for this section is inferior to the section speed limit
-            if (m_vehicle.getVelocityLimits().containsKey((type))
-                    && m_vehicle.getVelocityLimit(type)< it.getMax_Velocity()) {
-                travelSpeed = m_vehicle.getVelocityLimit(type);
-            }else{
-                travelSpeed= it.getMax_Velocity();
-            }
-            
-            time += lenght * 3600 / travelSpeed;
-            if (m_simPathParcelList!=null) {
-                SimPathParcel pp = new SimPathParcel(section);
-                
-                if (section.getDirection().equals(SectionDirection.unidirectional)) {
+            SimPathParcel pp = new SimPathParcel(section);
+
+            if (section.getDirection().equals(SectionDirection.unidirectional)) {
+                pp.setDirection(SimDirection.direct);
+            } else {
+                if (m_originNode.equals(m_fastestPath.get(0).getSection().getBeginningNode())) {
                     pp.setDirection(SimDirection.direct);
-                } else{
-                    if (m_originNode.equals(m_fastestPath.get(0).getSection().getBeginningNode())) {
-                        pp.setDirection(SimDirection.direct);
-                    } else{
-                        pp.setDirection(SimDirection.reverse);
-                    }
+                } else {
+                    pp.setDirection(SimDirection.reverse);
                 }
-                pp.setSection(section);
-                pp.setSegment(it);
-                pp.setTheoreticalTravelTime(lenght * 3600 / travelSpeed);
-                m_simPathParcelList.add(pp);
             }
+            //set the segment
+            pp.setSegment(it);
+            //set the segment's theoretical travel time 
+            pp.setTheoreticalTravelTime(calculateSegmentTravelTime(section, it));
+            //set the segment's toll costs
+            pp.setTollCosts(section.getToll()/segmentsList.size());
+            //set the segment's energy consumption
+            //pp.setTheoreticalEnergyConsumption();
             
+            //adds the SimPathParcel to the list
+            m_simPathParcelList.add(pp);
         }
     }
 
@@ -196,11 +187,8 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         ResultStaticAnalysis simResult = new ResultStaticAnalysis(m_originNode, m_destinyNode);
         simResult.setPath(m_fastestPath);
         simResult.setLength(m_fastestPathLength);
-        simResult.setSectionTravelTime(m_sectionTime);
         simResult.setPathNodes(m_fastestPathNodes);
         simResult.setVehicle(m_vehicle);
-        simResult.setEnergyConsumption(m_sectionEnergyConsumption);
-        simResult.setTollCosts(m_sectionTollCosts);
         return simResult;
     }
 
