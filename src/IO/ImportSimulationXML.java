@@ -5,21 +5,23 @@
  */
 package IO;
 
-import roadnetwork.domain.TimeUnit;
 import java.io.File;
+import java.util.ArrayList;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
+import roadnetwork.domain.Junction;
+import roadnetwork.domain.Project;
+import roadnetwork.domain.TrafficPattern;
+import roadnetwork.domain.Vehicle;
 
 /**
  *
  * @author antonio
  */
-public class ImportSimulationXML implements TimeUnit {
+public class ImportSimulationXML {
 
     private final String EXPECTED_FILE_EXTENSION = "xml";
 
-    //private Project project;
-    //private Simulation simulation;
     private File file;
 
     public ImportSimulationXML() {
@@ -58,13 +60,13 @@ public class ImportSimulationXML implements TimeUnit {
         return doc;
     }
 
-    
     /**
-     * 
+     *
      * @param filePath
-     * @return 
+     * @param project
+     * @return
      */
-    public boolean read(String filePath) {
+    public boolean read(String filePath, Project project) {
         file = readFile(filePath);
         if (file == null) // FICHEIRO NÃO ENCONTRADO
         {
@@ -85,21 +87,22 @@ public class ImportSimulationXML implements TimeUnit {
 
         for (int i = 0; i < nodeSimList.getLength(); i++) {
 
+            ArrayList<TrafficPattern> ltp = new ArrayList<>();
             String simID;
             String simDesc;
 
+            //Vai buscar a Simulation
             Node nodeSim = nodeSimList.item(i);
             if (nodeSim.getNodeType() != Node.ELEMENT_NODE) {
                 return false;
             }
             Element simElement = (Element) nodeSim;
 
+            //Vai buscar ID e Description, não usados, utilizador define os seus
             simID = simElement.getAttribute("id");
             simDesc = simElement.getAttribute("description");
 
-            System.out.println(simID);
-            System.out.println(simDesc);
-
+            //Abre a Traffic List
             Node trafficList = simElement.getElementsByTagName("traffic_list").item(0);
             if (trafficList.getNodeType() != Node.ELEMENT_NODE) {
                 return false;
@@ -108,47 +111,50 @@ public class ImportSimulationXML implements TimeUnit {
 
             NodeList patternNodeList = trafElement.getElementsByTagName("traffic_pattern");
 
+            //Para cada Traffic Pattern que está na Traffic List
             for (int j = 0; j < patternNodeList.getLength(); j++) {
 
                 Node patternNode = patternNodeList.item(j);
 
                 if (patternNode.getNodeType() == Node.ELEMENT_NODE) {
-
+                    
+                    TrafficPattern tp = new TrafficPattern();
                     Element patternElement = (Element) patternNode;
-
-                    String beginNode = patternElement.getAttribute("begin");
-                    String endNode = patternElement.getAttribute("end");
-
-                    System.out.println(j + " pattern b:" + beginNode + "e:" + endNode);
-
-                    String vehicleName = patternElement.getElementsByTagName("vehicle").item(0).getTextContent();
-                    System.out.println(j + " vehicle:" + vehicleName);
-                    String arrivalRate = patternElement.getElementsByTagName("arrival_rate").item(0).getTextContent();
-                    System.out.println(j + " arrival_rate:" + arrivalRate);
-
+                    
+                    //Verifica se existe RoadNetwork
+                    if(project.getRoadNetwork()==null)
+                        return false; //Caso nao existe o o import para
+                    //Vai buscar os nodes
+                    Junction beginNode = project.getRoadNetwork().getNodeByID(
+                            patternElement.getAttribute("begin"));
+                    tp.setBeginNode(beginNode);
+                    Junction endNode = project.getRoadNetwork().getNodeByID(
+                            patternElement.getAttribute("end"));
+                    tp.setEndNode(endNode);
+                    
+                    //Verifica se existe VehicleList
+                    if(project.getVehicleList()==null)
+                        return false; //Caso nao existe o o import para
+                    //Vai buscar Vehicle
+                    String vehicleName = 
+                            patternElement.getElementsByTagName("vehicle").item(0).getTextContent();
+                    Vehicle v = project.getVehicleByName(vehicleName);
+                    tp.setVehicle(v);
+                    
+                    //ArrivalRate
+                    String arrivalRate = 
+                            patternElement.getElementsByTagName("arrival_rate").item(0).getTextContent();
+                    
+                    tp.setArrivalRate(arrivalRate);
+                    if(tp.validate()){
+                        ltp.add(tp);
+                    }
+                    //
                 }
 
             }
 
         }
         return true;
-    }
-    
-    /**
-     * converts given arrival rate (in any time unit) to vehicles per second
-     * @param arrivalString - is the read value from the data file
-     * @return return - the number of vehicles to be injected into a node per second -1 in case of and error
-     */
-    public double arrivalRateInVehiclesPerSeconds(String arrivalString){
-        String[] split = arrivalString.split(" ");
-        if(split.length!=2)
-            return -1;
-        int vehicleValue = Integer.parseInt(split[0]);
-        String[] split2 = split[1].split("/");
-        if(split2.length!=2)
-            return -1;
-        String timeUnit = split2[1];
-        int rate = Integer.parseInt(split2[0]);
-        return vehicleValue/(double)(rate*TIME_UNIT_IN_SECONDS.get(timeUnit));
     }
 }

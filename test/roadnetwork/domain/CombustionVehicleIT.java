@@ -45,7 +45,7 @@ public class CombustionVehicleIT {
     public void testGetFuel() {
         System.out.println("getFuel");
         CombustionVehicle instance = new CombustionVehicle();
-        String expResult = "";
+        String expResult = null;
         String result = instance.getFuel();
         assertEquals(expResult, result);
 
@@ -63,18 +63,6 @@ public class CombustionVehicleIT {
 
     }
 
-    /**
-     * Test of getGearRatio method, of class CombustionVehicle.
-     */
-    @Test
-    public void testGetGearRatio() {
-        System.out.println("getGearRatio");
-        CombustionVehicle instance = new CombustionVehicle();
-        HashMap<Integer, Double> expResult = null;
-        HashMap<Integer, Double> result = instance.getGearRatio();
-        assertEquals(expResult, result);
-
-    }
 
     /**
      * Test of setGearList method, of class CombustionVehicle.
