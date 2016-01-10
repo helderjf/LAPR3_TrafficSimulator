@@ -28,8 +28,8 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     double m_fastestPathLength;
     ArrayList<SimPathParcel> m_simPathParcelList;
     
-    public FastestPathAlgorithm(){}
     
+    //---Static Analysis
     @Override
     public ResultStaticAnalysis getBestPathResults(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
         m_graph = new Graph<>(true);
@@ -50,25 +50,19 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         calculateSectionTollCosts();
         
         //Teste apagar
-        calculatePathParcelList();
+        calculateSimPathParcelList();
         //
         return constructResults();
     }
     
-    @Override
-    public ArrayList<SimPathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle){
-        getBestPathResults(roadNetwork, originNode, destinyNode, vehicle);
-        calculatePathParcelList();
-        return m_simPathParcelList;
-    }
 
+    //---Graph Construction---
     private void staticGraphConstruction(RoadNetwork rn, Vehicle vehicle) {
         for (Section sec : rn.getSectionList()) {
             StaticPathParcel spp = new StaticPathParcel(sec);
             addConection(spp);
         }
     }
-    
 
     private void addConection(PathParcel pp) {
         Section section = pp.getSection();
@@ -85,6 +79,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         }
     }
 
+    //---Data Calculation---
     /**
      *
      * @param section section
@@ -139,22 +134,42 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         }
     }
     
-    private void calculatePathParcelList(){
+    //---Static Analysis Results---
+    private ResultStaticAnalysis constructResults() {
+        
+        ResultStaticAnalysis simResult = new ResultStaticAnalysis(m_originNode, m_destinyNode);
+        simResult.setPath(m_fastestPath);
+        simResult.setLength(m_fastestPathLength);
+        simResult.setPathNodes(m_fastestPathNodes);
+        simResult.setVehicle(m_vehicle);
+        return simResult;
+    }
+    
+    
+    //---Simulation Path Parcel calculations---
+    @Override
+    public ArrayList<SimPathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle){
+        getBestPathResults(roadNetwork, originNode, destinyNode, vehicle);
+        calculateSimPathParcelList();
+        return m_simPathParcelList;
+    }
+    
+    private void calculateSimPathParcelList(){
         m_simPathParcelList = new ArrayList<>();
         if (m_originNode.equals(m_fastestPath.get(0).getSection().getBeginningNode())) {
             for (PathParcel pp : m_fastestPath) {
-                calculatePathParcel(pp.getSection(), pp.getSection().getSegmentsList());
+                calculateSimPathParcel(pp.getSection(), pp.getSection().getSegmentsList());
             }
         } else {
             for (PathParcel pp : m_fastestPath) {
                 ArrayList<Segment> segmentsList=pp.getSection().getSegmentsList();
                 Collections.reverse(segmentsList);
-                calculatePathParcel(pp.getSection(), segmentsList);
+                calculateSimPathParcel(pp.getSection(), segmentsList);
             }
         }
     }
    
-    private void calculatePathParcel(Section section, ArrayList<Segment> segmentsList) {
+    private void calculateSimPathParcel(Section section, ArrayList<Segment> segmentsList) {
         for (Segment it : segmentsList) {
             
             SimPathParcel pp = new SimPathParcel(section);
@@ -182,15 +197,6 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         }
     }
 
-    private ResultStaticAnalysis constructResults() {
-        
-        ResultStaticAnalysis simResult = new ResultStaticAnalysis(m_originNode, m_destinyNode);
-        simResult.setPath(m_fastestPath);
-        simResult.setLength(m_fastestPathLength);
-        simResult.setPathNodes(m_fastestPathNodes);
-        simResult.setVehicle(m_vehicle);
-        return simResult;
-    }
 
     @Override
     public String toString() {
