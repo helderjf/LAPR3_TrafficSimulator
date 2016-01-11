@@ -111,7 +111,8 @@ public class ResultStaticAnalysis implements Result {
             
             results.append(it.getTheoreticalTravelTime()/60);
             results.append(" minutes ");
-            
+            results.append("Energy Consumption");
+            results.append(it.getTheoreticalEnergyConsumption());
             results.append("(Toll: ");
                    results.append(it.getTollCosts());
             results.append(")\n");
