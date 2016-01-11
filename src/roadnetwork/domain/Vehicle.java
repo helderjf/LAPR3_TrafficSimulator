@@ -51,6 +51,15 @@ public abstract class Vehicle {
     }
 
     /**
+     * 
+     * @param name 
+     */
+    public Vehicle(String name) {
+        this();
+        this.name = name;
+    }    
+
+    /**
      *
      * @param name name
      * @param description description

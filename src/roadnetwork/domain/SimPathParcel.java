@@ -129,4 +129,14 @@ public class SimPathParcel implements PathParcel {
         m_tollCosts = tollCosts;
     }
 
+    public double getPredictedExitTime() {
+        return m_predictedExitTime;
+    }
+
+    public void setPredictedExitTime(double time) {
+        m_predictedExitTime = time;
+    }
+    
+    
+
 }

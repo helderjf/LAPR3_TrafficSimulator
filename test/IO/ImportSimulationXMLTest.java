@@ -5,10 +5,15 @@
  */
 package IO;
 
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import roadnetwork.domain.HybridVehicle;
+import roadnetwork.domain.Junction;
+import roadnetwork.domain.Project;
+import roadnetwork.domain.RoadNetwork;
 
 /**
  *
@@ -16,11 +21,24 @@ import static org.junit.Assert.*;
  */
 public class ImportSimulationXMLTest {
 
+    Project project;
+    
     public ImportSimulationXMLTest() {
     }
 
     @Before
     public void setUp() {
+        //Creates a project with nodes that are in the file
+        project = new Project("Project One", "No descripition");
+        project.setVehicleList(new ArrayList<>());
+        project.getVehicleList().add(new HybridVehicle("Dummy01"));
+        project.getVehicleList().add(new HybridVehicle("Dummy02"));
+        project.setRoadNetwork(new RoadNetwork());
+        project.getRoadNetwork().setNodeList(new ArrayList<>());
+        project.getRoadNetwork().getNodeList().add(new Junction("n1"));
+        project.getRoadNetwork().getNodeList().add(new Junction("n2"));
+        project.getRoadNetwork().getNodeList().add(new Junction("n3"));
+        project.getRoadNetwork().getNodeList().add(new Junction("n4"));
     }
 
     @After
@@ -36,7 +54,7 @@ public class ImportSimulationXMLTest {
         String filePath = "TestSet02_Simulation.xml";
         ImportSimulationXML instance = new ImportSimulationXML();
         boolean expResult = true;
-        boolean result = instance.read(filePath);
+        boolean result = instance.read(filePath,project);
         assertEquals(expResult, result);
     }
 
@@ -49,37 +67,8 @@ public class ImportSimulationXMLTest {
         String filePath = "otherfile.xml";
         ImportSimulationXML instance = new ImportSimulationXML();
         boolean expResult = false;
-        boolean result = instance.read(filePath);
+        boolean result = instance.read(filePath,project);
         assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of arrivalRateInVehiclesPerSeconds method, of class
-     * ImportSimulationXML.
-     */
-    @Test
-    public void testArrivalRateInVehiclesPerSeconds() {
-        System.out.println("arrivalRateInVehiclesPerSeconds");
-        String arrivalString = "1 1/s";
-        ImportSimulationXML instance = new ImportSimulationXML();
-        double expResult = 1.0;
-        double result = instance.arrivalRateInVehiclesPerSeconds(arrivalString);
-        assertEquals(expResult, result, 0.0);
-        //TEST 2 (value)
-        arrivalString = "25 1/s";
-        expResult = 25.0;
-        result = instance.arrivalRateInVehiclesPerSeconds(arrivalString);
-        assertEquals(expResult, result, 0.0);
-        //TEST 3 (minutes)
-        arrivalString = "60 1/m";
-        expResult = 1.0;
-        result = instance.arrivalRateInVehiclesPerSeconds(arrivalString);
-        assertEquals(expResult, result, 0.0);
-        //TEST 3 (hours)
-        arrivalString = "1800 1/h";
-        expResult = 0.5;
-        result = instance.arrivalRateInVehiclesPerSeconds(arrivalString);
-        assertEquals(expResult, result, 0.0);
     }
 
 }

@@ -22,6 +22,10 @@ public class CombustionVehicle extends Vehicle implements Combustion {
     private HashMap<Integer,Double> gearList;
     private ArrayList<Throttle> throttleList;
 
+    public CombustionVehicle() {
+        super();
+    }
+    
     /**
      *
      * @param name name of CombustionVehicle

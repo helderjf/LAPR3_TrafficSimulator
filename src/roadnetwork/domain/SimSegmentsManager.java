@@ -13,7 +13,6 @@ import java.util.Comparator;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-
 public class SimSegmentsManager {
 
     private RoadNetwork m_roadNetwork;
@@ -65,7 +64,6 @@ public class SimSegmentsManager {
         Collections.sort(simSegsOrderedByWaitingVehicle, new WaitingTimeComparator());
 
         boolean vehicleUpdated = true;
-
         while (vehicleUpdated == true) {
 
             vehicleUpdated = false;
@@ -91,6 +89,7 @@ public class SimSegmentsManager {
                     Collections.sort(simSegsOrderedByWaitingVehicle, new WaitingTimeComparator());
                     vehicleUpdated = true;
                     moovedVehicles++;
+                    break;
                 }
 
             }
@@ -99,8 +98,33 @@ public class SimSegmentsManager {
 
     }
 
-    ArrayList<SimVehicle> injectNewVehicles(ArrayList<SimVehicle> nextStepVehicles) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    ArrayList<SimVehicle> injectCreatedVehicles(double currentTime, ArrayList<SimVehicle> nextStepVehicles) {
+
+        ArrayList<SimVehicle> droppedVehiclesList = new ArrayList();
+
+        for (SimVehicle simV : nextStepVehicles) {
+
+            SimPathParcel firstParcel = simV.getFirstSimPathParcel();
+            SimSegment firstSegment = getSimSegmentByParcel(firstParcel);
+
+            if (firstSegment.canInjectVehicle()) {
+                firstSegment.injectCreatedVehicle(currentTime, simV);
+            } else {
+                simV.drop();
+                droppedVehiclesList.add(simV);
+            }
+        }
+
+        return droppedVehiclesList;
+
+    }
+
+    ArrayList<SimVehicle> endSimulation(double time) {
+        ArrayList<SimVehicle> cruisingVehicles=new ArrayList();
+        for(SimSegment simSeg : m_simSegmentsList){
+            cruisingVehicles.addAll(simSeg.getCruisingVehicles());
+        }
+        return cruisingVehicles;
     }
 
     public class WaitingTimeComparator implements Comparator<SimSegment> {
@@ -108,7 +132,7 @@ public class SimSegmentsManager {
         @Override
         public int compare(SimSegment ss1, SimSegment ss2) {
 
-            if (ss1.getVehicleQueue().peek().getArrivalTime() >= ss2.getVehicleQueue().peek().getArrivalTime()) {
+            if (ss1.getVehicleQueue().peek().getPredictedExitTime() >= ss2.getVehicleQueue().peek().getPredictedExitTime()) {
                 return 1;
             }
             return -1;

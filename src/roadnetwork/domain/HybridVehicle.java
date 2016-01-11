@@ -14,6 +14,22 @@ import java.util.List;
  */
 public class HybridVehicle extends Vehicle implements Electric, Combustion {
 
+    /**
+     * 
+     * @param name
+     * @param description
+     * @param mass
+     * @param type
+     * @param load
+     * @param drag_Coefficient
+     * @param frontalArea
+     * @param rrc
+     * @param wheelSize
+     * @param velocityLimit
+     * @param minRPM
+     * @param maxRPM
+     * @param finalDriveRatio 
+     */
     public HybridVehicle(
             String name, 
             String description,
@@ -32,6 +48,23 @@ public class HybridVehicle extends Vehicle implements Electric, Combustion {
                 minRPM, maxRPM, finalDriveRatio);
     }
 
+    /**
+     * 
+     * @param pk
+     * @param name
+     * @param description
+     * @param mass
+     * @param type
+     * @param load
+     * @param drag_Coefficient
+     * @param frontalArea
+     * @param rrc
+     * @param wheelSize
+     * @param velocityLimit
+     * @param minRPM
+     * @param maxRPM
+     * @param finalDriveRatio 
+     */
     public HybridVehicle(
             int pk,
             String name,
@@ -50,12 +83,21 @@ public class HybridVehicle extends Vehicle implements Electric, Combustion {
         super(pk, name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
                 minRPM, maxRPM, finalDriveRatio);
     }
-
-    public HybridVehicle() {
-    }
-
-    ;
     
+    /**
+     * 
+     */
+    public HybridVehicle() {
+        super();
+    };
+
+    /**
+     * 
+     * @param name 
+     */
+    public HybridVehicle(String name) {
+        super(name);
+    }   
     
     @Override
     public double breakingEnergyRegeneration() {
