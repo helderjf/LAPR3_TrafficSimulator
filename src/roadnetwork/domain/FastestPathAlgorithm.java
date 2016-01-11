@@ -254,8 +254,10 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
             pp.setTheoreticalTravelTime(calculateSegmentTravelTime(section, it));
             //set the segment's toll costs
             pp.setTollCosts(section.getToll()/segmentsList.size());
+            //get vehicle's velocity on the current segment
+            double vehicleVelocity=travelSpeed(section, it);
             //set the segment's energy consumption
-            //pp.setTheoreticalEnergyConsumption();
+            pp.setTheoreticalEnergyConsumption(calculateSegmentEnergyConsumption(pp, it, vehicleVelocity));
             
             //adds the SimPathParcel to the list
             m_simPathParcelList.add(pp);
