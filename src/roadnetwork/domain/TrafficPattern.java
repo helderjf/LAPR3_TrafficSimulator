@@ -11,6 +11,7 @@ package roadnetwork.domain;
  */
 public class TrafficPattern implements TimeUnit {
 
+    private int m_pk;
     private Junction beginNode;
     private Junction endNode;
     private Vehicle vehicle;
@@ -84,6 +85,20 @@ public class TrafficPattern implements TimeUnit {
         return beginNode != null && endNode != null && vehicle != null && arrivalRate > 0;
     }
 
+    public int getPK() {
+        return m_pk;
+    }
+
+    public void setPK(int pk) {
+        m_pk = pk;
+    }
+    
+    public boolean hasPK(){
+        return m_pk!=0;
+    }
+
+    
+    
 
 
 }
