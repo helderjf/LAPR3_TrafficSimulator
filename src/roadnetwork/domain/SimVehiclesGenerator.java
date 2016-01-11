@@ -36,15 +36,19 @@ public class SimVehiclesGenerator {
         ArrayList<SimVehicle> simVehicleList = new ArrayList();
 
         for (TrafficPattern tp : m_trafPatternList) {
-            Vehicle v = tp.getVehicle();
-            Junction onode = tp.getBeginNode();
-            Junction dnode = tp.getEndNode();
+            
+            Vehicle vehicle = tp.getVehicle();
+            Junction originNode = tp.getBeginNode();
+            Junction destinyNode = tp.getEndNode();
             double arrivalRate = tp.getArrivalRate();//units:  1/m
-            ArrayList<SimPathParcel> path = m_bestPathAlg.getBestPath(m_roadNetwork, onode, dnode, v);
+            ArrayList<SimPathParcel> simPath = m_bestPathAlg.getBestPath(m_roadNetwork, originNode, destinyNode, vehicle);
+            
             int numberVehiclesToInject= (int) (arrivalRate/60*m_timeStep);
+            
             for(int i =0; i<numberVehiclesToInject;i++){
+                
                 double injectionTime=m_timeStep+(-log(1-random())/(1/arrivalRate));
-                simVehicleList.add(new SimVehicle(v, onode, dnode, path, injectionTime));
+                simVehicleList.add(new SimVehicle(vehicle, originNode, destinyNode, simPath, tp, injectionTime));
             }
 
         }
