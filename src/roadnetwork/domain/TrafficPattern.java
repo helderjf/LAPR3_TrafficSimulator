@@ -11,6 +11,7 @@ package roadnetwork.domain;
  */
 public class TrafficPattern {
     
+    private int m_pk;
     private Junction beginNode;
     private Junction endNode;
     private Vehicle vehicle;
@@ -33,7 +34,18 @@ public class TrafficPattern {
     public double getArrivalRate() {
         return arrivalRate;
     }
+
+    public int getPK() {
+        return m_pk;
+    }
+
+    public void setPK(int pk) {
+        m_pk = pk;
+    }
     
+    public boolean hasPK(){
+        return m_pk!=0;
+    }
     
     
     
