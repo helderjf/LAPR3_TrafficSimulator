@@ -45,22 +45,16 @@ public class SimVehicle {
     boolean endSimulation(double currentTime) {
 
         m_currentPos.setSimExitTime(currentTime);
+        double idleConsumption = m_vehicle.getIdleConsumption(getTimeIdle());
+        m_currentPos.addToSimEnergyConsumption(idleConsumption);
         m_currentPos = null;
         m_ended = true;
 
-        return true;
+        return true;//TO DO fazer validação
     }
 
     double getPredictedExitTime() {
         return m_currentPos.getPredictedExitTime();
-    }
-
-    double getWaitingTime(double currentTime) {
-        return (currentTime - m_currentPos.getSimInTime() - m_currentPos.getTheoreticalTravelTime());
-    }
-
-    public double getArrivalTime() {
-        return (m_currentPos.getSimInTime() + m_currentPos.getTheoreticalTravelTime());//TODO verificar se é mesmo isto (em princípio nao)
     }
 
     SimPathParcel getNextPos() {
@@ -74,6 +68,9 @@ public class SimVehicle {
 
         m_currentPos.setSimExitTime(currentTime);
         m_nextPos.setSimInTime(currentTime);
+
+        double idleConsumption = m_vehicle.getIdleConsumption(getTimeIdle());
+        m_currentPos.addToSimEnergyConsumption(idleConsumption);
 
         m_currentPos = m_nextPos;
         if (m_path.indexOf(m_nextPos) == m_path.size()) {
@@ -101,20 +98,29 @@ public class SimVehicle {
         m_dropped = true;
     }
 
-    public boolean isDropped(){
+    public boolean isDropped() {
         return m_dropped;
     }
-    
-   public double getdroppedTime() {
+
+    public double getdroppedTime() {
         if (m_dropped) {
             return m_injectionTime;
         }
         return -1;
     }
 
-    void setInjected() {
-        m_currentPos=m_path.get(0);
-        m_nextPos=m_path.get(1);
+    void setInjected(double time) {
+        m_currentPos = m_path.get(0);
+        m_nextPos = m_path.get(1);
+        m_currentPos.initializePredictedExitTime(m_injectionTime);
+    }
+
+    private double getTimeIdle() {
+        return (m_currentPos.getSimExitTime() - m_currentPos.getSimInTime() - m_currentPos.getTheoreticalTravelTime());
+    }
+
+    void updatePredictedExitTime(double time) {
+        m_currentPos.setPredictedExitTime(time);
     }
 
 }

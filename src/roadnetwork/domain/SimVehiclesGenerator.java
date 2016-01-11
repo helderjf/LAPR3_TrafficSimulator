@@ -23,37 +23,40 @@ public class SimVehiclesGenerator {
     private ArrayList<TrafficPattern> m_trafPatternList;
     private BestPathAlgorithm m_bestPathAlg;
 
-    public SimVehiclesGenerator(RoadNetwork roadNetwork,double timeStep, ArrayList<TrafficPattern> trafficPatternList, BestPathAlgorithm bestPathAlgorithm) {
-        m_roadNetwork=roadNetwork;
+    public SimVehiclesGenerator(RoadNetwork roadNetwork, double timeStep, ArrayList<TrafficPattern> trafficPatternList, BestPathAlgorithm bestPathAlgorithm) {
+        m_roadNetwork = roadNetwork;
         m_timeStep = timeStep;
         m_trafPatternList = trafficPatternList;
         m_bestPathAlg = bestPathAlgorithm;
 
     }
 
-    ArrayList<SimVehicle> generateNextStepVehicles() {
+    ArrayList<SimVehicle> generateNextStepVehicles(double currentTime) {
 
         ArrayList<SimVehicle> simVehicleList = new ArrayList();
 
         for (TrafficPattern tp : m_trafPatternList) {
-            
+
             Vehicle vehicle = tp.getVehicle();
             Junction originNode = tp.getBeginNode();
             Junction destinyNode = tp.getEndNode();
             double arrivalRate = tp.getArrivalRate();//units:  1/m
             ArrayList<SimPathParcel> simPath = m_bestPathAlg.getBestPath(m_roadNetwork, originNode, destinyNode, vehicle);
-            
-            int numberVehiclesToInject= (int) (arrivalRate/60*m_timeStep);
-            
-            for(int i =0; i<numberVehiclesToInject;i++){
-                
-                double injectionTime=m_timeStep+(-log(1-random())/(1/arrivalRate));
-                simVehicleList.add(new SimVehicle(vehicle, originNode, destinyNode, simPath, tp, injectionTime));
+
+            int numberVehiclesToInject = (int) (arrivalRate / 60 * m_timeStep);
+            double injectionTime = currentTime;
+            for (int i = 0; i < numberVehiclesToInject; i++) {
+                injectionTime += (-log(1 - random()) / (/*  1/  */arrivalRate));//TO DO vefificar fórmula (a do enunciado está mal)
+                if (injectionTime < (currentTime + m_timeStep)) {
+                    simVehicleList.add(new SimVehicle(vehicle, originNode, destinyNode, simPath, tp, injectionTime));
+                } else {
+                    break;
+                }
             }
 
         }
-        
-        Collections.sort(simVehicleList,new ArrivingVehiclesComparator());
+
+        Collections.sort(simVehicleList, new ArrivingVehiclesComparator());
 
         return simVehicleList;
     }
@@ -63,11 +66,12 @@ public class SimVehiclesGenerator {
         @Override
         public int compare(SimVehicle sv1, SimVehicle sv2) {
 
-            if (sv1.getInjectionTime() < sv2.getInjectionTime()) {
+            if (sv1.getInjectionTime() > sv2.getInjectionTime()) {
                 return 1;
-            } else {
+            } else if (sv1.getInjectionTime() < sv2.getInjectionTime()) {
                 return -1;
             }
+            return 0;
 
         }
 

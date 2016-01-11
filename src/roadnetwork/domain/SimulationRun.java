@@ -48,16 +48,16 @@ public class SimulationRun {
 
         while (m_currentTime <= m_duration) {
 
-            //remove ending vehicles from the simulation
-            m_endedVehicles.addAll(m_simSegmentsManager.popEndingVehicles(m_currentTime));
 
-            //update position of vehicles currntly on the simulation
-            m_simSegmentsManager.updateCrossingVehicles(m_currentTime);
+            //update position of vehicles currently on the simulation
+            //this will remove ending vehicles from the network
+            //and move cruising vehicles to the next segment when possible
+            m_endedVehicles.addAll(m_simSegmentsManager.updateCurrentVehicles(m_currentTime));
 
             //generate vehicles to inject in the network on this time step
-            ArrayList<SimVehicle> nextStepVehicles = m_simVehiclesGenerator.generateNextStepVehicles();
+            ArrayList<SimVehicle> nextStepVehicles = m_simVehiclesGenerator.generateNextStepVehicles(m_currentTime);
 
-            //inject generated vehicles on the network and log the ones tha were not able to be injected
+            //inject generated vehicles on the network and log the ones that were not able to be injected
             m_droppedVehicles.addAll(m_simSegmentsManager.injectCreatedVehicles(m_currentTime, nextStepVehicles));
 
             m_currentTime += m_timeStep;

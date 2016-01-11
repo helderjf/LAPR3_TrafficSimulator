@@ -30,15 +30,12 @@ public class SimSegment {
 
     }
 
-    ArrayList<SimVehicle> updateEndingVehicles(double currentTime) {
-        ArrayList<SimVehicle> endedVehicles = new ArrayList();
-
-        while (m_vehicleQueue.peek() != null && m_vehicleQueue.peek().willEndAtThisTimeStep(currentTime)) {
-
+    SimVehicle updateEndingVehicle(double currentTime) {
+        double previousExitTime=0;
+        
             m_vehicleQueue.peek().endSimulation(currentTime);
-            endedVehicles.add(m_vehicleQueue.poll());
-        }
-        return endedVehicles;
+            
+          return  m_vehicleQueue.poll();
     }
 
     SimVehicle getFirstWaitingVehicle(double currentTime) {
@@ -60,7 +57,7 @@ public class SimSegment {
         return m_direction;
     }
 
-    boolean canInjectVehicle() {
+    boolean canAddVehicle() {
         return m_vehicleQueue.size() < m_segment.getMax_Vehicles();
     }
 
@@ -70,12 +67,12 @@ public class SimSegment {
         return sv;
     }
 
-    void injectCrossingVehicle(double currentTime, SimVehicle segVehicle) {
+    void pushCrossingVehicle(double currentTime, SimVehicle segVehicle) {
         m_vehicleQueue.add(segVehicle);
     }
 
     void injectCreatedVehicle(double currentTime, SimVehicle simV) {
-        simV.setInjected();
+        simV.setInjected(currentTime);
         m_vehicleQueue.add(simV);
     }
 

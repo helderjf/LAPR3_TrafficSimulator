@@ -41,18 +41,8 @@ public class SimSegmentsManager {
         return simSegmentsList;
     }
 
-    ArrayList<SimVehicle> popEndingVehicles(double currentTime) {
-
+    public ArrayList<SimVehicle> updateCurrentVehicles(double currentTime) {
         ArrayList<SimVehicle> endedVehicles = new ArrayList();
-
-        for (SimSegment simSeg : m_simSegmentsList) {
-            endedVehicles.addAll(simSeg.updateEndingVehicles(currentTime));
-        }
-        return endedVehicles;
-    }
-
-    void updateCrossingVehicles(double currentTime) {
-        int moovedVehicles = 0;
         ArrayList<SimSegment> simSegsOrderedByWaitingVehicle = new ArrayList();
 
         for (SimSegment simSeg : m_simSegmentsList) {
@@ -61,41 +51,55 @@ public class SimSegmentsManager {
             }
         }
 
-        Collections.sort(simSegsOrderedByWaitingVehicle, new WaitingTimeComparator());
-
+        SimVehicle currSegVehicle;
+        SimPathParcel nextParcel;
+        SimSegment nextSimSeg;
         boolean vehicleUpdated = true;
-        while (vehicleUpdated == true) {
 
+        while (vehicleUpdated == true) {
             vehicleUpdated = false;
 
-            SimVehicle currSegVehicle;
-            SimPathParcel nextParcel;
-            SimSegment nextSimSeg;
+            Collections.sort(simSegsOrderedByWaitingVehicle, new WaitingTimeComparator());
+
             for (SimSegment currSimSeg : simSegsOrderedByWaitingVehicle) {
 
                 currSegVehicle = currSimSeg.getVehicleQueue().peek();
-                nextParcel = currSegVehicle.getNextPos();
-                nextSimSeg = getSimSegmentByParcel(nextParcel);
 
-                if (nextSimSeg.canInjectVehicle()) {
+                if (currSegVehicle.willEndAtThisTimeStep(currentTime)) {
+                    endedVehicles.add(currSimSeg.updateEndingVehicle(currentTime));
 
-                    currSimSeg.popCrossingVehicle(currentTime);
-                    nextSimSeg.injectCrossingVehicle(currentTime, currSegVehicle);
+                    vehicleUpdated = true;
 
                     if (currSimSeg.getFirstWaitingVehicle(currentTime) == null) {
                         simSegsOrderedByWaitingVehicle.remove(currSimSeg);
                     }
 
-                    Collections.sort(simSegsOrderedByWaitingVehicle, new WaitingTimeComparator());
+                    break;
+                }
+
+                currSegVehicle = currSimSeg.getVehicleQueue().peek();
+                nextParcel = currSegVehicle.getNextPos();
+                nextSimSeg = getSimSegmentByParcel(nextParcel);
+
+                if (nextSimSeg.canAddVehicle()) {
+
+                    currSimSeg.popCrossingVehicle(currentTime);
+                    nextSimSeg.pushCrossingVehicle(currentTime, currSegVehicle);
                     vehicleUpdated = true;
-                    moovedVehicles++;
+
+                    if (currSimSeg.getFirstWaitingVehicle(currentTime) != null) {
+                        currSimSeg.getVehicleQueue().peek().updatePredictedExitTime(currSegVehicle.getPredictedExitTime());
+                    } else {
+                        simSegsOrderedByWaitingVehicle.remove(currSimSeg);
+                    }
+
                     break;
                 }
 
             }
 
         }
-
+        return endedVehicles;
     }
 
     ArrayList<SimVehicle> injectCreatedVehicles(double currentTime, ArrayList<SimVehicle> nextStepVehicles) {
@@ -107,7 +111,7 @@ public class SimSegmentsManager {
             SimPathParcel firstParcel = simV.getFirstSimPathParcel();
             SimSegment firstSegment = getSimSegmentByParcel(firstParcel);
 
-            if (firstSegment.canInjectVehicle()) {
+            if (firstSegment.canAddVehicle()) {
                 firstSegment.injectCreatedVehicle(currentTime, simV);
             } else {
                 simV.drop();
@@ -120,8 +124,8 @@ public class SimSegmentsManager {
     }
 
     ArrayList<SimVehicle> endSimulation(double time) {
-        ArrayList<SimVehicle> cruisingVehicles=new ArrayList();
-        for(SimSegment simSeg : m_simSegmentsList){
+        ArrayList<SimVehicle> cruisingVehicles = new ArrayList();
+        for (SimSegment simSeg : m_simSegmentsList) {
             cruisingVehicles.addAll(simSeg.getCruisingVehicles());
         }
         return cruisingVehicles;
@@ -132,13 +136,13 @@ public class SimSegmentsManager {
         @Override
         public int compare(SimSegment ss1, SimSegment ss2) {
 
-            if (ss1.getVehicleQueue().peek().getPredictedExitTime() >= ss2.getVehicleQueue().peek().getPredictedExitTime()) {
+            if (ss1.getVehicleQueue().peek().getPredictedExitTime() > ss2.getVehicleQueue().peek().getPredictedExitTime()) {
                 return 1;
+            } else if (ss1.getVehicleQueue().peek().getPredictedExitTime() < ss2.getVehicleQueue().peek().getPredictedExitTime()) {
+                return -1;
             }
-            return -1;
-
+            return 0;
         }
-
     }
 
     private SimSegment getSimSegmentByParcel(SimPathParcel parcel) {
