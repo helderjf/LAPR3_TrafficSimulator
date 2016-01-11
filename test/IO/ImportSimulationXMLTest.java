@@ -14,6 +14,7 @@ import roadnetwork.domain.HybridVehicle;
 import roadnetwork.domain.Junction;
 import roadnetwork.domain.Project;
 import roadnetwork.domain.RoadNetwork;
+import roadnetwork.domain.TrafficPattern;
 
 /**
  *
@@ -35,6 +36,7 @@ public class ImportSimulationXMLTest {
         project.getVehicleList().add(new HybridVehicle("Dummy02"));
         project.setRoadNetwork(new RoadNetwork());
         project.getRoadNetwork().setNodeList(new ArrayList<>());
+        project.getRoadNetwork().getNodeList().add(new Junction("n0"));
         project.getRoadNetwork().getNodeList().add(new Junction("n1"));
         project.getRoadNetwork().getNodeList().add(new Junction("n2"));
         project.getRoadNetwork().getNodeList().add(new Junction("n3"));
@@ -53,9 +55,9 @@ public class ImportSimulationXMLTest {
         System.out.println("read");
         String filePath = "TestSet02_Simulation.xml";
         ImportSimulationXML instance = new ImportSimulationXML();
-        boolean expResult = true;
-        boolean result = instance.read(filePath,project);
-        assertEquals(expResult, result);
+        ArrayList<TrafficPattern> result = instance.read(filePath,project);
+        assertEquals("Dummy01", result.get(0).getVehicle().getName());
+        assertEquals("n0", result.get(0).getBeginNode().getJunctionId());
     }
 
     /**
@@ -66,8 +68,8 @@ public class ImportSimulationXMLTest {
         System.out.println("read");
         String filePath = "otherfile.xml";
         ImportSimulationXML instance = new ImportSimulationXML();
-        boolean expResult = false;
-        boolean result = instance.read(filePath,project);
+        ArrayList<TrafficPattern> expResult = null;
+        ArrayList<TrafficPattern> result = instance.read(filePath,project);
         assertEquals(expResult, result);
     }
 
