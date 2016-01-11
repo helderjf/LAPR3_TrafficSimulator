@@ -219,7 +219,7 @@ public class SegmentIT {
     @Test
     public void testSetMax_Vehicles() {
         System.out.println("setMax_Vehicles");
-        double max_Vehicles = 0.0;
+        int max_Vehicles = 0;
         Segment instance = new Segment();
         instance.setMax_Vehicles(max_Vehicles);
 

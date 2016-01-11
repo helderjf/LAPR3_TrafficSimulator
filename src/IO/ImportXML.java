@@ -174,7 +174,7 @@ public class ImportXML implements Import {
         segment.setLenght(Double.parseDouble(segmentLength));
         segment.setMax_Velocity(Double.parseDouble(maxVelocity));
         segment.setMin_Velocity(Double.parseDouble(minVelocity));
-        segment.setMax_Vehicles(Double.parseDouble(numberVehicles));
+        segment.setMax_Vehicles(Integer.parseInt(numberVehicles));
         
         return segment;
     }

@@ -199,4 +199,18 @@ public class Project {
         return m_activeSimulation;
     }
 
+    /**
+     * Gets a vehicle by its name
+     * @param vehicleName as a String
+     * @return returns the vehicle with that name as a Vehicle object
+     */
+    public Vehicle getVehicleByName(String vehicleName) {
+        for (Vehicle v : m_vehicleList) {
+            if(v.getName() == null ? vehicleName == null : v.getName().equals(vehicleName))
+                return v;
+        }
+        return null;
+    }
+
+    
 }

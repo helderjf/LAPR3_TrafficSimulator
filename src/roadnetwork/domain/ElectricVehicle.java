@@ -15,7 +15,7 @@ import java.util.List;
 public class ElectricVehicle extends Vehicle implements Electric {
 
     public ElectricVehicle(){
-        
+        super();
     }
     
     /**
