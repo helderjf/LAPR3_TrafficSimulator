@@ -21,7 +21,8 @@ public class SimVehicle {
     private SimPathParcel m_currentPos;
     private SimPathParcel m_nextPos;
     private double m_injectionTime;
-    private boolean ended;
+    private boolean m_ended;
+    private boolean m_dropped;
 
     public SimVehicle(Vehicle vehicle, Junction originNode, Junction destinyNode, ArrayList<SimPathParcel> simpath, TrafficPattern trafficPattern, double injectionTime) {
         m_vehicle = vehicle;
@@ -32,7 +33,8 @@ public class SimVehicle {
         m_injectionTime = injectionTime;
         m_currentPos = null;
         m_nextPos = null;
-        ended = false;
+        m_ended = false;
+        m_dropped = false;
     }
 
     boolean willEndAtThisTimeStep(double currentTime) {
@@ -44,7 +46,7 @@ public class SimVehicle {
 
         m_currentPos.setSimExitTime(currentTime);
         m_currentPos = null;
-        ended = true;
+        m_ended = true;
 
         return true;
     }
@@ -89,6 +91,30 @@ public class SimVehicle {
 
     public double getInjectionTime() {
         return m_injectionTime;
+    }
+
+    public SimPathParcel getFirstSimPathParcel() {
+        return m_path.get(0);
+    }
+
+    public void drop() {
+        m_dropped = true;
+    }
+
+    public boolean isDropped(){
+        return m_dropped;
+    }
+    
+   public double getdroppedTime() {
+        if (m_dropped) {
+            return m_injectionTime;
+        }
+        return -1;
+    }
+
+    void setInjected() {
+        m_currentPos=m_path.get(0);
+        m_nextPos=m_path.get(1);
     }
 
 }

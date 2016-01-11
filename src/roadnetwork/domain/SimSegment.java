@@ -73,4 +73,13 @@ public class SimSegment {
     void injectCrossingVehicle(double currentTime, SimVehicle segVehicle) {
         m_vehicleQueue.add(segVehicle);
     }
+
+    void injectCreatedVehicle(double currentTime, SimVehicle simV) {
+        simV.setInjected();
+        m_vehicleQueue.add(simV);
+    }
+
+    Queue<SimVehicle> getCruisingVehicles() {
+        return m_vehicleQueue;
+    }
 }

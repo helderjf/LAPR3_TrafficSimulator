@@ -23,9 +23,12 @@ public class SimulationRun {
     private SimVehiclesGenerator m_simVehiclesGenerator;
 
     private double m_currentTime;
+    
     private ArrayList<SimVehicle> m_endedVehicles;
-    private ArrayList<SimVehicle> m_rejectedVehicles;
+    private ArrayList<SimVehicle> m_droppedVehicles;
+    private ArrayList<SimVehicle> m_cruisingVehicles;
 
+    
     public SimulationRun(String name, double duration, double timeStep, RoadNetwork roadNetwork, ArrayList<TrafficPattern> trafficPattern, BestPathAlgorithm bpMethod) {
 
         m_roadNetwork = roadNetwork;
@@ -36,7 +39,8 @@ public class SimulationRun {
 
         m_currentTime = 0;
         m_endedVehicles = new ArrayList();
-        m_rejectedVehicles = new ArrayList();
+        m_cruisingVehicles = new ArrayList();
+        m_droppedVehicles = new ArrayList();
 
     }
 
@@ -54,11 +58,13 @@ public class SimulationRun {
             ArrayList<SimVehicle> nextStepVehicles = m_simVehiclesGenerator.generateNextStepVehicles();
 
             //inject generated vehicles on the network and log the ones tha were not able to be injected
-            m_rejectedVehicles.addAll(m_simSegmentsManager.injectNewVehicles(nextStepVehicles));
+            m_droppedVehicles.addAll(m_simSegmentsManager.injectCreatedVehicles(m_currentTime, nextStepVehicles));
 
             m_currentTime += m_timeStep;
 
         }
+        
+        m_cruisingVehicles = m_simSegmentsManager.endSimulation(m_duration);
 
     }
 
