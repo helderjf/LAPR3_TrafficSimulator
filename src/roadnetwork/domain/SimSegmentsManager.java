@@ -67,7 +67,7 @@ public class SimSegmentsManager {
 
                 if (currSegVehicle.willEndAtThisTimeStep(currentTime)) {
                     endedVehicles.add(currSimSeg.updateEndingVehicle(currentTime));
-
+                    
                     vehicleUpdated = true;
 
                     if (currSimSeg.getFirstWaitingVehicle(currentTime) == null) {

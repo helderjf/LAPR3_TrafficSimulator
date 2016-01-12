@@ -45,4 +45,12 @@ public class ElectricVehicle extends Vehicle implements Electric {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public double getEnergyRegenerationRatio() {
+        return energyRegenerationRatio;
+    }
+    
+    
+    
+    
+
 }

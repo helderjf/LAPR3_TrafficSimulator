@@ -46,4 +46,8 @@ public class HybridVehicle extends Vehicle implements Electric, Combustion {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public double getEnergyRegenerationRatio() {
+        return energyRegenerationRatio;
+    }
+
 }
