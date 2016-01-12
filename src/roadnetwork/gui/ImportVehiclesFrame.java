@@ -30,7 +30,7 @@ public class ImportVehiclesFrame extends javax.swing.JFrame {
             setLocationRelativeTo(null);
             setVisible(true);
         }else{
-            JOptionPane.showMessageDialog(this, "Error: Vehicles file already imported!", "Error: Import Vehicles", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(this, "Error: Vehicles file already imported!", "Error: Import Vehicles", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -64,7 +64,7 @@ public class ImportVehiclesFrame extends javax.swing.JFrame {
         if(m_importVehiclesController.importVehicles(file)){
             JOptionPane.showMessageDialog(this, "File succefully imported!", "Import Vehicles", JOptionPane.INFORMATION_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(this, "Error: Vehicles file not imported. Please try with a correct file!", "Error: Import Vehicles", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(this, "Error: Vehicles file not imported. Please try with a correct file!", "Error: Import Vehicles", JOptionPane.ERROR_MESSAGE);
         }
     }
 

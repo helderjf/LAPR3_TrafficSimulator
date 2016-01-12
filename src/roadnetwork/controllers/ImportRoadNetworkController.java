@@ -17,26 +17,28 @@ import roadnetwork.domain.Section;
  * @author Tiago
  */
 public class ImportRoadNetworkController {
-    
+
     private Manager m_manager;
-    
-    public ImportRoadNetworkController(Manager manager){
+
+    public ImportRoadNetworkController(Manager manager) {
         m_manager = manager;
     }
-    
-    public boolean canImportRoadNetwork(){
-        
+
+    public boolean canImportRoadNetwork() {
+        if (m_manager.getCurrentProject() == null) {
+            return false;
+        }
         return m_manager.getCurrentProject().canImportRoadNetwork();
     }
-    
-    public boolean importRoadNetwork(File file){
+
+    public boolean importRoadNetwork(File file) {
         ImportXML importXML = new ImportXML(file);
-        
-        String [] characteristics = importXML.importRoadNetwork();
+
+        String[] characteristics = importXML.importRoadNetwork();
         ArrayList<Junction> junctions = importXML.importNodes();
         ArrayList<Section> sections = importXML.importSections();
-        
+
         return m_manager.getCurrentProject().createRoadNetwork(characteristics[0], characteristics[1], junctions, sections);
     }
-    
+
 }

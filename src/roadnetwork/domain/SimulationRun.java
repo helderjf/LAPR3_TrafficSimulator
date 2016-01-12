@@ -73,7 +73,7 @@ public class SimulationRun {
     }
 
     public ResultSimulation getResults() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return m_runResults;
     }
 
     private void createResults() {

@@ -27,7 +27,7 @@ public class ImportRoadNetworkFrame extends javax.swing.JFrame {
             setLocationRelativeTo(null);
             setVisible(true);
         }else{
-            JOptionPane.showMessageDialog(this, "Error: Road Network file already imported!", "Error: Import Road Network", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(this, "Error: Road Network file already imported!", "Error: Import Road Network", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -41,7 +41,7 @@ public class ImportRoadNetworkFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(400, 300));
+        setPreferredSize(new java.awt.Dimension(600, 450));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -59,9 +59,9 @@ public class ImportRoadNetworkFrame extends javax.swing.JFrame {
 
     void importRoadNetwork(File file) {
         if(m_importRNController.importRoadNetwork(file)){
-            JOptionPane.showMessageDialog(this, "File succefully imported!", "Import Road Network", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "File succefully imported!", "Import Road Network", JOptionPane.INFORMATION_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(this, "Error: Road Network file not imported. Please try with a correct file!", "Error: Import Road Network", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(null, "Error: Road Network file not imported. Please try with a correct file!", "Error: Import Road Network", JOptionPane.ERROR);
         }
     }
 
