@@ -235,16 +235,43 @@ public class FastestPathAlgorithmTest {
     @Test
     public void testGetBestPathResults() {
         System.out.println("getBestPathResults");
-        RoadNetwork roadNetwork = null;
-        Junction originNode = null;
-        Junction destinyNode = null;
-        Vehicle vehicle = null;
+        
+        Junction originNode = node0;
+        Junction destinyNode = node2;
+        Vehicle vehicle = vehicle1;
         FastestPathAlgorithm instance = new FastestPathAlgorithm();
-        ResultStaticAnalysis expResult = null;
-        ResultStaticAnalysis result = instance.getBestPathResults(roadNetwork, originNode, destinyNode, vehicle);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ResultStaticAnalysis expResult = new ResultStaticAnalysis(node0,node2);
+        ResultStaticAnalysis result = instance.getBestPathResults(roadNetwork1, originNode, destinyNode, vehicle1);
+        
+        //Origin and destiny nodes verification
+        assertEquals(expResult.getOriginNode(), result.getOriginNode());
+        assertEquals(expResult.getDestinyNode(), result.getDestinyNode());
+        
+        //Path Nodes
+        ArrayList<Junction> pathNodes = new ArrayList<>();
+        pathNodes.add(node0);
+        pathNodes.add(node1);
+        pathNodes.add(node2);
+        expResult.setPathNodes(pathNodes);
+        assertEquals(expResult.getPathNodes(), result.getPathNodes());
+        
+        //Path PathParcel
+        ArrayList<PathParcel> path = new ArrayList<>();
+        StaticPathParcel pp1 = new StaticPathParcel(section1);
+        pp1.setDirection(SimDirection.direct);
+        pp1.setTheoreticalTravelTime(256);
+        pp1.setTollCosts(0);
+        //pp1.setTheoreticalEnergyConsumption();
+        StaticPathParcel pp2 = new StaticPathParcel(section2);
+        pp2.setDirection(SimDirection.direct);
+        pp2.setTheoreticalTravelTime(600);
+        pp2.setTollCosts(0);
+        //pp2.setTheoreticalEnergyConsumption();
+        path.add(pp1);
+        path.add(pp2);
+        expResult.setPath(path);
+        assertEquals(expResult.getPath().size(), result.getPath().size());
+        //assertEquals(expResult.getPath(), result.getPath());
     }
 
     /**
@@ -253,16 +280,23 @@ public class FastestPathAlgorithmTest {
     @Test
     public void testGetBestPath() {
         System.out.println("getBestPath");
-        RoadNetwork roadNetwork = null;
-        Junction originNode = null;
-        Junction destinyNode = null;
-        Vehicle vehicle = null;
+        RoadNetwork roadNetwork = roadNetwork1;
+        Junction originNode = node0;
+        Junction destinyNode = node2;
+        Vehicle vehicle = vehicle1;
         FastestPathAlgorithm instance = new FastestPathAlgorithm();
-        ArrayList<SimPathParcel> expResult = null;
         ArrayList<SimPathParcel> result = instance.getBestPath(roadNetwork, originNode, destinyNode, vehicle);
+        
+        ArrayList<SimPathParcel> expResult = new ArrayList<>();
+        SimPathParcel spp1 = new SimPathParcel(section1);
+        spp1.setDirection(SimDirection.direct);
+        SimPathParcel spp2 = new SimPathParcel(section2);
+        spp2.setDirection(SimDirection.direct);
+        expResult.add(spp1);
+        expResult.add(spp2);
+        
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -272,11 +306,9 @@ public class FastestPathAlgorithmTest {
     public void testToString() {
         System.out.println("toString");
         FastestPathAlgorithm instance = new FastestPathAlgorithm();
-        String expResult = "";
+        String expResult = "Fastest path";
         String result = instance.toString();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }
