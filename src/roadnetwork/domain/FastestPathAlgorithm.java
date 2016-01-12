@@ -143,19 +143,22 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     }
     
     private double calculateSegmentEnergyConsumption(PathParcel pp,Segment segment, double vehicleVelocity){
-        double relativeVelocityWindInfluence = relativeVelocityWindInfluence(pp.getSection(), vehicleVelocity);
+        double relativeVelocityWindInfluence = relativeVelocityWindInfluence(pp, vehicleVelocity);
         double resistanceForce = resistanceForce(pp,segment,relativeVelocityWindInfluence); 
         double work = resistanceForce * segment.getLenght();
         double segmentEnergyConsumption = work * getSFC(resistanceForce);
         return segmentEnergyConsumption;
     }
     
+    //To do considerar efeito do vento contrario qd o veiculo se desloca no sentido reverse
     //Influence of Wind Velocity
-    private double relativeVelocityWindInfluence(Section section, double vehicleVelocity)
+    private double relativeVelocityWindInfluence(PathParcel pp, double vehicleVelocity)
     {
-        Wind w = section.getWind();
+        Wind w = pp.getSection().getWind();
         double windSpeed = w.getVelocity();
         double windAngle = w.getAngle();
+        double relativeVelocity;
+        //verificar a direcção do vento
         
         return vehicleVelocity + windSpeed * Math.cos(windAngle);      
     }
