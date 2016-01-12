@@ -11,7 +11,7 @@ package roadnetwork.domain;
  */
 public interface Electric{
     
-    public double breakingEnergyRegeneration();
+    public double breakingEnergyRegeneration(double breakingForce);
 
     
 }

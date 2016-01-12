@@ -257,6 +257,7 @@ public class DataAccessObject {
             String name,
             String description,
             String type,
+            String fuel,
             double mass,
             double load,
             double dragCoefficient,
@@ -264,8 +265,8 @@ public class DataAccessObject {
             double rcc,
             double wheelSize,
             double finalDriveRatio,
-            double maxRPM,
-            double minRPM) {
+            double minRPM,
+            double maxRPM) {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -274,21 +275,22 @@ public class DataAccessObject {
             }
 
             //create statement
-            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_VEHICLE(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_VEHICLE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             statement.setInt(1, projectPK);
             statement.setString(2, name);
             statement.setString(3, description);
             statement.setString(4, type);
-            statement.setDouble(5, mass);
-            statement.setDouble(6, load);
-            statement.setDouble(7, dragCoefficient);
-            statement.setDouble(8, frontalArea);
-            statement.setDouble(9, rcc);
-            statement.setDouble(10, wheelSize);
-            statement.setDouble(11, finalDriveRatio);
-            statement.setDouble(12, maxRPM);
+            statement.setString(5, fuel);
+            statement.setDouble(6, mass);
+            statement.setDouble(7, load);
+            statement.setDouble(8, dragCoefficient);
+            statement.setDouble(9, frontalArea);
+            statement.setDouble(10, rcc);
+            statement.setDouble(11, wheelSize);
+            statement.setDouble(12, finalDriveRatio);
             statement.setDouble(13, minRPM);
-            statement.registerOutParameter(14, Types.INTEGER);
+            statement.setDouble(14, maxRPM);
+            statement.registerOutParameter(15, Types.INTEGER);
 
             //execute statement
             statement.execute();
@@ -341,31 +343,7 @@ public class DataAccessObject {
                 }
             }
 
-            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_COMBUSTION_V(?,?)}");
-            statement.setInt(1, vehiclePK);
-            statement.setString(2, fuel);
-
-            //execute statement
-            statement.execute();
-
-            return 1;
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
-        }
-
-    }
-
-    public int saveNewHybridVehicle(int vehiclePK) {
-        try {
-            if (m_connection == null) {
-                if (!connect()) {
-                    return -1;//returns -1 so the caller knows the connection failed
-                }
-            }
-
-            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_HYBRID_V(?)}");
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_COMBUSTION_V(?)}");
             statement.setInt(1, vehiclePK);
 
             //execute statement
@@ -380,7 +358,7 @@ public class DataAccessObject {
 
     }
 
-    public int saveNewElectricVehicle(int vehiclePK) {
+    public int saveNewHybridVehicle(int vehiclePK, double energyRegenerationRatio) {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -388,8 +366,33 @@ public class DataAccessObject {
                 }
             }
 
-            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_ELECTRIC_V(?)}");
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_HYBRID_V(?,?)}");
             statement.setInt(1, vehiclePK);
+            statement.setDouble(2, energyRegenerationRatio);
+
+            //execute statement
+            statement.execute();
+
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+
+    }
+
+    public int saveNewElectricVehicle(int vehiclePK, double energyRegenerationRatio) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_ELECTRIC_V(?,?)}");
+            statement.setInt(1, vehiclePK);
+            statement.setDouble(2, energyRegenerationRatio);
 
             //execute statement
             statement.execute();

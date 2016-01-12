@@ -190,6 +190,7 @@ public class ProjectWriter {
                 vehicle.getName(),
                 vehicle.getDescription(),
                 vehicle.getType(),
+                vehicle.getFuel(),
                 vehicle.getMass(),
                 vehicle.getLoad(),
                 vehicle.getDragCoefficient(),
@@ -197,8 +198,8 @@ public class ProjectWriter {
                 vehicle.getRcc(),
                 vehicle.getWheelSize(),
                 vehicle.getFinalDriveRatio(),
-                vehicle.getMaxRPM(),
-                vehicle.getMinRPM()
+                vehicle.getMinRPM(),
+                vehicle.getMaxRPM()
         );
 
         if (vehiclePK == -1) {
@@ -250,26 +251,26 @@ public class ProjectWriter {
     }
 
     private boolean saveNewHybridVehicle(Vehicle vehicle) {
-        if (m_dao.saveNewHybridVehicle(vehicle.getPK()) != 1) {
+        if (m_dao.saveNewHybridVehicle(vehicle.getPK(),((HybridVehicle)vehicle).getEnergyRegenerationRatio()) != 1) {
             return false;
         }
         return true;
     }
 
     private boolean saveNewElectricVehicle(Vehicle vehicle) {
-        if (m_dao.saveNewElectricVehicle(vehicle.getPK()) != 1) {
+        if (m_dao.saveNewElectricVehicle(vehicle.getPK(),((ElectricVehicle)vehicle).getEnergyRegenerationRatio()) != 1) {
             return false;
         }
         return true;
     }
 
     private boolean saveNewVehicleGears(Vehicle vehicle) {
-//        ArrayList<Double> gears = ((CombustionVehicle) vehicle).getGearList();//TO DO alterar para a interface cmobustion, quando soublermos se o hybrid tambem vai ter gears
-//        for (Double ratio : gears) {
-//            if (m_dao.saveNewVehicleGear(vehicle.getPK(), gears.indexOf(ratio) + 1, ratio) != 1) {
-//                return false;
-//            }
-//        }
+        HashMap<Integer,Double> gears = vehicle.getGearList();
+        for (Integer gear : gears.keySet()) {
+            if (m_dao.saveNewVehicleGear(vehicle.getPK(), gear, gears.get(gear)) != 1) {
+                return false;
+            }
+        }
         return true;
     }
 

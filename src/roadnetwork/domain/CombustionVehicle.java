@@ -18,115 +18,21 @@ import java.util.Objects;
  */
 public class CombustionVehicle extends Vehicle implements Combustion {
 
-    private String fuel;
-    private HashMap<Integer,Double> gearList;
-    private ArrayList<Throttle> throttleList;
+
 
     public CombustionVehicle() {
         super();
     }
-    
-    /**
-     *
-     * @param name name of CombustionVehicle
-     * @param description description of Vehicle
-     * @param mass mass of CombustionVehicle
-     * @param type type of CombustionVehicle
-     * @param load load of CombustionVehicle
-     * @param drag_Coefficient drag_Coefficient of CombustionVehicle
-     * @param frontalArea
-     * @param rrc rrc of CombustionVehicle
-     * @param wheelSize wheelSize of CombustionVehicle
-     * @param velocityLimit velocityLimit of CombustionVehicle
-     * @param fuel fuel of CombustionVehicle
-     * @param minRPM minRPM of CombustionVehicle
-     * @param maxRPM maxRPM of CombustionVehicle
-     * @param finalDriveRatio finalDriveRatio of CombustionVehicle
-     * @param gearList
-     * @param throttleList
-     */
-    public CombustionVehicle(String name, String description, double mass, String type, double load,
-            double drag_Coefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit,
-            double minRPM, double maxRPM,
-            double finalDriveRatio, String fuel, HashMap<Integer,Double> gearList, ArrayList<Throttle> throttleList) {
-        super(name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
-                minRPM, maxRPM, finalDriveRatio);
-        this.fuel = fuel;
-        this.gearList = gearList;
-        this.throttleList = throttleList;
+
+    public CombustionVehicle(int m_pk, String name, String description, String type, String fuel, double mass, double load, double dragCoefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, double minRPM, double maxRPM, double finalDriveRatio, HashMap<Integer, Double> gearList, ArrayList<Throttle> throttleList) {
+        super(m_pk, name, description, type, fuel, mass, load, dragCoefficient, frontalArea, rrc, wheelSize, velocityLimit, minRPM, maxRPM, finalDriveRatio, gearList, throttleList);
     }
 
-    public CombustionVehicle(
-            int pk,
-            String name,
-            String description,
-            double mass,
-            String type,
-            double load,
-            double drag_Coefficient,
-            double frontalArea,
-            double rrc,
-            double wheelSize,
-            HashMap<SectionTypology, Double> velocityLimit,
-            double minRPM,
-            double maxRPM,
-            double finalDriveRatio,
-            String fuel,
-            HashMap<Integer,Double> gearList,
-            ArrayList<Throttle> throttleList) {
-
-        super(pk, name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
-                minRPM, maxRPM, finalDriveRatio);
-        this.fuel = fuel;
-        this.gearList = gearList;
-        this.throttleList = throttleList;
-    }
-
-    public CombustionVehicle(String fuel) {
-        this.fuel = fuel;
-    }
-
-    /**
-     *
-     * @return fuel of CombustionVehicle
-     */
-    public String getFuel() {
-        return fuel;
-    }
-
-    /**
-     *
-     * @param fuel fuel
-     */
-    public void setFuel(String fuel) {
-        this.fuel = fuel;
-    }
-
-    /**
-     *
-     * @return gearList
-     */
-    public HashMap<Integer,Double> getGearList() {
-        return gearList;
-    }
-
-    /**
-     *
-     * @param gearList
-     */
-    public void setGearList(HashMap<Integer,Double> gearList) {
-        this.gearList = gearList;
-    }
-
-    public ArrayList<Throttle> getThrottleList() {
-        return throttleList;
-    }
-
-    public void setThrottleList(ArrayList<Throttle> throttleList) {
-        this.throttleList = throttleList;
+    public CombustionVehicle(String name, String description, String type, String fuel, double mass, double load, double dragCoefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, double minRPM, double maxRPM, double finalDriveRatio, HashMap<Integer, Double> gearList, ArrayList<Throttle> throttleList) {
+        super(name, description, type, fuel, mass, load, dragCoefficient, frontalArea, rrc, wheelSize, velocityLimit, minRPM, maxRPM, finalDriveRatio, gearList, throttleList);
     }
     
-    
+
 
     /**
      *
@@ -151,47 +57,6 @@ public class CombustionVehicle extends Vehicle implements Combustion {
         return true;
     }
 
-    @Override
-    public List<EngineEfficiency> getEngineEfficiency() {
-        
-        //EngineEfficiency engineEfficiency = new EngineEfficiency();
-        ArrayList<EngineEfficiency> engineEfficiencyList = new ArrayList<>();
-        
-        
-        //preenche a lista com todos as performances
-        for (int key_idGear : gearList.keySet()) {  
-        
-            for(Throttle throttle : throttleList)
-            {
-                for(Regime regime : throttle.getRegimeList())
-                {
-                    EngineEfficiency engineEfficiency = new EngineEfficiency();
-                    engineEfficiency.setGear(key_idGear);
-                    engineEfficiency.setGearRatio(gearList.get(key_idGear));
-                    engineEfficiency.setThrottleRatio(throttle.getID());
-                    engineEfficiency.setTorque(regime.getTorque());
-                    engineEfficiency.setM_sfc(regime.getSfc());
-                    engineEfficiency.setM_rpmLow(regime.getRPMLow());
-                    engineEfficiency.setM_rpmHigh(regime.getRPMHigh());
-                      
-                    engineEfficiency.setResult(gearList.get(key_idGear)*regime.getTorque());
-                    engineEfficiencyList.add(engineEfficiency);
-                }           
-            }     
-        }
-        
-        //ordena a lista em ordem crescente por performance
-        Collections.sort(engineEfficiencyList, new Comparator<EngineEfficiency>() 
-        {
-             @Override
-             public int compare(EngineEfficiency lhs, EngineEfficiency rhs) {
 
-               return Double.valueOf(lhs.getResult()).compareTo(rhs.getResult());
-              }
-         });
-
-        
-        return engineEfficiencyList;
-    }
 
 }

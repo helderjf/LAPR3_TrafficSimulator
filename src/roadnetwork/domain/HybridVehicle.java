@@ -5,6 +5,7 @@
  */
 package roadnetwork.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,99 +15,39 @@ import java.util.List;
  */
 public class HybridVehicle extends Vehicle implements Electric, Combustion {
 
-    /**
-     * 
-     * @param name
-     * @param description
-     * @param mass
-     * @param type
-     * @param load
-     * @param drag_Coefficient
-     * @param frontalArea
-     * @param rrc
-     * @param wheelSize
-     * @param velocityLimit
-     * @param minRPM
-     * @param maxRPM
-     * @param finalDriveRatio 
-     */
-    public HybridVehicle(
-            String name, 
-            String description,
-            double mass, 
-            String type, 
-            double load,
-            double drag_Coefficient,
-            double frontalArea, 
-            double rrc, 
-            double wheelSize,
-            HashMap<SectionTypology, Double> velocityLimit,
-            double minRPM,
-            double maxRPM,
-            double finalDriveRatio) {
-        super(name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
-                minRPM, maxRPM, finalDriveRatio);
-    }
+    protected double energyRegenerationRatio;
 
     /**
-     * 
-     * @param pk
-     * @param name
-     * @param description
-     * @param mass
-     * @param type
-     * @param load
-     * @param drag_Coefficient
-     * @param frontalArea
-     * @param rrc
-     * @param wheelSize
-     * @param velocityLimit
-     * @param minRPM
-     * @param maxRPM
-     * @param finalDriveRatio 
-     */
-    public HybridVehicle(
-            int pk,
-            String name,
-            String description,
-            double mass,
-            String type,
-            double load,
-            double drag_Coefficient,
-            double frontalArea,
-            double rrc,
-            double wheelSize,
-            HashMap<SectionTypology, Double> velocityLimit,
-            double minRPM,
-            double maxRPM,
-            double finalDriveRatio) {
-        super(pk, name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
-                minRPM, maxRPM, finalDriveRatio);
-    }
-    
-    /**
-     * 
+     *
      */
     public HybridVehicle() {
         super();
-    };
+    }
 
-    /**
-     * 
-     * @param name 
-     */
-    public HybridVehicle(String name) {
-        super(name);
-    }   
-    
+    ;
+
+    public HybridVehicle(int m_pk, String name, String description, String type, String fuel, double mass, double load, double dragCoefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, double minRPM, double maxRPM, double finalDriveRatio, HashMap<Integer, Double> gearList, ArrayList<Throttle> throttleList, double energyRegenerationRatio) {
+        super(m_pk, name, description, type, fuel, mass, load, dragCoefficient, frontalArea, rrc, wheelSize, velocityLimit, minRPM, maxRPM, finalDriveRatio, gearList, throttleList);
+        this.energyRegenerationRatio = energyRegenerationRatio;
+    }
+
+    public HybridVehicle(String name, String description, String type, String fuel, double mass, double load, double dragCoefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, double minRPM, double maxRPM, double finalDriveRatio, HashMap<Integer, Double> gearList, ArrayList<Throttle> throttleList, double energyRegenerationRatio) {
+        super(name, description, type, fuel, mass, load, dragCoefficient, frontalArea, rrc, wheelSize, velocityLimit, minRPM, maxRPM, finalDriveRatio, gearList, throttleList);
+        this.energyRegenerationRatio = energyRegenerationRatio;
+    }
+
     @Override
-    public double breakingEnergyRegeneration() {
+    public double breakingEnergyRegeneration(double breakingForce) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<EngineEfficiency> getEngineEfficiency() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public double getEnergyRegenerationRatio() {
+        return energyRegenerationRatio;
     }
 
 }
