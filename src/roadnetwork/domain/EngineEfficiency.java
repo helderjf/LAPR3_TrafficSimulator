@@ -25,7 +25,7 @@ public class EngineEfficiency {
     private double gearRatio;
 
     //Results of gear ratio * torque in a certain gear and throttle ratio
-    private double result;
+    //private double result;
     
 
     public int getGear() {
@@ -44,13 +44,13 @@ public class EngineEfficiency {
         this.throttleRatio = throttleRatio;
     }
 
-    public double getResult() {
-        return result;
-    }
+//    public double getResult() {
+//        return result;
+//    }
 
-    public void setResult(double result) {
-        this.result = result;
-    }
+//    public void setResult(double result) {
+//        this.result = result;
+//    }
 
     public double getTorque() {
         return torque;

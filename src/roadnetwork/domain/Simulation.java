@@ -14,7 +14,7 @@ import roadnetwork.state.SimulationStateCreated;
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public class Simulation {
-    
+
     private int m_pk;
     private String m_name;
     private String m_description;
@@ -27,12 +27,48 @@ public class Simulation {
 
     Simulation(String name, String description) {
         m_name = name;
-        m_description=description;
+        m_description = description;
         m_state = new SimulationStateCreated(this);
     }
 
     public String getName() {
         return m_name;
+    }
+
+    public int getPK() {
+        return m_pk;
+    }
+
+    public String getDescription() {
+        return m_description;
+    }
+
+    public boolean xmlImported() {
+        return m_state.xmlImported(this);
+    }
+
+    public ArrayList<TrafficPattern> getTrafficPatternList() {
+        return m_trafficPatternList;
+    }
+
+    public void setName(String m_name) {
+        this.m_name = m_name;
+    }
+    
+    public void setPK(int m_pk) {
+        this.m_pk = m_pk;
+    }
+
+    public void setDescription(String m_description) {
+        this.m_description = m_description;
+    }
+
+    public void setState(SimulationState m_state) {
+        this.m_state = m_state;
+    }
+
+    public void setTrafficPatternList(ArrayList<TrafficPattern> m_trafficPatternList) {
+        this.m_trafficPatternList = m_trafficPatternList;
     }
 
     private SimulationState SimulationStateCreated(Simulation aThis) {
@@ -44,13 +80,7 @@ public class Simulation {
     }
 
     public SimulationRun newSimulationRun(RoadNetwork roadNetwork, String runName, double runDuration, double runTimeStep, BestPathAlgorithm bpm) {
-        return new SimulationRun(runName,runDuration,runTimeStep,roadNetwork, m_trafficPatternList,bpm);
+        return new SimulationRun(runName, runDuration, runTimeStep, roadNetwork, m_trafficPatternList, bpm);
     }
 
-    
-    
-    
-    
-    
-    
 }

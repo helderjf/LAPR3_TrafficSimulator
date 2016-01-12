@@ -39,6 +39,7 @@ public class MainFrame extends javax.swing.JFrame {
     private BestPathAnalysisFrame m_bestPathAnalysisFrame;
     private VehicleComparisonFrame m_vehicleComparisonFrame;
     private ImportRoadNetworkFrame m_importRoadNetworkFrame;
+    private CreateSimulationFrame m_createSimulationFrame;
 
     /**
      * Creates new form JanelaPrincipal
@@ -91,6 +92,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void vehicleComparison() {
         m_vehicleComparisonFrame = new VehicleComparisonFrame(this);
         revalidate();
+    }
+    
+    private void createSimulation() {
+       m_createSimulationFrame = new CreateSimulationFrame(this);
     }
 
     private void saveProject() {
@@ -275,6 +280,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu7.setText("Simulations");
 
         jMenuItem9.setText("Create Simulation");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem9);
 
         jMenuItem12.setText("Open Simulation");
@@ -505,6 +515,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         runSimulation();
     }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        createSimulation();
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
