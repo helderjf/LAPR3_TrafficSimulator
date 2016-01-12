@@ -5,6 +5,7 @@
  */
 package roadnetwork.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -15,20 +16,23 @@ import java.util.Objects;
  */
 public abstract class Vehicle {
 
-    private int m_pk;
-    private String name;
-    private String description;
-    private String type;
-    private double mass;
-    private double load;
-    private double dragCoefficient;
-    private double frontalArea;
-    private double rrc;
-    private double wheelSize;
-    private HashMap<SectionTypology, Double> velocityLimit;
-    private double minRPM;
-    private double maxRPM;
-    private double finalDriveRatio;
+    protected int m_pk;
+    protected String name;
+    protected String description;
+    protected String type;
+    protected String fuel;
+    protected double mass;
+    protected double load;
+    protected double dragCoefficient;
+    protected double frontalArea;
+    protected double rrc;
+    protected double wheelSize;
+    protected HashMap<SectionTypology, Double> velocityLimit;
+    protected double minRPM;
+    protected double maxRPM;
+    protected double finalDriveRatio;
+    protected HashMap<Integer, Double> gearList;
+    protected ArrayList<Throttle> throttleList;
 
     /**
      *
@@ -37,8 +41,9 @@ public abstract class Vehicle {
         this.m_pk = 0;
         this.name = "";
         this.description = "";
-        this.mass = 0;
         this.type = "";
+        this.fuel = "";
+        this.mass = 0;
         this.load = 0;
         this.dragCoefficient = 0;
         this.frontalArea = 0;
@@ -48,44 +53,87 @@ public abstract class Vehicle {
         this.minRPM = 0;
         this.maxRPM = 0;
         this.finalDriveRatio = 0;
+        this.gearList = new HashMap();
+        this.throttleList = new ArrayList();
     }
 
     /**
-     * 
-     * @param name 
+     *
+     * @param name
      */
     public Vehicle(String name) {
         this();
         this.name = name;
-    }    
+    }
 
     /**
      *
-     * @param name name
-     * @param description description
-     * @param mass mass
-     * @param type type
-     * @param load load
-     * @param drag_Coefficient drag coefficient
+     * @param m_pk
+     * @param name
+     * @param description
+     * @param type
+     * @param fuel
+     * @param mass
+     * @param load
+     * @param dragCoefficient
      * @param frontalArea
-     * @param rrc rrc
-     * @param wheelSize wheelSize diameter
+     * @param rrc
+     * @param wheelSize
      * @param velocityLimit
-     * @param minRPM minRPM
-     * @param maxRPM maxRPM
-     * @param finalDriveRatio finalDriveRatio
+     * @param minRPM
+     * @param maxRPM
+     * @param finalDriveRatio
+     * @param gearList
+     * @param throttleList
      */
-    public Vehicle(String name, String description, double mass, String type, double load, double drag_Coefficient,
-            double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit,
-            double minRPM, double maxRPM, double finalDriveRatio) {
+    public Vehicle(int m_pk, String name, String description, String type, String fuel, double mass, double load, double dragCoefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, double minRPM, double maxRPM, double finalDriveRatio, HashMap<Integer, Double> gearList, ArrayList<Throttle> throttleList) {
+        this.m_pk = m_pk;
+        this.name = name;
+        this.description = description;
+        this.type = type;
+        this.fuel = fuel;
+        this.mass = mass;
+        this.load = load;
+        this.dragCoefficient = dragCoefficient;
+        this.frontalArea = frontalArea;
+        this.rrc = rrc;
+        this.wheelSize = wheelSize;
+        this.velocityLimit = velocityLimit;
+        this.minRPM = minRPM;
+        this.maxRPM = maxRPM;
+        this.finalDriveRatio = finalDriveRatio;
+        this.gearList = gearList;
+        this.throttleList = throttleList;
+    }
 
+    /**
+     *
+     * @param name
+     * @param description
+     * @param type
+     * @param fuel
+     * @param mass
+     * @param load
+     * @param dragCoefficient
+     * @param frontalArea
+     * @param rrc
+     * @param wheelSize
+     * @param velocityLimit
+     * @param minRPM
+     * @param maxRPM
+     * @param finalDriveRatio
+     * @param gearList
+     * @param throttleList
+     */
+    public Vehicle(String name, String description, String type, String fuel, double mass, double load, double dragCoefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, double minRPM, double maxRPM, double finalDriveRatio, HashMap<Integer, Double> gearList, ArrayList<Throttle> throttleList) {
         this.m_pk = 0;
         this.name = name;
         this.description = description;
-        this.mass = mass;
         this.type = type;
+        this.fuel = fuel;
+        this.mass = mass;
         this.load = load;
-        this.dragCoefficient = drag_Coefficient;
+        this.dragCoefficient = dragCoefficient;
         this.frontalArea = frontalArea;
         this.rrc = rrc;
         this.wheelSize = wheelSize;
@@ -93,51 +141,10 @@ public abstract class Vehicle {
         this.minRPM = minRPM;
         this.maxRPM = maxRPM;
         this.finalDriveRatio = finalDriveRatio;
-
+        this.gearList = gearList;
+        this.throttleList = throttleList;
     }
 
-    public Vehicle(int pk, String name, String description, double mass, String type, double load, double drag_Coefficient,
-            double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit,
-            double minRPM, double maxRPM, double finalDriveRatio) {
-
-        this.m_pk = pk;
-        this.name = name;
-        this.description = description;
-        this.mass = mass;
-        this.type = type;
-        this.load = load;
-        this.dragCoefficient = drag_Coefficient;
-        this.frontalArea = frontalArea;
-        this.rrc = rrc;
-        this.wheelSize = wheelSize;
-        this.velocityLimit = velocityLimit;
-        this.minRPM = minRPM;
-        this.maxRPM = maxRPM;
-        this.finalDriveRatio = finalDriveRatio;
-
-    }
-
-    /**
-     *
-     * @param v Vechicle copy
-     */
-    public Vehicle(Vehicle v)//TO DO alterar isto. está ao contrário
-    {
-
-        v.name = this.name;
-        v.description = this.description;
-        v.mass = this.mass;
-        v.type = this.type;
-        v.load = this.load;
-        v.dragCoefficient = this.dragCoefficient;
-        v.frontalArea = this.frontalArea;
-        v.rrc = this.rrc;
-        v.wheelSize = this.wheelSize;
-        v.velocityLimit = this.velocityLimit;
-        v.minRPM = this.minRPM;
-        v.maxRPM = this.maxRPM;
-        v.finalDriveRatio = this.finalDriveRatio;
-    }
 
     /**
      *
@@ -274,11 +281,10 @@ public abstract class Vehicle {
     public void setVelocityLimits(HashMap<SectionTypology, Double> velocityLimit) {
         this.velocityLimit = velocityLimit;
     }
-    
-    public double getVelocityLimit(SectionTypology typology){
+
+    public double getVelocityLimit(SectionTypology typology) {
         return velocityLimit.get(typology);
     }
-    
 
     /**
      *
@@ -356,9 +362,63 @@ public abstract class Vehicle {
     public void setFrontalArea(double frontalArea) {
         this.frontalArea = frontalArea;
     }
+
+    public int getM_pk() {
+        return m_pk;
+    }
+
+    public void setM_pk(int m_pk) {
+        this.m_pk = m_pk;
+    }
+
+    public String getFuel() {
+        return fuel;
+    }
+
+    public void setFuel(String fuel) {
+        this.fuel = fuel;
+    }
+
+    public double getRrc() {
+        return rrc;
+    }
+
+    public void setRrc(double rrc) {
+        this.rrc = rrc;
+    }
+
+    public HashMap<SectionTypology, Double> getVelocityLimit() {
+        return velocityLimit;
+    }
+
+    public void setVelocityLimit(HashMap<SectionTypology, Double> velocityLimit) {
+        this.velocityLimit = velocityLimit;
+    }
+
+    public HashMap<Integer, Double> getGearList() {
+        return gearList;
+    }
+
+    public void setGearList(HashMap<Integer, Double> gearList) {
+        this.gearList = gearList;
+    }
+
+    public ArrayList<Throttle> getThrottleList() {
+        return throttleList;
+    }
+
+    public void setThrottleList(ArrayList<Throttle> throttleList) {
+        this.throttleList = throttleList;
+    }
+
+    
+    
+    
+    
+    
+    
     
     public abstract List<EngineEfficiency> getEngineEfficiency();
-
 
     /**
      *
@@ -417,8 +477,8 @@ public abstract class Vehicle {
 
         return 0;
     }
-    
-    public void addVelocityLimit(SectionTypology segment_type, double limit){
+
+    public void addVelocityLimit(SectionTypology segment_type, double limit) {
         velocityLimit.put(segment_type, limit);
     }
 
@@ -454,9 +514,8 @@ public abstract class Vehicle {
     public boolean hasPK() {
         return m_pk != 0;
     }
-    
-    public double getRadiusOfTire()
-    {
+
+    public double getRadiusOfTire() {
         return wheelSize / 2;
     }
 

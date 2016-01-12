@@ -5,6 +5,7 @@
  */
 package roadnetwork.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,72 +15,29 @@ import java.util.List;
  */
 public class ElectricVehicle extends Vehicle implements Electric {
 
-    public ElectricVehicle(){
+    protected double energyRegenerationRatio;
+
+    public ElectricVehicle() {
         super();
     }
-    
-    /**
-     *
-     * @param name name of Electric Vehicle
-     * @param description description of Electric Vehicle
-     * @param mass mass of Electric Vehicles
-     * @param type type of Electric Vehicles
-     * @param load load of Electric Vehicles
-     * @param drag_Coefficient drag_Coefficient of Electric Vehicles
-     * @param frontalArea
-     * @param rrc rrc of Electric Vehicles
-     * @param wheelSize wheelSize of Electric Vehicles
-     * @param velocityLimit velocityLimit of Electric Vehicles
-     * @param minRPM minRPM of Electric Vehicles
-     * @param maxRPM maxRPM of Electric Vehicles
-     * @param finalDriveRatio finalDriveRatio of Electric Vehicles
-     */
-    public ElectricVehicle(
-            String name,
-            String description,
-            double mass,
-            String type,
-            double load,
-            double drag_Coefficient,
-            double frontalArea,
-            double rrc,
-            double wheelSize,
-            HashMap<SectionTypology, Double> velocityLimit,
-            double minRPM,
-            double maxRPM,
-            double finalDriveRatio) {
-        super(name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
-                minRPM, maxRPM, finalDriveRatio);
+
+    public ElectricVehicle(int m_pk, String name, String description, String type, String fuel, double mass, double load, double dragCoefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, double minRPM, double maxRPM, double finalDriveRatio, HashMap<Integer, Double> gearList, ArrayList<Throttle> throttleList, double energyRegenerationRatio) {
+        super(m_pk, name, description, type, fuel, mass, load, dragCoefficient, frontalArea, rrc, wheelSize, velocityLimit, minRPM, maxRPM, finalDriveRatio, gearList, throttleList);
+        this.energyRegenerationRatio = energyRegenerationRatio;
     }
 
-    public ElectricVehicle(
-            int pk,
-            String name,
-            String description,
-            double mass,
-            String type,
-            double load,
-            double drag_Coefficient,
-            double frontalArea,
-            double rrc,
-            double wheelSize,
-            HashMap<SectionTypology, Double> velocityLimit,
-            double minRPM,
-            double maxRPM,
-            double finalDriveRatio) {
-        super(pk, name, description, mass, type, load, drag_Coefficient, frontalArea, rrc, wheelSize, velocityLimit,
-                minRPM, maxRPM, finalDriveRatio);
+    public ElectricVehicle(String name, String description, String type, String fuel, double mass, double load, double dragCoefficient, double frontalArea, double rrc, double wheelSize, HashMap<SectionTypology, Double> velocityLimit, double minRPM, double maxRPM, double finalDriveRatio, HashMap<Integer, Double> gearList, ArrayList<Throttle> throttleList, double energyRegenerationRatio) {
+        super(name, description, type, fuel, mass, load, dragCoefficient, frontalArea, rrc, wheelSize, velocityLimit, minRPM, maxRPM, finalDriveRatio, gearList, throttleList);
+        this.energyRegenerationRatio = energyRegenerationRatio;
     }
-
- 
 
     /**
      *
      * @return string ElectricVehicle
      */
     @Override
-    public double breakingEnergyRegeneration() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public double breakingEnergyRegeneration(double force) {
+        return energyRegenerationRatio*force;
     }
 
     @Override
