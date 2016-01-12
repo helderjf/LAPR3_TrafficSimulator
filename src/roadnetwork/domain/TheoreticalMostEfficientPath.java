@@ -97,7 +97,7 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
     }
     
     private double calculateSegmentWork(PathParcel pp,Segment segment, double vehicleVelocity){
-        double relativeVelocityWindInfluence = relativeVelocityWindInfluence(pp.getSection(), vehicleVelocity);
+        double relativeVelocityWindInfluence = relativeVelocityWindInfluence(pp, vehicleVelocity);
         double resistanceForce = resistanceForce(pp,segment,relativeVelocityWindInfluence); 
         double work = resistanceForce * segment.getLenght();
         return work;
@@ -114,7 +114,7 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
     }
     
     private double calculateSegmentEnergyConsumption(PathParcel pp,Segment segment, double vehicleVelocity){
-        double relativeVelocityWindInfluence = relativeVelocityWindInfluence(pp.getSection(), vehicleVelocity);
+        double relativeVelocityWindInfluence = relativeVelocityWindInfluence(pp, vehicleVelocity);
         double resistanceForce = resistanceForce(pp,segment,relativeVelocityWindInfluence); 
         double work = resistanceForce * segment.getLenght();
         double segmentEnergyConsumption=calculateSegmentWork(pp,segment, vehicleVelocity)*getSFC(resistanceForce);
@@ -147,34 +147,40 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
         
         return resistanceForce;
     }
-    
-    
-    
-    
-    //The vehicle will travel at the maximum speed allowed in the road or for the vehicle
-    private double vehicleVelocity(Section section, Segment segment) {
 
-        double travelSpeed;
-        SectionTypology type = section.getTypology();
-
-        //determin if the vehicle maximum speed for this section is inferior to the section speed limit
-        if (m_vehicle.getVelocityLimits().containsKey(type)
-                && m_vehicle.getVelocityLimit(type) < segment.getMax_Velocity()) {
-            travelSpeed = m_vehicle.getVelocityLimit(type);
-        } else {
-            travelSpeed = segment.getMax_Velocity();
-        }
-        return travelSpeed;
-    }
+    
+//    //The vehicle will travel at the maximum speed allowed in the road or for the vehicle
+//    private double vehicleVelocity(Section section, Segment segment) {
+//
+//        double travelSpeed;
+//        SectionTypology type = section.getTypology();
+//
+//        //determin if the vehicle maximum speed for this section is inferior to the section speed limit
+//        if (m_vehicle.getVelocityLimits().containsKey(type)
+//                && m_vehicle.getVelocityLimit(type) < segment.getMax_Velocity()) {
+//            travelSpeed = m_vehicle.getVelocityLimit(type);
+//        } else {
+//            travelSpeed = segment.getMax_Velocity();
+//        }
+//        return travelSpeed;
+//    }
     
     //Influence of Wind Velocity
-    private double relativeVelocityWindInfluence(Section section, double vehicleVelocity)
+    private double relativeVelocityWindInfluence(PathParcel pp, double vehicleVelocity)
     {
-        Wind w = section.getWind();
+        Wind w = pp.getSection().getWind();
         double windSpeed = w.getVelocity();
         double windAngle = w.getAngle();
         
-        return vehicleVelocity + windSpeed * Math.cos(windAngle);      
+        if(pp.getDirection().equals(SimDirection.direct))
+        {
+            return vehicleVelocity + windSpeed * Math.cos(windAngle); 
+        }
+        else
+        {
+            return vehicleVelocity - windSpeed * Math.cos(windAngle); 
+        }
+        
     }
     
     private double getSFC(Double resistanceForce){
