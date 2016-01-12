@@ -548,4 +548,25 @@ public abstract class Vehicle {
         return wheelSize / 2;
     }
 
+    double getIdleConsumption(double timeIdle) {
+        double rpmLow=999999;
+        double torque=0;
+        double sfc=0;
+
+        for (Throttle t : throttleList) {
+            if (t.getID().startsWith("25")) {
+                for (Regime r : t.getRegimeList()) {
+                    if(r.getRPMLow()<rpmLow){
+                        rpmLow=r.getRPMLow();
+                        torque=r.getTorque();
+                        sfc=r.getSfc();
+                    }
+                }
+            }
+        }
+        
+        return 2*3.1415*torque*(rpmLow/60)*sfc*timeIdle;
+
+    }
+
 }
