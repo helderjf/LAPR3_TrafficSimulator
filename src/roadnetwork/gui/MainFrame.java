@@ -459,18 +459,18 @@ public class MainFrame extends javax.swing.JFrame {
 
         Vehicle vehicle1 = new CombustionVehicle("dummy1", //name
                 "descricao", //descricao
-                1400, //mass
                 "car",//type
+                "gasoline",//fuel
+                1400, //mass
                 120,//load
                 0.35,//drag
                 1.8,//frontal area
                 0.01,//rcc
                 0.5,//wheel size
                 velocityLimit,//
-                5500,//max rpm
                 1000,//min rpm
+                5500,//max rpm
                 2.6,//final drive ratio
-                "gasoline",//fuel
                 gearList,
                 throttleList1);
 

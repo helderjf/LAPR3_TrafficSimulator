@@ -6,6 +6,8 @@
 package roadnetwork.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -144,7 +146,6 @@ public abstract class Vehicle {
         this.gearList = gearList;
         this.throttleList = throttleList;
     }
-
 
     /**
      *
@@ -411,14 +412,42 @@ public abstract class Vehicle {
         this.throttleList = throttleList;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    public abstract List<EngineEfficiency> getEngineEfficiency();
+    public List<EngineEfficiency> getEngineEfficiency() {
+
+        //EngineEfficiency engineEfficiency = new EngineEfficiency();
+        ArrayList<EngineEfficiency> engineEfficiencyList = new ArrayList<>();
+
+        //preenche a lista com todos as performances
+        for (int key_idGear : gearList.keySet()) {
+
+            for (Throttle throttle : throttleList) {
+                for (Regime regime : throttle.getRegimeList()) {
+                    EngineEfficiency engineEfficiency = new EngineEfficiency();
+                    engineEfficiency.setGear(key_idGear);
+                    engineEfficiency.setGearRatio(gearList.get(key_idGear));
+                    engineEfficiency.setThrottleRatio(throttle.getID());
+                    engineEfficiency.setTorque(regime.getTorque());
+                    engineEfficiency.setM_sfc(regime.getSfc());
+                    engineEfficiency.setM_rpmLow(regime.getRPMLow());
+                    engineEfficiency.setM_rpmHigh(regime.getRPMHigh());
+
+                    engineEfficiency.setResult(gearList.get(key_idGear) * regime.getTorque());
+                    engineEfficiencyList.add(engineEfficiency);
+                }
+            }
+        }
+
+        //ordena a lista em ordem crescente por performance
+        Collections.sort(engineEfficiencyList, new Comparator<EngineEfficiency>() {
+            @Override
+            public int compare(EngineEfficiency lhs, EngineEfficiency rhs) {
+
+                return Double.valueOf(lhs.getResult()).compareTo(rhs.getResult());
+            }
+        });
+
+        return engineEfficiencyList;
+    }
 
     /**
      *
