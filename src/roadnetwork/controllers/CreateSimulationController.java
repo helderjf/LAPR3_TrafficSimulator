@@ -35,13 +35,15 @@ public class CreateSimulationController {
     }
 
     public boolean simulationExists(String simulationName) {
-        if (m_project.simulationExists(simulationName)) {
+        //TODO
+        /*if (m_project.simulationExists(simulationName)) {
             return true;
         }
         if (m_project.hasPK()) {
             return m_manager.getProjectReader().simulationExists(m_project.getPK(), simulationName);
         }
-        return false;
+        return false;*/
+        return true;
     }
     
     public void setSimulation(String simulationName, String description){
@@ -49,14 +51,26 @@ public class CreateSimulationController {
     }
     
     public boolean setTrafficFile(String filepath){
-        if(filepath==null)
+        System.out.println("SOUT");
+        if(filepath==null){
+            System.out.println("File path null");
             return false;
+        }
         ImportSimulationXML r = new ImportSimulationXML();
         ArrayList<TrafficPattern> list = r.read(filepath,m_project);
-        if(list==null)
+        if(list==null){
+            System.out.println("list null");
             return false;
+        }
         m_simulation.setTrafficPatternList(list);
         m_project.setActiveSimulation(m_simulation);
-        return m_simulation.getState().setStateActive();
+        if(m_simulation.xmlImported()){
+            System.out.println("true");
+            return true;
+        }
+        else{
+            System.out.println("false");
+            return false;
+        }
     }
 }

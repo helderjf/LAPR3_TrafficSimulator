@@ -17,9 +17,10 @@ public class SimulationStateCreated extends SimulationStateImpl{
         super(simulation);
     }
     
-    public boolean setStateActive(Simulation simulation){
-        SimulationState ns = new SimulationStateActive(simulation);
-        simulation.setState(ns);
+    @Override
+    public boolean xmlImported(){
+        SimulationState ns = new SimulationStateActive(m_simulation);
+        m_simulation.setState(ns);
         return true;
     }
 }

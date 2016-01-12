@@ -74,11 +74,13 @@ public class ImportSimulationXML {
         
         if (file == null) // FICHEIRO NÃO ENCONTRADO
         {
+            System.out.println("File not found!");
             return null;
         }
         Document doc = initializeDocumentBuilder(file);
         if (doc == null) // FALHA A INICIALIZAR O DOCUMENT BUILDER
         {
+            System.out.println("Error initializing doucment builder!");
             return null;
         }
 
@@ -86,6 +88,7 @@ public class ImportSimulationXML {
 
         if (nodeSimList == null) //NÃO ENCONTROU NADA COM TAG SIMULATION
         {
+            System.out.println("TAG");
             return null;
         }
 
