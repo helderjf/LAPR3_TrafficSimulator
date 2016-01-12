@@ -9,7 +9,6 @@ import graphutils.Graph;
 import graphutils.GraphAlgorithms;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -89,7 +88,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
 
         ArrayList<Segment> segmentList = pathParcel.getSection().getSegmentsList();
 
-        double vehicleVelocity = 0;
+        double travelSpeed = 0;
         double relativeVelocityWindInfluence = 0;
         double resistanceForce = 0;
         double vehicleForce = 0;
@@ -108,8 +107,8 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
                 forceFlag = false;
                 
                 for (EngineEfficiency engineEfficiencyTemporary : engineEfficiencyList) {
-                    vehicleVelocity = vehicleVelocity(engineEfficiencyTemporary);
-                    relativeVelocityWindInfluence = relativeVelocityWindInfluence(pathParcel.getSection(), vehicleVelocity);
+                    travelSpeed = travelSpeed(pathParcel.getSection(),segment);
+                    relativeVelocityWindInfluence = relativeVelocityWindInfluence(pathParcel.getSection(), travelSpeed);
                     resistanceForce = resistanceForces(segment, relativeVelocityWindInfluence);
                     vehicleForce = vehicleForces(engineEfficiencyTemporary);
 
@@ -128,7 +127,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
                 {
 
                     consumption += segmentPowerCalculation(engineEfficiency)*
-                            3.6*engineEfficiency.getM_sfc()*calculateTravelTime(pathParcel.getSection(),vehicleVelocity);  
+                            3.6*engineEfficiency.getM_sfc()*calculateTravelTime(pathParcel.getSection(),relativeVelocityWindInfluence);  
                 }
                 
             }
@@ -144,7 +143,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
         for (Segment it : segmentList) {
             
             double lenght = it.getLenght();
-            SectionTypology type = section.getSectionType();
+            SectionTypology type = section.getTypology();
             
             time += lenght * 3600 / relativeVelocityWindInfluence(section,vehicleVelocity);
         }
@@ -204,26 +203,41 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     
     
     //The vehicle will travel at the maximum speed allowed in the road or for the vehicle
-    private double vehicleVelocity(EngineEfficiency engineEfficiency) {
+//    private double vehicleVelocity(EngineEfficiency engineEfficiency) {
+//
+//        double mediaRPM = (engineEfficiency.getM_rpmHigh() + engineEfficiency.getM_rpmLow()) / 2;
+//        
+//        double vehicleVelocity = 0;
+//        
+//        if(m_vehicle instanceof CombustionVehicle)
+//        {
+//            CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
+//            
+//            HashMap<Integer,Double> actualGearList = combustionVehicle.getGearList();
+//
+//            double gearRatio = actualGearList.get(engineEfficiency.getGear());
+//            
+//            vehicleVelocity = (2 * Math.PI * mediaRPM) / (60 * m_vehicle.getFinalDriveRatio() * gearRatio);
+//
+//        }
+// 
+//        return vehicleVelocity;
+//
+//    }
+    
+    
+    //The vehicle will travel at the maximum speed allowed in the road or for the vehicle
+    private double travelSpeed(Section section, Segment segment) {
 
-        double mediaRPM = (engineEfficiency.getM_rpmHigh() + engineEfficiency.getM_rpmLow()) / 2;
-        
-        double vehicleVelocity = 0;
-        
-        if(m_vehicle instanceof CombustionVehicle)
-        {
-            CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
-            
-            HashMap<Integer,Double> actualGearList = combustionVehicle.getGearList();
-
-            double gearRatio = actualGearList.get(engineEfficiency.getGear());
-            
-            vehicleVelocity = (2 * Math.PI * mediaRPM) / (60 * m_vehicle.getFinalDriveRatio() * gearRatio);
-
+        double travelSpeed;
+        SectionTypology type = section.getTypology();
+        if (m_vehicle.getVelocityLimits().containsKey(type)
+                && m_vehicle.getVelocityLimit(type) < segment.getMax_Velocity()) {
+            travelSpeed = m_vehicle.getVelocityLimit(type);
+        } else {
+            travelSpeed = segment.getMax_Velocity();
         }
- 
-        return vehicleVelocity;
-
+        return travelSpeed;
     }
     
     //Influence of Wind Velocity
@@ -292,7 +306,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
             
             double lenght = it.getLenght();
             double travelSpeed;
-            SectionTypology type = section.getSectionType();
+            SectionTypology type = section.getTypology();
             
             //determin if the vehicle maximum speed for this section is inferior to the section speed limit
             if (m_vehicle.getVelocityLimits().containsKey((type))

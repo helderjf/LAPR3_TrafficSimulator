@@ -13,4 +13,6 @@ public interface SimulationState {
 
     public boolean canRunSimulation();
     
+    public boolean setStateActive();
+    
 }

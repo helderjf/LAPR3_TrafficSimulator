@@ -7,6 +7,7 @@ package IO;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
 import roadnetwork.domain.Junction;
@@ -66,35 +67,37 @@ public class ImportSimulationXML {
      * @param project
      * @return
      */
-    public boolean read(String filePath, Project project) {
+    public ArrayList<TrafficPattern> read(String filePath, Project project) {
         file = readFile(filePath);
+        
+        ArrayList<TrafficPattern> ltp = new ArrayList<>();
+        
         if (file == null) // FICHEIRO NÃO ENCONTRADO
         {
-            return false;
+            return null;
         }
         Document doc = initializeDocumentBuilder(file);
         if (doc == null) // FALHA A INICIALIZAR O DOCUMENT BUILDER
         {
-            return false;
+            return null;
         }
 
         NodeList nodeSimList = doc.getElementsByTagName("Simulation");
 
         if (nodeSimList == null) //NÃO ENCONTROU NADA COM TAG SIMULATION
         {
-            return false;
+            return null;
         }
 
         for (int i = 0; i < nodeSimList.getLength(); i++) {
 
-            ArrayList<TrafficPattern> ltp = new ArrayList<>();
             String simID;
             String simDesc;
 
             //Vai buscar a Simulation
             Node nodeSim = nodeSimList.item(i);
             if (nodeSim.getNodeType() != Node.ELEMENT_NODE) {
-                return false;
+                return null;
             }
             Element simElement = (Element) nodeSim;
 
@@ -105,7 +108,7 @@ public class ImportSimulationXML {
             //Abre a Traffic List
             Node trafficList = simElement.getElementsByTagName("traffic_list").item(0);
             if (trafficList.getNodeType() != Node.ELEMENT_NODE) {
-                return false;
+                return null;
             }
             Element trafElement = (Element) trafficList;
 
@@ -123,7 +126,7 @@ public class ImportSimulationXML {
                     
                     //Verifica se existe RoadNetwork
                     if(project.getRoadNetwork()==null)
-                        return false; //Caso nao existe o o import para
+                        return null; //Caso nao existe o o import para
                     //Vai buscar os nodes
                     Junction beginNode = project.getRoadNetwork().getNodeByID(
                             patternElement.getAttribute("begin"));
@@ -134,7 +137,7 @@ public class ImportSimulationXML {
                     
                     //Verifica se existe VehicleList
                     if(project.getVehicleList()==null)
-                        return false; //Caso nao existe o o import para
+                        return null; //Caso nao existe o o import para
                     //Vai buscar Vehicle
                     String vehicleName = 
                             patternElement.getElementsByTagName("vehicle").item(0).getTextContent();
@@ -149,12 +152,11 @@ public class ImportSimulationXML {
                     if(tp.validate()){
                         ltp.add(tp);
                     }
-                    //
                 }
 
             }
 
         }
-        return true;
+        return ltp;
     }
 }

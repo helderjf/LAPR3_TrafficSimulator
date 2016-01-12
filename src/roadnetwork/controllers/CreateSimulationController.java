@@ -5,12 +5,15 @@
  */
 package roadnetwork.controllers;
 
+import IO.ImportSimulationXML;
+import java.util.ArrayList;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 import roadnetwork.domain.Simulation;
+import roadnetwork.domain.TrafficPattern;
 
 /**
- *
+ * 
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
 public class CreateSimulationController {
@@ -23,16 +26,12 @@ public class CreateSimulationController {
         m_manager = manager;
     }
 
-    public boolean projectActive() {
+    public boolean newSimulation() {
         m_project = m_manager.getCurrentProject();
         if (m_project != null) {
-            return true;
+            return m_project.canSimulate();
         }
-        return false;
-    }
-
-    public boolean newSimulation() {
-        return m_project.canSimulate();
+        return false;   
     }
 
     public boolean simulationExists(String simulationName) {
@@ -49,5 +48,15 @@ public class CreateSimulationController {
         m_simulation=m_project.newSimulation(simulationName, description);
     }
     
-
+    public boolean setTrafficFile(String filepath){
+        if(filepath==null)
+            return false;
+        ImportSimulationXML r = new ImportSimulationXML();
+        ArrayList<TrafficPattern> list = r.read(filepath,m_project);
+        if(list==null)
+            return false;
+        m_simulation.setTrafficPatternList(list);
+        m_project.setActiveSimulation(m_simulation);
+        return m_simulation.getState().setStateActive();
+    }
 }

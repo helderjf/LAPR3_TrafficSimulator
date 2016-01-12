@@ -19,13 +19,15 @@ public class SimulationStateImpl implements SimulationState{
         m_simulation = simulation;
         
     }
-
+    
     @Override
     public boolean canRunSimulation() {
         return false;
     }
-    
-    
-    
+
+    @Override
+    public boolean setStateActive() {
+        return false;
+    }
     
 }
