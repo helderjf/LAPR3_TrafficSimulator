@@ -282,9 +282,7 @@ public class Section {
         this.roadName = roadId;
     }
 
-    SectionTypology getSectionType() {
-        return typology;
-    }
+    
 
     public void setPK(int pk) {
         m_pk = pk;

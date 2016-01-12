@@ -122,7 +122,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     private double travelSpeed(Section section, Segment segment) {
         //determin if the vehicle maximum speed for this section is inferior to the section speed limit
         double travelSpeed;
-        SectionTypology type = section.getSectionType();
+        SectionTypology type = section.getTypology();
         if (m_vehicle.getVelocityLimits().containsKey(type)
                 && m_vehicle.getVelocityLimit(type) < segment.getMax_Velocity()) {
             travelSpeed = m_vehicle.getVelocityLimit(type);
