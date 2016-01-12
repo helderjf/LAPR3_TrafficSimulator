@@ -238,7 +238,7 @@ public class ProjectReader {
             while (combustionVehicles.next()) {
 
                 ArrayList<Throttle> throttleList = getThrottleList(combustionVehicles.getInt("ID_VEHICLE"));
-                ArrayList<Double> gearList = getGearList(combustionVehicles.getInt("ID_VEHICLE"));
+                HashMap<Integer,Double> gearList = getGearList(combustionVehicles.getInt("ID_VEHICLE"));
                 HashMap<SectionTypology, Double> velocityLimits = getVelocityLimits(combustionVehicles.getInt("ID_VEHICLE"));
                 if (throttleList == null
                         || gearList == null
@@ -246,25 +246,25 @@ public class ProjectReader {
                     return false;
                 }
 
-//                combustionVehiclesList.add(new CombustionVehicle(
-//                        combustionVehicles.getInt("ID_VEHICLE"),
-//                        combustionVehicles.getString("NAME"),
-//                        combustionVehicles.getString("DESCRIPTION"),
-//                        combustionVehicles.getDouble("MASS"),
-//                        combustionVehicles.getString("TYPE"),
-//                        combustionVehicles.getDouble("LOAD"),
-//                        combustionVehicles.getDouble("DRAG_COEF"),
-//                        combustionVehicles.getDouble("FRONTAL_AREA"),
-//                        combustionVehicles.getDouble("RRC"),
-//                        combustionVehicles.getDouble("WHEEL_SIZE"),
-//                        velocityLimits,
-//                        combustionVehicles.getDouble("RPM_MIN"),
-//                        combustionVehicles.getDouble("RPM_MAX"),
-//                        combustionVehicles.getDouble("FINAL_DRIVE_RATIO"),
-//                        combustionVehicles.getString("FUEL"),
-//                        gearList,
-//                        throttleList
-//                ));
+                combustionVehiclesList.add(new CombustionVehicle(
+                        combustionVehicles.getInt("ID_VEHICLE"),
+                        combustionVehicles.getString("NAME"),
+                        combustionVehicles.getString("DESCRIPTION"),
+                        combustionVehicles.getString("TYPE"),
+                        combustionVehicles.getString("FUEL"),
+                        combustionVehicles.getDouble("MASS"),
+                        combustionVehicles.getDouble("LOAD"),
+                        combustionVehicles.getDouble("DRAG_COEF"),
+                        combustionVehicles.getDouble("FRONTAL_AREA"),
+                        combustionVehicles.getDouble("RRC"),
+                        combustionVehicles.getDouble("WHEEL_SIZE"),
+                        velocityLimits,
+                        combustionVehicles.getDouble("RPM_MIN"),
+                        combustionVehicles.getDouble("RPM_MAX"),
+                        combustionVehicles.getDouble("FINAL_DRIVE_RATIO"),
+                        gearList,
+                        throttleList
+                ));
             }
 
             m_project.addVehicleList(combustionVehiclesList);
@@ -287,16 +287,17 @@ public class ProjectReader {
             ArrayList<Vehicle> hybridVehiclesList = new ArrayList();
             while (hybridVehicles.next()) {
 
-                //  ArrayList<Throttle> throttleList = getThrotleList(combustionVehicles.getInt("ID_VEHICLE"));
-                //  ArrayList<Double> gearList = getGearList(combustionVehicles.getInt("ID_VEHICLE"));
+                  ArrayList<Throttle> throttleList = getThrottleList(hybridVehicles.getInt("ID_VEHICLE"));
+                  HashMap<Integer,Double> gearList = getGearList(hybridVehicles.getInt("ID_VEHICLE"));
                 HashMap<SectionTypology, Double> velocityLimits = getVelocityLimits(hybridVehicles.getInt("ID_VEHICLE"));
 
                 hybridVehiclesList.add(new HybridVehicle(
                         hybridVehicles.getInt("ID_VEHICLE"),
                         hybridVehicles.getString("NAME"),
                         hybridVehicles.getString("DESCRIPTION"),
-                        hybridVehicles.getDouble("MASS"),
                         hybridVehicles.getString("TYPE"),
+                        hybridVehicles.getString("FUEL"),
+                        hybridVehicles.getDouble("MASS"),
                         hybridVehicles.getDouble("LOAD"),
                         hybridVehicles.getDouble("DRAG_COEF"),
                         hybridVehicles.getDouble("FRONTAL_AREA"),
@@ -305,10 +306,10 @@ public class ProjectReader {
                         velocityLimits,
                         hybridVehicles.getDouble("RPM_MIN"),
                         hybridVehicles.getDouble("RPM_MAX"),
-                        hybridVehicles.getDouble("FINAL_DRIVE_RATIO")
-                //combustionVehicles.getString("FUEL"),
-                //gearList,
-                //throttleList
+                        hybridVehicles.getDouble("FINAL_DRIVE_RATIO"),
+                        gearList,
+                        throttleList,
+                        hybridVehicles.getDouble("ENERGY_REGENERATION_RATIO")
                 ));
             }
 
@@ -333,16 +334,17 @@ public class ProjectReader {
             ArrayList<Vehicle> electricVehiclesList = new ArrayList();
             while (electricVehicles.next()) {
 
-                //  ArrayList<Throttle> throttleList = getThrotleList(combustionVehicles.getInt("ID_VEHICLE"));
-                //  ArrayList<Double> gearList = getGearList(combustionVehicles.getInt("ID_VEHICLE"));
+                  ArrayList<Throttle> throttleList = getThrottleList(electricVehicles.getInt("ID_VEHICLE"));
+                  HashMap<Integer,Double> gearList = getGearList(electricVehicles.getInt("ID_VEHICLE"));
                 HashMap<SectionTypology, Double> velocityLimits = getVelocityLimits(electricVehicles.getInt("ID_VEHICLE"));
 
                 electricVehiclesList.add(new ElectricVehicle(
                         electricVehicles.getInt("ID_VEHICLE"),
                         electricVehicles.getString("NAME"),
                         electricVehicles.getString("DESCRIPTION"),
-                        electricVehicles.getDouble("MASS"),
                         electricVehicles.getString("TYPE"),
+                        electricVehicles.getString("FUEL"),
+                        electricVehicles.getDouble("MASS"),
                         electricVehicles.getDouble("LOAD"),
                         electricVehicles.getDouble("DRAG_COEF"),
                         electricVehicles.getDouble("FRONTAL_AREA"),
@@ -351,10 +353,10 @@ public class ProjectReader {
                         velocityLimits,
                         electricVehicles.getDouble("RPM_MIN"),
                         electricVehicles.getDouble("RPM_MAX"),
-                        electricVehicles.getDouble("FINAL_DRIVE_RATIO")
-                //combustionVehicles.getString("FUEL"),
-                //gearList,
-                //throttleList
+                        electricVehicles.getDouble("FINAL_DRIVE_RATIO"),
+                        gearList,
+                        throttleList,
+                        electricVehicles.getDouble("ENERGY_REGENERATION_RATIO")
                 ));
             }
 
@@ -363,7 +365,7 @@ public class ProjectReader {
             return true;
 
         } catch (SQLException ex) {
-            System.out.println("Hybrid vehicles not retrieved");
+            System.out.println("Electric vehicles not retrieved");
             System.out.println(ex);
             return false;
         }
@@ -421,16 +423,16 @@ public class ProjectReader {
         }
     }
 
-    private ArrayList<Double> getGearList(int vehiclePK) {
+    private HashMap<Integer,Double> getGearList(int vehiclePK) {
         try {
             ResultSet gears = m_dao.getVehicleGears(vehiclePK);
             if (gears == null) {
                 return null;
             }
 
-            ArrayList<Double> gearList = new ArrayList();
+            HashMap<Integer,Double> gearList = new HashMap();
             while (gears.next()) {
-                gearList.add(gears.getDouble("RATIO"));
+                gearList.put(gears.getInt("ID_GEAR"),gears.getDouble("RATIO"));
             }
             return gearList;
 
@@ -470,10 +472,9 @@ public class ProjectReader {
     }
 
     public boolean simulationExists(int projectPK, String simulationName) {
-        if (m_dao.simulationExists(projectPK,simulationName) == 0) {
+        if (m_dao.simulationExists(projectPK, simulationName) == 0) {
             return false;
         }
         return true;
     }
 }
-

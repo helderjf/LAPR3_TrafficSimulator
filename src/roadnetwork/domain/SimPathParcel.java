@@ -14,13 +14,15 @@ public class SimPathParcel implements PathParcel {
     private Section m_section;
     private Segment m_segment;
     private SimDirection m_direction;
-    
+
     private double m_theoreticalTravelTime;
     private double m_simInTime;
     private double m_predictedExitTime;
     private double m_simExitTime;
-    
+
     private double m_theoreticalEnergyConsumption;
+    private double m_simEnergyConsumption;
+
     private double m_tollCosts;
 
     public SimPathParcel(Section section) {
@@ -92,16 +94,16 @@ public class SimPathParcel implements PathParcel {
         return m_simInTime;
     }
 
-    void setSimExitTime(double time) {
-        m_simExitTime = time;
+    void setSimInTime(double time) {
+        m_simInTime = time;
     }
 
     double getSimExitTime() {
         return m_simExitTime;
     }
 
-    void setSimInTime(double time) {
-        m_simInTime = time;
+    void setSimExitTime(double time) {
+        m_simExitTime = time;
     }
 
     @Override
@@ -127,6 +129,26 @@ public class SimPathParcel implements PathParcel {
     @Override
     public void setTollCosts(double tollCosts) {
         m_tollCosts = tollCosts;
+    }
+
+    public double getPredictedExitTime() {
+        return m_predictedExitTime;
+    }
+
+    public void setPredictedExitTime(double time) {
+        m_predictedExitTime = time;
+    }
+
+    public double getSimEnergyConsumption() {
+        return m_simEnergyConsumption;
+    }
+
+    public void addToSimEnergyConsumption(double idleCosumption) {
+        m_simEnergyConsumption = m_theoreticalEnergyConsumption+idleCosumption;
+    }
+
+    void initializePredictedExitTime(double injectionTime) {
+        m_predictedExitTime=injectionTime+m_theoreticalTravelTime;
     }
 
 }

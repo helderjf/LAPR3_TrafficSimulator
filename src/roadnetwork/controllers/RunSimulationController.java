@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import roadnetwork.domain.BestPathAlgorithm;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
+import roadnetwork.domain.ResultSimulation;
 import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.Simulation;
 import roadnetwork.domain.SimulationRun;
@@ -24,6 +25,7 @@ public class RunSimulationController {
     private Simulation m_simulation;
     private RoadNetwork m_roadNetwork;
     private SimulationRun m_simulationRun;
+    private ResultSimulation m_runResults;
 
     public RunSimulationController(Manager manager) {
 
@@ -42,17 +44,21 @@ public class RunSimulationController {
 
     }
 
-    ArrayList<BestPathAlgorithm> getBestPathMethods(){
+    public ArrayList<BestPathAlgorithm> getBestPathMethods(){
         return m_manager.getAlgorithmsList();
         
     }
     
     
-    public void setRunData(String runName, double runDuration, double runTimeStep, BestPathAlgorithm bpm){
+    public ResultSimulation setRunData(String runName, double runDuration, double runTimeStep, BestPathAlgorithm bpm){
         m_roadNetwork=m_project.getRoadNetwork();
         m_simulationRun = m_simulation.newSimulationRun(m_roadNetwork,runName,runDuration,runTimeStep,bpm);
+        
         m_simulationRun.start();
         
+        m_runResults=m_simulationRun.getResults();
+        
+        return m_runResults;
     }
     
     

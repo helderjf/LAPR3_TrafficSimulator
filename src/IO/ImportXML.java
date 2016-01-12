@@ -216,10 +216,10 @@ public class ImportXML implements Import {
                     vehicle = new HybridVehicle();
                 break;
                 default:
-                    String fuel = domElementVehicle.getElementsByTagName("fuel").item(0).getNodeValue();
-                    vehicle = new CombustionVehicle(fuel);
+                    vehicle = new CombustionVehicle();
                 break;
                 }
+        String fuel = domElementVehicle.getElementsByTagName("fuel").item(0).getNodeValue();
         String mass = domElementVehicle.getElementsByTagName("mass").item(0).getNodeValue();
         mass = mass.toLowerCase().split("kg")[0].replace(" ", "");
         String load = domElementVehicle.getElementsByTagName("load").item(0).getNodeValue();
@@ -264,7 +264,9 @@ public class ImportXML implements Import {
                 regime.setTorque(Double.parseDouble(domThrottle.getElementsByTagName("torque").item(0).getNodeValue()));
                 regime.setM_rpmLow(Double.parseDouble(domThrottle.getElementsByTagName("rpm_low").item(0).getNodeValue()));
                 regime.setM_rpmHigh(Double.parseDouble(domThrottle.getElementsByTagName("rpm_high").item(0).getNodeValue()));
-                regime.setM_sfc(Double.parseDouble(domThrottle.getElementsByTagName("SFC").item(0).getNodeValue()));
+                if (!motorization.equals("energy")){
+                    regime.setM_sfc(Double.parseDouble(domThrottle.getElementsByTagName("SFC").item(0).getNodeValue()));
+                }
                 throttle.addRegime(regime);
             }
             throttleList.add(throttle);
@@ -282,10 +284,9 @@ public class ImportXML implements Import {
         vehicle.setMinRPM(Double.parseDouble(minRpm));
         vehicle.setMaxRPM(Double.parseDouble(maxRpm));
         vehicle.setFinalDriveRatio(Double.parseDouble(finalDriveRation));
-        if(vehicle instanceof CombustionVehicle){
-            ((CombustionVehicle)vehicle).setGearList(gearList);
-            ((CombustionVehicle)vehicle).setThrottleList(throttleList);
-        }
+        vehicle.setFuel(fuel);
+        vehicle.setGearList(gearList);
+        vehicle.setThrottleList(throttleList);
         return vehicle;
     }
 }
