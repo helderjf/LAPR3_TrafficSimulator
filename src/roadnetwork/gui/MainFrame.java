@@ -66,8 +66,8 @@ public class MainFrame extends javax.swing.JFrame {
         m_copyProjectFrame = new CopyProjectFrame(this);
         revalidate();
     }
-    
-    private void importRoadNetwork(){
+
+    private void importRoadNetwork() {
         m_importRoadNetworkFrame = new ImportRoadNetworkFrame(this);
         revalidate();
     }
@@ -95,15 +95,19 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void saveProject() {
         SaveProjectController m_saveProjectController = new SaveProjectController(m_manager);
-        if(m_saveProjectController.checkProjectSaved()){
+        if (m_saveProjectController.checkProjectSaved()) {
             JOptionPane.showMessageDialog(this, "The project is already saved", "Save Project", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            if(m_saveProjectController.saveProject()){
+        } else {
+            if (m_saveProjectController.saveProject()) {
                 JOptionPane.showMessageDialog(this, "Project saved", "Save Project", JOptionPane.INFORMATION_MESSAGE);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Ther was an error! The project has not been saved!", "Save Project", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    private void runSimulation() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public Manager getManager() {
@@ -277,6 +281,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu7.add(jMenuItem12);
 
         jMenuItem13.setText("Run Simulation");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem13);
 
         jMenu8.setText("Simulation Run(s)");
@@ -349,8 +358,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-               //CREATE MOCK OBJECTS
+
+        //CREATE MOCK OBJECTS
         Junction node0 = new Junction("node0");
         Junction node1 = new Junction("node1");
         Junction node2 = new Junction("node2");
@@ -367,7 +376,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         Section section1 = new Section("E01", node0, node1, SectionTypology.regular_road, SectionDirection.bidirectional, 0, new Wind(20, 3), list1);
         section1.setToll(0);
-        
+
         Segment segment3 = new Segment(1, 100, 0, 10, 90, 0, 30);
         Segment segment4 = new Segment(2, 100, 0.5, 5, 90, 0, 20);
         ArrayList<Segment> list2 = new ArrayList();
@@ -417,13 +426,13 @@ public class MainFrame extends javax.swing.JFrame {
         roadNetwork1.setNodeList(nodeList);
         roadNetwork1.setSectionList(completeSectionList);
 
-        HashMap <SectionTypology,Double>velocityLimit = new HashMap();
+        HashMap<SectionTypology, Double> velocityLimit = new HashMap();
         velocityLimit.put(SectionTypology.highway, 60d);
-        HashMap<Integer,Double> gearList = new HashMap<>();
-        gearList.put(1,3.5);
-        gearList.put(2,2.5);
-        gearList.put(3,1.25);
-        gearList.put(4,0.9);
+        HashMap<Integer, Double> gearList = new HashMap<>();
+        gearList.put(1, 3.5);
+        gearList.put(2, 2.5);
+        gearList.put(3, 1.25);
+        gearList.put(4, 0.9);
 
         Regime r1 = new Regime(85, 1000, 2499, 8.2);
         Regime r2 = new Regime(95, 2500, 3999, 6.2);
@@ -483,15 +492,19 @@ public class MainFrame extends javax.swing.JFrame {
         projecto1.setRoadNetwork(roadNetwork1);
         projecto1.setVehicleList(vehicleList);
         projecto1.setState(new ProjectStateSimulationReady(projecto1));
-        
+
         m_manager.setCurrentProject(projecto1);
-        
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
         importRoadNetwork();
     }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        runSimulation();
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
