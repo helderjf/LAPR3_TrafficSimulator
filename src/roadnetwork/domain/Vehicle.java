@@ -442,7 +442,7 @@ public abstract class Vehicle {
             @Override
             public int compare(EngineEfficiency lhs, EngineEfficiency rhs) {
 
-                return Double.valueOf(lhs.getResult()).compareTo(rhs.getResult());
+                return Double.valueOf(lhs.getTorque()*lhs.getGearRatio()).compareTo((rhs.getTorque()*rhs.getGearRatio()));
             }
         });
 
