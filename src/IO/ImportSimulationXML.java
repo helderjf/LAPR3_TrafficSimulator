@@ -85,10 +85,10 @@ public class ImportSimulationXML {
         }
 
         NodeList nodeSimList = doc.getElementsByTagName("Simulation");
-
-        if (nodeSimList == null) //NÃO ENCONTROU NADA COM TAG SIMULATION
-        {
-            System.out.println("TAG");
+        //Caso não encontre nenhuma tag simulation
+        if(nodeSimList==null){
+            return null;
+        } else if(nodeSimList.getLength() == 0){
             return null;
         }
 
@@ -116,12 +116,19 @@ public class ImportSimulationXML {
             Element trafElement = (Element) trafficList;
 
             NodeList patternNodeList = trafElement.getElementsByTagName("traffic_pattern");
-
+            
+            //Caso não encontre traffic pattenrs
+            if(patternNodeList==null){
+                return null;
+            } else if(patternNodeList.getLength() == 0){
+                return null;
+            }
+            
             //Para cada Traffic Pattern que está na Traffic List
             for (int j = 0; j < patternNodeList.getLength(); j++) {
 
                 Node patternNode = patternNodeList.item(j);
-
+                
                 if (patternNode.getNodeType() == Node.ELEMENT_NODE) {
                     
                     TrafficPattern tp = new TrafficPattern();

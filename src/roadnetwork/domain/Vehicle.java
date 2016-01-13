@@ -235,13 +235,7 @@ public abstract class Vehicle {
         this.dragCoefficient = drag_Coefficient;
     }
 
-    /**
-     *
-     * @return rrc
-     */
-    public double getRcc() {
-        return rrc;
-    }
+    
 
     /**
      *

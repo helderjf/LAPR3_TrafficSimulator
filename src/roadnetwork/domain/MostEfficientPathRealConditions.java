@@ -48,21 +48,12 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
         
         m_bestPathLength = GraphAlgorithms.getShortestPathLength(m_graph, m_originNode, m_destinyNode, m_bestPath, m_bestPathNodes);
 
-        //calculateSectionEnergyConsumption();
-        calculateSectionTime();
-        calculateSectionTollCosts();
+        claculateStaticData();
 
         return constructResults();
     }
     
-    @Override
-    public ArrayList<SimPathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle){
-        getBestPathResults(roadNetwork, originNode, destinyNode, vehicle);
-        calculatePathParcelList();
-        return m_pathParcelList;
-    }
-
-    private void staticGraphConstruction(RoadNetwork rn, Vehicle vehicle) {
+     private void staticGraphConstruction(RoadNetwork rn, Vehicle vehicle) {
         for (Section sec : rn.getSectionList()) {
             StaticPathParcel spp = new StaticPathParcel(sec);
             addConection(spp);
@@ -82,6 +73,18 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
             PathParcel ppRev = pp.createReversePP();
             ppRev.setDirection(SimDirection.reverse);
             m_graph.insertEdge(section.getEndingNode(), section.getBeginningNode(), ppRev, calculateSectionEnergyConsumption(ppRev));
+        }
+    }
+    
+    //---Data Calculation---
+    private void claculateStaticData(){
+        for (PathParcel pp : m_bestPath) {
+            //Section's Travel Time
+            pp.setTheoreticalTravelTime(calculateSectionTravelTime(pp.getSection()));
+            //Section's Toll Costs
+            pp.setTollCosts(calculateSectionTollCosts(pp.getSection()));
+            //Section's Energy Consumption
+            pp.setTheoreticalEnergyConsumption(calculateSectionEnergyConsumption(pp));
         }
     }
     
@@ -115,11 +118,10 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
                 for (EngineEfficiency engineEfficiencyTemporary : engineEfficiencyList) {
                     travelSpeed = travelSpeed(pp.getSection(),segment);
                     relativeVelocityWindInfluence = relativeVelocityWindInfluence(pp, travelSpeed);
-                    resistanceForce = resistanceForces(pp,segment, relativeVelocityWindInfluence);
+                    resistanceForce = resistanceForces(segment, relativeVelocityWindInfluence);
                     vehicleForce = vehicleForces(engineEfficiencyTemporary,  relativeVelocityWindInfluence,  resistanceForce);
                     if(vehicleForce>resistanceForce)
                     {
-                        
                         segmentTotalForce = vehicleForce + resistanceForce;
                         segmentConsuption = segmentTotalForce * engineEfficiencyTemporary.getM_sfc() * segment.getLenght();
                     }
@@ -130,20 +132,45 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
         return sectionConsuption;
     }
     
-    private double calculateTravelTime(PathParcel pp, double vehicleVelocity){
-        ArrayList<Segment> segmentList = pp.getSection().getSegmentsList();
+//    private double calculateSegmentEnergyConsumption(){
+//    
+//    }
+    
+    private double calculateSectionTravelTime(Section section){
+        ArrayList<Segment> segmentList = section.getSegmentsList();
         double time = 0; //in seconds
         
         for (Segment it : segmentList) {
-            
-            double lenght = it.getLenght();
-            SectionTypology type = pp.getSection().getTypology();
-            
-            time += lenght * 3600 / relativeVelocityWindInfluence(pp,vehicleVelocity);
+            time += calculateSegmentTravelTime(section, it);
         }
         return time;
     }
+    
+    private double calculateSegmentTravelTime(Section section, Segment segment){
+        double time;
+        double lenght = segment.getLenght();
+        double travelSpeed = travelSpeed(section, segment);
+
+        time = lenght / travelSpeed;
+        return time;
+    }
+    
+    //The vehicle will travel at the maximum speed allowed in the road or for the vehicle
+    private double travelSpeed(Section section, Segment segment) {
+        double travelSpeed;
+        SectionTypology type = section.getTypology();
+        if (m_vehicle.getVelocityLimits().containsKey(type)
+                && m_vehicle.getVelocityLimit(type) < segment.getMax_Velocity()) {
+            travelSpeed = m_vehicle.getVelocityLimit(type);
+        } else {
+            travelSpeed = segment.getMax_Velocity();
+        }
+        return travelSpeed;
+    }
        
+    private double calculateSectionTollCosts(Section section){
+        return section.getToll();
+    }
     
     private void calculateSectionsEnergyConsumption(){
         m_sectionEnergyConsumption = new ArrayList<>();
@@ -188,40 +215,21 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     }
     
 
-    private double resistanceForces(PathParcel pp, Segment segment, double relativeVelocityWindInfluence)
+    private double resistanceForces(Segment segment, double relativeVelocityWindInfluence)
     {
-        double rrc = m_vehicle.getRcc();
-        double mass = m_vehicle.getMass();
+
+        double rrc = m_vehicle.getRrc();
+        double mass = m_vehicle.getMass()+m_vehicle.getLoad();
         double dragCoefficient = m_vehicle.getDragCoefficient();
         double frontalArea = m_vehicle.getFrontalArea();
-        double f1;
-        double f2;
-        double f3;
-
-        if (pp.getDirection().equals(SimDirection.direct)) {
-            f1 = rrc * mass * gravity * Math.cos(segment.getSlope());
-            f3 = mass * gravity * Math.sin(segment.getSlope());
-        } else{
-            f1 = -1 *rrc * mass * gravity * Math.cos(segment.getSlope());
-            f3 = -1 *mass * gravity * Math.sin(segment.getSlope());
-        }
-        f2 = 0.5 * dragCoefficient * frontalArea * densityOfAir * Math.pow(relativeVelocityWindInfluence, 2);
-
-        double resistanceForce = f1 + f2 + f3;
-
-        return resistanceForce;
-//        double rrc = m_vehicle.getRcc();
-//        double mass = m_vehicle.getMass();
-//        double dragCoefficient = m_vehicle.getDragCoefficient();
-//        double frontalArea = m_vehicle.getFrontalArea();
-//        
-//        double resistanceForcesPart1 = rrc * mass * gravity * Math.cos(segment.getSlope());
-//        double resistanceForcesPart2 = 0.5 * dragCoefficient * frontalArea * densityOfAir * Math.pow(relativeVelocityWindInfluence, 2);
-//        double resistanceForcesPart3 = mass * gravity * Math.sin(segment.getSlope());
-//        
-//        double resistanceForces = resistanceForcesPart1 + resistanceForcesPart2 + resistanceForcesPart3;
-//        
-//        return resistanceForces;
+        
+        double resistanceForcesPart1 = rrc * mass * gravity * Math.cos(segment.getSlope());
+        double resistanceForcesPart2 = 0.5 * dragCoefficient * frontalArea * densityOfAir * Math.pow(relativeVelocityWindInfluence, 2);
+        double resistanceForcesPart3 = mass * gravity * Math.sin(segment.getSlope());
+        
+        double resistanceForces = resistanceForcesPart1 + resistanceForcesPart2 + resistanceForcesPart3;
+        
+        return resistanceForces;
     }
     
     
@@ -246,20 +254,6 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
         return rpm;
     }
     
-    
-    //The vehicle will travel at the maximum speed allowed in the road or for the vehicle
-    private double travelSpeed(Section section, Segment segment) {
-
-        double travelSpeed;
-        SectionTypology type = section.getTypology();
-        if (m_vehicle.getVelocityLimits().containsKey(type)
-                && m_vehicle.getVelocityLimit(type) < segment.getMax_Velocity()) {
-            travelSpeed = m_vehicle.getVelocityLimit(type);
-        } else {
-            travelSpeed = segment.getMax_Velocity();
-        }
-        return travelSpeed;
-    }
     
     //Influence of Wind Velocity
     private double relativeVelocityWindInfluence(PathParcel pp, double vehicleVelocity)
@@ -299,19 +293,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     
 
 
-    private void calculateSectionTime(){
-        m_sectionTime=new ArrayList<>();
-        
-        //TODO
-        
-    }
     
-    private void calculateSectionTollCosts(){
-        m_sectionTollCosts=new ArrayList<>();
-        for (PathParcel pp : m_bestPath) {
-            m_sectionTollCosts.add(pp.getSection().getToll());
-        }
-    }
     
     private void calculatePathParcelList(){
         m_pathParcelList = new ArrayList<>();
@@ -380,6 +362,13 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     @Override
     public String toString() {
         return "Most Efficient Path in Real Conditions";
+    }
+    
+    @Override
+    public ArrayList<SimPathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle){
+        getBestPathResults(roadNetwork, originNode, destinyNode, vehicle);
+        calculatePathParcelList();
+        return m_pathParcelList;
     }
     
     
