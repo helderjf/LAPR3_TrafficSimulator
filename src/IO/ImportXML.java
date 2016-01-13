@@ -34,13 +34,16 @@ public class ImportXML implements Import {
     @Override
     public String[] importRoadNetwork() {
         
-        Node rootNode = xmlDocument.getDocumentElement(); 
+        /*Node rootNode = xmlDocument.getDocumentElement(); 
         NodeList nList = rootNode.getChildNodes();
+        */
+        
+        NodeList nList = xmlDocument.getElementsByTagName("Network");
         
         String[] characteristics = new String[2];
         
-        characteristics[0] = nList.item(0).getAttributes().getNamedItem("id").getNodeValue();
-        characteristics[1] = nList.item(0).getAttributes().getNamedItem("description").getNodeValue();
+        characteristics[0] = ((Element) nList.item(0)).getAttribute("id");
+        characteristics[1] = ((Element) nList.item(0)).getAttribute("description");
         
         return characteristics;
     }
@@ -56,8 +59,12 @@ public class ImportXML implements Import {
         for (int i = 0; i < nList.getLength(); i++) {
             Node childNode = nList.item(i);
             if (childNode.getNodeName().equals("node_list")) { //tratar lista de nos
+                    NodeList nodeL = childNode.getChildNodes();
                 for (int j = 0; j < childNode.getChildNodes().getLength(); j++) {
-                    list.add(new Junction(childNode.getChildNodes().item(j).getAttributes().getNamedItem("id").getNodeValue()));
+                    Node node = nodeL.item(j);
+                    if(node.hasAttributes()){
+                    list.add(new Junction(((Element)node).getAttribute("id")));
+                    }
                 }
             }
         }
@@ -94,12 +101,22 @@ public class ImportXML implements Import {
         
         ArrayList<Section> list = new ArrayList();
         
-        NodeList sectionList = xmlDocument.getElementsByTagName("section_list");
+        Node root = xmlDocument.getDocumentElement();
+        NodeList nList = root.getChildNodes();
         
-        for (int i = 0; i < sectionList.getLength(); i++) {
-            Node childNode = sectionList.item(i);
-            list.add(getSection(childNode));
+        for (int i = 0; i < nList.getLength(); i++) {
+            Node childNode = nList.item(i);
+            if (childNode.getNodeName().equals("section_list")) { //tratar lista de nos
+                    NodeList nodeL = childNode.getChildNodes();
+                for (int j = 0; j < childNode.getChildNodes().getLength(); j++) {
+                    Node node = nodeL.item(j);
+                    if(node.hasAttributes()){
+                        list.add(getSection(node));
+                    }
+                }
+            }
         }
+        
         return list;
     }
     
@@ -119,33 +136,39 @@ public class ImportXML implements Import {
         
         //definir road name
         Element domElement = (Element)node;
-        String roadName = domElement.getElementsByTagName("road").item(0).getNodeValue();
+        String roadName = domElement.getElementsByTagName("road").item(0).getFirstChild().getNodeValue();
         section.setRoadName(roadName);
         
         //definir typology
-        String typology = domElement.getElementsByTagName("typology").item(0).getNodeValue();
+        String typology = domElement.getElementsByTagName("typology").item(0).getFirstChild().getNodeValue();
+        typology = typology.replace(" ", "_");
         section.setTypology(SectionTypology.valueOf(typology));
         
         //definir typology
-        String direction = domElement.getElementsByTagName("direction").item(0).getNodeValue();
+        String direction = domElement.getElementsByTagName("direction").item(0).getFirstChild().getNodeValue();
         section.setDirection(SectionDirection.valueOf(direction));
         
         //definir Toll
-        String toll = domElement.getElementsByTagName("toll").item(0).getNodeValue();
+        String toll = domElement.getElementsByTagName("toll").item(0).getFirstChild().getNodeValue();
         section.setToll(Double.parseDouble(toll));
         
-        //definir wind
-        String wind_direction = domElement.getElementsByTagName("wind_direction").item(0).getNodeValue();
-        String wind_speed = domElement.getElementsByTagName("wind_speed").item(0).getNodeValue();
+        //definir wind //HERE!!!
+        String wind_direction = domElement.getElementsByTagName("wind_direction").item(0).getFirstChild().getNodeValue();
+        String wind_speed = domElement.getElementsByTagName("wind_speed").item(0).getFirstChild().getNodeValue();
         wind_speed = wind_speed.toLowerCase().split("m/s")[0].replace(" ", "");
-        section.setWind(new Wind(Double.parseDouble(wind_direction), Double.parseDouble(wind_speed)));  
+        double windDir = Double.parseDouble(wind_direction) * Math.PI / 180.0;
+        section.setWind(new Wind(windDir, Double.parseDouble(wind_speed)));  
         
         //definir lista de segment
         NodeList domSegmentList = domElement.getElementsByTagName("segment_list");
         ArrayList<Segment> segmentList = new ArrayList();
-        for (int i = 0; i < domSegmentList.getLength(); i++) {
-            Node segmentNode = domSegmentList.item(i);
-            segmentList.add(getSegment(segmentNode));
+        
+        NodeList nodeL = domSegmentList.item(0).getChildNodes();
+        for (int i = 0; i < nodeL.getLength(); i++) {
+            Node nodeSegment = nodeL.item(i);
+            if(nodeSegment.hasAttributes()){
+                segmentList.add(getSegment(nodeSegment));
+            }
         }
         section.setSegmentsList(segmentList);
         return section;
@@ -157,23 +180,45 @@ public class ImportXML implements Import {
         
         Element domElement = (Element) segmentNode;
         String segmentIndex = domElement.getAttribute("id");
-        String segmentHeight = domElement.getElementsByTagName("height").item(0).getNodeValue();
-        String segmentSlope = domElement.getElementsByTagName("slope").item(0).getNodeValue();
+        String segmentHeight = domElement.getElementsByTagName("height").item(0).getFirstChild().getNodeValue();
+        String segmentSlope = domElement.getElementsByTagName("slope").item(0).getFirstChild().getNodeValue();
         segmentSlope = segmentSlope.split("%")[0];
-        String segmentLength = domElement.getElementsByTagName("length").item(0).getNodeValue();
-        segmentLength = segmentLength.toLowerCase().split("km")[0].replace(" ", "");
-        String maxVelocity = domElement.getElementsByTagName("max_velocity").item(0).getNodeValue(); 
-        maxVelocity = maxVelocity.toLowerCase().split("km/h")[0].replace(" ", "");
-        String minVelocity = domElement.getElementsByTagName("min_velocity").item(0).getNodeValue(); 
-        minVelocity = minVelocity.toLowerCase().split("km/h")[0].replace(" ", "");
-        String numberVehicles = domElement.getElementsByTagName("number_vehicles").item(0).getNodeValue();
+        double slope = Math.asin(Double.parseDouble(segmentSlope)/100.0);
+        /*if(segmentSlope.startsWith("-")){
+            slope = slope * -1.0;
+        }*/
+        String segmentLength = domElement.getElementsByTagName("length").item(0).getFirstChild().getNodeValue();
+        double length;
+        if(segmentLength.toLowerCase().contains("km")){
+            segmentLength = segmentLength.toLowerCase().split("km")[0].replace(" ", "");
+            length = Double.parseDouble(segmentLength) * 1000;
+        }else{
+            length = Double.parseDouble(segmentLength.toLowerCase().split("m")[0].replace(" ", ""));
+        }
+        String maxVelocity = domElement.getElementsByTagName("max_velocity").item(0).getFirstChild().getNodeValue();
+        double max_velocity;
+        if(maxVelocity.toLowerCase().contains("km/h")){
+            maxVelocity = maxVelocity.toLowerCase().split("km/h")[0].replace(" ", "");
+            max_velocity = Double.parseDouble(maxVelocity) * 1000.0 / 3600.0;
+        }else{
+            max_velocity = Double.parseDouble(maxVelocity.toLowerCase().split("m/s")[0].replace(" ", ""));
+        }
+        String minVelocity = domElement.getElementsByTagName("min_velocity").item(0).getFirstChild().getNodeValue();
+        double min_velocity;
+        if(minVelocity.toLowerCase().contains("km/h")){
+            minVelocity = minVelocity.toLowerCase().split("km/h")[0].replace(" ", "");
+            min_velocity = Double.parseDouble(minVelocity) * 1000.0 / 3600.0;
+        }else{
+            min_velocity = Double.parseDouble(minVelocity.toLowerCase().split("m/s")[0].replace(" ", ""));
+        }
+        String numberVehicles = domElement.getElementsByTagName("number_vehicles").item(0).getFirstChild().getNodeValue();
         
         segment.setIndex(Integer.parseInt(segmentIndex));
         segment.setInitialHeight(Double.parseDouble(segmentHeight));
-        segment.setSlope(Double.parseDouble(segmentSlope));
-        segment.setLenght(Double.parseDouble(segmentLength));
-        segment.setMax_Velocity(Double.parseDouble(maxVelocity));
-        segment.setMin_Velocity(Double.parseDouble(minVelocity));
+        segment.setSlope(slope);
+        segment.setLenght(length);
+        segment.setMax_Velocity(max_velocity);
+        segment.setMin_Velocity(min_velocity);
         segment.setMax_Vehicles(Integer.parseInt(numberVehicles));
         
         return segment;
@@ -236,7 +281,7 @@ public class ImportXML implements Import {
             String segment = ((Element)velocityLimit.getChildNodes().item(0)).getElementsByTagName("segment_type").item(0).getNodeValue();
             //String limit = velocityLimit.getElementsByTagName("limit").item(0).getNodeValue();
             String limit = ((Element)velocityLimit.getChildNodes().item(0)).getElementsByTagName("limit").item(0).getNodeValue();
-            vehicle.addVelocityLimit(SectionTypology.valueOf(segment), Double.parseDouble(limit));
+            vehicle.addVelocityLimit(SectionTypology.valueOf(segment),(double) Double.parseDouble(limit) * 1000 / 3600);
         }
 
         //GET ENERGY

@@ -10,11 +10,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import roadnetwork.domain.CombustionVehicle;
 import roadnetwork.domain.HybridVehicle;
 import roadnetwork.domain.Junction;
 import roadnetwork.domain.Project;
 import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.TrafficPattern;
+import roadnetwork.domain.Vehicle;
 
 /**
  *
@@ -32,8 +34,12 @@ public class ImportSimulationXMLTest {
         //Creates a project with nodes that are in the file
         project = new Project("Project One", "No descripition");
         project.setVehicleList(new ArrayList<>());
-        project.getVehicleList().add(new HybridVehicle("Dummy01"));
-        project.getVehicleList().add(new HybridVehicle("Dummy02"));
+        Vehicle v = new CombustionVehicle();
+        v.setName("Dummy01");
+        project.getVehicleList().add(v);
+        v = new CombustionVehicle();
+        v.setName("Dummy02");
+        project.getVehicleList().add(v);
         project.setRoadNetwork(new RoadNetwork());
         project.getRoadNetwork().setNodeList(new ArrayList<>());
         project.getRoadNetwork().getNodeList().add(new Junction("n0"));
@@ -73,4 +79,17 @@ public class ImportSimulationXMLTest {
         assertEquals(expResult, result);
     }
 
+    
+    /**
+     * Test of read method, of class ImportSimulationXML.
+     */
+    @Test
+    public void testReadParsingErrors() {
+        System.out.println("read");
+        String filePath = "TestSet01_Network.xml";
+        ImportSimulationXML instance = new ImportSimulationXML();
+        ArrayList<TrafficPattern> expResult = null;
+        ArrayList<TrafficPattern> result = instance.read(filePath,project);
+        assertEquals(expResult, result);
+    }
 }
