@@ -55,13 +55,10 @@ public class Junction {
     }
 
     /**
-     * 
-     * @return hash
+     * @param junctionId the junctionId to set
      */
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        return hash;
+    public void setJunctionId(String junctionId) {
+        this.junctionId = junctionId;
     }
 
     /**
@@ -103,5 +100,7 @@ public class Junction {
     public String toString() {
         return "Node " + junctionId;
     }
+
+    
   
 }

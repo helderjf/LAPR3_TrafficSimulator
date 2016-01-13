@@ -15,13 +15,15 @@ import javax.swing.JFileChooser;
 public class ImportRoadNetworkPane extends javax.swing.JPanel {
 
     ImportRoadNetworkFrame m_ancestor;
-    
+
     /**
      * Creates new form ImportRoadNetworkPane
      */
     public ImportRoadNetworkPane(ImportRoadNetworkFrame ancestor) {
         m_ancestor = ancestor;
         initComponents();
+        initFileChooser();
+
     }
 
     /**
@@ -54,15 +56,22 @@ public class ImportRoadNetworkPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-        int returnValue = jFileChooser1.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-          File selectedFile = jFileChooser1.getSelectedFile();
-          m_ancestor.importRoadNetwork(selectedFile);
-        }
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser jFileChooser1;
     // End of variables declaration//GEN-END:variables
+
+    private void initFileChooser() {
+        int returnValue = jFileChooser1.showOpenDialog(this);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jFileChooser1.getSelectedFile();
+            this.setVisible(false);
+            m_ancestor.importRoadNetwork(selectedFile);
+        } else if (returnValue == JFileChooser.CANCEL_OPTION) {
+            this.setVisible(false);
+
+        }
+    }
 }

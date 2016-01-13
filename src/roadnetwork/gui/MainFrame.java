@@ -39,6 +39,7 @@ public class MainFrame extends javax.swing.JFrame {
     private BestPathAnalysisFrame m_bestPathAnalysisFrame;
     private VehicleComparisonFrame m_vehicleComparisonFrame;
     private ImportRoadNetworkFrame m_importRoadNetworkFrame;
+    private CreateSimulationFrame m_createSimulationFrame;
 
     /**
      * Creates new form JanelaPrincipal
@@ -91,6 +92,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void vehicleComparison() {
         m_vehicleComparisonFrame = new VehicleComparisonFrame(this);
         revalidate();
+    }
+    
+    private void createSimulation() {
+       m_createSimulationFrame = new CreateSimulationFrame(this);
     }
 
     private void saveProject() {
@@ -275,6 +280,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu7.setText("Simulations");
 
         jMenuItem9.setText("Create Simulation");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem9);
 
         jMenuItem12.setText("Open Simulation");
@@ -368,8 +378,8 @@ public class MainFrame extends javax.swing.JFrame {
         nodeList.add(node1);
         nodeList.add(node2);
 
-        Segment segment1 = new Segment(1, 100, 1.5, 3.2, 90, 0, 20);
-        Segment segment2 = new Segment(2, 148, 1.5, 3.2, 90, 0, 20);
+        Segment segment1 = new Segment(1, 100, 1.5, 3.2*1000, 90*1000/3600, 0, 20*1000/3600);
+        Segment segment2 = new Segment(2, 148, 1.5, 3.2*1000, 90*1000/3600, 0, 20*1000/3600);
         ArrayList<Segment> list1 = new ArrayList();
         list1.add(segment1);
         list1.add(segment2);
@@ -377,8 +387,8 @@ public class MainFrame extends javax.swing.JFrame {
         Section section1 = new Section("E01", node0, node1, SectionTypology.regular_road, SectionDirection.bidirectional, 0, new Wind(20, 3), list1);
         section1.setToll(0);
 
-        Segment segment3 = new Segment(1, 100, 0, 10, 90, 0, 30);
-        Segment segment4 = new Segment(2, 100, 0.5, 5, 90, 0, 20);
+        Segment segment3 = new Segment(1, 100, 0, 10*1000, 90*1000/3600, 0, 30*1000/3600);
+        Segment segment4 = new Segment(2, 100, 0.5, 5*1000, 90*1000/3600, 0, 20*1000/3600);
         ArrayList<Segment> list2 = new ArrayList();
         list2.add(segment3);
         list2.add(segment4);
@@ -392,7 +402,7 @@ public class MainFrame extends javax.swing.JFrame {
         Road road1 = new Road(1, "E01");
         road1.setSections(sectionlist1);
 
-        Segment segment5 = new Segment(1, 100, 0, 100, 120, 50, 100);
+        Segment segment5 = new Segment(1, 100, 0, 100*1000, 120*1000/3600, 50*1000/3600, 100*1000/3600);
         ArrayList<Segment> list3 = new ArrayList();
         list3.add(segment5);
         Section section3 = new Section("A01", node0, node2, SectionTypology.highway, SectionDirection.bidirectional, 12, new Wind(-5, 3), list3);
@@ -403,7 +413,7 @@ public class MainFrame extends javax.swing.JFrame {
         Road road2 = new Road(2, "A01");
         road2.setSections(sectionlist2);
 
-        Segment segment6 = new Segment(1, 100, 0.125, 10, 61, 50, 100);
+        Segment segment6 = new Segment(1, 100, 0.125, 10*1000, 61*1000/3600, 50*1000/3600, 100*1000/3600);
         ArrayList<Segment> list4 = new ArrayList();
         list4.add(segment6);
         Section section4 = new Section("A03", node1, node2, SectionTypology.highway, SectionDirection.bidirectional, 4, new Wind(-5, 3), list4);
@@ -505,6 +515,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         runSimulation();
     }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        createSimulation();
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

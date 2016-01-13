@@ -5,33 +5,33 @@
  */
 package roadnetwork.gui;
 
-import java.io.File;
 import javax.swing.JOptionPane;
-import roadnetwork.controllers.ImportVehiclesController;
+import roadnetwork.controllers.CreateSimulationController;
 
 /**
  *
- * @author josemiranda
+ * @author antonio
  */
-public class ImportVehiclesFrame extends javax.swing.JFrame {
+public class CreateSimulationFrame extends javax.swing.JFrame {
 
     MainFrame m_mainFrame;
-    private ImportVehiclesController m_importVehiclesController;
+    CreateSimulationController m_createSimulationController;
     
-    /**
-     * Creates new form JanelaImportVehicles
-     */
-    public ImportVehiclesFrame(MainFrame frame) {
-        m_mainFrame=frame;       
-        m_importVehiclesController = new ImportVehiclesController(m_mainFrame.getManager());
-        if (m_importVehiclesController.canImportVehicles()) {
+
+    public CreateSimulationFrame(MainFrame frame) {
+        m_mainFrame = frame;
+        m_createSimulationController = new CreateSimulationController(frame.getManager());
+        if(m_createSimulationController.newSimulation()){
             initComponents();
-            setContentPane(new ImportVehiclesPane(this));
+            setContentPane(new CreateSimulationPane(this));
             setLocationRelativeTo(null);
+            pack();
             setVisible(true);
-        }else{
-            JOptionPane.showMessageDialog(this, "Error: Vehicles file already imported!", "Error: Import Vehicles", JOptionPane.INFORMATION_MESSAGE);
         }
+        else{
+            JOptionPane.showMessageDialog(this,"Please create a project first.");
+        }
+        
     }
 
     /**
@@ -43,8 +43,7 @@ public class ImportVehiclesFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Import Vehicles");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,16 +59,20 @@ public class ImportVehiclesFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    void importVehicles(File file) {
-        if(m_importVehiclesController.importVehicles(file)){
-            JOptionPane.showMessageDialog(this, "File succefully imported!", "Import Vehicles", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(this, "Error: Vehicles file not imported. Please try with a correct file!", "Error: Import Vehicles", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
-    
+    void createSimulation(String name, String description, String filepath) {
+       if(m_createSimulationController.simulationExists(name)){
+           m_createSimulationController.setSimulation(name, description);
+           if(m_createSimulationController.setTrafficFile(filepath)){
+               JOptionPane.showMessageDialog(this,"Simulation created with success.");
+           } else {
+               JOptionPane.showMessageDialog(this,"An error was found while load traffic pattern file. Please try again.");
+           }
+       } else {
+           JOptionPane.showMessageDialog(this,"This simulation already exists.");
+       }
+    }
 }

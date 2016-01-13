@@ -26,7 +26,7 @@ public class SimulationStateImpl implements SimulationState{
     }
 
     @Override
-    public boolean setStateActive() {
+    public boolean xmlImported() {
         return false;
     }
     

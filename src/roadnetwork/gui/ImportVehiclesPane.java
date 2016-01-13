@@ -13,6 +13,7 @@ import javax.swing.JFileChooser;
  * @author Tiago
  */
 public class ImportVehiclesPane extends javax.swing.JPanel {
+
     private ImportVehiclesFrame m_ancestor;
 
     /**
@@ -21,6 +22,7 @@ public class ImportVehiclesPane extends javax.swing.JPanel {
     public ImportVehiclesPane(ImportVehiclesFrame ancestor) {
         m_ancestor = ancestor;
         initComponents();
+        initFileChooser();
     }
 
     /**
@@ -57,15 +59,18 @@ public class ImportVehiclesPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-        int returnValue = jFileChooser1.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-          File selectedFile = jFileChooser1.getSelectedFile();
-          m_ancestor.importVehicles(selectedFile);
-        }
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser jFileChooser1;
     // End of variables declaration//GEN-END:variables
+
+    private void initFileChooser() {
+        int returnValue = jFileChooser1.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jFileChooser1.getSelectedFile();
+            m_ancestor.importVehicles(selectedFile);
+        }
+    }
 }

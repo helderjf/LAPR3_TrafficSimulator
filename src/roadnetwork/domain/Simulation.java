@@ -43,8 +43,8 @@ public class Simulation {
         return m_description;
     }
 
-    public SimulationState getState() {
-        return m_state;
+    public boolean xmlImported() {
+        return m_state.xmlImported(this);
     }
 
     public ArrayList<TrafficPattern> getTrafficPatternList() {

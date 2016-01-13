@@ -15,11 +15,11 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Andre
+ * @author josemiranda
  */
-public class RoadIT {
+public class RoadTest {
     
-    public RoadIT() {
+    public RoadTest() {
     }
     
     @BeforeClass
@@ -48,7 +48,8 @@ public class RoadIT {
         int expResult = 0;
         int result = instance.getId();
         assertEquals(expResult, result);
-
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -60,7 +61,8 @@ public class RoadIT {
         int id = 0;
         Road instance = new Road();
         instance.setId(id);
-
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -73,7 +75,8 @@ public class RoadIT {
         String expResult = "";
         String result = instance.getName();
         assertEquals(expResult, result);
-
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -85,7 +88,8 @@ public class RoadIT {
         String name = "";
         Road instance = new Road();
         instance.setName(name);
-
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -98,7 +102,8 @@ public class RoadIT {
         ArrayList<Section> expResult = null;
         ArrayList<Section> result = instance.getSections();
         assertEquals(expResult, result);
-
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -110,8 +115,9 @@ public class RoadIT {
         ArrayList<Section> sections = null;
         Road instance = new Road();
         instance.setSections(sections);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
-
 
     /**
      * Test of equals method, of class Road.
@@ -124,7 +130,22 @@ public class RoadIT {
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
+    /**
+     * Test of toString method, of class Road.
+     */
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        Road instance = new Road();
+        String expResult = "";
+        String result = instance.toString();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

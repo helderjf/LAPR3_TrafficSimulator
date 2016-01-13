@@ -16,13 +16,5 @@ public class SimulationStateActive extends SimulationStateImpl{
     public SimulationStateActive(Simulation simulation) {
         super(simulation);
     }
-
-    @Override
-    public boolean canRunSimulation() {
-        return true;
-    }
-    
-    
-    
     
 }
