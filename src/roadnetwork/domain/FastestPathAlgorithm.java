@@ -115,7 +115,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         double lenght = segment.getLenght();
         double travelSpeed = travelSpeed(section, segment);
 
-        time = lenght * 3600 / travelSpeed;
+        time = lenght / travelSpeed;
         return time;
     }
 
@@ -146,11 +146,11 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         double relativeVelocityWindInfluence = relativeVelocityWindInfluence(pp, vehicleVelocity);
         double resistanceForce = resistanceForce(pp,segment,relativeVelocityWindInfluence); 
         double work = resistanceForce * segment.getLenght();
-        double segmentEnergyConsumption = work * getSFC(resistanceForce);
+        double segmentEnergyConsumption = work /** *getSFC(resistanceForce)*/;
         return segmentEnergyConsumption;
     }
     
-    //To do considerar efeito do vento contrario qd o veiculo se desloca no sentido reverse
+    //To do: verificar situações em q o efeito do vento é desprezavel
     //Influence of Wind Velocity
     private double relativeVelocityWindInfluence(PathParcel pp, double vehicleVelocity)
     {
@@ -159,8 +159,11 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         double windAngle = w.getAngle();
         double relativeVelocity;
         //verificar a direcção do vento
-        
-        return vehicleVelocity + windSpeed * Math.cos(windAngle);      
+        if (pp.getDirection().equals(SimDirection.direct)) {
+            return vehicleVelocity + windSpeed * Math.cos(windAngle);
+        } else{
+            return vehicleVelocity - windSpeed * Math.cos(windAngle);
+        }
     }
     
     private double resistanceForce(PathParcel pp, Segment segment, double relativeVelocityWindInfluence){
@@ -176,8 +179,8 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
             f1 = rrc * mass * gravity * Math.cos(segment.getSlope());
             f3 = mass * gravity * Math.sin(segment.getSlope());
         } else{
-            f1 = rrc * mass * gravity * Math.cos(-1*segment.getSlope());
-            f3 = mass * gravity * Math.sin(-1*segment.getSlope());
+            f1 = -1 *rrc * mass * gravity * Math.cos(segment.getSlope());
+            f3 = -1 *mass * gravity * Math.sin(segment.getSlope());
         }
         f2 = 0.5 * dragCoefficient * frontalArea * densityOfAir * Math.pow(relativeVelocityWindInfluence, 2);
         
@@ -186,15 +189,15 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         return resistanceForce;
     }
     
-    private double getSFC(Double resistanceForce){
-        double sfc=Double.MAX_VALUE;
-        for (EngineEfficiency engineEfficiency : m_vehicle.getEngineEfficiency()) {
-            if (sfc>engineEfficiency.getM_sfc()) {
-                sfc=engineEfficiency.getM_sfc();
-            }
-        }
-        return sfc;
-    }
+//    private double getSFC(Double resistanceForce){
+//        double sfc=Double.MAX_VALUE;
+//        for (EngineEfficiency engineEfficiency : m_vehicle.getEngineEfficiency()) {
+//            if (sfc>engineEfficiency.getM_sfc()) {
+//                sfc=engineEfficiency.getM_sfc();
+//            }
+//        }
+//        return sfc;
+//    }
     
     
     
