@@ -116,14 +116,14 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
         double relativeVelocityWindInfluence = relativeVelocityWindInfluence(pp, vehicleVelocity);
         double resistanceForce = resistanceForce(pp,segment,relativeVelocityWindInfluence); 
         double work = resistanceForce * segment.getLenght();
-        double segmentEnergyConsumption=calculateSegmentWork(pp,segment, vehicleVelocity)*getSFC(resistanceForce);
+        double segmentEnergyConsumption=calculateSegmentWork(pp,segment, vehicleVelocity);
         return segmentEnergyConsumption;
     }
     
 
     private double resistanceForce(PathParcel pp, Segment segment, double relativeVelocityWindInfluence){
-        double rrc = m_vehicle.getRcc();
-        double mass = m_vehicle.getMass();
+        double rrc = m_vehicle.getRrc();
+        double mass = m_vehicle.getMass()+m_vehicle.getLoad();
         double dragCoefficient = m_vehicle.getDragCoefficient();
         double frontalArea = m_vehicle.getFrontalArea();
         double f1;
@@ -145,48 +145,27 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
     }
 
     
-//    //The vehicle will travel at the maximum speed allowed in the road or for the vehicle
-//    private double vehicleVelocity(Section section, Segment segment) {
-//
-//        double travelSpeed;
-//        SectionTypology type = section.getTypology();
-//
-//        //determin if the vehicle maximum speed for this section is inferior to the section speed limit
-//        if (m_vehicle.getVelocityLimits().containsKey(type)
-//                && m_vehicle.getVelocityLimit(type) < segment.getMax_Velocity()) {
-//            travelSpeed = m_vehicle.getVelocityLimit(type);
-//        } else {
-//            travelSpeed = segment.getMax_Velocity();
-//        }
-//        return travelSpeed;
-//    }
-    
     //Influence of Wind Velocity
     private double relativeVelocityWindInfluence(PathParcel pp, double vehicleVelocity)
     {
         Wind w = pp.getSection().getWind();
         double windSpeed = w.getVelocity();
         double windAngle = w.getAngle();
-        
-        if(pp.getDirection().equals(SimDirection.direct))
-        {
-            return vehicleVelocity + windSpeed * Math.cos(windAngle); 
-        }
-        else
-        {
-            return vehicleVelocity - windSpeed * Math.cos(windAngle); 
+        double relativeVelocity;
+
+        if (pp.getDirection().equals(SimDirection.direct)) {
+            relativeVelocity = vehicleVelocity + windSpeed * Math.cos(windAngle);
+        } else {
+            relativeVelocity = vehicleVelocity - windSpeed * Math.cos(windAngle);
         }
         
-    }
-    
-    private double getSFC(Double resistanceForce){
-        double sfc=Double.MAX_VALUE;
-        for (EngineEfficiency engineEfficiency : m_vehicle.getEngineEfficiency()) {
-            if (sfc>engineEfficiency.getM_sfc()) {
-                sfc=engineEfficiency.getM_sfc();
-            }
+        if ((pp.getDirection().equals(SimDirection.direct) && Math.cos(windAngle)<0 
+                || pp.getDirection().equals(SimDirection.reverse) && Math.cos(windAngle)>0)
+                &&relativeVelocity<=30) {
+            relativeVelocity=0;
         }
-        return sfc;
+        return relativeVelocity;
+        
     }
     
     private double calculateSectionTravelTime(Section section) {
@@ -205,7 +184,7 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
         double lenght = segment.getLenght();
         double travelSpeed = travelSpeed(section, segment);
 
-        time = lenght * 3600 / travelSpeed;
+        time = lenght / travelSpeed;
         return time;
     }
 

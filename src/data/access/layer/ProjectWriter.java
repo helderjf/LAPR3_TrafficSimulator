@@ -195,7 +195,7 @@ public class ProjectWriter {
                 vehicle.getLoad(),
                 vehicle.getDragCoefficient(),
                 vehicle.getFrontalArea(),
-                vehicle.getRcc(),
+                vehicle.getRrc(),
                 vehicle.getWheelSize(),
                 vehicle.getFinalDriveRatio(),
                 vehicle.getMinRPM(),

@@ -145,12 +145,10 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     private double calculateSegmentEnergyConsumption(PathParcel pp,Segment segment, double vehicleVelocity){
         double relativeVelocityWindInfluence = relativeVelocityWindInfluence(pp, vehicleVelocity);
         double resistanceForce = resistanceForce(pp,segment,relativeVelocityWindInfluence); 
-        double work = resistanceForce * segment.getLenght();
-        double segmentEnergyConsumption = work /** *getSFC(resistanceForce)*/;
+        double segmentEnergyConsumption = resistanceForce * segment.getLenght();
         return segmentEnergyConsumption;
     }
     
-    //To do: verificar situações em q o efeito do vento é desprezavel
     //Influence of Wind Velocity
     private double relativeVelocityWindInfluence(PathParcel pp, double vehicleVelocity)
     {
@@ -158,17 +156,24 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         double windSpeed = w.getVelocity();
         double windAngle = w.getAngle();
         double relativeVelocity;
-        //verificar a direcção do vento
+
         if (pp.getDirection().equals(SimDirection.direct)) {
-            return vehicleVelocity + windSpeed * Math.cos(windAngle);
-        } else{
-            return vehicleVelocity - windSpeed * Math.cos(windAngle);
+            relativeVelocity = vehicleVelocity + windSpeed * Math.cos(windAngle);
+        } else {
+            relativeVelocity = vehicleVelocity - windSpeed * Math.cos(windAngle);
         }
+        
+        if ((pp.getDirection().equals(SimDirection.direct) && Math.cos(windAngle)<0 
+                || pp.getDirection().equals(SimDirection.reverse) && Math.cos(windAngle)>0)
+                &&relativeVelocity<=30) {
+            relativeVelocity=vehicleVelocity;
+        }
+        return relativeVelocity;
     }
     
     private double resistanceForce(PathParcel pp, Segment segment, double relativeVelocityWindInfluence){
-        double rrc = m_vehicle.getRcc();
-        double mass = m_vehicle.getMass();
+        double rrc = m_vehicle.getRrc();
+        double mass = m_vehicle.getMass()+m_vehicle.getLoad();
         double dragCoefficient = m_vehicle.getDragCoefficient();
         double frontalArea = m_vehicle.getFrontalArea();
         double f1;
@@ -179,8 +184,8 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
             f1 = rrc * mass * gravity * Math.cos(segment.getSlope());
             f3 = mass * gravity * Math.sin(segment.getSlope());
         } else{
-            f1 = -1 *rrc * mass * gravity * Math.cos(segment.getSlope());
-            f3 = -1 *mass * gravity * Math.sin(segment.getSlope());
+            f1 = rrc * mass * gravity * Math.cos(-1 *segment.getSlope());
+            f3 = mass * gravity * Math.sin(-1 *segment.getSlope());
         }
         f2 = 0.5 * dragCoefficient * frontalArea * densityOfAir * Math.pow(relativeVelocityWindInfluence, 2);
         
@@ -188,18 +193,6 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         
         return resistanceForce;
     }
-    
-//    private double getSFC(Double resistanceForce){
-//        double sfc=Double.MAX_VALUE;
-//        for (EngineEfficiency engineEfficiency : m_vehicle.getEngineEfficiency()) {
-//            if (sfc>engineEfficiency.getM_sfc()) {
-//                sfc=engineEfficiency.getM_sfc();
-//            }
-//        }
-//        return sfc;
-//    }
-    
-    
     
     private double calculateSectionTollCosts(Section section){
         return section.getToll();

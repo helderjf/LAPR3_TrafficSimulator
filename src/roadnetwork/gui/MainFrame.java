@@ -379,22 +379,22 @@ public class MainFrame extends javax.swing.JFrame {
         nodeList.add(node1);
         nodeList.add(node2);
 
-        Segment segment1 = new Segment(1, 100, 1.5, 3.2*1000, 90*1000/3600, 0, 32);
-        Segment segment2 = new Segment(2, 148, 1.5, 3.2*1000, 90*1000/3600, 0, 32);
+        Segment segment1 = new Segment(1, 100, Math.asin(1.5/100), 3.2*1000, 90*1000/3600, 0, 32);
+        Segment segment2 = new Segment(2, 148, Math.asin(1.5/100), 3.2*1000, 90*1000/3600, 0, 32);
         ArrayList<Segment> list1 = new ArrayList();
         list1.add(segment1);
         list1.add(segment2);
 
-        Section section1 = new Section("E01", node0, node1, SectionTypology.regular_road, SectionDirection.bidirectional, 0, new Wind(20, 3), list1);
+        Section section1 = new Section("E01", node0, node1, SectionTypology.regular_road, SectionDirection.bidirectional, 0, new Wind(20*(Math.PI)/180, 3), list1);
         section1.setToll(0);
 
         Segment segment3 = new Segment(1, 100, 0, 10*1000, 90*1000/3600, 0, 100);
-        Segment segment4 = new Segment(2, 100, 0.5, 5*1000, 90*1000/3600, 0, 50);
+        Segment segment4 = new Segment(2, 100, Math.asin(0.5/100), 5*1000, 90*1000/3600, 0, 50);
         ArrayList<Segment> list2 = new ArrayList();
         list2.add(segment3);
         list2.add(segment4);
 
-        Section section2 = new Section("E01", node1, node2, SectionTypology.regular_road, SectionDirection.bidirectional, 0, new Wind(-5, 3), list2);
+        Section section2 = new Section("E01", node1, node2, SectionTypology.regular_road, SectionDirection.bidirectional, 0, new Wind(-5*(Math.PI)/180, 3), list2);
         section2.setToll(0);
         ArrayList<Section> sectionlist1 = new ArrayList();
         sectionlist1.add(section1);
@@ -406,7 +406,7 @@ public class MainFrame extends javax.swing.JFrame {
         Segment segment5 = new Segment(1, 100, 0, 100*1000, 120*1000/3600, 50*1000/3600, 1000);
         ArrayList<Segment> list3 = new ArrayList();
         list3.add(segment5);
-        Section section3 = new Section("A01", node0, node2, SectionTypology.highway, SectionDirection.bidirectional, 12, new Wind(-5, 3), list3);
+        Section section3 = new Section("A01", node0, node2, SectionTypology.highway, SectionDirection.bidirectional, 12, new Wind(-5*(Math.PI)/180, 3), list3);
         section3.setToll(12);
         ArrayList<Section> sectionlist2 = new ArrayList();
         sectionlist2.add(section3);
@@ -414,10 +414,10 @@ public class MainFrame extends javax.swing.JFrame {
         Road road2 = new Road(2, "A01");
         road2.setSections(sectionlist2);
 
-        Segment segment6 = new Segment(1, 100, 0.125, 10*1000, 61*1000/3600, 50*1000/3600, 100);
+        Segment segment6 = new Segment(1, 100, Math.asin(0.125/100), 10*1000, 61*1000/3600, 50*1000/3600, 100);
         ArrayList<Segment> list4 = new ArrayList();
         list4.add(segment6);
-        Section section4 = new Section("A03", node1, node2, SectionTypology.highway, SectionDirection.bidirectional, 4, new Wind(-5, 3), list4);
+        Section section4 = new Section("A03", node1, node2, SectionTypology.highway, SectionDirection.bidirectional, 4, new Wind(-5*(Math.PI)/180, 3), list4);
         section4.setToll(4);
         ArrayList<Section> sectionlist3 = new ArrayList();
         sectionlist3.add(section4);
