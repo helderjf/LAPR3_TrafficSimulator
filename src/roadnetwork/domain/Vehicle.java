@@ -508,10 +508,6 @@ public abstract class Vehicle {
         return true;
     }
 
-    public double Energy() {
-
-        return 0;
-    }
 
     public void addVelocityLimit(SectionTypology segment_type, double limit) {
         velocityLimit.put(segment_type, limit);

@@ -115,10 +115,11 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
                 for (EngineEfficiency engineEfficiencyTemporary : engineEfficiencyList) {
                     travelSpeed = travelSpeed(pp.getSection(),segment);
                     relativeVelocityWindInfluence = relativeVelocityWindInfluence(pp, travelSpeed);
-                    resistanceForce = resistanceForces(segment, relativeVelocityWindInfluence);
+                    resistanceForce = resistanceForces(pp,segment, relativeVelocityWindInfluence);
                     vehicleForce = vehicleForces(engineEfficiencyTemporary,  relativeVelocityWindInfluence,  resistanceForce);
                     if(vehicleForce>resistanceForce)
                     {
+                        
                         segmentTotalForce = vehicleForce + resistanceForce;
                         segmentConsuption = segmentTotalForce * engineEfficiencyTemporary.getM_sfc() * segment.getLenght();
                     }
@@ -187,21 +188,40 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm{
     }
     
 
-    private double resistanceForces(Segment segment, double relativeVelocityWindInfluence)
+    private double resistanceForces(PathParcel pp, Segment segment, double relativeVelocityWindInfluence)
     {
-
         double rrc = m_vehicle.getRcc();
         double mass = m_vehicle.getMass();
         double dragCoefficient = m_vehicle.getDragCoefficient();
         double frontalArea = m_vehicle.getFrontalArea();
-        
-        double resistanceForcesPart1 = rrc * mass * gravity * Math.cos(segment.getSlope());
-        double resistanceForcesPart2 = 0.5 * dragCoefficient * frontalArea * densityOfAir * Math.pow(relativeVelocityWindInfluence, 2);
-        double resistanceForcesPart3 = mass * gravity * Math.sin(segment.getSlope());
-        
-        double resistanceForces = resistanceForcesPart1 + resistanceForcesPart2 + resistanceForcesPart3;
-        
-        return resistanceForces;
+        double f1;
+        double f2;
+        double f3;
+
+        if (pp.getDirection().equals(SimDirection.direct)) {
+            f1 = rrc * mass * gravity * Math.cos(segment.getSlope());
+            f3 = mass * gravity * Math.sin(segment.getSlope());
+        } else{
+            f1 = -1 *rrc * mass * gravity * Math.cos(segment.getSlope());
+            f3 = -1 *mass * gravity * Math.sin(segment.getSlope());
+        }
+        f2 = 0.5 * dragCoefficient * frontalArea * densityOfAir * Math.pow(relativeVelocityWindInfluence, 2);
+
+        double resistanceForce = f1 + f2 + f3;
+
+        return resistanceForce;
+//        double rrc = m_vehicle.getRcc();
+//        double mass = m_vehicle.getMass();
+//        double dragCoefficient = m_vehicle.getDragCoefficient();
+//        double frontalArea = m_vehicle.getFrontalArea();
+//        
+//        double resistanceForcesPart1 = rrc * mass * gravity * Math.cos(segment.getSlope());
+//        double resistanceForcesPart2 = 0.5 * dragCoefficient * frontalArea * densityOfAir * Math.pow(relativeVelocityWindInfluence, 2);
+//        double resistanceForcesPart3 = mass * gravity * Math.sin(segment.getSlope());
+//        
+//        double resistanceForces = resistanceForcesPart1 + resistanceForcesPart2 + resistanceForcesPart3;
+//        
+//        return resistanceForces;
     }
     
     
