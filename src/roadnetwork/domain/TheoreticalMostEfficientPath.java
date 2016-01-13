@@ -9,7 +9,6 @@ import graphutils.Graph;
 import graphutils.GraphAlgorithms;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
 /**
  *
@@ -122,9 +121,6 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
     }
     
 
-    
-    
-    
     private double resistanceForce(PathParcel pp, Segment segment, double relativeVelocityWindInfluence){
         double rrc = m_vehicle.getRcc();
         double mass = m_vehicle.getMass();
@@ -306,8 +302,5 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
             m_simPathParcelList.add(pp);
         }
     }
-
-    
-    
-    
+   
 }
