@@ -30,23 +30,23 @@ public class SimSegment {
 
     }
 
-    SimVehicle updateEndingVehicle(double currentTime) {
-        double previousExitTime = 0;
+//    SimVehicle updateEndingVehicle(double currentTime) {
+//        double previousExitTime = 0;
+//
+//        m_vehicleQueue.peek().endSimulation(currentTime);
+//
+//        return m_vehicleQueue.poll();
+//    }
 
-        m_vehicleQueue.peek().endSimulation(currentTime);
-
-        return m_vehicleQueue.poll();
-    }
-
-    SimVehicle getFirstWaitingVehicle(double currentTime) {
-        if (m_vehicleQueue.peek() == null) {
-            return null;
-        }
-        if (m_vehicleQueue.peek().getPredictedExitTime() <= currentTime) {
-            return m_vehicleQueue.peek();
-        }
-        return null;
-    }
+//    SimVehicle getFirstWaitingVehicle(double currentTime) {
+//        if (m_vehicleQueue.peek() == null) {
+//            return null;
+//        }
+//        if (m_vehicleQueue.peek().getPredictedExitTime() <= currentTime) {
+//            return m_vehicleQueue.peek();
+//        }
+//        return null;
+//    }
 
     public Queue<SimVehicle> getVehicleQueue() {
         return m_vehicleQueue;
@@ -64,19 +64,17 @@ public class SimSegment {
         return m_vehicleQueue.size() < m_segment.getMax_Vehicles();
     }
 
-    SimVehicle popCrossingVehicle(double currentTime) {
-        SimVehicle sv = m_vehicleQueue.poll();
-        sv.crossToNextPos(currentTime);
-        return sv;
+    SimVehicle popCrossingVehicle() {
+        
+        return  m_vehicleQueue.poll();
     }
 
-    void pushCrossingVehicle(double currentTime, SimVehicle segVehicle) {
-        m_vehicleQueue.add(segVehicle);
+    boolean pushCrossingVehicle(SimVehicle vehicle) {
+       return  m_vehicleQueue.add(vehicle);
     }
 
-    void injectCreatedVehicle(double currentTime, SimVehicle simV) {
-        simV.setInjected(currentTime);
-        m_vehicleQueue.add(simV);
+    void injectCreatedVehicle(SimVehicle vehicle) {
+        m_vehicleQueue.add(vehicle);
     }
 
     Queue<SimVehicle> getCruisingVehicles() {

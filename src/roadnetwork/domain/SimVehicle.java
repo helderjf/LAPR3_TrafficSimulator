@@ -38,14 +38,15 @@ public class SimVehicle {
     }
 
     boolean willEndAtThisTimeStep(double currentTime) {
-        return m_nextPos != null
+        return m_nextPos == null
                 && (m_currentPos.getPredictedExitTime() <= currentTime);
     }
 
     boolean endSimulation(double currentTime) {
 
         m_currentPos.setSimExitTime(currentTime);
-        double idleConsumption = m_vehicle.getIdleConsumption(getTimeIdle());
+        double timeIdle=getTimeIdle();
+        double idleConsumption = m_vehicle.getIdleConsumption(timeIdle);
         m_currentPos.addToSimEnergyConsumption(idleConsumption);
         m_currentPos = null;
         m_ended = true;
@@ -73,7 +74,7 @@ public class SimVehicle {
         m_currentPos.addToSimEnergyConsumption(idleConsumption);
 
         m_currentPos = m_nextPos;
-        if (m_path.indexOf(m_nextPos) == m_path.size()) {
+        if (m_path.indexOf(m_nextPos) == (m_path.size()-1)) {
             m_nextPos = null;
         } else {
             m_nextPos = m_path.get(m_path.indexOf(m_nextPos) + 1);
@@ -109,7 +110,7 @@ public class SimVehicle {
         return -1;
     }
 
-    void setInjected(double time) {
+    void setInjected() {
         m_currentPos = m_path.get(0);
         m_nextPos = m_path.get(1);
         m_currentPos.initializePredictedExitTime(m_injectionTime);
@@ -122,5 +123,7 @@ public class SimVehicle {
     void updatePredictedExitTime(double time) {
         m_currentPos.setPredictedExitTime(time);
     }
+
+
 
 }

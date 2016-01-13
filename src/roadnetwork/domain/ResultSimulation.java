@@ -37,9 +37,9 @@ public class ResultSimulation implements Result {
         int durationMinutes = (int) ((m_duration - durationHours * 3600) / 60);
         int durationSeconds = (int) (m_duration - durationHours * 3600 - durationMinutes * 60);
 
-        int timeStepHours = (int) (m_duration / 3600);
-        int timeStepMinutes = (int) ((m_duration - durationHours * 3600) / 60);
-        int timeStepSeconds = (int) (m_duration - durationHours * 3600 - durationMinutes * 60);
+        int timeStepHours = (int) (m_timeStep / 3600);
+        int timeStepMinutes = (int) ((m_timeStep - timeStepHours * 3600) / 60);
+        int timeStepSeconds = (int) (m_timeStep - timeStepHours * 3600 - timeStepMinutes * 60);
         
         int createdV = m_cruisingVehicles.size()+m_endedVehicles.size()+m_droppedVehicles.size();
         int injectedV = m_cruisingVehicles.size()+m_endedVehicles.size();

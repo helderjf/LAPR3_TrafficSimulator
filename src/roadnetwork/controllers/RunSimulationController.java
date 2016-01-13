@@ -34,35 +34,35 @@ public class RunSimulationController {
     }
 
     public boolean newSimulationRun() {
-
+        if (m_manager.getCurrentProject() == null) {
+            return false;
+        }
         m_project = m_manager.getCurrentProject();
+
         if (m_project.canSimulate()) {
-            m_simulation = m_project.getCurrentSimulation();
-            return m_simulation.canRunSimulation();
+            if (m_project.getCurrentSimulation() != null) {
+                m_simulation = m_project.getCurrentSimulation();
+                return m_simulation.canRunSimulation();
+            }
         }
         return false;
 
     }
 
-    public ArrayList<BestPathAlgorithm> getBestPathMethods(){
+    public ArrayList<BestPathAlgorithm> getBestPathMethods() {
         return m_manager.getAlgorithmsList();
-        
+
     }
-    
-    
-    public ResultSimulation setRunData(String runName, double runDuration, double runTimeStep, BestPathAlgorithm bpm){
-        m_roadNetwork=m_project.getRoadNetwork();
-        m_simulationRun = m_simulation.newSimulationRun(m_roadNetwork,runName,runDuration,runTimeStep,bpm);
-        
+
+    public ResultSimulation setRunData(String runName, double runDuration, double runTimeStep, BestPathAlgorithm bpm) {
+        m_roadNetwork = m_project.getRoadNetwork();
+        m_simulationRun = m_simulation.newSimulationRun(m_roadNetwork, runName, runDuration, runTimeStep, bpm);
+
         m_simulationRun.start();
-        
-        m_runResults=m_simulationRun.getResults();
-        
+
+        m_runResults = m_simulationRun.getResults();
+
         return m_runResults;
     }
-    
-    
-    
-    
-    
+
 }

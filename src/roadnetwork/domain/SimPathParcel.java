@@ -148,7 +148,7 @@ public class SimPathParcel implements PathParcel {
     }
 
     void initializePredictedExitTime(double injectionTime) {
-        m_predictedExitTime=injectionTime+m_theoreticalTravelTime;
+        m_predictedExitTime=m_theoreticalTravelTime+injectionTime;
     }
 
 }

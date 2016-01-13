@@ -13,12 +13,12 @@ import java.util.Comparator;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class SimSegmentsManager {
+public class SimulationClock {
 
     private RoadNetwork m_roadNetwork;
     private ArrayList<SimSegment> m_simSegmentsList;
 
-    public SimSegmentsManager(RoadNetwork roadNetwork) {
+    public SimulationClock(RoadNetwork roadNetwork) {
         m_roadNetwork = roadNetwork;
         m_simSegmentsList = createSimSegmentsList(roadNetwork);
     }
@@ -45,52 +45,68 @@ public class SimSegmentsManager {
         ArrayList<SimVehicle> endedVehicles = new ArrayList();
         ArrayList<SimSegment> simSegsOrderedByWaitingVehicle = new ArrayList();
 
-        for (SimSegment simSeg : m_simSegmentsList) {
-            if (simSeg.getFirstWaitingVehicle(currentTime) != null) {
+        for (SimSegment simSeg : m_simSegmentsList) {//Construct list of all segments containing vehicles that have arrive to the end of segment during this time step
+            if (simSeg.getVehicleQueue().peek() != null
+                    && simSeg.getVehicleQueue().peek().getPredictedExitTime() < currentTime) {
+
                 simSegsOrderedByWaitingVehicle.add(simSeg);
             }
         }
 
         SimVehicle currSegVehicle;
         SimPathParcel nextParcel;
+        double currSegVehiclePredictedExitTime;
         SimSegment nextSimSeg;
         boolean vehicleUpdated = true;
 
         while (vehicleUpdated == true) {
             vehicleUpdated = false;
 
-            Collections.sort(simSegsOrderedByWaitingVehicle, new WaitingTimeComparator());
+            Collections.sort(simSegsOrderedByWaitingVehicle, new WaitingTimeComparator());//order list by vehicle arrival time
 
             for (SimSegment currSimSeg : simSegsOrderedByWaitingVehicle) {
 
-                currSegVehicle = currSimSeg.getVehicleQueue().peek();
+                currSegVehicle = currSimSeg.getVehicleQueue().peek();//get first vehicel of the queue
+                currSegVehiclePredictedExitTime = currSegVehicle.getPredictedExitTime();//save for comparing with next vehicle
 
-                if (currSegVehicle.willEndAtThisTimeStep(currentTime)) {
-                    endedVehicles.add(currSimSeg.updateEndingVehicle(currentTime));
-                    
-                    vehicleUpdated = true;
+                if (currSegVehicle.willEndAtThisTimeStep(currentTime)) {//is vehicle ending it's simulation
 
-                    if (currSimSeg.getFirstWaitingVehicle(currentTime) == null) {
-                        simSegsOrderedByWaitingVehicle.remove(currSimSeg);
+                    currSimSeg.popCrossingVehicle();//remove vehicle from segment
+                    currSegVehicle.endSimulation(currentTime);//instruct vehicle to end its simulation
+                    endedVehicles.add(currSegVehicle);//add veicle to ended vehicles container
+
+                    if (currSimSeg.getVehicleQueue().peek() != null) {
+                        if (currSimSeg.getVehicleQueue().peek().getPredictedExitTime() >= currentTime) {//will the next vehicle of the queue also arrive to the end of the segment in this timestep?
+                            simSegsOrderedByWaitingVehicle.remove(currSimSeg);//if not --> remove segment from list
+                        } else if (currSimSeg.getVehicleQueue().peek().getPredictedExitTime() < currSegVehiclePredictedExitTime) {//is the predicted exit time earlier than the previous vehicle
+                            currSimSeg.getVehicleQueue().peek().updatePredictedExitTime(currSegVehiclePredictedExitTime);//if it is it will be updated to the same as the previous vehicle
+                        }
+                    } else {
+                        simSegsOrderedByWaitingVehicle.remove(currSimSeg);//if not --> remove segment from list
                     }
-
+                    vehicleUpdated = true;
                     break;
                 }
 
-                currSegVehicle = currSimSeg.getVehicleQueue().peek();
-                nextParcel = currSegVehicle.getNextPos();
-                nextSimSeg = getSimSegmentByParcel(nextParcel);
+                nextParcel = currSegVehicle.getNextPos();//get vehicle's next path position
+                nextSimSeg = getSimSegmentByParcel(nextParcel);//determine which SimSegment corresponds to the SimPathParcel retrieved
 
                 if (nextSimSeg.canAddVehicle()) {
 
-                    currSimSeg.popCrossingVehicle(currentTime);
-                    nextSimSeg.pushCrossingVehicle(currentTime, currSegVehicle);
+                    if (nextSimSeg.pushCrossingVehicle(currSegVehicle)) {
+                        currSimSeg.popCrossingVehicle();
+                        currSegVehicle.crossToNextPos(currentTime);
+                    }
                     vehicleUpdated = true;
 
-                    if (currSimSeg.getFirstWaitingVehicle(currentTime) != null) {
-                        currSimSeg.getVehicleQueue().peek().updatePredictedExitTime(currSegVehicle.getPredictedExitTime());
+                    if (currSimSeg.getVehicleQueue().peek() != null) {
+                        if (currSimSeg.getVehicleQueue().peek().getPredictedExitTime() >= currentTime) {//will the next vehicle of the queue also arrive to the end of the segment in this timestep?
+                            simSegsOrderedByWaitingVehicle.remove(currSimSeg);//if not --> remove segment from list
+                        } else if (currSimSeg.getVehicleQueue().peek().getPredictedExitTime() < currSegVehiclePredictedExitTime) {//is the predicted exit time earlier than the previous vehicle
+                            currSegVehicle.updatePredictedExitTime(currSegVehiclePredictedExitTime);//if it is it will be updated to the same as the previous vehicle
+                        }
                     } else {
-                        simSegsOrderedByWaitingVehicle.remove(currSimSeg);
+                        simSegsOrderedByWaitingVehicle.remove(currSimSeg);//if not --> remove segment from list
                     }
 
                     break;
@@ -112,7 +128,8 @@ public class SimSegmentsManager {
             SimSegment firstSegment = getSimSegmentByParcel(firstParcel);
 
             if (firstSegment.canAddVehicle()) {
-                firstSegment.injectCreatedVehicle(currentTime, simV);
+                firstSegment.injectCreatedVehicle(simV);
+                simV.setInjected();
             } else {
                 simV.drop();
                 droppedVehiclesList.add(simV);

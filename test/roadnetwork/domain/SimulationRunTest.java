@@ -26,7 +26,7 @@ public class SimulationRunTest {
     private static RoadNetwork roadNetwork1;
     private static BestPathAlgorithm m_bestPathMethod=new FastestPathAlgorithm();
     private static TrafficPattern m_trafficPattern;
-    private static SimSegmentsManager m_simSegmentsManager;
+    private static SimulationClock m_simSegmentsManager;
     private static SimVehiclesGenerator m_simVehiclesGenerator;
 
     private static double m_currentTime=0;

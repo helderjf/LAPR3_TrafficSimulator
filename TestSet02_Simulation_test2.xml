@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation id="TestSet02" description="simulation test set to begin development">
+    <traffic_list>
+    	<traffic_pattern begin="node0" end="node1">
+			<vehicle>dummy1</vehicle>
+			<arrival_rate>5 1/m</arrival_rate>
+    	</traffic_pattern>
+    	<traffic_pattern begin="node0" end="node2">
+			<vehicle>dummy1</vehicle>
+			<arrival_rate>5 1/m</arrival_rate>
+    	</traffic_pattern>
+      </traffic_list>
+</Simulation>
+
