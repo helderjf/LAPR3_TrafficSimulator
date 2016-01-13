@@ -40,6 +40,7 @@ public class MainFrame extends javax.swing.JFrame {
     private VehicleComparisonFrame m_vehicleComparisonFrame;
     private ImportRoadNetworkFrame m_importRoadNetworkFrame;
     private CreateSimulationFrame m_createSimulationFrame;
+    private RunSimulationFrame m_runSimulationFrame;
 
     /**
      * Creates new form JanelaPrincipal
@@ -112,7 +113,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void runSimulation() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        m_runSimulationFrame = new RunSimulationFrame(this);
     }
 
     public Manager getManager() {

@@ -87,6 +87,7 @@ public class RunSimulationFrame extends javax.swing.JFrame {
 
     private void showResults() {
         setContentPane(new RunSimulationShowResults(this,m_runResults));
+        revalidate();
     }
 
 

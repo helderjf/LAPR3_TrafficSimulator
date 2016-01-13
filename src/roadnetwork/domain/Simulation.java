@@ -44,7 +44,8 @@ public class Simulation {
     }
 
     public boolean xmlImported() {
-        return m_state.xmlImported(this);
+        
+        return m_state.xmlImported();
     }
 
     public ArrayList<TrafficPattern> getTrafficPatternList() {

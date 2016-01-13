@@ -68,8 +68,8 @@ public class SimVehicle {
 
         m_currentPos.setSimExitTime(currentTime);
         m_nextPos.setSimInTime(currentTime);
-
-        double idleConsumption = m_vehicle.getIdleConsumption(getTimeIdle());
+        double timeIdle = getTimeIdle();
+        double idleConsumption = m_vehicle.getIdleConsumption(timeIdle);
         m_currentPos.addToSimEnergyConsumption(idleConsumption);
 
         m_currentPos = m_nextPos;

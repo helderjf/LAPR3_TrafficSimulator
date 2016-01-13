@@ -68,6 +68,7 @@ public class CreateSimulationFrame extends javax.swing.JFrame {
            m_createSimulationController.setSimulation(name, description);
            if(m_createSimulationController.setTrafficFile(filepath)){
                JOptionPane.showMessageDialog(this,"Simulation created with success.");
+               setVisible(false);
            } else {
                JOptionPane.showMessageDialog(this,"An error was found while load traffic pattern file. Please try again.");
            }

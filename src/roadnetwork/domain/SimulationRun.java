@@ -18,7 +18,7 @@ public class SimulationRun {
     private double m_timeStep;
     private RoadNetwork m_roadNetwork;
     private BestPathAlgorithm m_bestPathMethod;
-    private TrafficPattern m_trafficPattern;
+    private ArrayList<TrafficPattern> m_trafficPatternList;
     private SimSegmentsManager m_simSegmentsManager;
     private SimVehiclesGenerator m_simVehiclesGenerator;
 
@@ -33,7 +33,12 @@ public class SimulationRun {
     
     public SimulationRun(String name, double duration, double timeStep, RoadNetwork roadNetwork, ArrayList<TrafficPattern> trafficPattern, BestPathAlgorithm bpMethod) {
 
+        m_name=name;
+        m_duration=duration;
+        m_timeStep=timeStep;
+        
         m_roadNetwork = roadNetwork;
+        m_trafficPatternList=trafficPattern;
         m_bestPathMethod = bpMethod;
 
         m_simSegmentsManager = new SimSegmentsManager(roadNetwork);

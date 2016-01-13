@@ -43,10 +43,10 @@ public class SimVehiclesGenerator {
             double arrivalRate = tp.getArrivalRate();//units:  1/m
             ArrayList<SimPathParcel> simPath = m_bestPathAlg.getBestPath(m_roadNetwork, originNode, destinyNode, vehicle);
 
-            int numberVehiclesToInject = (int) (arrivalRate / 60 * m_timeStep);
+            int numberVehiclesToInject = (int) (arrivalRate * m_timeStep);
             double injectionTime = currentTime;
             for (int i = 0; i < numberVehiclesToInject; i++) {
-                injectionTime += (-log(1 - random()) / (/*  1/  */arrivalRate));//TO DO vefificar fórmula (a do enunciado está mal)
+                injectionTime += (-log(1 - random()) / (arrivalRate));
                 if (injectionTime < (currentTime + m_timeStep)) {
                     simVehicleList.add(new SimVehicle(vehicle, originNode, destinyNode, simPath, tp, injectionTime));
                 } else {

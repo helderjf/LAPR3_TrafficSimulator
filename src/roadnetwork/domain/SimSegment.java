@@ -31,14 +31,17 @@ public class SimSegment {
     }
 
     SimVehicle updateEndingVehicle(double currentTime) {
-        double previousExitTime=0;
-        
-            m_vehicleQueue.peek().endSimulation(currentTime);
-            
-          return  m_vehicleQueue.poll();
+        double previousExitTime = 0;
+
+        m_vehicleQueue.peek().endSimulation(currentTime);
+
+        return m_vehicleQueue.poll();
     }
 
     SimVehicle getFirstWaitingVehicle(double currentTime) {
+        if (m_vehicleQueue.peek() == null) {
+            return null;
+        }
         if (m_vehicleQueue.peek().getPredictedExitTime() <= currentTime) {
             return m_vehicleQueue.peek();
         }
