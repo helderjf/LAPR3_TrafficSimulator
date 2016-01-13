@@ -158,6 +158,7 @@ public class CreateSimulationPane extends javax.swing.JPanel {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Simulation File", "xml");
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(filter);
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showOpenDialog(this);
         if(result == JFileChooser.APPROVE_OPTION){
             selectedFile = fileChooser.getSelectedFile();
