@@ -299,7 +299,7 @@ public class VehicleTest {
         System.out.println("getRcc");
         Vehicle instance = vehicle1;
         double expResult = 0.01;
-        double result = instance.getRcc();
+        double result = instance.getRrc();
         assertEquals(expResult, result, 0.0);
 
     }
@@ -314,7 +314,7 @@ public class VehicleTest {
         Vehicle instance = vehicle1;
         instance.setRcc(rrc);
         double expResult = 0.3;
-        double result = instance.getRcc();
+        double result = instance.getRrc();
         assertEquals(expResult, result, 0.0);
     }
 
