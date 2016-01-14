@@ -52,6 +52,11 @@ public class VehicleTest {
     Throttle throttle1;
     Throttle throttle2;
     Throttle throttle3;
+    
+    List<EngineEfficiency> lstEngineEfficiency;
+    
+    EngineEfficiency engineEfficiency1;
+    EngineEfficiency engineEfficiency2;
 
 
     
@@ -167,6 +172,10 @@ public class VehicleTest {
                 2.6,//final drive ratio
                 gearList1,
                 throttleList1);
+        
+        lstEngineEfficiency = new ArrayList<>();
+        
+  
   
     }
     
