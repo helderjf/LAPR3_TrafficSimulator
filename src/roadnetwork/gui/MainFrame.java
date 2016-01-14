@@ -116,9 +116,20 @@ public class MainFrame extends javax.swing.JFrame {
         m_runSimulationFrame = new RunSimulationFrame(this);
     }
 
+    
+   private void editSimulationProperties(){
+        new EditSimulationPropertiesDialog(this,true);
+    }
+    
+    
+    
     public Manager getManager() {
         return m_manager;
     }
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -325,6 +336,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu7.add(jMenuItem10);
 
         jMenuItem11.setText("Properties");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem11);
 
         jMenuBar1.add(jMenu7);
@@ -533,6 +549,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+       editSimulationProperties();
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

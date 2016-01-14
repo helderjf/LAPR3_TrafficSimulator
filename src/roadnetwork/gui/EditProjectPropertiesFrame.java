@@ -16,7 +16,7 @@ import roadnetwork.domain.Project;
 public class EditProjectPropertiesFrame extends javax.swing.JFrame {
 
     MainFrame m_mainFrame;
-    EditProjectPropertiesController m_EditProjectPropertiesController;
+    EditProjectPropertiesController m_editProjectPropertiesController;
     String m_oldName;
     String m_oldDescription;
 
@@ -25,7 +25,7 @@ public class EditProjectPropertiesFrame extends javax.swing.JFrame {
      */
     public EditProjectPropertiesFrame(MainFrame mainFrame) {
         m_mainFrame = mainFrame;
-        m_EditProjectPropertiesController = new EditProjectPropertiesController(mainFrame.getManager());
+        m_editProjectPropertiesController = new EditProjectPropertiesController(mainFrame.getManager());
 
         run();
 
@@ -60,7 +60,7 @@ public class EditProjectPropertiesFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     void newProperties(String newName, String newDescription) {
-        if (m_EditProjectPropertiesController.setNewProperties(newName, newDescription)) {
+        if (m_editProjectPropertiesController.setNewProperties(newName, newDescription)) {
             JOptionPane.showMessageDialog(this, "Properties have been changed.", "Properties changed", JOptionPane.INFORMATION_MESSAGE);
             setVisible(false);
         } else {
@@ -71,13 +71,13 @@ public class EditProjectPropertiesFrame extends javax.swing.JFrame {
 
     private void run() {
 
-        if (!m_EditProjectPropertiesController.projectActive()) {
+        if (!m_editProjectPropertiesController.projectActive()) {
             JOptionPane.showMessageDialog(this, "Can't view or edit properties. There is no active project.", "No active project", JOptionPane.INFORMATION_MESSAGE);
             setVisible(false);
-        } else if (m_EditProjectPropertiesController.editProperties()) {
+        } else if (m_editProjectPropertiesController.editProperties()) {
 
-            m_oldName = m_EditProjectPropertiesController.getProjectName();
-            m_oldDescription = m_EditProjectPropertiesController.getProjectDescription();
+            m_oldName = m_editProjectPropertiesController.getProjectName();
+            m_oldDescription = m_editProjectPropertiesController.getProjectDescription();
             initComponents();
             setContentPane(new EditProjectPropertiesPane(this, m_oldName, m_oldDescription));
             setLocationRelativeTo(null);
@@ -90,6 +90,6 @@ public class EditProjectPropertiesFrame extends javax.swing.JFrame {
     }
 
     boolean nameExists(String name) {
-        return m_EditProjectPropertiesController.nameExists(name);
+        return m_editProjectPropertiesController.nameExists(name);
     }
 }

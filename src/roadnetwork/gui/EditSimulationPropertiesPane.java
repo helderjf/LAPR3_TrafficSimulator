@@ -11,20 +11,21 @@ import javax.swing.JOptionPane;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class EditProjectPropertiesPane extends javax.swing.JPanel {
+public class EditSimulationPropertiesPane extends javax.swing.JPanel {
 
-    EditProjectPropertiesFrame m_ancestor;
-    String m_oldName;
-    String m_oldDescription;
+    private EditSimulationPropertiesDialog m_ancestor;
+    private String m_oldName;
+    private String m_oldDescription;
 
     /**
-     * Creates new form EditProjectPropertiesPane
+     * Creates new form EditSimulationPropertiesPane
      */
-    public EditProjectPropertiesPane(EditProjectPropertiesFrame ancestor, String pname, String pdesc) {
+    EditSimulationPropertiesPane(EditSimulationPropertiesDialog ancestor, String oldName, String oldDescription) {
         m_ancestor = ancestor;
-        m_oldName = pname;
-        m_oldDescription = pdesc;
+        m_oldName = oldName;
+        m_oldDescription = oldDescription;
         initComponents();
+
     }
 
     /**
@@ -44,11 +45,11 @@ public class EditProjectPropertiesPane extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        jLabel1.setText("Project name:");
+        jLabel1.setText("Simulation name:");
 
         jTextField1.setText(m_oldName);
 
-        jLabel2.setText("Project description:");
+        jLabel2.setText("Simulation description:");
 
         jTextPane1.setText(m_oldDescription);
         jScrollPane1.setViewportView(jTextPane1);
@@ -87,7 +88,7 @@ public class EditProjectPropertiesPane extends javax.swing.JPanel {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,8 +100,8 @@ public class EditProjectPropertiesPane extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -109,16 +110,13 @@ public class EditProjectPropertiesPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (!jTextField1.getText().replace(" ", "").equals("") && !jTextPane1.getText().replace(" ", "").equals("")) {
-            if (!m_ancestor.nameExists(jTextField1.getText().trim())) {
-                m_ancestor.newProperties(jTextField1.getText().trim(), jTextPane1.getText().trim());
-            } else {
-                JOptionPane.showMessageDialog(this, "A project with the name name already exists.\n"
-                        + "Please choose a different name");
-            }
+
+        if (jTextField1.getText().trim().equals("") || jTextPane1.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "You must enter a simulation name and a simulation description.");
         } else {
-            JOptionPane.showMessageDialog(this, "You must enter a project name and a project description.");
+            m_ancestor.newProperties(jTextField1.getText().trim(), jTextPane1.getText().trim());
         }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
