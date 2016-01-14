@@ -97,7 +97,7 @@ public class ImportXML implements Import {
   
 
     @Override
-    public ArrayList<Section> importSections() {
+    public ArrayList<Section> importSections(ArrayList<Junction> junctions) {
         
         ArrayList<Section> list = new ArrayList();
         
@@ -111,7 +111,7 @@ public class ImportXML implements Import {
                 for (int j = 0; j < childNode.getChildNodes().getLength(); j++) {
                     Node node = nodeL.item(j);
                     if(node.hasAttributes()){
-                        list.add(getSection(node));
+                        list.add(getSection(node, junctions));
                     }
                 }
             }
@@ -125,14 +125,20 @@ public class ImportXML implements Import {
      * @param node
      * @return section object
      */
-    private Section getSection(Node node){
+    private Section getSection(Node node, ArrayList<Junction> junctions){
         Section section = new Section();
         String begginingNode = node.getAttributes().getNamedItem("begin").getNodeValue();
         String endingNode = node.getAttributes().getNamedItem("end").getNodeValue();
         
         // definir begin e end junction
-        section.setBeginningNode(new Junction(begginingNode));
-        section.setEndingNode(new Junction(endingNode));
+        for (Junction j : junctions){
+            if(j.getJunctionId().equals(begginingNode)){
+                section.setBeginningNode(j);
+            }
+            if(j.getJunctionId().equals(endingNode)){
+                section.setEndingNode(j);
+            }
+        } 
         
         //definir road name
         Element domElement = (Element)node;
@@ -229,7 +235,7 @@ public class ImportXML implements Import {
     public ArrayList<Vehicle> importVehicles()
     {
         ArrayList<Vehicle> list = new ArrayList();
-        
+        /*
         //get vehicle list
         Node domVehicleList = xmlDocument.getElementsByTagName("vehicle_list").item(0);
         
@@ -239,6 +245,18 @@ public class ImportXML implements Import {
             Node nodeChild = domVehicleList.getChildNodes().item(i);
             list.add(getVehicle(nodeChild));
         }
+                */
+        
+        Node root = xmlDocument.getDocumentElement();
+        
+        NodeList nList = root.getChildNodes();
+        
+        for (int i = 2; i < nList.getLength(); i++) {
+            if(nList.item(i).getNodeValue()!=null){
+            list.add(getVehicle(nList.item(i)));
+            }
+        }
+        
         return list;
     }
 

@@ -28,7 +28,7 @@ public interface Import {
      * @param path
      * @return Dom Node type with all sections
      */
-    public ArrayList<Section> importSections();
+    public ArrayList<Section> importSections(ArrayList<Junction> junctions);
     
     /**
      * import vehicles from an xml file
