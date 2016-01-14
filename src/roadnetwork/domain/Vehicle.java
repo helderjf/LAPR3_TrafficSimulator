@@ -18,22 +18,89 @@ import java.util.Objects;
  */
 public abstract class Vehicle {
 
+    /**
+     *
+     */
     protected int m_pk;
+
+    /**
+     *
+     */
     protected String name;
+
+    /**
+     *
+     */
     protected String description;
+
+    /**
+     *
+     */
     protected String type;
+
+    /**
+     *
+     */
     protected String fuel;
+
+    /**
+     *
+     */
     protected double mass;
+
+    /**
+     *
+     */
     protected double load;
+
+    /**
+     *
+     */
     protected double dragCoefficient;
+
+    /**
+     *
+     */
     protected double frontalArea;
+
+    /**
+     *
+     */
     protected double rrc;
+
+    /**
+     *
+     */
     protected double wheelSize;
+
+    /**
+     *
+     */
     protected HashMap<SectionTypology, Double> velocityLimit;
+
+    /**
+     *
+     */
     protected double minRPM;
+
+    /**
+     *
+     */
     protected double maxRPM;
+
+    /**
+     *
+     */
     protected double finalDriveRatio;
+
+    /**
+     *
+     */
     protected HashMap<Integer, Double> gearList;
+
+    /**
+     *
+     */
     protected ArrayList<Throttle> throttleList;
 
     /**
@@ -277,6 +344,11 @@ public abstract class Vehicle {
         this.velocityLimit = velocityLimit;
     }
 
+    /**
+     *
+     * @param typology
+     * @return
+     */
     public double getVelocityLimit(SectionTypology typology) {
         return velocityLimit.get(typology);
     }
