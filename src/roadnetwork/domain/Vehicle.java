@@ -37,7 +37,7 @@ public abstract class Vehicle {
     protected ArrayList<Throttle> throttleList;
 
     /**
-     *
+     * 
      */
     public Vehicle() {
         this.m_pk = 0;
@@ -350,60 +350,112 @@ public abstract class Vehicle {
         this.type = type;
     }
 
+    /**
+     * 
+     * @return frontalArea
+     */
     public double getFrontalArea() {
         return frontalArea;
     }
 
+    /**
+     * 
+     * @param frontalArea frontalArea
+     */
     public void setFrontalArea(double frontalArea) {
         this.frontalArea = frontalArea;
     }
 
+    /**
+     * 
+     * @return fuel
+     */
     public String getFuel() {
         return fuel;
     }
 
+    /**
+     * 
+     * @param fuel fuel
+     */
     public void setFuel(String fuel) {
         this.fuel = fuel;
     }
 
+    /**
+     * 
+     * @return rrc
+     */
     public double getRrc() {
         return rrc;
     }
 
+    /**
+     * 
+     * @param rrc rrc
+     */
     public void setRrc(double rrc) {
         this.rrc = rrc;
     }
 
+    /**
+     * 
+     * @return velocityLimit
+     */
     public HashMap<SectionTypology, Double> getVelocityLimit() {
         return velocityLimit;
     }
 
+    /**
+     * 
+     * @param velocityLimit velocityLimit
+     */
     public void setVelocityLimit(HashMap<SectionTypology, Double> velocityLimit) {
         this.velocityLimit = velocityLimit;
     }
 
+    /**
+     * 
+     * @return gearList
+     */
     public HashMap<Integer, Double> getGearList() {
         return gearList;
     }
 
+    /**
+     * 
+     * @param gearList gearList
+     */
     public void setGearList(HashMap<Integer, Double> gearList) {
         this.gearList = gearList;
     }
 
+    /**
+     * 
+     * @return throttleList
+     */
     public ArrayList<Throttle> getThrottleList() {
         return throttleList;
     }
 
+    /**
+     * 
+     * @param throttleList throttleList
+     */
     public void setThrottleList(ArrayList<Throttle> throttleList) {
         this.throttleList = throttleList;
     }
 
+    /**
+     * 
+     * @return EngineEfficiency
+     */
     abstract public List<EngineEfficiency> getEngineEfficiency();
 
     /**
-     *
-     * @param obj object
-     * @return
+     * 
+     * @param obj Vehicle
+     * @return result
      */
     @Override
     public boolean equals(Object obj) {//to do completar para os novos atributos
@@ -454,6 +506,11 @@ public abstract class Vehicle {
     }
 
 
+    /**
+     * 
+     * @param segment_type segment_type
+     * @param limit limit
+     */
     public void addVelocityLimit(SectionTypology segment_type, double limit) {
         velocityLimit.put(segment_type, limit);
     }
@@ -487,14 +544,27 @@ public abstract class Vehicle {
                 + "finalDriveRatio=" + finalDriveRatio;
     }
 
+    /**
+     * 
+     * @return m_pk
+     */
     public boolean hasPK() {
         return m_pk != 0;
     }
 
+    /**
+     * 
+     * @return radiusOfTire
+     */
     public double getRadiusOfTire() {
         return wheelSize / 2;
     }
 
+    /**
+     * 
+     * @param timeIdle timeIdle
+     * @return timeIdle
+     */
     double getIdleConsumption(double timeIdle) {
         double rpmLow=999999;
         double torque=0;
