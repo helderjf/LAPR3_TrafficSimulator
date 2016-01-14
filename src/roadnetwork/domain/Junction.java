@@ -15,7 +15,11 @@ public class Junction {
     private String junctionId;
 
     
-    
+    /**
+     * 
+     * @param pk pk 
+     * @param name name
+     */
     public Junction(int pk, String name) {
         this.m_pk = pk;
         this.junctionId = name;
@@ -81,10 +85,19 @@ public class Junction {
         return true;
     }
 
+    /**
+     * 
+     * @return m_pk
+
+     */
     public int getPK() {
         return m_pk;
     }
 
+    /**
+     * 
+     * @param pk pk
+     */
     public void setPK(int pk) {
         m_pk = pk;
     }
