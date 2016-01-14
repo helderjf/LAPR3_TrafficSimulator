@@ -13,8 +13,11 @@ import java.util.Objects;
  */
 public class EngineEfficiency {
     
-
-
+    public EngineEfficiency()
+    {
+        
+    }
+    
     //Regime Data
     private double torque;
     private double m_rpmLow;
