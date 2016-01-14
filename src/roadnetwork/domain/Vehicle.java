@@ -529,7 +529,9 @@ public abstract class Vehicle {
      * @return Vehicle data
      */
     public String showData() {//completar para os novos atributos
-        return "Vehicle: \n"
+        
+        String showData =
+             "Vehicle: \n"
                 + "id= " + m_pk + "\n"
                 + "name= " + name + "\n"
                 + "mass= " + mass + "\n"
@@ -542,6 +544,8 @@ public abstract class Vehicle {
                 + "minRPM=" + minRPM + "\n"
                 + "maxRPM=" + maxRPM + "\n"
                 + "finalDriveRatio=" + finalDriveRatio;
+        
+        return showData;
     }
 
     /**
@@ -569,6 +573,7 @@ public abstract class Vehicle {
         double rpmLow=999999;
         double torque=0;
         double sfc=0;
+        double result = 0;
 
         for (Throttle t : throttleList) {
             if (t.getID().startsWith("25")) {
@@ -582,7 +587,8 @@ public abstract class Vehicle {
             }
         }
         
-        return 2*3.1415*torque*(rpmLow/60)*sfc*timeIdle;
+        result = 2*3.1415*torque*(rpmLow/60)*sfc*timeIdle;
+        return result;
 
     }
 
