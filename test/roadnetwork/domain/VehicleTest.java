@@ -682,7 +682,7 @@ public class VehicleTest {
     public void testToString() {
         System.out.println("toString");
         Vehicle instance = vehicle3;
-        String expResult = "Vehicle " + instance.getM_pk() + " - " + instance.getName();
+        String expResult = "Vehicle " + instance.getPK() + " - " + instance.getName();
         String result = instance.toString();
         assertEquals(expResult, result);
 
@@ -721,7 +721,7 @@ public class VehicleTest {
     public void testHasPK() {
         System.out.println("hasPK");
         Vehicle instance = vehicle3;
-        instance.setM_pk(0);
+        instance.setPK(0);
         boolean expResult = false;
         boolean result = instance.hasPK();
         assertEquals(expResult, result);

@@ -37,11 +37,7 @@ public class ImportRoadNetworkPane extends javax.swing.JPanel {
 
         jFileChooser1 = new javax.swing.JFileChooser();
 
-        jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileChooser1ActionPerformed(evt);
-            }
-        });
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -55,8 +51,8 @@ public class ImportRoadNetworkPane extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-    }//GEN-LAST:event_jFileChooser1ActionPerformed
+    //GEN-FIRST:event_jFileChooser1ActionPerformed
+    //GEN-LAST:event_jFileChooser1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -29,5 +29,15 @@ public class SimulationStateImpl implements SimulationState{
     public boolean xmlImported() {
         return false;
     }
+
+    @Override
+    public boolean canEditProperties() {
+        return false;
+    }
+
+    @Override
+    public boolean propertiesChanged() {
+        return true;
+    }
     
 }

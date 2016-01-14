@@ -59,9 +59,9 @@ public class ImportRoadNetworkFrame extends javax.swing.JFrame {
 
     void importRoadNetwork(File file) {
         if(m_importRNController.importRoadNetwork(file)){
-            JOptionPane.showMessageDialog(null, "File succefully imported!", "Import Road Network", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "File succefully imported!", "Import Road Network", JOptionPane.INFORMATION_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(null, "Error: Road Network file not imported. Please try with a correct file!", "Error: Import Road Network", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(this, "Error: Road Network file not imported. Please try with a correct file!", "Error: Import Road Network", JOptionPane.ERROR);
         }
     }
 

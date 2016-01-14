@@ -17,8 +17,11 @@ import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.Section;
 import roadnetwork.domain.SectionTypology;
 import roadnetwork.domain.Segment;
+import roadnetwork.domain.Simulation;
 import roadnetwork.domain.Throttle;
+import roadnetwork.domain.TrafficPattern;
 import roadnetwork.domain.Vehicle;
+import roadnetwork.state.SimulationState;
 
 /**
  *
@@ -54,8 +57,15 @@ public class ProjectWriter {
                 m_dao.rollback();
                 return false;
             }
-
         }
+
+        if (m_project.hasSimulation()) {
+            if (!saveNewSimulation()) {
+                m_dao.rollback();
+                return false;
+            }
+        }
+
         m_dao.commit();
         return true;//TO DO fazer verificação
     }
@@ -81,7 +91,13 @@ public class ProjectWriter {
                 m_dao.rollback();
                 return false;
             }
+        }
 
+        if (m_project.hasSimulation()) {
+            if (!updateProjectSimulation()) {
+                m_dao.rollback();
+                return false;
+            }
         }
 
         m_dao.commit();
@@ -144,7 +160,7 @@ public class ProjectWriter {
                     section.getToll(),
                     section.getWind().getAngle(),
                     section.getWind().getVelocity()));
-            if (section.getPK() == 0) {
+            if (section.getPK() <= 0) {
                 return false;
             }
 
@@ -251,21 +267,21 @@ public class ProjectWriter {
     }
 
     private boolean saveNewHybridVehicle(Vehicle vehicle) {
-        if (m_dao.saveNewHybridVehicle(vehicle.getPK(),((HybridVehicle)vehicle).getEnergyRegenerationRatio()) != 1) {
+        if (m_dao.saveNewHybridVehicle(vehicle.getPK(), ((HybridVehicle) vehicle).getEnergyRegenerationRatio()) != 1) {
             return false;
         }
         return true;
     }
 
     private boolean saveNewElectricVehicle(Vehicle vehicle) {
-        if (m_dao.saveNewElectricVehicle(vehicle.getPK(),((ElectricVehicle)vehicle).getEnergyRegenerationRatio()) != 1) {
+        if (m_dao.saveNewElectricVehicle(vehicle.getPK(), ((ElectricVehicle) vehicle).getEnergyRegenerationRatio()) != 1) {
             return false;
         }
         return true;
     }
 
     private boolean saveNewVehicleGears(Vehicle vehicle) {
-        HashMap<Integer,Double> gears = vehicle.getGearList();
+        HashMap<Integer, Double> gears = vehicle.getGearList();
         for (Integer gear : gears.keySet()) {
             if (m_dao.saveNewVehicleGear(vehicle.getPK(), gear, gears.get(gear)) != 1) {
                 return false;
@@ -293,6 +309,44 @@ public class ProjectWriter {
             }
         }
         return true;
+    }
+
+    private boolean saveNewSimulation() {
+        Simulation sim = m_project.getCurrentSimulation();
+        String simName = sim.getName();
+        String simDesc = sim.getDescription();
+        String simState = sim.getState().getClass().getSimpleName();
+
+        int simPK = m_dao.saveNewSimulation(m_project.getPK(), simName, simDesc, simState);
+
+        if (simPK <= 0) {
+            return false;
+        }
+
+        sim.setPK(simPK);
+
+        ArrayList<TrafficPattern> traffPatList = sim.getTrafficPatternList();
+
+        int bNodePK;
+        int eNodePK;
+        int vPK;
+        double aRate;
+
+        for (TrafficPattern tp : traffPatList) {
+
+            bNodePK = tp.getBeginNode().getPK();
+            eNodePK = tp.getEndNode().getPK();
+            vPK = tp.getVehicle().getPK();
+            aRate = tp.getArrivalRate();
+
+            int tpPK = m_dao.saveNewTrafficPattern(simPK, bNodePK, eNodePK, vPK, aRate);
+            if (tpPK <= 0) {
+                return false;
+            }
+            tp.setPK(tpPK);
+        }
+        return true;
+
     }
 
     private boolean updateProjectProperties() {
@@ -388,6 +442,44 @@ public class ProjectWriter {
                 }
             }
 
+        }
+        return true;
+    }
+
+    private boolean updateProjectSimulation() {
+        Simulation sim = m_project.getCurrentSimulation();
+        
+        if(!sim.hasPK()){
+            return saveNewSimulation();
+        }
+        
+        int simpk = sim.getPK();
+        String simName = sim.getName();
+        String simDesc = sim.getDescription();
+        String simState = sim.getState().getClass().getSimpleName();
+
+        if (m_dao.updateSimulation(simpk, simName, simDesc, simState) == -1) {
+            return false;
+        }
+
+        ArrayList<TrafficPattern> traffPatList = sim.getTrafficPatternList();
+        int tpPK;
+        int bNodePK;
+        int eNodePK;
+        int vPK;
+        double aRate;
+
+        for (TrafficPattern tp : traffPatList) {
+
+            tpPK = tp.getPK();
+            bNodePK = tp.getBeginNode().getPK();
+            eNodePK = tp.getEndNode().getPK();
+            vPK = tp.getVehicle().getPK();
+            aRate = tp.getArrivalRate();
+
+            if (m_dao.updateTrafficPattern(tpPK, bNodePK, eNodePK, vPK, aRate) == -1) {
+                return false;
+            }
         }
         return true;
     }

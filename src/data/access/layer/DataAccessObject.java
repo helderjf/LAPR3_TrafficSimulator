@@ -205,7 +205,6 @@ public class DataAccessObject {
 
             //execute statement
             statement.execute();
-
             return statement.getInt(10);
 
         } catch (SQLException ex) {
@@ -295,7 +294,7 @@ public class DataAccessObject {
             //execute statement
             statement.execute();
 
-            return statement.getInt(14);
+            return statement.getInt(15);
 
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -464,6 +463,60 @@ public class DataAccessObject {
         }
     }
 
+    int saveNewSimulation(int projPK, String simName, String simDesc, String simState) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+            //create statement
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_SIMULATION(?,?,?,?,?)}");
+            statement.setInt(1, projPK);
+            statement.setString(2, simName);
+            statement.setString(3, simDesc);
+            statement.setString(4, simState);
+
+            statement.registerOutParameter(5, Types.INTEGER);
+
+            //execute statement
+            statement.execute();
+            return statement.getInt(5);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+
+    }
+
+    int saveNewTrafficPattern(int simPK, int bNodePK, int eNodePK, int vPK, double aRate) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+            //create statement
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_TRAFFIC_PATTERN(?,?,?,?,?,?)}");
+            statement.setInt(1, simPK);
+            statement.setInt(2, bNodePK);
+            statement.setInt(3, eNodePK);
+            statement.setInt(4, vPK);
+            statement.setDouble(5, aRate);
+
+            statement.registerOutParameter(6, Types.INTEGER);
+
+            //execute statement
+            statement.execute();
+            return statement.getInt(6);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
+
     int updateProject(int projectPK, String projectName, String projectDescription, String projectState) {
         try {
             if (m_connection == null) {
@@ -615,6 +668,58 @@ public class DataAccessObject {
         }
 
     }
+
+    int updateSimulation(int simpk, String simName, String simDesc, String simState) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            CallableStatement statement = m_connection.prepareCall("{call UPDATE_SIMULATION(?,?,?,?)}");
+            statement.setInt(1, simpk);
+            statement.setString(2, simName);
+            statement.setString(3, simDesc);
+            statement.setString(4, simState);
+
+            statement.execute();
+
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
+    
+    
+        int updateTrafficPattern(int tpPK, int bNodePK, int eNodePK, int vPK, double aRate) {
+                try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            CallableStatement statement = m_connection.prepareCall("{call UPDATE_TRAFFIC_PATTERN(?,?,?,?,?)}");
+            statement.setInt(1, tpPK);
+            statement.setInt(2, bNodePK);
+            statement.setInt(3, eNodePK);
+            statement.setInt(4, vPK);
+            statement.setDouble(5, aRate);
+
+            statement.execute();
+
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
+    
+    
 
     ArrayList<String> getOrderedProjectList() {
         try {
@@ -997,5 +1102,7 @@ public class DataAccessObject {
             return -1;//returns null so the caller knows the connection failed
         }
     }
+
+
 
 }

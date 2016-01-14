@@ -43,5 +43,7 @@ public interface ProjectState {
     
     public boolean vehiclesAssigned();
 
+    public boolean simulationCreated();
+
 }
     

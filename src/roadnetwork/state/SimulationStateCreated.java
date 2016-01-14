@@ -11,16 +11,22 @@ import roadnetwork.domain.Simulation;
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public class SimulationStateCreated extends SimulationStateImpl{
+public class SimulationStateCreated extends SimulationStateImpl {
 
     public SimulationStateCreated(Simulation simulation) {
         super(simulation);
     }
-    
+
     @Override
-    public boolean xmlImported(){
+    public boolean xmlImported() {
         SimulationState ns = new SimulationStateActive(m_simulation);
         m_simulation.setState(ns);
         return true;
     }
+
+    @Override
+    public boolean canEditProperties() {
+        return true;
+    }
+
 }

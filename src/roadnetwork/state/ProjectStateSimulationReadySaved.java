@@ -48,4 +48,15 @@ public class ProjectStateSimulationReadySaved extends ProjectStateImpl {
         return true;
     }
 
+    @Override
+    public boolean simulationCreated() {
+        ProjectState ns = new ProjectStateSimulationReady(m_project);
+        m_project.setState(ns);
+        return true;
+        
+    }
+    
+    
+    
+
 }

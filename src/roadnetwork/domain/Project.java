@@ -212,5 +212,17 @@ public class Project {
         return null;
     }
 
+    public void simulationCreated() {
+        m_state.simulationCreated();
+    }
+
+    public boolean hasSimulation() {
+        return m_activeSimulation!=null;
+    }
+
+    public void simulationPropertiesChanged() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 }

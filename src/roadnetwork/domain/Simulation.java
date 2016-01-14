@@ -84,4 +84,20 @@ public class Simulation {
         return new SimulationRun(runName, runDuration, runTimeStep, roadNetwork, m_trafficPatternList, bpm);
     }
 
+    public SimulationState getState() {
+        return m_state;
+    }
+
+    public boolean hasPK() {
+        return m_pk!=0;
+    }
+
+    public boolean canEditProperties() {
+        return m_state.canEditProperties();
+    }
+
+    public boolean propertiesChanged() {
+        return m_state.propertiesChanged();
+    }
+
 }

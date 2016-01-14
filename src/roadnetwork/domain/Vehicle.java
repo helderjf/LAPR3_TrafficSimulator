@@ -358,14 +358,6 @@ public abstract class Vehicle {
         this.frontalArea = frontalArea;
     }
 
-    public int getM_pk() {
-        return m_pk;
-    }
-
-    public void setM_pk(int m_pk) {
-        this.m_pk = m_pk;
-    }
-
     public String getFuel() {
         return fuel;
     }

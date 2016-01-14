@@ -3,20 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package roadnetwork.state;
+package roadnetwork.factory;
 
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
  */
-public interface SimulationState {
-
-    public boolean canRunSimulation();
-    
-    public boolean xmlImported();
-
-    public boolean canEditProperties();
-
-    public boolean propertiesChanged();
+public class SimulationStateFactory {
     
 }
