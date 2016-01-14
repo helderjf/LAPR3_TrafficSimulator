@@ -146,6 +146,18 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         double relativeVelocityWindInfluence = relativeVelocityWindInfluence(pp, vehicleVelocity);
         double resistanceForce = resistanceForce(pp,segment,relativeVelocityWindInfluence); 
         double segmentEnergyConsumption = resistanceForce * segment.getLenght();
+        
+        if ((m_vehicle instanceof CombustionVehicle) && segmentEnergyConsumption<0) {
+            segmentEnergyConsumption=0;
+        
+        } else if ((m_vehicle instanceof ElectricVehicle) && segmentEnergyConsumption<0) {
+            ElectricVehicle electricVehicle = (ElectricVehicle)m_vehicle;
+            segmentEnergyConsumption= segmentEnergyConsumption * electricVehicle.getEnergyRegenerationRatio();
+        
+        }else if ((m_vehicle instanceof HybridVehicle) && segmentEnergyConsumption<0) {
+            HybridVehicle hybridVehicle = (HybridVehicle)m_vehicle;
+            segmentEnergyConsumption=segmentEnergyConsumption * hybridVehicle.getEnergyRegenerationRatio();
+        }
         return segmentEnergyConsumption;
     }
     

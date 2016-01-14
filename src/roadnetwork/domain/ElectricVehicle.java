@@ -42,7 +42,44 @@ public class ElectricVehicle extends Vehicle implements Electric {
 
     @Override
     public List<EngineEfficiency> getEngineEfficiency() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        //EngineEfficiency engineEfficiency = new EngineEfficiency();
+        ArrayList<EngineEfficiency> engineEfficiencyList = new ArrayList<>();
+        
+        //obter a ultima mudanca
+        int lastGear = gearList.size();
+        
+        //preenche a lista com todos as performances
+        while(lastGear > 0)
+        {
+            for (Throttle throttle : throttleList) 
+            {
+                for (Regime regime : throttle.getRegimeList()) 
+                {
+                    EngineEfficiency engineEfficiency = new EngineEfficiency();
+                    engineEfficiency.setGear(lastGear);
+                    engineEfficiency.setGearRatio(gearList.get(lastGear));
+                    engineEfficiency.setThrottleRatio(throttle.getID());
+                    engineEfficiency.setTorque(regime.getTorque());
+                    engineEfficiency.setM_rpmLow(regime.getRPMLow());
+                    engineEfficiency.setM_rpmHigh(regime.getRPMHigh());
+
+                    engineEfficiencyList.add(engineEfficiency);
+                }
+            }
+            lastGear--;
+        }
+
+//        //ordena a lista em ordem crescente por performance
+//        Collections.sort(engineEfficiencyList, new Comparator<EngineEfficiency>() {
+//            @Override
+//            public int compare(EngineEfficiency lhs, EngineEfficiency rhs) {
+//
+//                return Double.valueOf(lhs.getGearRatio()*lhs.getTorque()).compareTo(rhs.getGearRatio()*rhs.getTorque());
+//            }
+//        });
+
+        return engineEfficiencyList;
     }
 
     public double getEnergyRegenerationRatio() {

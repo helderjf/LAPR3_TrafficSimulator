@@ -117,6 +117,18 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
         double resistanceForce = resistanceForce(pp,segment,relativeVelocityWindInfluence); 
         double work = resistanceForce * segment.getLenght();
         double segmentEnergyConsumption=calculateSegmentWork(pp,segment, vehicleVelocity);
+        
+        if ((m_vehicle instanceof CombustionVehicle) && segmentEnergyConsumption<0) {
+            segmentEnergyConsumption=0;
+        
+        } else if ((m_vehicle instanceof ElectricVehicle) && segmentEnergyConsumption<0) {
+            ElectricVehicle electricVehicle = (ElectricVehicle)m_vehicle;
+            segmentEnergyConsumption= segmentEnergyConsumption * electricVehicle.getEnergyRegenerationRatio();
+        
+        }else if ((m_vehicle instanceof HybridVehicle) && segmentEnergyConsumption<0) {
+            HybridVehicle hybridVehicle = (HybridVehicle)m_vehicle;
+            segmentEnergyConsumption=segmentEnergyConsumption * hybridVehicle.getEnergyRegenerationRatio();
+        }
         return segmentEnergyConsumption;
     }
     
@@ -230,6 +242,7 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
     //---Simulation Path Parcel calculations---
     @Override
     public ArrayList<SimPathParcel> getBestPath(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
+        getBestPathResults(roadNetwork, originNode, destinyNode, vehicle);
         calculatePathParcelList();
         return m_simPathParcelList;
     }
@@ -252,7 +265,6 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
     private void calculatePathParcel(Section section, ArrayList<Segment> segmentsList) {
         for (Segment it : segmentsList) {
             
-            //creates new SimPathParcel
             SimPathParcel pp = new SimPathParcel(section);
             
             //set the segment's direction
@@ -265,7 +277,6 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
                     pp.setDirection(SimDirection.reverse);
                 }
             }
-            
             //set the segment
             pp.setSegment(it);
             //set the segment's theoretical travel time 

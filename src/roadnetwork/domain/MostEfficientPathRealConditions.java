@@ -92,15 +92,12 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm {
         double consumption = 0;
 
         double sectionConsuption = 0;
-
-        if (m_vehicle instanceof CombustionVehicle) {
-            CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
-            List<EngineEfficiency> engineEfficiencyList = combustionVehicle.getEngineEfficiency();
-
-            for (Segment segment : segmentList) {
-                sectionConsuption += calculateSegmentEnergyConsumption(engineEfficiencyList, pp, segment);
-            }
+        List<EngineEfficiency> engineEfficiencyList=m_vehicle.getEngineEfficiency();
+        
+        for (Segment segment : segmentList) {
+            sectionConsuption += calculateSegmentEnergyConsumption(engineEfficiencyList, pp, segment);
         }
+
         return sectionConsuption;
     }
 
@@ -108,9 +105,10 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm {
         double travelSpeed;
         double relativeVelocityWindInfluence;
         double resistanceForce;
-        double vehicleForce;
+        double vehicleForce=0;
         double segmentTotalForce;
         double segmentEnergyConsumption = 0;
+        EngineEfficiency engineEfficiency=null;
 
         //vai percorrer todas as performances ordenadas de motor calculadas para cada Throttle Ratio e Gear Ratio
         for (EngineEfficiency engineEfficiencyTemporary : engineEfficiencyList) {
@@ -119,13 +117,65 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm {
             resistanceForce = resistanceForces(pp, segment, relativeVelocityWindInfluence);
             vehicleForce = vehicleForces(engineEfficiencyTemporary, relativeVelocityWindInfluence, resistanceForce);
             if (vehicleForce > resistanceForce) {
-                segmentEnergyConsumption = vehicleForce * engineEfficiencyTemporary.getM_sfc() / 3600000 * segment.getLenght();
+                engineEfficiency=engineEfficiencyTemporary;
                 break;
             }
         }
+        
+        if (m_vehicle instanceof CombustionVehicle) {
+            segmentEnergyConsumption=calculateSegmentEnergyConsumptionCombustionVehicle(vehicleForce, engineEfficiency, segment);
+        
+        } else if (m_vehicle instanceof ElectricVehicle) {
+            segmentEnergyConsumption=calculateSegmentEnergyConsumptionElectricVehicle(vehicleForce, engineEfficiency, segment);
+        
+        }else if ((m_vehicle instanceof HybridVehicle) && segmentEnergyConsumption<0) {
+            segmentEnergyConsumption=calculateSegmentEnergyConsumptionHybridVehicle(vehicleForce, engineEfficiency, segment);
+        }
         return segmentEnergyConsumption;
     }
-
+    
+    private double calculateSegmentEnergyConsumptionCombustionVehicle(double vehicleForce, EngineEfficiency engineEfficiency, Segment segment) {
+        double segmentEnergyConsumption;
+        if (vehicleForce<0) {
+            segmentEnergyConsumption=0;
+        } else{
+            segmentEnergyConsumption = vehicleForce * engineEfficiency.getM_sfc() / 3600000 * segment.getLenght();
+        }
+        return segmentEnergyConsumption;
+    }
+    
+    private double calculateSegmentEnergyConsumptionElectricVehicle(double vehicleForce, EngineEfficiency engineEfficiency, Segment segment){
+        double segmentEnergyConsumption;
+        ElectricVehicle electricVehicle = (ElectricVehicle)m_vehicle;
+        if (vehicleForce<0) {
+            //ToDo calcular força maxima do motor
+            double vehicleMaxForce;
+//            if (vehicleForce>vehicleMaxForce) {
+//                vehicleForce=vehicleMaxForce;
+//            }
+            segmentEnergyConsumption= vehicleForce * electricVehicle.getEnergyRegenerationRatio()*segment.getLenght();
+        } else {
+            segmentEnergyConsumption=vehicleForce * segment.getLenght();
+        }
+        return segmentEnergyConsumption;
+    }
+    
+    private double calculateSegmentEnergyConsumptionHybridVehicle(double vehicleForce, EngineEfficiency engineEfficiency, Segment segment){
+        double segmentEnergyConsumption;
+        HybridVehicle hybridVehicle = (HybridVehicle)m_vehicle;
+        if (vehicleForce<0) {
+            //ToDo calcular força maxima do motor
+//            double vehicleMaxForce;
+//            if (vehicleForce>vehicleMaxForce) {
+//                vehicleForce=vehicleMaxForce;
+//            }
+            segmentEnergyConsumption= vehicleForce * hybridVehicle.getEnergyRegenerationRatio()*segment.getLenght();
+        } else{
+            segmentEnergyConsumption = vehicleForce * engineEfficiency.getM_sfc() / 3600000 * segment.getLenght();
+        }
+        return segmentEnergyConsumption;
+    }
+    
     private double calculateSectionTravelTime(Section section) {
         ArrayList<Segment> segmentList = section.getSegmentsList();
         double time = 0; //in seconds
@@ -172,18 +222,15 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm {
         double gearRatio = 0;
         double radiusTire = 0;
 
-        if (m_vehicle instanceof CombustionVehicle) {
-            CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
-            double rpm = rpmCalculation(engineEfficiency, relativeVelocityWindInfluence);
+        double rpm = rpmCalculation(engineEfficiency, relativeVelocityWindInfluence);
 
-            if (rpm > engineEfficiency.getM_rpmLow() && rpm < engineEfficiency.getM_rpmHigh()) {
-                torque = engineEfficiency.getTorque();
-                finalDriveRatio = combustionVehicle.getFinalDriveRatio();
-                gearRatio = engineEfficiency.getGearRatio();
-                radiusTire = combustionVehicle.getRadiusOfTire();
+        if (rpm > engineEfficiency.getM_rpmLow() && rpm < engineEfficiency.getM_rpmHigh()) {
+            torque = engineEfficiency.getTorque();
+            finalDriveRatio = m_vehicle.getFinalDriveRatio();
+            gearRatio = engineEfficiency.getGearRatio();
+            radiusTire = m_vehicle.getRadiusOfTire();
 
-                vehicleForce = (torque * finalDriveRatio * gearRatio) / radiusTire;
-            }
+            vehicleForce = (torque * finalDriveRatio * gearRatio) / radiusTire;
         }
         return vehicleForce;
     }
