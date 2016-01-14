@@ -53,13 +53,6 @@ public class VehicleTest {
     Throttle throttle2;
     Throttle throttle3;
     
-    List<EngineEfficiency> lstEngineEfficiency;
-    
-    EngineEfficiency engineEfficiency1;
-    EngineEfficiency engineEfficiency2;
-
-
-    
     public VehicleTest() {
     }
     
@@ -172,10 +165,6 @@ public class VehicleTest {
                 2.6,//final drive ratio
                 gearList1,
                 throttleList1);
-        
-        lstEngineEfficiency = new ArrayList<>();
-        
-  
   
     }
     
@@ -790,7 +779,7 @@ public class VehicleTest {
     @Test
     public void testSetPK() {
         System.out.println("setPK");
-        int pk = 1;
+        int pk = 0;
         Vehicle instance = vehicle3;
         instance.setPK(pk);
         int expResult = 1;
