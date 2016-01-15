@@ -90,19 +90,19 @@ public class SimPathParcel implements PathParcel {
         this.m_theoreticalTravelTime = time;
     }
 
-    double getSimInTime() {
+    public double getSimInTime() {
         return m_simInTime;
     }
 
-    void setSimInTime(double time) {
+    public void setSimInTime(double time) {
         m_simInTime = time;
     }
 
-    double getSimExitTime() {
+    public double getSimExitTime() {
         return m_simExitTime;
     }
 
-    void setSimExitTime(double time) {
+    public void setSimExitTime(double time) {
         m_simExitTime = time;
     }
 
@@ -150,5 +150,10 @@ public class SimPathParcel implements PathParcel {
     void initializePredictedExitTime(double injectionTime) {
         m_predictedExitTime=m_theoreticalTravelTime+injectionTime;
     }
+
+
+
+
+    
 
 }

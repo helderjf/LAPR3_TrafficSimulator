@@ -18,11 +18,12 @@ public class ResultSimulation implements Result {
     private String m_runName;
     private double m_duration;
     private double m_timeStep;
+    private BestPathAlgorithm m_bestPathMethod;
     private ArrayList<SimVehicle> m_endedVehicles;
     private ArrayList<SimVehicle> m_cruisingVehicles;
     private ArrayList<SimVehicle> m_droppedVehicles;
 
-    public ResultSimulation(String runName, double duration, double timeStep, ArrayList<SimVehicle> endedVehicles, ArrayList<SimVehicle> cruisingVehicles, ArrayList<SimVehicle> droppedVehicles) {
+    public ResultSimulation(String runName, double duration, double timeStep, BestPathAlgorithm bpm, ArrayList<SimVehicle> endedVehicles, ArrayList<SimVehicle> cruisingVehicles, ArrayList<SimVehicle> droppedVehicles) {
         m_runName = runName;
         m_duration = duration;
         m_timeStep = timeStep;
@@ -49,6 +50,7 @@ public class ResultSimulation implements Result {
                 + "\n"
                 + "Duration: "+durationHours+" hours "+durationMinutes+" minutes "+durationSeconds+" seconds\n"
                 + "Time Step: "+timeStepHours+" hours "+timeStepMinutes+" minutes "+timeStepSeconds+" seconds\n"
+                + "Best path method: "+m_bestPathMethod.toString()+"\n"
                 + "Created Vehicles: "+createdV+"\n"
                 + "Injected Vehicles: "+injectedV+"\n"
                 + "Ended Vehicles: "+m_endedVehicles.size()+"\n"
@@ -57,5 +59,19 @@ public class ResultSimulation implements Result {
 
         return results;
     }
+
+    public ArrayList<SimVehicle> getDroppedVehicles() {
+        return m_droppedVehicles;
+    }
+
+    public ArrayList<SimVehicle> getEndedVehicles() {
+        return m_endedVehicles;
+    }
+
+    public ArrayList<SimVehicle> getCruisingVehicles() {
+        return m_cruisingVehicles;
+    }
+    
+    
 
 }

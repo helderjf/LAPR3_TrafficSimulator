@@ -15,7 +15,10 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
+import oracle.sql.ARRAY;
+import oracle.sql.ArrayDescriptor;
 import roadnetwork.domain.SectionDirection;
 import roadnetwork.domain.SectionTypology;
 
@@ -517,6 +520,123 @@ public class DataAccessObject {
         }
     }
 
+    int saveNewRun(int simPK, String name, double duration, double timeStep, String bestPathMehod) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+            //create statement
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_NEW_SIMULATION_RUN(?,?,?,?,?,?)}");
+            statement.setInt(1, simPK);
+            statement.setString(2, name);
+            statement.setDouble(3, duration);
+            statement.setDouble(4, timeStep);
+            statement.setString(5, bestPathMehod);
+
+            statement.registerOutParameter(6, Types.INTEGER);
+
+            //execute statement
+            statement.execute();
+            return statement.getInt(6);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
+
+    int saveRunDroppedVehicles(int runPK, int[] droppedTrafPatList, double[] droppedIntantsList) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            ArrayDescriptor oracleIntArray = ArrayDescriptor.createDescriptor("INTEGER_T", m_connection);
+            ArrayDescriptor oracleFloatArray = ArrayDescriptor.createDescriptor("FLOAT_T", m_connection);
+
+            ARRAY trafficpaterns = new ARRAY(oracleIntArray, m_connection, droppedTrafPatList);
+            ARRAY dropInstants = new ARRAY(oracleFloatArray, m_connection, droppedTrafPatList);
+
+            //create statement
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_DROPPED_VEHICLES(?,?,?,?)}");
+            statement.setInt(1, runPK);
+            statement.setObject(2, trafficpaterns);
+            statement.setObject(3, dropInstants);
+
+            statement.registerOutParameter(4, OracleTypes.ARRAY, "INTEGER_T");
+
+            //execute statement
+            statement.execute();
+
+            int[] errors = new int[droppedTrafPatList.length];
+
+            ARRAY ora_errors = ((OracleCallableStatement) statement).getARRAY(4);//to do tratar erros
+
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
+
+    int saveRunInjectedVehicles(int runPK,
+            int[] injectedVTrafPatList,
+            int[] injectedVSection,
+            int[] injectedVSegment,
+            String[] injectedVTravelDirection,
+            double[] injectedVTimeIn,
+            double[] injectedVTimeOut,
+            double[] injectedVEnergy) {
+
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            ArrayDescriptor oracleIntArray = ArrayDescriptor.createDescriptor("INTEGER_T", m_connection);
+            ArrayDescriptor oracleFloatArray = ArrayDescriptor.createDescriptor("FLOAT_T", m_connection);
+            ArrayDescriptor oracleVarchar2Array = ArrayDescriptor.createDescriptor("VARCHAR2_T", m_connection);
+
+            ARRAY trafficpaterns = new ARRAY(oracleIntArray, m_connection, injectedVTrafPatList);
+            ARRAY sections = new ARRAY(oracleIntArray, m_connection, injectedVSection);
+            ARRAY segments = new ARRAY(oracleIntArray, m_connection, injectedVSegment);
+            ARRAY directions = new ARRAY(oracleVarchar2Array, m_connection, injectedVTravelDirection);
+            ARRAY inTimes = new ARRAY(oracleFloatArray, m_connection, injectedVTimeIn);
+            ARRAY exitTimes = new ARRAY(oracleFloatArray, m_connection, injectedVTimeOut);
+            ARRAY energyConsumptions = new ARRAY(oracleFloatArray, m_connection, injectedVEnergy);
+
+            //create statement
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_DROPPED_VEHICLES(?,?,?,?,?,?,?,?)}");
+            statement.setInt(1, runPK);
+            statement.setObject(2, trafficpaterns);
+            statement.setObject(3, sections);
+            statement.setObject(4, segments);
+            statement.setObject(5, directions);
+            statement.setObject(6, inTimes);
+            statement.setObject(7, exitTimes);
+            statement.setObject(8, energyConsumptions);
+
+            //statement.registerOutParameter(9, OracleTypes.ARRAY, "INTEGER_T");
+            //execute statement
+            statement.execute();
+
+            //int[] errors = new int[droppedTrafPatList.length];
+            //ARRAY ora_errors = ((OracleCallableStatement) statement).getARRAY(4);//to do tratar erros
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
+
     int updateProject(int projectPK, String projectName, String projectDescription, String projectState) {
         try {
             if (m_connection == null) {
@@ -692,10 +812,9 @@ public class DataAccessObject {
             return -1;
         }
     }
-    
-    
-        int updateTrafficPattern(int tpPK, int bNodePK, int eNodePK, int vPK, double aRate) {
-                try {
+
+    int updateTrafficPattern(int tpPK, int bNodePK, int eNodePK, int vPK, double aRate) {
+        try {
             if (m_connection == null) {
                 if (!connect()) {
                     return -1;//returns -1 so the caller knows the connection failed
@@ -718,8 +837,6 @@ public class DataAccessObject {
             return -1;
         }
     }
-    
-    
 
     ArrayList<String> getOrderedProjectList() {
         try {
@@ -1102,7 +1219,5 @@ public class DataAccessObject {
             return -1;//returns null so the caller knows the connection failed
         }
     }
-
-
 
 }

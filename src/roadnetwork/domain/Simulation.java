@@ -20,6 +20,8 @@ public class Simulation {
     private String m_description;
     private SimulationState m_state;
     private ArrayList<TrafficPattern> m_trafficPatternList;
+    
+    private SimulationRun m_currentRun;
 
     public Simulation() {
         m_state = new SimulationStateCreated(this);
@@ -81,7 +83,9 @@ public class Simulation {
     }
 
     public SimulationRun newSimulationRun(RoadNetwork roadNetwork, String runName, double runDuration, double runTimeStep, BestPathAlgorithm bpm) {
-        return new SimulationRun(runName, runDuration, runTimeStep, roadNetwork, m_trafficPatternList, bpm);
+        m_currentRun=null;
+        SimulationRun m_currentRun = new SimulationRun(runName, runDuration, runTimeStep, roadNetwork, m_trafficPatternList, bpm);
+        return m_currentRun;
     }
 
     public SimulationState getState() {
@@ -98,6 +102,10 @@ public class Simulation {
 
     public boolean propertiesChanged() {
         return m_state.propertiesChanged();
+    }
+
+    public SimulationRun getCurrentRun() {
+        return m_currentRun;
     }
 
 }

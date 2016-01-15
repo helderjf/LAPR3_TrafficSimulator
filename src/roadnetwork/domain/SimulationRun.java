@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class SimulationRun {
 
+    private int m_pk;
     private String m_name;
     private double m_duration;
     private double m_timeStep;
@@ -31,7 +32,7 @@ public class SimulationRun {
     private ResultSimulation m_runResults;
 
     public SimulationRun(String name, double duration, double timeStep, RoadNetwork roadNetwork, ArrayList<TrafficPattern> trafficPattern, BestPathAlgorithm bpMethod) {
-
+        m_pk=0;
         m_name = name;
         m_duration = duration;
         m_timeStep = timeStep;
@@ -79,8 +80,28 @@ public class SimulationRun {
     }
 
     private void createResults() {
-        m_runResults = new ResultSimulation(m_name, m_duration, m_timeStep, m_endedVehicles, m_cruisingVehicles, m_droppedVehicles);
+        m_runResults = new ResultSimulation(m_name, m_duration, m_timeStep, m_bestPathMethod, m_endedVehicles, m_cruisingVehicles, m_droppedVehicles);
 
+    }
+
+    public String getName() {
+        return m_name;
+    }
+
+    public double getDuration() {
+        return m_duration;
+    }
+
+    public double getTimeStep() {
+       return m_timeStep;
+    }
+
+    public BestPathAlgorithm getBestPathMethod() {
+        return m_bestPathMethod;
+    }
+
+    public void setPK(int runPK) {
+        m_pk=runPK;
     }
 
 }

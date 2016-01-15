@@ -45,5 +45,7 @@ public interface ProjectState {
 
     public boolean simulationCreated();
 
+    public boolean simulationPropertiesChanged();
+
 }
     

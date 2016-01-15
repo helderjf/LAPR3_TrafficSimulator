@@ -124,6 +124,18 @@ public class SimVehicle {
         m_currentPos.setPredictedExitTime(time);
     }
 
+    public int getVehiclePK() {
+        return m_vehicle.getPK();
+    }
+
+    public TrafficPattern getTrafficPattern() {
+        return m_trafficPattern;
+    }
+    
+    public ArrayList<SimPathParcel> getPath(){
+        return m_path;
+    }
+
 
 
 }
