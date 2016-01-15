@@ -109,13 +109,15 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm {
         double segmentTotalForce;
         double segmentEnergyConsumption = 0;
         EngineEfficiency engineEfficiency=null;
-
+        double rpm=0;
         //vai percorrer todas as performances ordenadas de motor calculadas para cada Throttle Ratio e Gear Ratio
         for (EngineEfficiency engineEfficiencyTemporary : engineEfficiencyList) {
             travelSpeed = travelSpeed(pp.getSection(), segment);
             relativeVelocityWindInfluence = relativeVelocityWindInfluence(pp, travelSpeed);
+            
             resistanceForce = resistanceForces(pp, segment, relativeVelocityWindInfluence);
-            vehicleForce = vehicleForces(engineEfficiencyTemporary, relativeVelocityWindInfluence, resistanceForce);
+            rpm = rpmCalculation(engineEfficiencyTemporary, travelSpeed);
+            vehicleForce = vehicleForces(engineEfficiencyTemporary, travelSpeed, rpm);
             if (vehicleForce > resistanceForce) {
                 engineEfficiency=engineEfficiencyTemporary;
                 break;
@@ -126,10 +128,10 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm {
             segmentEnergyConsumption=calculateSegmentEnergyConsumptionCombustionVehicle(vehicleForce, engineEfficiency, segment);
         
         } else if (m_vehicle instanceof ElectricVehicle) {
-            segmentEnergyConsumption=calculateSegmentEnergyConsumptionElectricVehicle(vehicleForce, engineEfficiency, segment);
+            segmentEnergyConsumption=calculateSegmentEnergyConsumptionElectricVehicle(vehicleForce, engineEfficiency, segment, rpm);
         
-        }else if ((m_vehicle instanceof HybridVehicle) && segmentEnergyConsumption<0) {
-            segmentEnergyConsumption=calculateSegmentEnergyConsumptionHybridVehicle(vehicleForce, engineEfficiency, segment);
+        }else if ((m_vehicle instanceof HybridVehicle)) {
+            segmentEnergyConsumption=calculateSegmentEnergyConsumptionHybridVehicle(vehicleForce, engineEfficiency, segment, rpm);
         }
         return segmentEnergyConsumption;
     }
@@ -144,15 +146,15 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm {
         return segmentEnergyConsumption;
     }
     
-    private double calculateSegmentEnergyConsumptionElectricVehicle(double vehicleForce, EngineEfficiency engineEfficiency, Segment segment){
+    private double calculateSegmentEnergyConsumptionElectricVehicle(double vehicleForce, EngineEfficiency engineEfficiency, Segment segment, double rpm){
         double segmentEnergyConsumption;
         ElectricVehicle electricVehicle = (ElectricVehicle)m_vehicle;
         if (vehicleForce<0) {
             //ToDo calcular força maxima do motor
-            double vehicleMaxForce;
-//            if (vehicleForce>vehicleMaxForce) {
-//                vehicleForce=vehicleMaxForce;
-//            }
+            double vehicleMaxForce=calculateMaxForce(engineEfficiency, rpm);
+            if (vehicleForce>vehicleMaxForce) {
+                vehicleForce=vehicleMaxForce;
+            }
             segmentEnergyConsumption= vehicleForce * electricVehicle.getEnergyRegenerationRatio()*segment.getLenght();
         } else {
             segmentEnergyConsumption=vehicleForce * segment.getLenght();
@@ -160,20 +162,40 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm {
         return segmentEnergyConsumption;
     }
     
-    private double calculateSegmentEnergyConsumptionHybridVehicle(double vehicleForce, EngineEfficiency engineEfficiency, Segment segment){
+    private double calculateSegmentEnergyConsumptionHybridVehicle(double vehicleForce, EngineEfficiency engineEfficiency, Segment segment, double rpm){
         double segmentEnergyConsumption;
         HybridVehicle hybridVehicle = (HybridVehicle)m_vehicle;
         if (vehicleForce<0) {
             //ToDo calcular força maxima do motor
-//            double vehicleMaxForce;
-//            if (vehicleForce>vehicleMaxForce) {
-//                vehicleForce=vehicleMaxForce;
-//            }
+            double vehicleMaxForce=calculateMaxForce(engineEfficiency, rpm);
+            if (vehicleForce>vehicleMaxForce) {
+                vehicleForce=vehicleMaxForce;
+            }
             segmentEnergyConsumption= vehicleForce * hybridVehicle.getEnergyRegenerationRatio()*segment.getLenght();
         } else{
             segmentEnergyConsumption = vehicleForce * engineEfficiency.getM_sfc() / 3600000 * segment.getLenght();
         }
         return segmentEnergyConsumption;
+    }
+    
+    private double calculateMaxForce(EngineEfficiency engineEfficiency, double rpm){
+        
+        double finalDriveRatio=m_vehicle.getFinalDriveRatio();
+        double tireRadious=m_vehicle.getRadiusOfTire();
+        double torque=0;
+        double gearRatio=0;
+        
+        for (EngineEfficiency ee : m_vehicle.getEngineEfficiency()) {
+            if (ee.getThrottleRatio().equals("100")) {
+                if (rpm > engineEfficiency.getM_rpmLow() && rpm < engineEfficiency.getM_rpmHigh()){
+                    torque=ee.getTorque();
+                    gearRatio=ee.getGearRatio();
+                    break;
+                }
+            }
+        }
+        
+        return torque*finalDriveRatio*gearRatio/tireRadious;
     }
     
     private double calculateSectionTravelTime(Section section) {
@@ -212,17 +234,15 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm {
         return section.getToll();
     }
 
-    //private double vehicleForces(int gearIndex, Throttle throttle, Regime regime, Section section, Segment segment, double relativeVelocityWindInfluence)
-    private double vehicleForces(EngineEfficiency engineEfficiency, double relativeVelocityWindInfluence, double resistanceForce) {
+    //private double vehicleForces(int gearIndex, Throttle throttle, Regime regime, Section section, Segment segment, double vehicleVelocity)
+    private double vehicleForces(EngineEfficiency engineEfficiency, double vehicleVelocity, double rpm) {
 
-        double vehicleForce = 0;
+        double vehicleForce = Double.MIN_VALUE;
 
-        double torque = 0;
-        double finalDriveRatio = 0;
-        double gearRatio = 0;
-        double radiusTire = 0;
-
-        double rpm = rpmCalculation(engineEfficiency, relativeVelocityWindInfluence);
+        double torque;
+        double finalDriveRatio;
+        double gearRatio;
+        double radiusTire;
 
         if (rpm > engineEfficiency.getM_rpmLow() && rpm < engineEfficiency.getM_rpmHigh()) {
             torque = engineEfficiency.getTorque();
@@ -259,21 +279,18 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm {
     }
 
     //The vehicle will travel at the maximum speed allowed in the road or for the vehicle
-    private double rpmCalculation(EngineEfficiency engineEfficiency, double relativeVelocityWindInfluence) {
+    private double rpmCalculation(EngineEfficiency engineEfficiency, double vehicleVelocity) {
 
         double rpm = 0;
 
-        if (m_vehicle instanceof CombustionVehicle) {
-            CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
 
-            HashMap<Integer, Double> actualGearList = combustionVehicle.getGearList();
+            HashMap<Integer, Double> actualGearList = m_vehicle.getGearList();
 
             double gearRatio = actualGearList.get(engineEfficiency.getGear());
 
-            rpm = (relativeVelocityWindInfluence * 60 * m_vehicle.getFinalDriveRatio() * gearRatio)
+            rpm = (vehicleVelocity * 60 * m_vehicle.getFinalDriveRatio() * gearRatio)
                     / (2 * Math.PI * m_vehicle.getRadiusOfTire());
 
-        }
 
         return rpm;
     }

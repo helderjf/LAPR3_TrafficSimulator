@@ -58,4 +58,9 @@ public class ResultSimulation implements Result {
         return results;
     }
 
+    @Override
+    public String getResultsHTMLCode() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

@@ -119,5 +119,45 @@ public class ResultStaticAnalysis implements Result {
         }
         return results.toString();
     }
+    
+    @Override
+    public String getResultsHTMLCode(){
+        StringBuilder results= new StringBuilder();
+        results.append("<h4>-----Static Analysis-----</h4>" 
+        +
+        "<p>Vehicle: "+m_vehicle.getName()+"</p>"+
+        "<p>Start Node:" +m_originNode.getJunctionId()+"</p>"+
+        "<p>End Node: "+m_destinyNode.getJunctionId()+"</p>"+
+        "<table border = 1>" +
+                "<tr>"+
+                    "<th>Origin Node</th>"+
+                    "<th>Destiny Node</th>"+
+                    "<th>Road</th>"+
+                    "<th>Travel Time (s)</th>");
+        if (m_vehicle instanceof CombustionVehicle) {
+            results.append("<th>Energy Consumption (g)</th>");
+        } else{
+            results.append("<th>Energy Consumption (J)</th>");
+        }
+ 
+    results.append(
+                    "<th>Toll Costs</th>"+
+                "</tr>");
+                
+        for (PathParcel pp : m_path) {
+            int i = m_path.indexOf(pp);
+            results.append(
+                    "<tr>"+
+                        "<td>"+m_pathNodes.get(i).getJunctionId()+"</td>"+
+                        "<td>"+m_pathNodes.get(i+1).getJunctionId()+"</td>"+
+                        "<td>"+pp.getSection().getRoadName()+"</td>"+
+                        "<td>"+String.format("%.0f",pp.getTheoreticalTravelTime())+"</td>"+
+                        "<td>"+String.format("%.1f",pp.getTheoreticalEnergyConsumption())+"</td>"+
+                        "<td>"+String.format("%.1f",pp.getTollCosts())+"</td>"+
+                    "</tr>");
+        }
+        
+        return results.toString();
+    }
 
 }

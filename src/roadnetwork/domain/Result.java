@@ -13,4 +13,6 @@ public interface Result {
     
     public String printResults();
     
+    public String getResultsHTMLCode();
+    
 }
