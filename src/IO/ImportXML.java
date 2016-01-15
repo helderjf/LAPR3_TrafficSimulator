@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.*;
@@ -32,17 +33,17 @@ public class ImportXML implements Import {
     }
 
     @Override
-    public String[] importRoadNetwork() {
+    public Vector<String> importRoadNetwork() {
 
         /*Node rootNode = xmlDocument.getDocumentElement(); 
          NodeList nList = rootNode.getChildNodes();
          */
         NodeList nList = xmlDocument.getElementsByTagName("Network");
 
-        String[] characteristics = new String[2];
+        Vector<String> characteristics = new Vector<>();
 
-        characteristics[0] = ((Element) nList.item(0)).getAttribute("id");
-        characteristics[1] = ((Element) nList.item(0)).getAttribute("description");
+        characteristics.add(((Element) nList.item(0)).getAttribute("id"));
+        characteristics.add(((Element) nList.item(0)).getAttribute("description"));
 
         return characteristics;
     }

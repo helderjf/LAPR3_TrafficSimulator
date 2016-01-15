@@ -35,10 +35,10 @@ public class MainFrame extends javax.swing.JFrame {
     private NewProjectFrame m_newProjectFrame;
     private OpenProjectFrame m_openProjectFrame;
     private CopyProjectFrame m_copyProjectFrame;
-    private ImportVehiclesFrame m_importVehiclesFrame;
+    private ImportVehiclesDialog m_importVehiclesDialog;
     private BestPathAnalysisFrame m_bestPathAnalysisFrame;
     private VehicleComparisonFrame m_vehicleComparisonFrame;
-    private ImportRoadNetworkFrame m_importRoadNetworkFrame;
+    private ImportRoadNetworkDialog m_importRoadNetworkDialog;
     private CreateSimulationFrame m_createSimulationFrame;
     private RunSimulationFrame m_runSimulationFrame;
 
@@ -70,12 +70,12 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void importRoadNetwork() {
-        m_importRoadNetworkFrame = new ImportRoadNetworkFrame(this);
+        m_importRoadNetworkDialog = new ImportRoadNetworkDialog(this, false);
         revalidate();
     }
 
     private void importVehicles() {
-        m_importVehiclesFrame = new ImportVehiclesFrame(this);
+        m_importVehiclesDialog = new ImportVehiclesDialog(this, true);
         revalidate();
     }
 

@@ -13,21 +13,23 @@ import roadnetwork.controllers.ImportRoadNetworkController;
  *
  * @author Tiago
  */
-public class ImportRoadNetworkFrame extends javax.swing.JFrame {
+public class ImportRoadNetworkDialog extends javax.swing.JDialog {
 
     MainFrame m_mainFrame;
     ImportRoadNetworkController m_importRNController;
-
-    ImportRoadNetworkFrame(MainFrame frame) {
-        m_mainFrame = frame;
+    
+    /**
+     * Creates new form importRoadNetworkDialog
+     */
+    public ImportRoadNetworkDialog(MainFrame parent, boolean modal) {
+        super(parent, modal);
+        m_mainFrame = parent;
         m_importRNController = new ImportRoadNetworkController(m_mainFrame.getManager());
         if (m_importRNController.canImportRoadNetwork()) {
             initComponents();
             setContentPane(new ImportRoadNetworkPane(this));
-            setLocationRelativeTo(null);
-            setVisible(true);
         }else{
-            JOptionPane.showMessageDialog(this, "Error: Road Network file already imported!", "Error: Import Road Network", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: Road Network file already imported!", "Error: Import Road Network", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -40,31 +42,30 @@ public class ImportRoadNetworkFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 450));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 326, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    void importRoadNetwork(File file) {
-        if(m_importRNController.importRoadNetwork(file)){
-            JOptionPane.showMessageDialog(this, "File succefully imported!", "Import Road Network", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(this, "Error: Road Network file not imported. Please try with a correct file!", "Error: Import Road Network", JOptionPane.ERROR);
-        }
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    void importRoadNetwork(File file) {
+        if(m_importRNController.importRoadNetwork(file)){
+            JOptionPane.showMessageDialog(null, "File succefully imported!", "Import Road Network", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, "Error: Road Network file not imported. Please try with a correct file!", "Error: Import Road Network", JOptionPane.ERROR);
+        }
+    }
 }

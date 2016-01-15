@@ -14,16 +14,15 @@ import javax.swing.JFileChooser;
  */
 public class ImportRoadNetworkPane extends javax.swing.JPanel {
 
-    ImportRoadNetworkFrame m_ancestor;
+    ImportRoadNetworkDialog m_ancestor;
 
     /**
      * Creates new form ImportRoadNetworkPane
      */
-    public ImportRoadNetworkPane(ImportRoadNetworkFrame ancestor) {
+    public ImportRoadNetworkPane(ImportRoadNetworkDialog ancestor) {
         m_ancestor = ancestor;
         initComponents();
         initFileChooser();
-
     }
 
     /**
@@ -51,8 +50,8 @@ public class ImportRoadNetworkPane extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    //GEN-FIRST:event_jFileChooser1ActionPerformed
-    //GEN-LAST:event_jFileChooser1ActionPerformed
+//GEN-FIRST:event_jFileChooser1ActionPerformed
+//GEN-LAST:event_jFileChooser1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

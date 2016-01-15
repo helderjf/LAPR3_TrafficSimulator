@@ -14,12 +14,12 @@ import javax.swing.JFileChooser;
  */
 public class ImportVehiclesPane extends javax.swing.JPanel {
 
-    private ImportVehiclesFrame m_ancestor;
+    private ImportVehiclesDialog m_ancestor;
 
     /**
      * Creates new form importVehiclesPane
      */
-    public ImportVehiclesPane(ImportVehiclesFrame ancestor) {
+    public ImportVehiclesPane(ImportVehiclesDialog ancestor) {
         m_ancestor = ancestor;
         initComponents();
         initFileChooser();
