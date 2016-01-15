@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import roadnetwork.domain.Result;
+import roadnetwork.domain.ResultSimulation;
 
 /**
  *
@@ -39,35 +40,71 @@ public class ExportHTML {
     public boolean exportGlobalResults(ArrayList<Result> resultsList){
         
         boolean flag=createHTMLFile();
+        String resultString;
         
-        if (flag==false) {
+        if (flag == false) {
             return false;
         }
-        
-        try{
-            m_file.append("<html>");
-            m_file.append("<body>");
-            
-            for (Result result : resultsList) {
-                m_file.append("<p>");
-                m_file.append(result.getGlobalResultsHTMLCode());
-                m_file.append("</p>");
-            }
-            m_file.append("</body>");
-            m_file.append("</html>");
-            
+
+        resultString
+                = "<html>"
+                + "<body>";
+
+        for (Result result : resultsList) {
+            resultString
+                    += "<p>"
+                    + result.getGlobalResultsHTMLCode()
+                    + "</p>";
+        }
+        resultString
+                += "</body>"
+                + "</html>";
+        try {
+            m_file.append(resultString);
+
             m_file.close();
-        }catch(IOException ex) {
+        } catch (IOException ex) {
             ex.getMessage();
             flag = false;
         }
         return flag;
     }
-    
-    
-    
-    public boolean exportFilterResults(){
-        return true;
+
+    public boolean exportDetailedResults(ResultSimulation result) {
+
+        boolean flag = createHTMLFile();
+        String resultString;
+
+        if (flag == false) {
+            return false;
+        }
+
+        resultString
+                = "<html>"
+                + "<header>"
+                + "<p>"
+                + result.getGlobalResultsHTMLCode()
+                + "</p>"
+                + "</header>"
+                +"<body>";
+        
+        resultString
+                += result.getDetailedResults();
+
+        resultString
+                +=
+                "</body>"+
+                "</html>";
+
+        try {
+            m_file.append(resultString);
+
+            m_file.close();
+        } catch (IOException ex) {
+            ex.getMessage();
+            flag = false;
+        }
+        return flag;
     }
     
 }

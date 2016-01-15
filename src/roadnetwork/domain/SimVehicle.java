@@ -136,6 +136,17 @@ public class SimVehicle {
         return m_path;
     }
 
+    public Vehicle getVehicle(){
+        return m_vehicle;
+    }
+    
+    public Junction getOriginNode(){
+        return m_originNode;
+    }
+    
+    public Junction getDestinyNode(){
+        return m_destinyNode;
+    }
 
 
 }

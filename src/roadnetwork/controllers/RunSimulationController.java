@@ -74,12 +74,6 @@ public class RunSimulationController {
         return m_projectWriter.saveSimulationRun();
     }
     
-    public boolean exportGlobalResultsHTML(String fileName){
-        ExportHTML html = new ExportHTML(fileName);
-        ArrayList<Result> results = new ArrayList<>();
-        results.add(m_runResults);
-        return html.exportGlobalResults(results);
-    }
     
-
+    
 }

@@ -100,5 +100,42 @@ public class ResultSimulation implements Result {
                 
         return results;
     }
+    
+    public String getDetailedResults(){
+        String results="";
+        for (SimVehicle simVehicle : m_endedVehicles) {
+            
+            results+=
+                    "<p>"+
+                    "Vehicle Name: "+
+                    simVehicle.getVehicle().getName()+
+                    "</p>"+
+                    "<p>"+
+                    "Origin Node: "+
+                    simVehicle.getOriginNode().getJunctionId()+
+                    "</p>"+
+                    "<p>"+
+                    "Destiny Node: "+
+                    simVehicle.getDestinyNode().getJunctionId()+
+                    "</p>"+
+                    "<p>"+
+                    "Injection Time: "+
+                    simVehicle.getInjectionTime()+
+                    "</p>"+
+                    "<table border = 1>" +
+                    "<tr>"+
+                        "<th>Origin Node</th>"+
+                        "<th>Destiny Node</th>"+
+                        "<th>Segment</th>"+
+                        "<th>Road</th>"+
+                        "<th>Travel Time (s)</th>";
+            
+            
+            
+        }
+        
+        
+        return results;
+    }
 
 }

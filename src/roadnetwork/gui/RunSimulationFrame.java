@@ -90,9 +90,5 @@ public class RunSimulationFrame extends javax.swing.JFrame {
         revalidate();
     }
 
-    public boolean exportGlobalResultsHTML(String fileName){
-        return m_runSimulationContoller.exportGlobalResultsHTML(fileName);
-    }
-    
     
 }
