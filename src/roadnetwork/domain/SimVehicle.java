@@ -45,7 +45,7 @@ public class SimVehicle {
     boolean endSimulation(double currentTime) {
 
         m_currentPos.setSimExitTime(currentTime);
-        double timeIdle=getTimeIdle();
+        double timeIdle = getTimeIdle();
         double idleConsumption = m_vehicle.getIdleConsumption(timeIdle);
         m_currentPos.addToSimEnergyConsumption(idleConsumption);
         m_currentPos = null;
@@ -74,7 +74,7 @@ public class SimVehicle {
         m_currentPos.addToSimEnergyConsumption(idleConsumption);
 
         m_currentPos = m_nextPos;
-        if (m_path.indexOf(m_nextPos) == (m_path.size()-1)) {
+        if (m_path.indexOf(m_nextPos) == (m_path.size() - 1)) {
             m_nextPos = null;
         } else {
             m_nextPos = m_path.get(m_path.indexOf(m_nextPos) + 1);
@@ -112,7 +112,11 @@ public class SimVehicle {
 
     void setInjected() {
         m_currentPos = m_path.get(0);
-        m_nextPos = m_path.get(1);
+        if (m_path.get(1) != null) {
+            m_nextPos = m_path.get(1);
+        } else {
+            m_nextPos = null;
+        }
         m_currentPos.initializePredictedExitTime(m_injectionTime);
     }
 
@@ -131,11 +135,9 @@ public class SimVehicle {
     public TrafficPattern getTrafficPattern() {
         return m_trafficPattern;
     }
-    
-    public ArrayList<SimPathParcel> getPath(){
+
+    public ArrayList<SimPathParcel> getPath() {
         return m_path;
     }
-
-
 
 }

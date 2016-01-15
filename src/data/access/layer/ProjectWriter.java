@@ -263,7 +263,7 @@ public class ProjectWriter {
 
     private boolean saveNewCombustionVehicle(Vehicle vehicle) {
 
-        if (m_dao.saveNewCombustionVehicle(vehicle.getPK(), ((CombustionVehicle) vehicle).getFuel()) != 1) {
+        if (m_dao.saveNewCombustionVehicle(vehicle.getPK()) != 1) {
             return false;
         }
         return (saveNewVehicleGears(vehicle)
@@ -274,14 +274,16 @@ public class ProjectWriter {
         if (m_dao.saveNewHybridVehicle(vehicle.getPK(), ((HybridVehicle) vehicle).getEnergyRegenerationRatio()) != 1) {
             return false;
         }
-        return true;
+        return (saveNewVehicleGears(vehicle)
+                && saveNewVehicleThrottle(vehicle));
     }
 
     private boolean saveNewElectricVehicle(Vehicle vehicle) {
         if (m_dao.saveNewElectricVehicle(vehicle.getPK(), ((ElectricVehicle) vehicle).getEnergyRegenerationRatio()) != 1) {
             return false;
         }
-        return true;
+        return (saveNewVehicleGears(vehicle)
+                && saveNewVehicleThrottle(vehicle));
     }
 
     private boolean saveNewVehicleGears(Vehicle vehicle) {
@@ -422,6 +424,7 @@ public class ProjectWriter {
     private void fillInjecttedArrays(ArrayList<SimVehicle> endedVehiclesList, int[] injectedVTrafPatList, int[] injectedVSection, int[] injectedVSegment, String[] injectedVTravelDirection, double[] injectedVTimeIn, double[] injectedVTimeOut, double[] injectedVEnergy) {
         for (int i = 0; i < endedVehiclesList.size(); i++) {
             injectedVTrafPatList[i] = endedVehiclesList.get(i).getTrafficPattern().getPK();
+
             for (SimPathParcel pathParcel : endedVehiclesList.get(i).getPath()) {
                 injectedVSection[i] = pathParcel.getSection().getPK();
                 injectedVSegment[i] = pathParcel.getSegment().getIndex();
