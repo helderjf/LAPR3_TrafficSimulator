@@ -337,7 +337,7 @@ public class DataAccessObject {
 
     }
 
-    public int saveNewCombustionVehicle(int vehiclePK, String fuel) {
+    public int saveNewCombustionVehicle(int vehiclePK) {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -613,7 +613,7 @@ public class DataAccessObject {
             ARRAY energyConsumptions = new ARRAY(oracleFloatArray, m_connection, injectedVEnergy);
 
             //create statement
-            CallableStatement statement = m_connection.prepareCall("{call SAVE_DROPPED_VEHICLES(?,?,?,?,?,?,?,?)}");
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_INJECTED_VEHICLES(?,?,?,?,?,?,?,?)}");
             statement.setInt(1, runPK);
             statement.setObject(2, trafficpaterns);
             statement.setObject(3, sections);
