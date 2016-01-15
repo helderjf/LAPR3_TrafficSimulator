@@ -63,7 +63,9 @@ public class ProjectStateSimulationReadySaved extends ProjectStateImpl {
         return true;
     }    
     
-    
-    
+    @Override
+    public boolean vehiclesAssigned(){
+        return true;
+    }
 
 }

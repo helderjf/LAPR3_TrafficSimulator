@@ -19,7 +19,7 @@ public class Project {
     private String m_name;
     private String m_description;
     private RoadNetwork m_roadNetwork;
-    private ArrayList<Vehicle> m_vehicleList;
+    private ArrayList<Vehicle> m_vehicleList = new ArrayList<>();;
     private Simulation m_activeSimulation;//active simulation
     private ProjectState m_state;
 
@@ -140,11 +140,7 @@ public class Project {
     }
 
     public void addVehicleList(ArrayList<Vehicle> vehicleList) {
-        if (m_vehicleList == null) {
-            m_vehicleList = vehicleList;
-        } else {
-            m_vehicleList.addAll(vehicleList);
-        }
+        m_vehicleList.addAll(vehicleList);
     }
 
     public void setActiveSimulation(Simulation s) {
@@ -180,14 +176,17 @@ public class Project {
         return false;
     }
 
-    public boolean canImportVehicles() {
-        return m_state.canImportVehicles();
-    }
-
     public boolean createVehicleList(ArrayList<Vehicle> vehicleList) {
-        m_vehicleList = vehicleList;
-
-        if (!vehicleList.isEmpty()) {
+        if (vehicleList != null) {
+            if (m_vehicleList.isEmpty()) {
+                m_vehicleList.addAll(vehicleList);
+            } else {
+                for (Vehicle v : vehicleList) {
+                    if (!m_vehicleList.contains(v)) {
+                        m_vehicleList.add(v);
+                    }
+                }
+            }
             return m_state.vehiclesAssigned();
         }
         return false;

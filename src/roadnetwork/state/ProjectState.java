@@ -13,8 +13,6 @@ public interface ProjectState {
     
     public boolean canImportRoadNetwork();
     
-    public boolean canImportVehicles();
-    
     public boolean canSaveProject();
     
     public boolean canCopyProject();
