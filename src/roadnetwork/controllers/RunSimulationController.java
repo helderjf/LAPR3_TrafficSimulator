@@ -5,6 +5,7 @@
  */
 package roadnetwork.controllers;
 
+import data.access.layer.ProjectWriter;
 import java.util.ArrayList;
 import roadnetwork.domain.BestPathAlgorithm;
 import roadnetwork.domain.Manager;
@@ -26,6 +27,7 @@ public class RunSimulationController {
     private RoadNetwork m_roadNetwork;
     private SimulationRun m_simulationRun;
     private ResultSimulation m_runResults;
+    private ProjectWriter m_projectWriter;
 
     public RunSimulationController(Manager manager) {
 
@@ -64,5 +66,11 @@ public class RunSimulationController {
 
         return m_runResults;
     }
+    
+    public boolean saveRun(){
+        m_projectWriter = m_manager.getProjectWriter();
+        return m_projectWriter.saveSimulationRun();
+    }
+    
 
 }

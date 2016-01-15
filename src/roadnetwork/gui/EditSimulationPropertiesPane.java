@@ -111,8 +111,11 @@ public class EditSimulationPropertiesPane extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        if (jTextField1.getText().trim().equals("") || jTextPane1.getText().trim().equals("")) {
-            JOptionPane.showMessageDialog(this, "You must enter a simulation name and a simulation description.");
+        if (jTextField1.getText().trim().equals(m_oldName) && jTextPane1.getText().trim().equals(m_oldDescription)) {
+            JOptionPane.showMessageDialog(this, "You made no changes.");
+            m_ancestor.dispose();
+        } else if (jTextField1.getText().trim().equals("") || jTextPane1.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "You must provide a simulation name and a simulation description.");
         } else {
             m_ancestor.newProperties(jTextField1.getText().trim(), jTextPane1.getText().trim());
         }

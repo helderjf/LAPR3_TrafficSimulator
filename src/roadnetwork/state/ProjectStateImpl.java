@@ -116,5 +116,10 @@ public class ProjectStateImpl implements ProjectState {
         return false;
     }
 
+    @Override
+    public boolean simulationPropertiesChanged() {
+        return false;
+    }
+
 
 }

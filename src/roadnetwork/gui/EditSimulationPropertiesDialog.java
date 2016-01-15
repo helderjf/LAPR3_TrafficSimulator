@@ -85,7 +85,7 @@ public class EditSimulationPropertiesDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     void newProperties(String newName, String newDescription) {
-        if (m_editSimProppertiesController.setNewProperties(m_oldName, m_oldDescription)) {
+        if (m_editSimProppertiesController.setNewProperties(newName, newDescription)) {
 
             JOptionPane.showMessageDialog(this, "Simulation properties changed.", "Simulatin Properties", JOptionPane.INFORMATION_MESSAGE);
             //setVisible(false);

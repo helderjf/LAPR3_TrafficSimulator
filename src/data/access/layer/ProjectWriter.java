@@ -13,11 +13,15 @@ import roadnetwork.domain.HybridVehicle;
 import roadnetwork.domain.Junction;
 import roadnetwork.domain.Project;
 import roadnetwork.domain.Regime;
+import roadnetwork.domain.ResultSimulation;
 import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.Section;
 import roadnetwork.domain.SectionTypology;
 import roadnetwork.domain.Segment;
+import roadnetwork.domain.SimPathParcel;
+import roadnetwork.domain.SimVehicle;
 import roadnetwork.domain.Simulation;
+import roadnetwork.domain.SimulationRun;
 import roadnetwork.domain.Throttle;
 import roadnetwork.domain.TrafficPattern;
 import roadnetwork.domain.Vehicle;
@@ -349,6 +353,90 @@ public class ProjectWriter {
 
     }
 
+    public boolean saveSimulationRun() {
+        Simulation sim = m_project.getCurrentSimulation();
+        int simPK = sim.getPK();
+        SimulationRun run = sim.getCurrentRun();
+        ResultSimulation runResults = run.getResults();
+        String runName = run.getName();
+        double duration = run.getDuration();
+        double timeStep = run.getTimeStep();
+        String bpm = run.getBestPathMethod().toString();
+
+        int runPK = m_dao.saveNewRun(simPK, runName, duration, timeStep, bpm);
+        if (runPK <= 0) {
+            return false;
+        }
+        run.setPK(runPK);
+
+        ArrayList<SimVehicle> droppedVehiclesList = runResults.getDroppedVehicles();
+        ArrayList<SimVehicle> endedVehiclesList = runResults.getEndedVehicles();
+        //ArrayList<SimVehicle> cruisingVehiclesList = runResults.getCruisingVehicles();
+
+        int[] droppedTrafPatList = new int[droppedVehiclesList.size()];
+        double[] droppedIntantsList = new double[droppedVehiclesList.size()];
+        fillDroppedArrays(droppedVehiclesList, droppedTrafPatList, droppedIntantsList);
+
+        if (m_dao.saveRunDroppedVehicles(runPK, droppedTrafPatList, droppedIntantsList) == -1) {
+            return false;
+        }
+
+        int[] injectedVTrafPatList = new int[endedVehiclesList.size()];
+        int[] injectedVSection = new int[endedVehiclesList.size()];
+        int[] injectedVSegment = new int[endedVehiclesList.size()];
+        String[] injectedVTravelDirection = new String[endedVehiclesList.size()];
+        double[] injectedVTimeIn = new double[endedVehiclesList.size()];
+        double[] injectedVTimeOut = new double[endedVehiclesList.size()];
+        double[] injectedVEnergy = new double[endedVehiclesList.size()];
+        fillInjecttedArrays(endedVehiclesList,
+                // cruisingVehiclesList,
+                injectedVTrafPatList,
+                injectedVSection,
+                injectedVSegment,
+                injectedVTravelDirection,
+                injectedVTimeIn,
+                injectedVTimeOut,
+                injectedVEnergy);
+
+        if (m_dao.saveRunInjectedVehicles(runPK,
+                injectedVTrafPatList,
+                injectedVSection,
+                injectedVSegment,
+                injectedVTravelDirection,
+                injectedVTimeIn,
+                injectedVTimeOut,
+                injectedVEnergy) == -1) {
+            return false;
+        }
+        return true;
+
+    }
+
+    private void fillDroppedArrays(ArrayList<SimVehicle> droppedVehiclesList, int[] droppedTrafPatList, double[] droppedInstantsList) {
+        for (int i = 0; i < droppedVehiclesList.size(); i++) {
+            droppedTrafPatList[i] = droppedVehiclesList.get(i).getTrafficPattern().getPK();
+            droppedInstantsList[i] = droppedVehiclesList.get(i).getdroppedTime();
+        }
+    }
+
+    private void fillInjecttedArrays(ArrayList<SimVehicle> endedVehiclesList, int[] injectedVTrafPatList, int[] injectedVSection, int[] injectedVSegment, String[] injectedVTravelDirection, double[] injectedVTimeIn, double[] injectedVTimeOut, double[] injectedVEnergy) {
+        for (int i = 0; i < endedVehiclesList.size(); i++) {
+            injectedVTrafPatList[i] = endedVehiclesList.get(i).getTrafficPattern().getPK();
+            for (SimPathParcel pathParcel : endedVehiclesList.get(i).getPath()) {
+                injectedVSection[i] = pathParcel.getSection().getPK();
+                injectedVSegment[i] = pathParcel.getSegment().getIndex();
+                injectedVTravelDirection[i] = pathParcel.getDirection().toString();
+                injectedVTimeIn[i] = pathParcel.getSimInTime();
+                injectedVTimeOut[i] = pathParcel.getSimExitTime();
+                injectedVEnergy[i] = pathParcel.getSimEnergyConsumption();
+            }
+        }
+//        for (int i = endedVehiclesList.size(); i < (endedVehiclesList.size() + cruisingVehiclesList.size()); i++) {
+//            injectedVTrafPatList[i] = cruisingVehiclesList.get(i - endedVehiclesList.size()).getTrafficPattern().getPK();
+//        }
+
+    }
+
     private boolean updateProjectProperties() {
         int projectPK = m_project.getPK();
         String projectName = m_project.getName();
@@ -448,11 +536,11 @@ public class ProjectWriter {
 
     private boolean updateProjectSimulation() {
         Simulation sim = m_project.getCurrentSimulation();
-        
-        if(!sim.hasPK()){
+
+        if (!sim.hasPK()) {
             return saveNewSimulation();
         }
-        
+
         int simpk = sim.getPK();
         String simName = sim.getName();
         String simDesc = sim.getDescription();

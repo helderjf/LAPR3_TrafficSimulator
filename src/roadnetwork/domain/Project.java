@@ -20,7 +20,6 @@ public class Project {
     private String m_description;
     private RoadNetwork m_roadNetwork;
     private ArrayList<Vehicle> m_vehicleList;
-    private ArrayList<Simulation> m_simulationList;//all simulations
     private Simulation m_activeSimulation;//active simulation
     private ProjectState m_state;
 
@@ -75,9 +74,9 @@ public class Project {
             Junction dj, BestPathAlgorithm alg, Vehicle v) {
         return new StaticAnalysis(rn, oj, dj, alg, v);
     }
-    
+
     public StaticAnalysis newComparisonStaticAnalysis(RoadNetwork rn, Junction oj,
-            Junction dj, BestPathAlgorithm alg, ArrayList<Vehicle> vlst){
+            Junction dj, BestPathAlgorithm alg, ArrayList<Vehicle> vlst) {
         return new StaticAnalysis(rn, oj, dj, alg, vlst);
     }
 
@@ -125,13 +124,12 @@ public class Project {
     }
 
     public void setPK(int pk) {
-        m_PK=pk;
+        m_PK = pk;
     }
-    
-    public int getPK(){
+
+    public int getPK() {
         return m_PK;
     }
-    
 
     public boolean hasRoadNetwork() {
         return m_state.hasRoadNetwork();
@@ -142,54 +140,54 @@ public class Project {
     }
 
     public void addVehicleList(ArrayList<Vehicle> vehicleList) {
-        if(m_vehicleList==null){
-            m_vehicleList=vehicleList;
-        }else{
+        if (m_vehicleList == null) {
+            m_vehicleList = vehicleList;
+        } else {
             m_vehicleList.addAll(vehicleList);
         }
     }
-    
-    public void setActiveSimulation(Simulation s){
-        m_activeSimulation=s;
+
+    public void setActiveSimulation(Simulation s) {
+        m_activeSimulation = s;
     }
 
     public boolean canSimulate() {
         return m_state.canSimulate();
     }
-    
-    public boolean simulationExists(String simulationName){
-        for(Simulation it: m_simulationList){
-            if(it.getName().trim().equals(simulationName))
-                return true;
+
+    public boolean simulationExists(String simulationName) {
+        if (m_activeSimulation == null) {
+            return false;
         }
-        return false;
+
+        return m_activeSimulation.getName().equals(simulationName);
     }
 
     public Simulation newSimulation(String simulationName, String description) {
         return new Simulation(simulationName, description);
     }
-    
-    public boolean canImportRoadNetwork(){
+
+    public boolean canImportRoadNetwork() {
         return m_state.canImportRoadNetwork();
     }
-    
-    public boolean createRoadNetwork(String name, String description, ArrayList<Junction> junctions, ArrayList<Section> sectionList){
+
+    public boolean createRoadNetwork(String name, String description, ArrayList<Junction> junctions, ArrayList<Section> sectionList) {
         m_roadNetwork = new RoadNetwork(name, description, junctions, sectionList);
-        
-        if( !(m_roadNetwork.getNodeList().isEmpty() || m_roadNetwork.getSectionList().isEmpty())){
+
+        if (!(m_roadNetwork.getNodeList().isEmpty() || m_roadNetwork.getSectionList().isEmpty())) {
             return m_state.roadNetworkAssigned();
         }
         return false;
     }
-    
+
     public boolean canImportVehicles() {
         return m_state.canImportVehicles();
     }
 
     public boolean createVehicleList(ArrayList<Vehicle> vehicleList) {
         m_vehicleList = vehicleList;
-        
-        if( !vehicleList.isEmpty()){
+
+        if (!vehicleList.isEmpty()) {
             return m_state.vehiclesAssigned();
         }
         return false;
@@ -201,13 +199,15 @@ public class Project {
 
     /**
      * Gets a vehicle by its name
+     *
      * @param vehicleName as a String
      * @return returns the vehicle with that name as a Vehicle object
      */
     public Vehicle getVehicleByName(String vehicleName) {
         for (Vehicle v : m_vehicleList) {
-            if(v.getName() == null ? vehicleName == null : v.getName().equals(vehicleName))
+            if (v.getName() == null ? vehicleName == null : v.getName().equals(vehicleName)) {
                 return v;
+            }
         }
         return null;
     }
@@ -217,12 +217,11 @@ public class Project {
     }
 
     public boolean hasSimulation() {
-        return m_activeSimulation!=null;
+        return m_activeSimulation != null;
     }
 
-    public void simulationPropertiesChanged() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean simulationPropertiesChanged() {
+        return m_state.simulationPropertiesChanged();
     }
 
-    
 }
