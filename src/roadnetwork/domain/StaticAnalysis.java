@@ -18,7 +18,8 @@ public class StaticAnalysis {
     private Junction m_destinyNode;
     private Vehicle m_vehicle;
     private BestPathAlgorithm m_algorithm;
-    private Result m_results;
+    private ArrayList<PathParcel> m_bestPath;
+    private ResultStaticAnalysis m_results;
     private ArrayList<Vehicle> m_vehiclesList;
     private ArrayList<Result> m_resultsComparison;
     
@@ -53,11 +54,25 @@ public class StaticAnalysis {
     
     
     public Result runSingleVehicle(){
-        return m_algorithm.getBestPathResults(m_roaNetwork, m_originNode, m_destinyNode, m_vehicle);
+        m_bestPath=m_algorithm.getBestPathResults(m_roaNetwork, m_originNode, m_destinyNode, m_vehicle);
+        
+        m_results= new ResultStaticAnalysis(m_originNode, m_destinyNode);
+        m_results.setPath(m_bestPath);
+        m_results.setVehicle(m_vehicle);
+        m_results.setBestPathAlgorithm(m_algorithm);
+        
+        return m_results;
     }
     
     private Result runEachVehicle(Vehicle vehicle){
-        return m_algorithm.getBestPathResults(m_roaNetwork, m_originNode, m_destinyNode, vehicle);
+        m_bestPath=m_algorithm.getBestPathResults(m_roaNetwork, m_originNode, m_destinyNode, vehicle);
+        
+        m_results= new ResultStaticAnalysis(m_originNode, m_destinyNode);
+        m_results.setPath(m_bestPath);
+        m_results.setVehicle(vehicle);
+        m_results.setBestPathAlgorithm(m_algorithm);
+        
+        return m_results;
     }
     
 }

@@ -21,7 +21,7 @@ public interface BestPathAlgorithm {
      * @param vehicle vehicle
      * @return bestPath
      */
-    public Result getBestPathResults(RoadNetwork roadNetwork, Junction originNode, 
+    public ArrayList<PathParcel> getBestPathResults(RoadNetwork roadNetwork, Junction originNode, 
             Junction destinyNode, 
             Vehicle vehicle);
     

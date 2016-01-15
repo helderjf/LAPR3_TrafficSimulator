@@ -259,16 +259,14 @@ public class GraphAlgorithms {
      * @param voInf Vertice Orig
      * @param vdInf Vertice Destiny
      * @param path Path
-     * @return lenght
      */
-    public static <V, E> double getShortestPathLength(Graph<V, E> g, V voInf, V vdInf, ArrayList<E> path, ArrayList<V> pathNodes) {
+    public static <V, E> void calculateShortestPath(Graph<V, E> g, V voInf, V vdInf, ArrayList<E> path) {
         Deque<V> shortPath = new ArrayDeque<>();
-        double length = shortestPath(g, voInf, vdInf, shortPath);
+        shortestPath(g, voInf, vdInf, shortPath);
 
         while (shortPath.iterator().hasNext()) {
 
             Vertex<V, E> vi = g.getVertex(shortPath.poll());
-            pathNodes.add(vi.getElement());
             if (shortPath.iterator().hasNext()) {
                 
             Vertex<V, E> vj = g.getVertex(shortPath.peek());
@@ -291,8 +289,6 @@ public class GraphAlgorithms {
                 path.add(lightEdge.getElement());
             }
         }
-
-        return length;
     }
     
 

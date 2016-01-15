@@ -16,6 +16,7 @@ public class ResultStaticAnalysis implements Result {
     private Junction m_originNode;
     private Junction m_destinyNode;
     private ArrayList<PathParcel> m_path;
+    private BestPathAlgorithm m_bestPathAlgorithm;
     private double m_length;
     private Vehicle m_vehicle;
 
@@ -69,6 +70,14 @@ public class ResultStaticAnalysis implements Result {
     }
     
     /**
+     *
+     * @return BestPathAlgorithm
+     */
+    public BestPathAlgorithm getBestPathAlgorithm(){
+        return m_bestPathAlgorithm;
+    }
+    
+    /**
      * @param path the m_path to set
      */
     public void setPath(ArrayList<PathParcel> path) {
@@ -89,6 +98,10 @@ public class ResultStaticAnalysis implements Result {
      */
     public void setVehicle(Vehicle vehicle){
         m_vehicle=vehicle;
+    }
+    
+    public void setBestPathAlgorithm(BestPathAlgorithm bpa){
+        m_bestPathAlgorithm=bpa;
     }
     
     /**
@@ -147,6 +160,7 @@ public class ResultStaticAnalysis implements Result {
     public String getGlobalResultsHTMLCode(){
         String results=
             "<b>-----Static Analysis-----</b>" +
+            "<p>Best Path Algorithm: "+ m_bestPathAlgorithm+"</p>"+
             "<p>Vehicle: "+m_vehicle.getName()+"</p>"+
             "<p>Start Node: " +m_originNode.getJunctionId()+"</p>"+
             "<p>End Node: "+m_destinyNode.getJunctionId()+"</p>"+
