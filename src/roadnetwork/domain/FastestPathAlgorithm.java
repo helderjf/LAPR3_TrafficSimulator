@@ -225,7 +225,6 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         ResultStaticAnalysis simResult = new ResultStaticAnalysis(m_originNode, m_destinyNode);
         simResult.setPath(m_fastestPath);
         simResult.setLength(m_fastestPathLength);
-        simResult.setPathNodes(m_fastestPathNodes);
         simResult.setVehicle(m_vehicle);
         return simResult;
     }

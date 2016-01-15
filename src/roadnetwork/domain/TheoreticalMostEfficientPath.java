@@ -237,7 +237,6 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
         ResultStaticAnalysis simResult = new ResultStaticAnalysis(m_originNode, m_destinyNode);
         simResult.setPath(m_bestPath);
         simResult.setLength(m_bestPathLength);
-        simResult.setPathNodes(m_bestPathNodes);
         simResult.setVehicle(m_vehicle);
         return simResult;
     }

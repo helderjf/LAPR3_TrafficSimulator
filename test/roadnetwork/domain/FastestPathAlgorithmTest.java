@@ -247,13 +247,6 @@ public class FastestPathAlgorithmTest {
         assertEquals(expResult.getOriginNode(), result.getOriginNode());
         assertEquals(expResult.getDestinyNode(), result.getDestinyNode());
         
-        //Path Nodes
-        ArrayList<Junction> pathNodes = new ArrayList<>();
-        pathNodes.add(node0);
-        pathNodes.add(node1);
-        pathNodes.add(node2);
-        expResult.setPathNodes(pathNodes);
-        assertEquals(expResult.getPathNodes(), result.getPathNodes());
         
         //Path PathParcel
         ArrayList<PathParcel> path = new ArrayList<>();

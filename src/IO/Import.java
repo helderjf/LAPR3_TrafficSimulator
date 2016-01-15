@@ -6,6 +6,7 @@
 package IO;
 
 import java.util.ArrayList;
+import java.util.Vector;
 import roadnetwork.domain.*;
 
 /**
@@ -14,7 +15,7 @@ import roadnetwork.domain.*;
  */
 public interface Import {
     
-    public String[] importRoadNetwork();
+    public Vector<String> importRoadNetwork();
     
     /**
      * Import nodes from a file

@@ -11,24 +11,23 @@ import roadnetwork.controllers.ImportVehiclesController;
 
 /**
  *
- * @author josemiranda
+ * @author Tiago
  */
-public class ImportVehiclesFrame extends javax.swing.JFrame {
+public class ImportVehiclesDialog extends javax.swing.JDialog {
 
     MainFrame m_mainFrame;
     private ImportVehiclesController m_importVehiclesController;
     
     /**
-     * Creates new form JanelaImportVehicles
+     * Creates new form ImportVehiclesDialog
      */
-    public ImportVehiclesFrame(MainFrame frame) {
-        m_mainFrame=frame;       
+    public ImportVehiclesDialog(MainFrame parent, boolean modal) {
+        super(parent, modal);
+        m_mainFrame=parent;       
         m_importVehiclesController = new ImportVehiclesController(m_mainFrame.getManager());
         if (m_importVehiclesController.canImportVehicles()) {
             initComponents();
-            //setContentPane(new ImportVehiclesPane(this));
-            setLocationRelativeTo(null);
-            setVisible(true);
+            setContentPane(new ImportVehiclesPane(this));
         }else{
             JOptionPane.showMessageDialog(this, "Error: Vehicles file already imported!", "Error: Import Vehicles", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -44,7 +43,6 @@ public class ImportVehiclesFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Import Vehicles");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,7 +58,11 @@ public class ImportVehiclesFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    void importVehicles(File file) {
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // End of variables declaration//GEN-END:variables
+
+
+void importVehicles(File file) {
         if(m_importVehiclesController.importVehicles(file)){
             JOptionPane.showMessageDialog(this, "File succefully imported!", "Import Vehicles", JOptionPane.INFORMATION_MESSAGE);
         }else{
@@ -68,8 +70,4 @@ public class ImportVehiclesFrame extends javax.swing.JFrame {
         }
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
-
-    
 }

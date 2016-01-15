@@ -8,6 +8,7 @@ package roadnetwork.controllers;
 import IO.ImportXML;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Vector;
 import roadnetwork.domain.Junction;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Section;
@@ -34,11 +35,11 @@ public class ImportRoadNetworkController {
     public boolean importRoadNetwork(File file) {
         ImportXML importXML = new ImportXML(file);
 
-        String[] characteristics = importXML.importRoadNetwork();
+        Vector<String> characteristics = importXML.importRoadNetwork();
         ArrayList<Junction> junctions = importXML.importNodes();
         ArrayList<Section> sections = importXML.importSections(junctions);
 
-        return m_manager.getCurrentProject().createRoadNetwork(characteristics[0], characteristics[1], junctions, sections);
+        return m_manager.getCurrentProject().createRoadNetwork(characteristics.elementAt(0), characteristics.elementAt(1), junctions, sections);
     }
 
 }

@@ -17,7 +17,6 @@ public class ResultStaticAnalysis implements Result {
     private Junction m_destinyNode;
     private ArrayList<PathParcel> m_path;
     private double m_length;
-    private ArrayList<Junction> m_pathNodes;
     private Vehicle m_vehicle;
 
     /**
@@ -60,13 +59,6 @@ public class ResultStaticAnalysis implements Result {
         return m_destinyNode;
     }
     
-    /**
-     *
-     * @return PathNodes
-     */
-    public ArrayList<Junction> getPathNodes(){
-        return m_pathNodes;
-    }
     
     /**
      *
@@ -90,13 +82,6 @@ public class ResultStaticAnalysis implements Result {
         this.m_length = m_length;
     }
     
-    /**
-     *
-     * @param pathNodes pathNodes
-     */
-    public void setPathNodes(ArrayList<Junction> pathNodes){
-        m_pathNodes=pathNodes;
-    }
     
     /**
      *
@@ -127,11 +112,17 @@ public class ResultStaticAnalysis implements Result {
         results.append(m_vehicle.getName());
         results.append("#\n");
         for(PathParcel it : m_path){
-            int i = m_path.indexOf(it);
-            
-            results.append(m_pathNodes.get(i).toString());
+            if (it.getDirection().equals(SimDirection.direct)) {
+                results.append(it.getSection().getBeginningNode().getJunctionId());
+            } else{
+                results.append(it.getSection().getEndingNode().getJunctionId());
+            }
             results.append(" ---> ");
-            results.append(m_pathNodes.get(i+1).toString());
+            if (it.getDirection().equals(SimDirection.direct)) {
+                results.append(it.getSection().getEndingNode().getJunctionId());
+            } else{
+                results.append(it.getSection().getBeginningNode().getJunctionId());
+            }
             results.append("  @  ");
             results.append(it.getSection().getRoadName());
             results.append(" | Travel time: ");
@@ -157,7 +148,7 @@ public class ResultStaticAnalysis implements Result {
         String results=
             "<b>-----Static Analysis-----</b>" +
             "<p>Vehicle: "+m_vehicle.getName()+"</p>"+
-            "<p>Start Node:" +m_originNode.getJunctionId()+"</p>"+
+            "<p>Start Node: " +m_originNode.getJunctionId()+"</p>"+
             "<p>End Node: "+m_destinyNode.getJunctionId()+"</p>"+
             "<table border = 1>" +
                 "<tr>"+
@@ -176,11 +167,30 @@ public class ResultStaticAnalysis implements Result {
                 "</tr>";
                 
         for (PathParcel pp : m_path) {
-            int i = m_path.indexOf(pp);
             results+=
-                "<tr>"+
-                    "<td>"+m_pathNodes.get(i).getJunctionId()+"</td>"+
-                    "<td>"+m_pathNodes.get(i+1).getJunctionId()+"</td>"+
+                "<tr>";
+                    if (pp.getDirection().equals(SimDirection.direct)) {
+                        results+="<td>"+
+                                pp.getSection().getBeginningNode().getJunctionId()+
+                                "</td>";
+                    } else{
+                        results+=
+                                "<td>"+
+                                pp.getSection().getEndingNode().getJunctionId()+
+                                "</td>";
+                    }
+            
+                    if (pp.getDirection().equals(SimDirection.direct)) {
+                        results+="<td>"+
+                                pp.getSection().getEndingNode().getJunctionId()+
+                                "</td>";
+                    } else{
+                        results+=
+                                "<td>"+
+                                pp.getSection().getBeginningNode().getJunctionId()+
+                                "</td>";
+                    }
+                results+=
                     "<td>"+pp.getSection().getRoadName()+"</td>"+
                     "<td>"+String.format("%.0f",pp.getTheoreticalTravelTime())+"</td>"+
                     "<td>"+String.format("%.1f",pp.getTheoreticalEnergyConsumption())+"</td>"+
