@@ -30,6 +30,7 @@ public class ResultSimulation implements Result {
         m_endedVehicles = endedVehicles;
         m_cruisingVehicles = cruisingVehicles;
         m_droppedVehicles = droppedVehicles;
+        m_bestPathMethod=bpm;
     }
 
     @Override
@@ -74,8 +75,30 @@ public class ResultSimulation implements Result {
     
     
     @Override
-    public String getResultsHTMLCode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getGlobalResultsHTMLCode() {
+        int durationHours = (int) (m_duration / 3600);
+        int durationMinutes = (int) ((m_duration - durationHours * 3600) / 60);
+        int durationSeconds = (int) (m_duration - durationHours * 3600 - durationMinutes * 60);
+
+        int timeStepHours = (int) (m_timeStep / 3600);
+        int timeStepMinutes = (int) ((m_timeStep - timeStepHours * 3600) / 60);
+        int timeStepSeconds = (int) (m_timeStep - timeStepHours * 3600 - timeStepMinutes * 60);
+        
+        int createdV = m_cruisingVehicles.size()+m_endedVehicles.size()+m_droppedVehicles.size();
+        int injectedV = m_cruisingVehicles.size()+m_endedVehicles.size();
+        
+        String results=
+                "<b>-------  " + m_runName + "  -------</b>"+
+                "<p>Duration: "+durationHours+" hours "+durationMinutes+" minutes "+durationSeconds+" seconds</p>"
+                + "<p>Time Step: "+timeStepHours+" hours "+timeStepMinutes+" minutes "+timeStepSeconds+" seconds</p>"
+                + "<p>Best path method: "+m_bestPathMethod.toString()+"</p>"
+                + "<p>Created Vehicles: "+createdV+"</p>"
+                + "<p>Injected Vehicles: "+injectedV+"</p>"
+                + "<p>Ended Vehicles: "+m_endedVehicles.size()+"</p>"
+                + "<p>Cruising Vehicles: "+m_cruisingVehicles.size()+"</p>"
+                + "<p>Dropped Vehicles: "+m_droppedVehicles.size()+"</p>";
+                
+        return results;
     }
 
 }

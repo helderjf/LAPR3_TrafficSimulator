@@ -5,6 +5,7 @@
  */
 package roadnetwork.gui;
 
+import javax.swing.JOptionPane;
 import roadnetwork.domain.ResultSimulation;
 
 /**
@@ -103,7 +104,13 @@ public class RunSimulationShowResults extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
+        boolean flag = m_ancestor.exportGlobalResultsHTML("Simulation Global Results");
+        if (flag=false) {
+            JOptionPane.showMessageDialog(this,"Error : Unable to export results.");
+        } else{
+            JOptionPane.showMessageDialog(this,"Results correctely exported.");
+        }
+        m_ancestor.setVisible(false);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

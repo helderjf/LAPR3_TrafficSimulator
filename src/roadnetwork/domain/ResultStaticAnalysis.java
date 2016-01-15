@@ -19,7 +19,6 @@ public class ResultStaticAnalysis implements Result {
     private double m_length;
     private ArrayList<Junction> m_pathNodes;
     private Vehicle m_vehicle;
-    private ArrayList<Double> m_sectionEnergyConsumption;
 
     /**
      *
@@ -78,14 +77,6 @@ public class ResultStaticAnalysis implements Result {
     }
     
     /**
-     *
-     * @return EnergyConsumption
-     */
-    public ArrayList<Double> getEnergyConsumption(){
-        return m_sectionEnergyConsumption;
-    }
-    
-    /**
      * @param path the m_path to set
      */
     public void setPath(ArrayList<PathParcel> path) {
@@ -113,14 +104,6 @@ public class ResultStaticAnalysis implements Result {
      */
     public void setVehicle(Vehicle vehicle){
         m_vehicle=vehicle;
-    }
-    
-    /**
-     *
-     * @param energyConsumption energyConsumption
-     */
-    public void setEnergyConsumption(ArrayList<Double> energyConsumption){
-        m_sectionEnergyConsumption=energyConsumption;
     }
     
     /**
@@ -170,44 +153,43 @@ public class ResultStaticAnalysis implements Result {
     }
     
     @Override
-    public String getResultsHTMLCode(){
-        StringBuilder results= new StringBuilder();
-        results.append("<b>-----Static Analysis-----</b>" 
-        +
-        "<p>Vehicle: "+m_vehicle.getName()+"</p>"+
-        "<p>Start Node:" +m_originNode.getJunctionId()+"</p>"+
-        "<p>End Node: "+m_destinyNode.getJunctionId()+"</p>"+
-        "<table border = 1>" +
+    public String getGlobalResultsHTMLCode(){
+        String results=
+            "<b>-----Static Analysis-----</b>" +
+            "<p>Vehicle: "+m_vehicle.getName()+"</p>"+
+            "<p>Start Node:" +m_originNode.getJunctionId()+"</p>"+
+            "<p>End Node: "+m_destinyNode.getJunctionId()+"</p>"+
+            "<table border = 1>" +
                 "<tr>"+
                     "<th>Origin Node</th>"+
                     "<th>Destiny Node</th>"+
                     "<th>Road</th>"+
-                    "<th>Travel Time (s)</th>");
+                    "<th>Travel Time (s)</th>";
         if (m_vehicle instanceof CombustionVehicle) {
-            results.append("<th>Energy Consumption (g)</th>");
+            results +="<th>Energy Consumption (g)</th>";
         } else{
-            results.append("<th>Energy Consumption (J)</th>");
+            results+="<th>Energy Consumption (J)</th>";
         }
  
-    results.append(
+        results+=
                     "<th>Toll Costs</th>"+
-                "</tr>");
+                "</tr>";
                 
         for (PathParcel pp : m_path) {
             int i = m_path.indexOf(pp);
-            results.append(
-                    "<tr>"+
-                        "<td>"+m_pathNodes.get(i).getJunctionId()+"</td>"+
-                        "<td>"+m_pathNodes.get(i+1).getJunctionId()+"</td>"+
-                        "<td>"+pp.getSection().getRoadName()+"</td>"+
-                        "<td>"+String.format("%.0f",pp.getTheoreticalTravelTime())+"</td>"+
-                        "<td>"+String.format("%.1f",pp.getTheoreticalEnergyConsumption())+"</td>"+
-                        "<td>"+String.format("%.1f",pp.getTollCosts())+"</td>"+
-                    "</tr>");
+            results+=
+                "<tr>"+
+                    "<td>"+m_pathNodes.get(i).getJunctionId()+"</td>"+
+                    "<td>"+m_pathNodes.get(i+1).getJunctionId()+"</td>"+
+                    "<td>"+pp.getSection().getRoadName()+"</td>"+
+                    "<td>"+String.format("%.0f",pp.getTheoreticalTravelTime())+"</td>"+
+                    "<td>"+String.format("%.1f",pp.getTheoreticalEnergyConsumption())+"</td>"+
+                    "<td>"+String.format("%.1f",pp.getTollCosts())+"</td>"+
+                "</tr>";
         }
-        results.append("</table>");
+        results+="</table>";
         
-        return results.toString();
+        return results;
     }
 
 }

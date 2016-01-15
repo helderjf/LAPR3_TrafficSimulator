@@ -5,11 +5,13 @@
  */
 package roadnetwork.controllers;
 
+import IO.ExportHTML;
 import data.access.layer.ProjectWriter;
 import java.util.ArrayList;
 import roadnetwork.domain.BestPathAlgorithm;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
+import roadnetwork.domain.Result;
 import roadnetwork.domain.ResultSimulation;
 import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.Simulation;
@@ -70,6 +72,13 @@ public class RunSimulationController {
     public boolean saveRun(){
         m_projectWriter = m_manager.getProjectWriter();
         return m_projectWriter.saveSimulationRun();
+    }
+    
+    public boolean exportGlobalResultsHTML(String fileName){
+        ExportHTML html = new ExportHTML(fileName);
+        ArrayList<Result> results = new ArrayList<>();
+        results.add(m_runResults);
+        return html.exportGlobalResults(results);
     }
     
 

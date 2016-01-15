@@ -113,7 +113,7 @@ public class VehicleComparisonShowResultsPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        boolean flag = m_ancestorFrame.exportGlobalResultsHTML("GlobalResults");
+        boolean flag = m_ancestorFrame.exportGlobalResultsHTML("Vehicle Comparison Results");
         if (flag=false) {
             JOptionPane.showMessageDialog(this,"Error : Unable to export results.");
         } else{

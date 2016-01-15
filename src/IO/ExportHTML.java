@@ -50,7 +50,7 @@ public class ExportHTML {
             
             for (Result result : resultsList) {
                 m_file.append("<p>");
-                m_file.append(result.getResultsHTMLCode());
+                m_file.append(result.getGlobalResultsHTMLCode());
                 m_file.append("</p>");
             }
             m_file.append("</body>");
