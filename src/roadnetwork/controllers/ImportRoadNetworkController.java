@@ -36,7 +36,7 @@ public class ImportRoadNetworkController {
 
         String[] characteristics = importXML.importRoadNetwork();
         ArrayList<Junction> junctions = importXML.importNodes();
-        ArrayList<Section> sections = importXML.importSections();
+        ArrayList<Section> sections = importXML.importSections(junctions);
 
         return m_manager.getCurrentProject().createRoadNetwork(characteristics[0], characteristics[1], junctions, sections);
     }

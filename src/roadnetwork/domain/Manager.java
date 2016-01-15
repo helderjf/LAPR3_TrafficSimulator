@@ -27,7 +27,10 @@ public class Manager {
     //private ProjectWriter m_projectWriter;
     
     
-    
+    /**
+     * 
+     * @param name name
+     */
     public Manager(String name){
         m_name=name;
         m_dataAccessObject=new DataAccessObject("jdbc:oracle:thin:@localhost:1521:XE", "grupo60", "pass60");
@@ -39,48 +42,87 @@ public class Manager {
         
     }
 
+    /**
+     * 
+     * @return name
+     */
     public String getM_name() {
         return m_name;
     }
 
+    /**
+     * 
+     * @return CurrentProject
+     */
     public Project getCurrentProject() {
         return m_currentProject;
     }
 
     /**
-     * @return the m_dataAccessLayer
+     * @return the dataAccessLayer
      */
     public DataAccessObject getdataAccessLayer() {
         return m_dataAccessObject;
     }
     
+    /**
+     * 
+     * @return AlgorithmsList
+     */
     public ArrayList<BestPathAlgorithm> getAlgorithmsList(){
         return m_algorithmsList;
     }
     
+    /**
+     * 
+     * @param alg BestPathAlgorithm
+     */
     public void addAlgorithm(BestPathAlgorithm alg){
         m_algorithmsList.add(alg);
     }
 
+    /**
+     * 
+     * @param fileName filename
+     * @return new ExportCSV
+     */
     public ExportCSV newCSV(String fileName) {
         
         return new ExportCSV(fileName);
     }
 
+    /**
+     * 
+     * @return ProjectReader
+     */
     public ProjectReader getProjectReader() {
         return new ProjectReader(m_dataAccessObject, new ProjectStateFactory());
     }
 
+    /**
+     * 
+     * @param project project
+     * @return operation result
+     */
     public boolean setCurrentProject(Project project) {
         m_currentProject=project;
         return true;
     }
 
+    /**
+     * 
+     * @return ProjectWriter
+     */
     public ProjectWriter getProjectWriter() {
         return new ProjectWriter(m_dataAccessObject);
 
     }
     
+    /**
+     * 
+     * @param fileName filename
+     * @return ExportHTML
+     */
     public ExportHTML newHTML(String fileName){
         return new ExportHTML(fileName);
     }

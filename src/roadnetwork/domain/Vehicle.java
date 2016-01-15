@@ -18,26 +18,93 @@ import java.util.Objects;
  */
 public abstract class Vehicle {
 
+    /**
+     *
+     */
     protected int m_pk;
-    protected String name;
-    protected String description;
-    protected String type;
-    protected String fuel;
-    protected double mass;
-    protected double load;
-    protected double dragCoefficient;
-    protected double frontalArea;
-    protected double rrc;
-    protected double wheelSize;
-    protected HashMap<SectionTypology, Double> velocityLimit;
-    protected double minRPM;
-    protected double maxRPM;
-    protected double finalDriveRatio;
-    protected HashMap<Integer, Double> gearList;
-    protected ArrayList<Throttle> throttleList;
 
     /**
      *
+     */
+    protected String name;
+
+    /**
+     *
+     */
+    protected String description;
+
+    /**
+     *
+     */
+    protected String type;
+
+    /**
+     *
+     */
+    protected String fuel;
+
+    /**
+     *
+     */
+    protected double mass;
+
+    /**
+     *
+     */
+    protected double load;
+
+    /**
+     *
+     */
+    protected double dragCoefficient;
+
+    /**
+     *
+     */
+    protected double frontalArea;
+
+    /**
+     *
+     */
+    protected double rrc;
+
+    /**
+     *
+     */
+    protected double wheelSize;
+
+    /**
+     *
+     */
+    protected HashMap<SectionTypology, Double> velocityLimit;
+
+    /**
+     *
+     */
+    protected double minRPM;
+
+    /**
+     *
+     */
+    protected double maxRPM;
+
+    /**
+     *
+     */
+    protected double finalDriveRatio;
+
+    /**
+     *
+     */
+    protected HashMap<Integer, Double> gearList;
+
+    /**
+     *
+     */
+    protected ArrayList<Throttle> throttleList;
+
+    /**
+     * 
      */
     public Vehicle() {
         this.m_pk = 0;
@@ -277,6 +344,11 @@ public abstract class Vehicle {
         this.velocityLimit = velocityLimit;
     }
 
+    /**
+     *
+     * @param typology
+     * @return
+     */
     public double getVelocityLimit(SectionTypology typology) {
         return velocityLimit.get(typology);
     }
@@ -350,60 +422,112 @@ public abstract class Vehicle {
         this.type = type;
     }
 
+    /**
+     * 
+     * @return frontalArea
+     */
     public double getFrontalArea() {
         return frontalArea;
     }
 
+    /**
+     * 
+     * @param frontalArea frontalArea
+     */
     public void setFrontalArea(double frontalArea) {
         this.frontalArea = frontalArea;
     }
 
+    /**
+     * 
+     * @return fuel
+     */
     public String getFuel() {
         return fuel;
     }
 
+    /**
+     * 
+     * @param fuel fuel
+     */
     public void setFuel(String fuel) {
         this.fuel = fuel;
     }
 
+    /**
+     * 
+     * @return rrc
+     */
     public double getRrc() {
         return rrc;
     }
 
+    /**
+     * 
+     * @param rrc rrc
+     */
     public void setRrc(double rrc) {
         this.rrc = rrc;
     }
 
+    /**
+     * 
+     * @return velocityLimit
+     */
     public HashMap<SectionTypology, Double> getVelocityLimit() {
         return velocityLimit;
     }
 
+    /**
+     * 
+     * @param velocityLimit velocityLimit
+     */
     public void setVelocityLimit(HashMap<SectionTypology, Double> velocityLimit) {
         this.velocityLimit = velocityLimit;
     }
 
+    /**
+     * 
+     * @return gearList
+     */
     public HashMap<Integer, Double> getGearList() {
         return gearList;
     }
 
+    /**
+     * 
+     * @param gearList gearList
+     */
     public void setGearList(HashMap<Integer, Double> gearList) {
         this.gearList = gearList;
     }
 
+    /**
+     * 
+     * @return throttleList
+     */
     public ArrayList<Throttle> getThrottleList() {
         return throttleList;
     }
 
+    /**
+     * 
+     * @param throttleList throttleList
+     */
     public void setThrottleList(ArrayList<Throttle> throttleList) {
         this.throttleList = throttleList;
     }
 
+    /**
+     * 
+     * @return EngineEfficiency
+     */
     abstract public List<EngineEfficiency> getEngineEfficiency();
 
     /**
-     *
-     * @param obj object
-     * @return
+     * 
+     * @param obj Vehicle
+     * @return result
      */
     @Override
     public boolean equals(Object obj) {//to do completar para os novos atributos
@@ -454,6 +578,11 @@ public abstract class Vehicle {
     }
 
 
+    /**
+     * 
+     * @param segment_type segment_type
+     * @param limit limit
+     */
     public void addVelocityLimit(SectionTypology segment_type, double limit) {
         velocityLimit.put(segment_type, limit);
     }
@@ -472,7 +601,9 @@ public abstract class Vehicle {
      * @return Vehicle data
      */
     public String showData() {//completar para os novos atributos
-        return "Vehicle: \n"
+        
+        String showData =
+             "Vehicle: \n"
                 + "id= " + m_pk + "\n"
                 + "name= " + name + "\n"
                 + "mass= " + mass + "\n"
@@ -485,20 +616,36 @@ public abstract class Vehicle {
                 + "minRPM=" + minRPM + "\n"
                 + "maxRPM=" + maxRPM + "\n"
                 + "finalDriveRatio=" + finalDriveRatio;
+        
+        return showData;
     }
 
+    /**
+     * 
+     * @return m_pk
+     */
     public boolean hasPK() {
         return m_pk != 0;
     }
 
+    /**
+     * 
+     * @return radiusOfTire
+     */
     public double getRadiusOfTire() {
         return wheelSize / 2;
     }
 
+    /**
+     * 
+     * @param timeIdle timeIdle
+     * @return timeIdle
+     */
     double getIdleConsumption(double timeIdle) {
         double rpmLow=999999;
         double torque=0;
         double sfc=0;
+        double result = 0;
 
         for (Throttle t : throttleList) {
             if (t.getID().startsWith("25")) {
@@ -512,7 +659,8 @@ public abstract class Vehicle {
             }
         }
         
-        return 2*3.1415*torque*(rpmLow/60)*sfc*timeIdle;
+        result = 2*3.1415*torque*(rpmLow/60)*sfc*timeIdle;
+        return result;
 
     }
 
