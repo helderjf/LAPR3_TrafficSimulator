@@ -21,6 +21,11 @@ public class ResultStaticAnalysis implements Result {
     private Vehicle m_vehicle;
     private ArrayList<Double> m_sectionEnergyConsumption;
 
+    /**
+     *
+     * @param origin origin
+     * @param destiny destiny
+     */
     public ResultStaticAnalysis(Junction origin, Junction destiny) {
         m_originNode = origin;
         m_destinyNode = destiny;
@@ -40,23 +45,42 @@ public class ResultStaticAnalysis implements Result {
         return m_length;
     }
 
-    
+    /**
+     *
+     * @return OriginNode
+     */
     public Junction getOriginNode() {
         return m_originNode;
     }
 
+    /**
+     *
+     * @return DestinyNode
+     */
     public Junction getDestinyNode() {
         return m_destinyNode;
     }
     
+    /**
+     *
+     * @return PathNodes
+     */
     public ArrayList<Junction> getPathNodes(){
         return m_pathNodes;
     }
     
+    /**
+     *
+     * @return Vehicle
+     */
     public Vehicle getVehicle(){
         return m_vehicle;
     }
     
+    /**
+     *
+     * @return EnergyConsumption
+     */
     public ArrayList<Double> getEnergyConsumption(){
         return m_sectionEnergyConsumption;
     }
@@ -75,24 +99,44 @@ public class ResultStaticAnalysis implements Result {
         this.m_length = m_length;
     }
     
+    /**
+     *
+     * @param pathNodes pathNodes
+     */
     public void setPathNodes(ArrayList<Junction> pathNodes){
         m_pathNodes=pathNodes;
     }
     
+    /**
+     *
+     * @param vehicle vehicle
+     */
     public void setVehicle(Vehicle vehicle){
         m_vehicle=vehicle;
     }
     
+    /**
+     *
+     * @param energyConsumption energyConsumption
+     */
     public void setEnergyConsumption(ArrayList<Double> energyConsumption){
         m_sectionEnergyConsumption=energyConsumption;
     }
     
+    /**
+     * 
+     * @return print of ResultStaticAnalysis
+     */
     @Override
     public String toString() {
         return "Fastest path between " + m_originNode.toString() + " and " + m_destinyNode.toString() + " is:\n"
                 + "COMPLETAR ESTE MÉTODO!!!";
     }
 
+    /**
+     *
+     * @return ResultStaticAnalysis
+     */
     @Override
     public String printResults() {
         StringBuilder results = new StringBuilder();
@@ -117,6 +161,46 @@ public class ResultStaticAnalysis implements Result {
                    results.append(it.getTollCosts());
             results.append(")\n");
         }
+        return results.toString();
+    }
+    
+    @Override
+    public String getResultsHTMLCode(){
+        StringBuilder results= new StringBuilder();
+        results.append("<h4>-----Static Analysis-----</h4>" 
+        +
+        "<p>Vehicle: "+m_vehicle.getName()+"</p>"+
+        "<p>Start Node:" +m_originNode.getJunctionId()+"</p>"+
+        "<p>End Node: "+m_destinyNode.getJunctionId()+"</p>"+
+        "<table border = 1>" +
+                "<tr>"+
+                    "<th>Origin Node</th>"+
+                    "<th>Destiny Node</th>"+
+                    "<th>Road</th>"+
+                    "<th>Travel Time (s)</th>");
+        if (m_vehicle instanceof CombustionVehicle) {
+            results.append("<th>Energy Consumption (g)</th>");
+        } else{
+            results.append("<th>Energy Consumption (J)</th>");
+        }
+ 
+    results.append(
+                    "<th>Toll Costs</th>"+
+                "</tr>");
+                
+        for (PathParcel pp : m_path) {
+            int i = m_path.indexOf(pp);
+            results.append(
+                    "<tr>"+
+                        "<td>"+m_pathNodes.get(i).getJunctionId()+"</td>"+
+                        "<td>"+m_pathNodes.get(i+1).getJunctionId()+"</td>"+
+                        "<td>"+pp.getSection().getRoadName()+"</td>"+
+                        "<td>"+String.format("%.0f",pp.getTheoreticalTravelTime())+"</td>"+
+                        "<td>"+String.format("%.1f",pp.getTheoreticalEnergyConsumption())+"</td>"+
+                        "<td>"+String.format("%.1f",pp.getTollCosts())+"</td>"+
+                    "</tr>");
+        }
+        
         return results.toString();
     }
 

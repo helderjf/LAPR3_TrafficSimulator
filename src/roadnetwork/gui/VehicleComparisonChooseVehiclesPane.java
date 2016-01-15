@@ -167,8 +167,10 @@ public class VehicleComparisonChooseVehiclesPane extends javax.swing.JPanel {
 //        if (m_modelSelectedVehicles.contains(jList1.getSelectedValue())) {
 //            JOptionPane.showMessageDialog(this, "The selected vehicle has already been chosen", "Vehicles selection", JOptionPane.INFORMATION_MESSAGE);
 //        }else{
-        m_modelSelectedVehicles.addElement((Vehicle) jList1.getSelectedValue());
-//        }
+            if (jList1.getSelectedValue()!=null) {
+                m_modelSelectedVehicles.addElement((Vehicle) jList1.getSelectedValue());
+            }
+//       }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

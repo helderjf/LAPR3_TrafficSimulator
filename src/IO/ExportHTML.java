@@ -45,19 +45,16 @@ public class ExportHTML {
         }
         
         try{
-            m_file.append("<html>\n"+
-                    "<head>\n"+
-                    "<title>\n"+
-                    "Static Analysis - Global Results\n"+
-                    "</title>\n");
-            for (Result result : resultsList) {
-                m_file.append("<p>\n");
-                m_file.append(result.printResults());
-                m_file.append("</p>\n");
-            }
+            m_file.append("<html>");
+            m_file.append("<body>");
             
-            m_file.append("</head>\n"+
-                    "</html>\n");
+            for (Result result : resultsList) {
+                m_file.append("<p>");
+                m_file.append(result.getResultsHTMLCode());
+                m_file.append("</p>");
+            }
+            m_file.append("</body>");
+            m_file.append("</html>");
             
             m_file.close();
         }catch(IOException ex) {

@@ -52,8 +52,6 @@ public class VehicleTest {
     Throttle throttle1;
     Throttle throttle2;
     Throttle throttle3;
-
-
     
     public VehicleTest() {
     }
@@ -699,18 +697,27 @@ public class VehicleTest {
         String expResult =  "Vehicle: \n"
                 + "id= " + 1 + "\n"
                 + "name= " + "dummy3" + "\n"
-                + "mass= " + 600 + "\n"
+                + "mass= " + 600.0 + "\n"
                 + "type= " + "moto" + "\n"
-                + "load= " + 70 + "\n"
+                + "load= " + 70.0 + "\n"
                 + "drag_Coefficient= " + 0.12 + "\n"
                 + "rrc=" + 0.01 + "\n"
                 + "wheelSize=" + 0.3 + "\n"
                 + "velocityLimit=" + velocityLimit1 + "\n"
-                + "minRPM=" + 900 + "\n"
-                + "maxRPM=" + 6900 + "\n"
+                + "minRPM=" + 900.0 + "\n"
+                + "maxRPM=" + 6900.0 + "\n"
                 + "finalDriveRatio=" + 2.6;
         
         String result = instance.showData();
+        
+        System.out.println("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+        System.out.println(result);
+        System.out.println(result.length());
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        System.out.println(expResult);
+        System.out.println(expResult.length());
+        
+        
         assertEquals(expResult, result);
     }
 
@@ -746,35 +753,73 @@ public class VehicleTest {
     @Test
     public void testGetIdleConsumption() {
         System.out.println("getIdleConsumption");
-        double timeIdle = 0.0;
+        double timeIdle = 2;
         Vehicle instance = vehicle1;
-        double expResult = 0.0;
+        double expResult = 145975.03333333335;
         double result = instance.getIdleConsumption(timeIdle);
         assertEquals(expResult, result, 0.0);
 
     }
-    
-//    double getIdleConsumption(double timeIdle) {
-//        double rpmLow=999999;
-//        double torque=0;
-//        double sfc=0;
-//
-//        for (Throttle t : throttleList) {
-//            if (t.getID().startsWith("25")) {
-//                for (Regime r : t.getRegimeList()) {
-//                    if(r.getRPMLow()<rpmLow){
-//                        rpmLow=r.getRPMLow();
-//                        torque=r.getTorque();
-//                        sfc=r.getSfc();
-//                    }
-//                }
-//            }
-//        }
-//        
-//        return 2*3.1415*torque*(rpmLow/60)*sfc*timeIdle;
-//
-//    }
 
+    /**
+     * Test of getPK method, of class Vehicle.
+     */
+    @Test
+    public void testGetPK() {
+        System.out.println("getPK");
+        Vehicle instance = vehicle3;
+        int expResult = 1;
+        int result = instance.getPK();
+        assertEquals(expResult, result);
+    }
 
-    
+    /**
+     * Test of setPK method, of class Vehicle.
+     */
+    @Test
+    public void testSetPK() {
+        System.out.println("setPK");
+        int pk = 0;
+        Vehicle instance = vehicle3;
+        instance.setPK(pk);
+        int expResult = 1;
+        int result = instance.getPK();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of getRrc method, of class Vehicle.
+     */
+    @Test
+    public void testGetRrc() {
+        System.out.println("getRrc");
+        Vehicle instance = vehicle3;
+        double expResult = 0.01;
+        double result = instance.getRrc();
+        assertEquals(expResult, result, 0.0);
+
+    }
+
+    /**
+     * Test of setRrc method, of class Vehicle.
+     */
+    @Test
+    public void testSetRrc() {
+        System.out.println("setRrc");
+        double rrc = 0.01;
+        Vehicle instance = vehicle3;
+        instance.setRrc(rrc);
+        double expResult = 0.01;
+        double result = instance.getRrc();
+        assertEquals(expResult, result, 0.0);
+    }
+
+    public class VehicleImpl extends Vehicle {
+
+        public List<EngineEfficiency> getEngineEfficiency() {
+            return null;
+        }
+    }
+  
 }
