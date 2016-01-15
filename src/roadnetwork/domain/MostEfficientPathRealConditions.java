@@ -390,11 +390,8 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm {
             //get vehicle's velocity on the current segment
             double vehicleVelocity = travelSpeed(section, it);
             //set the segment's energy consumption
-            if (m_vehicle instanceof CombustionVehicle) {
-                CombustionVehicle combustionVehicle = (CombustionVehicle) m_vehicle;
-                List<EngineEfficiency> engineEfficiencyList = combustionVehicle.getEngineEfficiency();
-                pp.setTheoreticalEnergyConsumption(calculateSegmentEnergyConsumption(engineEfficiencyList, pp, it));
-            }
+            List<EngineEfficiency> engineEfficiencyList = m_vehicle.getEngineEfficiency();
+            pp.setTheoreticalEnergyConsumption(calculateSegmentEnergyConsumption(engineEfficiencyList, pp, it));
             //adds the SimPathParcel to the list
             m_simPathParcelList.add(pp);
         }

@@ -470,27 +470,27 @@ public class MainFrame extends javax.swing.JFrame {
         gearList.put(3, 1.25);
         gearList.put(4, 0.9);
 
-        Regime r1 = new Regime(85, 1000, 2499, 8.2);
-        Regime r2 = new Regime(95, 2500, 3999, 6.2);
-        Regime r3 = new Regime(80, 4000, 5500, 10.2);
+        Regime r1 = new Regime(85, 1000, 2499, 580.2);
+        Regime r2 = new Regime(95, 2500, 3999, 520.2);
+        Regime r3 = new Regime(80, 4000, 5500, 640.2);
         ArrayList<Regime> lr1 = new ArrayList();
         lr1.add(r1);
         lr1.add(r2);
         lr1.add(r3);
         Throttle t1 = new Throttle("25", lr1);
 
-        Regime r4 = new Regime(135, 1000, 2499, 5.2);
-        Regime r5 = new Regime(150, 2500, 3999, 3.2);
-        Regime r6 = new Regime(140, 4000, 5500, 8.2);
+        Regime r4 = new Regime(135, 1000, 2499, 400.2);
+        Regime r5 = new Regime(150, 2500, 3999, 350.2);
+        Regime r6 = new Regime(140, 4000, 5500, 521.8);
         ArrayList<Regime> lr2 = new ArrayList();
         lr2.add(r4);
         lr2.add(r5);
         lr2.add(r6);
         Throttle t2 = new Throttle("50", lr2);
 
-        Regime r7 = new Regime(200, 1000, 2499, 2.2);
-        Regime r8 = new Regime(240, 2500, 3999, 1.2);
-        Regime r9 = new Regime(190, 4000, 5500, 4.2);
+        Regime r7 = new Regime(200, 1000, 2499, 290.2);
+        Regime r8 = new Regime(240, 2500, 3999, 250.7);
+        Regime r9 = new Regime(190, 4000, 5500, 370.1);
         ArrayList<Regime> lr3 = new ArrayList();
         lr3.add(r7);
         lr3.add(r8);

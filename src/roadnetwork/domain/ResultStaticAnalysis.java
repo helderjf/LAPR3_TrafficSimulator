@@ -151,15 +151,20 @@ public class ResultStaticAnalysis implements Result {
             results.append(m_pathNodes.get(i+1).toString());
             results.append("  @  ");
             results.append(it.getSection().getRoadName());
-            results.append(" Travel time: ");
+            results.append(" | Travel time: ");
             
-            results.append(it.getTheoreticalTravelTime()/60);
-            results.append(" minutes ");
-            results.append("Energy Consumption");
-            results.append(it.getTheoreticalEnergyConsumption());
-            results.append("(Toll: ");
-                   results.append(it.getTollCosts());
-            results.append(")\n");
+            results.append(String.format("%.0f",it.getTheoreticalTravelTime()));
+            results.append("s ");
+            results.append("| Energy Consumption: ");
+            results.append(String.format("%.1f",it.getTheoreticalEnergyConsumption()));
+            if (m_vehicle instanceof CombustionVehicle) {
+                results.append("g");
+            } else{
+                results.append("J");
+            }
+            results.append(" | Toll: ");
+            results.append(String.format("%.1f",it.getTollCosts()));
+            results.append(" |\n");
         }
         return results.toString();
     }
@@ -167,7 +172,7 @@ public class ResultStaticAnalysis implements Result {
     @Override
     public String getResultsHTMLCode(){
         StringBuilder results= new StringBuilder();
-        results.append("<h4>-----Static Analysis-----</h4>" 
+        results.append("<b>-----Static Analysis-----</b>" 
         +
         "<p>Vehicle: "+m_vehicle.getName()+"</p>"+
         "<p>Start Node:" +m_originNode.getJunctionId()+"</p>"+
@@ -200,6 +205,7 @@ public class ResultStaticAnalysis implements Result {
                         "<td>"+String.format("%.1f",pp.getTollCosts())+"</td>"+
                     "</tr>");
         }
+        results.append("</table>");
         
         return results.toString();
     }
