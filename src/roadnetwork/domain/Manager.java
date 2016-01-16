@@ -131,6 +131,15 @@ public class Manager {
         return new StateFactory();
     }
     
-    
+    public ArrayList<ImportedResult> createImportedResults(){
+        ArrayList<ImportedResult> impResults= new ArrayList<>();
+        ImportedResultTrafficPatterns irtp= new ImportedResultTrafficPatterns();
+        ImportedResultTrafficPatternsPath irtpp = new ImportedResultTrafficPatternsPath();
+        ImportedResultSingleTrafficPattern irstp = new ImportedResultSingleTrafficPattern();
+        impResults.add(irtp);
+        impResults.add(irtpp);
+        impResults.add(irstp);
+        return impResults;
+    }
     
 }

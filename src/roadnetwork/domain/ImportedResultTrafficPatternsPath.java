@@ -83,5 +83,11 @@ public class ImportedResultTrafficPatternsPath implements ImportedResult{
 
         return results;    
     }
+
+    @Override
+    public String toString() {
+        return "Traffic Patterns Results per segment";
+    }
+    
     
 }

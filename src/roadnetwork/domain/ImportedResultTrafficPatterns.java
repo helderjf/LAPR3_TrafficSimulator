@@ -54,5 +54,12 @@ public class ImportedResultTrafficPatterns implements ImportedResult{
 
         return results;
     }
+
+    @Override
+    public String toString() {
+        return "Traffic Patterns Results";
+    }
+    
+    
     
 }
