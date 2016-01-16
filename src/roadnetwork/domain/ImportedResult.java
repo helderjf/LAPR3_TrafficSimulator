@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package roadnetwork.factory;
+package roadnetwork.domain;
 
 /**
  *
- * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
+ * @author josemiranda
  */
-public class SimulationStateFactory {
-    
+public interface ImportedResult {
+    public String getGlobalResultsHTMLCode();
 }

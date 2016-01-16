@@ -36,10 +36,10 @@ public class Wind {
      * 
      * @param wd WindDirection
      */
-    public Wind(Wind wd)
+    public Wind(Wind otherWind)
     {
-        wd.angle = this.angle;
-        wd.velocity = this.velocity;
+        angle=otherWind.angle;
+        velocity=otherWind.velocity;
     }
 
     /**

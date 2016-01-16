@@ -9,8 +9,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import roadnetwork.domain.ImportedResult;
 import roadnetwork.domain.Result;
-import roadnetwork.domain.ResultSimulation;
 
 /**
  *
@@ -53,7 +53,7 @@ public class ExportHTML {
         for (Result result : resultsList) {
             resultString
                     += "<p>"
-                    + result.getGlobalResultsHTMLCode()
+                    + result.getResultsHTMLCode()
                     + "</p>";
         }
         resultString
@@ -70,32 +70,20 @@ public class ExportHTML {
         return flag;
     }
 
-    public boolean exportDetailedResults(ResultSimulation result) {
-
-        boolean flag = createHTMLFile();
+    public boolean exportDetailedResults(ImportedResult result) {
+        boolean flag=createHTMLFile();
         String resultString;
-
+        
         if (flag == false) {
             return false;
         }
 
         resultString
                 = "<html>"
-                + "<header>"
-                + "<p>"
+                + "<body>"
                 + result.getGlobalResultsHTMLCode()
-                + "</p>"
-                + "</header>"
-                +"<body>";
-        
-        resultString
-                += result.getDetailedResults();
-
-        resultString
-                +=
-                "</body>"+
-                "</html>";
-
+                + "</body>"
+                + "</html>";
         try {
             m_file.append(resultString);
 
@@ -106,5 +94,6 @@ public class ExportHTML {
         }
         return flag;
     }
+        
     
 }

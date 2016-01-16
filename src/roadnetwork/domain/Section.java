@@ -90,16 +90,21 @@ public class Section {
      *
      * @param s Section copy
      */
-    public Section(Section s) {
-        s.beginningNode = this.beginningNode;
-        s.direction = this.direction;
-        s.endingNode = this.endingNode;
-        s.m_pk = this.m_pk;
-        s.roadName = this.roadName;
-        s.toll = this.toll;
-        s.typology = this.typology;
-        s.wind = this.wind;
-        s.segmentsList = this.segmentsList;
+    public Section(Section otherSection) {
+     roadName=otherSection.roadName;
+     beginningNode=otherSection.beginningNode;
+     endingNode=otherSection.endingNode;
+     typology=otherSection.typology;
+     direction=otherSection.direction;
+     toll=otherSection.toll;
+     wind=new Wind(otherSection.wind);
+     segmentsList = new ArrayList();
+     for(Segment seg : otherSection.segmentsList){
+         segmentsList.add(new Segment(seg));
+     }
+     
+        
+        
     }
 
     /**

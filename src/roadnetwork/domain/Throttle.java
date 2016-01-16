@@ -25,6 +25,14 @@ public class Throttle {
         m_regimeList = regimeList;
     }
     
+    public Throttle(Throttle otherThrottle){
+        m_id = otherThrottle.m_id;
+        m_regimeList = new ArrayList();
+        for(Regime r : otherThrottle.m_regimeList){
+            m_regimeList.add(new Regime(r));
+        }
+    }
+    
 
     public String getID() {
         return m_id;

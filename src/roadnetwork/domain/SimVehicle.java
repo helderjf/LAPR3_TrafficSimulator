@@ -112,10 +112,10 @@ public class SimVehicle {
 
     void setInjected() {
         m_currentPos = m_path.get(0);
-        if (m_path.get(1) != null) {
-            m_nextPos = m_path.get(1);
-        } else {
+        if (m_path.size() ==1) {
             m_nextPos = null;
+        } else {
+            m_nextPos = m_path.get(1);
         }
         m_currentPos.initializePredictedExitTime(m_injectionTime);
     }
@@ -140,17 +140,16 @@ public class SimVehicle {
         return m_path;
     }
 
-    public Vehicle getVehicle(){
+    public Vehicle getVehicle() {
         return m_vehicle;
     }
-    
-    public Junction getOriginNode(){
+
+    public Junction getOriginNode() {
         return m_originNode;
     }
-    
-    public Junction getDestinyNode(){
+
+    public Junction getDestinyNode() {
         return m_destinyNode;
     }
-
 
 }

@@ -30,6 +30,11 @@ public class ElectricVehicle extends Vehicle implements Electric {
         super(name, description, type, fuel, mass, load, dragCoefficient, frontalArea, rrc, wheelSize, velocityLimit, minRPM, maxRPM, finalDriveRatio, gearList, throttleList);
         this.energyRegenerationRatio = energyRegenerationRatio;
     }
+    
+    public ElectricVehicle (ElectricVehicle otherElectricVehicle){
+        super(otherElectricVehicle);
+        energyRegenerationRatio=otherElectricVehicle.energyRegenerationRatio;
+    }
 
     /**
      *

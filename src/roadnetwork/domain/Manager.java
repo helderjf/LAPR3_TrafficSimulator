@@ -11,7 +11,7 @@ import IO.ExportCSV;
 import IO.ExportHTML;
 import data.access.layer.ProjectWriter;
 import java.util.ArrayList;
-import roadnetwork.factory.ProjectStateFactory;
+import roadnetwork.factory.StateFactory;
 
 /**
  *
@@ -96,7 +96,7 @@ public class Manager {
      * @return ProjectReader
      */
     public ProjectReader getProjectReader() {
-        return new ProjectReader(m_dataAccessObject, new ProjectStateFactory());
+        return new ProjectReader(m_dataAccessObject, new StateFactory());
     }
 
     /**
@@ -125,6 +125,10 @@ public class Manager {
      */
     public ExportHTML newHTML(String fileName){
         return new ExportHTML(fileName);
+    }
+
+    public StateFactory getStateFactory() {
+        return new StateFactory();
     }
     
     

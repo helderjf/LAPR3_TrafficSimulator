@@ -13,6 +13,6 @@ public interface Result {
     
     public String printResults();
     
-    public String getGlobalResultsHTMLCode();
+    public String getResultsHTMLCode();
     
 }

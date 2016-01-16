@@ -58,17 +58,18 @@ public class Segment {
     
     /**
      * 
-     * @param s Segment copy
+     * @param otherSegment Segment copy
      */
-    public Segment(Segment s)
+    public Segment(Segment otherSegment)
     {
-        s.index = this.index;
-        s.initialHeight = this.initialHeight;
-        s.lenght = this.lenght;
-        s.max_Vehicles = this.max_Vehicles;
-        s.max_Velocity = this.max_Velocity;
-        s.min_Velocity = this.min_Velocity;
-        s.slope = this.slope;
+        
+        index = otherSegment.index;
+        initialHeight = otherSegment.initialHeight;
+        lenght = otherSegment.lenght;
+        max_Vehicles = otherSegment.max_Vehicles;
+        max_Velocity = otherSegment.max_Velocity;
+        min_Velocity = otherSegment.min_Velocity;
+        slope = otherSegment.slope;
     }
 
 

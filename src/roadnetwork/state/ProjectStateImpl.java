@@ -34,7 +34,7 @@ public class ProjectStateImpl implements ProjectState {
 
     @Override
     public boolean canCopyProject() {
-        return false;
+        return true;
     }
 
     @Override
@@ -112,6 +112,11 @@ public class ProjectStateImpl implements ProjectState {
 
     @Override
     public boolean simulationPropertiesChanged() {
+        return false;
+    }
+
+    @Override
+    public boolean canOpenSimulation() {
         return false;
     }
 

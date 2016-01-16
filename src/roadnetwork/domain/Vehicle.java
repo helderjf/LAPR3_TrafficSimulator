@@ -6,8 +6,6 @@
 package roadnetwork.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -213,6 +211,37 @@ public abstract class Vehicle {
         this.gearList = gearList;
         this.throttleList = throttleList;
     }
+    
+    
+    public Vehicle(Vehicle otherVehicle){
+        m_pk = 0;
+        name = otherVehicle.name;
+        description = otherVehicle.description;
+        type = otherVehicle.type;
+        fuel = otherVehicle.fuel;
+        mass = otherVehicle.mass;
+        load = otherVehicle.load;
+        dragCoefficient = otherVehicle.dragCoefficient;
+        frontalArea = otherVehicle.frontalArea;
+        rrc = otherVehicle.rrc;
+        wheelSize = otherVehicle.wheelSize;
+        velocityLimit = new HashMap();
+        for(SectionTypology key: otherVehicle.velocityLimit.keySet()){
+            velocityLimit.put(key, otherVehicle.velocityLimit.get(key));
+        }
+        minRPM = otherVehicle.minRPM;
+        maxRPM = otherVehicle.maxRPM;
+        finalDriveRatio = otherVehicle.finalDriveRatio;
+        gearList = new HashMap();
+        for(Integer key : otherVehicle.gearList.keySet()){
+            gearList.put(key, otherVehicle.gearList.get(key));
+        }
+        throttleList = new ArrayList();
+        for(Throttle t : otherVehicle.throttleList){
+            throttleList.add(new Throttle(t));
+        }
+    }
+    
 
     /**
      *

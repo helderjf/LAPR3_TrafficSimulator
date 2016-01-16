@@ -25,7 +25,6 @@ import roadnetwork.domain.SimulationRun;
 import roadnetwork.domain.Throttle;
 import roadnetwork.domain.TrafficPattern;
 import roadnetwork.domain.Vehicle;
-import roadnetwork.state.SimulationState;
 
 /**
  *
@@ -297,7 +296,7 @@ public class ProjectWriter {
     }
 
     private boolean saveNewVehicleThrottle(Vehicle vehicle) {
-        ArrayList<Throttle> throttleList = ((CombustionVehicle) vehicle).getThrottleList();//TO DO alterar para a interface cmobustion, quando soublermos se o hybrid tambem vai ter gears
+        ArrayList<Throttle> throttleList = vehicle.getThrottleList();//TO DO alterar para a interface cmobustion, quando soublermos se o hybrid tambem vai ter gears
         for (Throttle throttle : throttleList) {
             ArrayList<Regime> regimeList = throttle.getRegimeList();
             for (Regime regime : regimeList) {
@@ -390,6 +389,7 @@ public class ProjectWriter {
         double[] injectedVTimeIn = new double[endedVehiclesList.size()];
         double[] injectedVTimeOut = new double[endedVehiclesList.size()];
         double[] injectedVEnergy = new double[endedVehiclesList.size()];
+
         fillInjecttedArrays(endedVehiclesList,
                 // cruisingVehiclesList,
                 injectedVTrafPatList,
@@ -575,4 +575,41 @@ public class ProjectWriter {
         return true;
     }
 
+    public boolean saveProjectCopy(Project m_activeProject, String name, String description) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

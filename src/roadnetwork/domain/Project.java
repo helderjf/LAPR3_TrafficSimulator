@@ -6,6 +6,7 @@
 package roadnetwork.domain;
 
 import java.util.ArrayList;
+import roadnetwork.factory.StateFactory;
 import roadnetwork.state.ProjectState;
 import roadnetwork.state.ProjectStateCreated;
 
@@ -19,7 +20,8 @@ public class Project {
     private String m_name;
     private String m_description;
     private RoadNetwork m_roadNetwork;
-    private ArrayList<Vehicle> m_vehicleList = new ArrayList<>();;
+    private ArrayList<Vehicle> m_vehicleList = new ArrayList<>();
+    ;
     private Simulation m_activeSimulation;//active simulation
     private ProjectState m_state;
 
@@ -31,6 +33,25 @@ public class Project {
         m_name = name;
         m_description = description;
         m_state = new ProjectStateCreated(this);
+    }
+
+    public Project(Project otherProject, StateFactory stateFactory) {
+        m_PK = 0;
+        m_name = otherProject.m_name;
+        m_description = otherProject.m_description;
+        m_roadNetwork = new RoadNetwork(otherProject.getRoadNetwork());
+        m_vehicleList = new ArrayList();
+        for (Vehicle v : otherProject.getVehicleList()) {
+            if (v instanceof CombustionVehicle) {
+                m_vehicleList.add(new CombustionVehicle((CombustionVehicle) v));
+            } else if (v instanceof HybridVehicle) {
+                m_vehicleList.add(new HybridVehicle((HybridVehicle) v));
+            } else if (v instanceof ElectricVehicle) {
+                m_vehicleList.add(new ElectricVehicle((ElectricVehicle) v));
+            }
+        }
+        m_state = stateFactory.getProjectState(otherProject.getState().getClass().getSimpleName(), this);
+
     }
 
     public boolean setState(ProjectState newState) {
@@ -222,5 +243,23 @@ public class Project {
     public boolean simulationPropertiesChanged() {
         return m_state.simulationPropertiesChanged();
     }
+
+    public boolean canOpenSimulation() {
+        return m_state.canOpenSimulation();
+    }
+
+    public Vehicle getVehicleByPK(int vehiclePK) {
+        for (Vehicle v : m_vehicleList) {
+            if (v.getPK() == vehiclePK) {
+                return v;
+            }
+        }
+        return null;
+    }
+
+    public boolean canCopyProject() {
+        return m_state.canCopyProject();
+    }
+
 
 }
