@@ -157,7 +157,7 @@ public class ResultStaticAnalysis implements Result {
     }
     
     @Override
-    public String getGlobalResultsHTMLCode(){
+    public String getResultsHTMLCode(){
         String results=
             "<b>-----Static Analysis-----</b>" +
             "<p>Best Path Algorithm: "+ m_bestPathAlgorithm+"</p>"+

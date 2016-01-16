@@ -53,7 +53,7 @@ public class ExportHTML {
         for (Result result : resultsList) {
             resultString
                     += "<p>"
-                    + result.getGlobalResultsHTMLCode()
+                    + result.getResultsHTMLCode()
                     + "</p>";
         }
         resultString
@@ -71,40 +71,8 @@ public class ExportHTML {
     }
 
     public boolean exportDetailedResults(ResultSimulation result) {
-
-        boolean flag = createHTMLFile();
-        String resultString;
-
-        if (flag == false) {
-            return false;
-        }
-
-        resultString
-                = "<html>"
-                + "<header>"
-                + "<p>"
-                + result.getGlobalResultsHTMLCode()
-                + "</p>"
-                + "</header>"
-                +"<body>";
-        
-        resultString
-                += result.getDetailedResults();
-
-        resultString
-                +=
-                "</body>"+
-                "</html>";
-
-        try {
-            m_file.append(resultString);
-
-            m_file.close();
-        } catch (IOException ex) {
-            ex.getMessage();
-            flag = false;
-        }
-        return flag;
+        return true;
     }
+        
     
 }
