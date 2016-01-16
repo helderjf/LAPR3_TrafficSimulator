@@ -76,5 +76,12 @@ public class ProjectStateSimulationReadySaved extends ProjectStateImpl {
     public boolean canCopySimulation() {
         return true;
     }    
+    
+    @Override
+    public boolean canDeleteRun() {
+        return true;
+    }    
+    
+    
 
 }

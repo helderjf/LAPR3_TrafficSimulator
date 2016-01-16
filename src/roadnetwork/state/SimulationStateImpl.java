@@ -44,5 +44,10 @@ public class SimulationStateImpl implements SimulationState{
     public boolean canCopySimulation() {
         return false;
     }
+
+    @Override
+    public boolean canDeleteRun() {
+        return false;
+    }
     
 }
