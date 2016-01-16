@@ -20,10 +20,13 @@ import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.Section;
 import roadnetwork.domain.SectionTypology;
 import roadnetwork.domain.Segment;
+import roadnetwork.domain.Simulation;
 import roadnetwork.domain.Throttle;
+import roadnetwork.domain.TrafficPattern;
 import roadnetwork.domain.Vehicle;
 import roadnetwork.domain.Wind;
-import roadnetwork.factory.ProjectStateFactory;
+import roadnetwork.factory.StateFactory;
+import roadnetwork.state.SimulationState;
 
 /**
  *
@@ -35,11 +38,11 @@ public class ProjectReader {
     private ArrayList<Integer> m_projectIDList;
     private ArrayList<String> m_projectNameList;
     private Project m_project;
-    private ProjectStateFactory m_stateFactory;
+    private StateFactory m_stateFactory;
 
-    public ProjectReader(DataAccessObject dao, ProjectStateFactory psf) {
+    public ProjectReader(DataAccessObject dao, StateFactory sf) {
         m_dao = dao;
-        m_stateFactory = psf;
+        m_stateFactory = sf;
     }
 
     public Project newProject() {
@@ -85,7 +88,7 @@ public class ProjectReader {
             m_project.setName(properties.getString(2));
             m_project.setDescription(properties.getString(3));
             String s = properties.getString(4);
-            m_project.setState(m_stateFactory.getProjectState(s, m_project));
+            m_project.setState(m_stateFactory.getSimulationState(s, m_project));
             return true;
         } catch (SQLException ex) {
             System.out.println("Project properties not retrieved");
@@ -238,7 +241,7 @@ public class ProjectReader {
             while (combustionVehicles.next()) {
 
                 ArrayList<Throttle> throttleList = getThrottleList(combustionVehicles.getInt("ID_VEHICLE"));
-                HashMap<Integer,Double> gearList = getGearList(combustionVehicles.getInt("ID_VEHICLE"));
+                HashMap<Integer, Double> gearList = getGearList(combustionVehicles.getInt("ID_VEHICLE"));
                 HashMap<SectionTypology, Double> velocityLimits = getVelocityLimits(combustionVehicles.getInt("ID_VEHICLE"));
                 if (throttleList == null
                         || gearList == null
@@ -287,8 +290,8 @@ public class ProjectReader {
             ArrayList<Vehicle> hybridVehiclesList = new ArrayList();
             while (hybridVehicles.next()) {
 
-                  ArrayList<Throttle> throttleList = getThrottleList(hybridVehicles.getInt("ID_VEHICLE"));
-                  HashMap<Integer,Double> gearList = getGearList(hybridVehicles.getInt("ID_VEHICLE"));
+                ArrayList<Throttle> throttleList = getThrottleList(hybridVehicles.getInt("ID_VEHICLE"));
+                HashMap<Integer, Double> gearList = getGearList(hybridVehicles.getInt("ID_VEHICLE"));
                 HashMap<SectionTypology, Double> velocityLimits = getVelocityLimits(hybridVehicles.getInt("ID_VEHICLE"));
 
                 hybridVehiclesList.add(new HybridVehicle(
@@ -334,8 +337,8 @@ public class ProjectReader {
             ArrayList<Vehicle> electricVehiclesList = new ArrayList();
             while (electricVehicles.next()) {
 
-                  ArrayList<Throttle> throttleList = getThrottleList(electricVehicles.getInt("ID_VEHICLE"));
-                  HashMap<Integer,Double> gearList = getGearList(electricVehicles.getInt("ID_VEHICLE"));
+                ArrayList<Throttle> throttleList = getThrottleList(electricVehicles.getInt("ID_VEHICLE"));
+                HashMap<Integer, Double> gearList = getGearList(electricVehicles.getInt("ID_VEHICLE"));
                 HashMap<SectionTypology, Double> velocityLimits = getVelocityLimits(electricVehicles.getInt("ID_VEHICLE"));
 
                 electricVehiclesList.add(new ElectricVehicle(
@@ -423,16 +426,16 @@ public class ProjectReader {
         }
     }
 
-    private HashMap<Integer,Double> getGearList(int vehiclePK) {
+    private HashMap<Integer, Double> getGearList(int vehiclePK) {
         try {
             ResultSet gears = m_dao.getVehicleGears(vehiclePK);
             if (gears == null) {
                 return null;
             }
 
-            HashMap<Integer,Double> gearList = new HashMap();
+            HashMap<Integer, Double> gearList = new HashMap();
             while (gears.next()) {
-                gearList.put(gears.getInt("ID_GEAR"),gears.getDouble("RATIO"));
+                gearList.put(gears.getInt("ID_GEAR"), gears.getDouble("RATIO"));
             }
             return gearList;
 
@@ -477,4 +480,60 @@ public class ProjectReader {
         }
         return true;
     }
+
+    public boolean projectHasSimulations(int projectPK) {
+        if (m_dao.projectHasSimulations(projectPK) == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public HashMap<String, Integer> getOrderedSimulationList(int projpk) {
+        return m_dao.getOrderedSimulationList(projpk);
+    }
+
+    public Simulation getSimulation(Project project, int simPK) {
+        try {
+            ResultSet simResult = m_dao.getSimulation(simPK);
+            ResultSet trafPatResult = m_dao.getTrafficPattern(simPK);
+
+            simResult.next();
+            String simName = simResult.getString("NAME");
+            String simDesc = simResult.getString("DESCRIPTION");
+            String state = simResult.getString("STATE");
+
+            ArrayList<TrafficPattern> trafficPaternList = new ArrayList();
+            while (trafPatResult.next()) {
+                int tpPK = trafPatResult.getInt("ID_TRAFFIC_PATTERN");
+                int bnodePK = trafPatResult.getInt("BEGIN_NODE_ID");
+                int enodePK = trafPatResult.getInt("END_NODE_ID");
+                int vehiclePK = trafPatResult.getInt("ID_VEHICLE");
+                double arrivalRate = trafPatResult.getDouble("ARRIVAL_RATE");
+
+                Junction beginNode = project.getRoadNetwork().getNodeByPK(bnodePK);
+                Junction endNode = project.getRoadNetwork().getNodeByPK(bnodePK);
+                Vehicle vehicle = project.getVehicleByPK(vehiclePK);
+                trafficPaternList.add(new TrafficPattern(tpPK, beginNode, endNode, vehicle, arrivalRate));
+
+            }
+
+            Simulation sim = new Simulation();
+            sim.setPK(simPK);
+            sim.setName(simName);
+            sim.setDescription(simDesc);
+            sim.setTrafficPatternList(trafficPaternList);
+            SimulationState simstate = m_stateFactory.getSimulationState(state, sim);
+            sim.setState(simstate);
+
+            return sim;
+
+        } catch (SQLException ex) {
+            System.out.println("Simulation not retrieved");
+            System.out.println(ex);
+
+            return null;
+        }
+
+    }
+
 }

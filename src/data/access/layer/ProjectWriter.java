@@ -297,7 +297,7 @@ public class ProjectWriter {
     }
 
     private boolean saveNewVehicleThrottle(Vehicle vehicle) {
-        ArrayList<Throttle> throttleList = ((CombustionVehicle) vehicle).getThrottleList();//TO DO alterar para a interface cmobustion, quando soublermos se o hybrid tambem vai ter gears
+        ArrayList<Throttle> throttleList = vehicle.getThrottleList();//TO DO alterar para a interface cmobustion, quando soublermos se o hybrid tambem vai ter gears
         for (Throttle throttle : throttleList) {
             ArrayList<Regime> regimeList = throttle.getRegimeList();
             for (Regime regime : regimeList) {

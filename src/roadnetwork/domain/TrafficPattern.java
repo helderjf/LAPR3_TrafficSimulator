@@ -17,6 +17,20 @@ public class TrafficPattern implements TimeUnit {
     private Vehicle vehicle;
     private double arrivalRate; //in vehicles/seconds
 
+    
+    public TrafficPattern(){
+        
+    }
+    
+    public TrafficPattern(int m_pk, Junction beginNode, Junction endNode, Vehicle vehicle, double arrivalRate) {
+        this.m_pk = m_pk;
+        this.beginNode = beginNode;
+        this.endNode = endNode;
+        this.vehicle = vehicle;
+        this.arrivalRate = arrivalRate;
+    }
+
+    
     public Junction getBeginNode() {
         return beginNode;
     }

@@ -121,5 +121,10 @@ public class ProjectStateImpl implements ProjectState {
         return false;
     }
 
+    @Override
+    public boolean canOpenSimulation() {
+        return false;
+    }
+
 
 }

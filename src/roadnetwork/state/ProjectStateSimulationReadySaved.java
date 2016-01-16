@@ -63,7 +63,10 @@ public class ProjectStateSimulationReadySaved extends ProjectStateImpl {
         return true;
     }    
     
-    
+    @Override
+    public boolean canOpenSimulation() {
+        return true;
+    }    
     
 
 }

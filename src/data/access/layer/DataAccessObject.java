@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import oracle.jdbc.OracleCallableStatement;
@@ -1217,6 +1218,111 @@ public class DataAccessObject {
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;//returns null so the caller knows the connection failed
+        }
+    }
+
+    int projectHasSimulations(int projectPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call CHECK_PROJECT_HAS_SIMULATIONS(?,?)}");
+            statement.setInt(1, projectPK);
+            statement.registerOutParameter(2, Types.INTEGER);
+
+            //executar query
+            statement.execute();
+
+            return statement.getInt(2);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;//returns null so the caller knows the connection failed
+        }
+    }
+
+    HashMap<String, Integer> getOrderedSimulationList(int projpk) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_ORDERED_SIMULATION_LIST(?,?)}");
+            statement.setInt(1, projpk);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            m_output = (ResultSet) statement.getObject(2);
+
+            HashMap<String, Integer> simulationMap = new HashMap();
+            while (m_output.next()) {
+                simulationMap.put(m_output.getString(2), m_output.getInt(1));
+            }
+
+            return simulationMap;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns -1 so the caller knows the connection failed
+        }
+    }
+
+    ResultSet getSimulation(int simPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_SIMULATION(?,?)}");
+            statement.setInt(1, simPK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet simulation = (ResultSet) statement.getObject(2);
+
+            return simulation;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    ResultSet getTrafficPattern(int simPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_TRAFFIC_PATTERN_LIST(?,?)}");
+            statement.setInt(1, simPK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet trafficPatternList = (ResultSet) statement.getObject(2);
+
+            return trafficPatternList;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
         }
     }
 
