@@ -5,23 +5,29 @@
  */
 package roadnetwork.gui;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import roadnetwork.domain.ResultSimulation;
+import roadnetwork.domain.TrafficPattern;
 
 /**
  *
- * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
+ * @author josemiranda
  */
-public class RunSimulationShowResults extends javax.swing.JPanel {
-
-    private RunSimulationFrame m_ancestor;
-    private ResultSimulation m_runResults;
-
-    RunSimulationShowResults(RunSimulationFrame ancestor, ResultSimulation results) {
-        m_ancestor = ancestor;
-        m_runResults = results;
+public class ExportRunResultsChooseTPatternPane extends javax.swing.JPanel {
+    
+    ExportRunResultsDialog m_ancestor;
+    ModelList<TrafficPattern> m_modelList;
+    /**
+     * Creates new form ExportRunResultsChooseTPatternPane
+     * @param ancestor
+     * @param tpList
+     */
+    public ExportRunResultsChooseTPatternPane(ExportRunResultsDialog ancestor, ArrayList<TrafficPattern> tpList) {
+        m_ancestor=ancestor;
+        m_modelList= new ModelList<>();
+        m_modelList.addItems(tpList);
+        
         initComponents();
-        setVisible(true);
     }
 
     /**
@@ -34,34 +40,29 @@ public class RunSimulationShowResults extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
+        jList1 = new javax.swing.JList();
         jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText(m_runResults.printResults());
-        jScrollPane1.setViewportView(jTextArea1);
+        jList1.setModel(m_modelList);
+        jScrollPane1.setViewportView(jList1);
 
-        jLabel1.setText("Do you wish to save the results on the data base server?");
-
-        jButton1.setText("No");
+        jButton1.setText("Export");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Run's results sumary:");
-
-        jButton2.setText("Yes");
+        jButton2.setText("Cancel");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("Traffic Patterns");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -69,45 +70,44 @@ public class RunSimulationShowResults extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(81, 81, 81)
+                        .addComponent(jButton1)
+                        .addGap(40, 40, 40)
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(0, 105, Short.MAX_VALUE)))))
-                .addContainerGap())
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addContainerGap(50, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        m_ancestor.setVisible(false);
+        if (jList1.getSelectedValue()!=null) {
+            TrafficPattern tp = (TrafficPattern)jList1.getSelectedValue();
+            m_ancestor.exportResultsSpecieficTP("Simulation Detailed Results", tp);
+        } else{
+            JOptionPane.showMessageDialog(this, "You must choose one option.", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       m_ancestor.saveResults();
+        m_ancestor.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
@@ -115,8 +115,7 @@ public class RunSimulationShowResults extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

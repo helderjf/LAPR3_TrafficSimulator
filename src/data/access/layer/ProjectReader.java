@@ -511,7 +511,7 @@ public class ProjectReader {
                 double arrivalRate = trafPatResult.getDouble("ARRIVAL_RATE");
 
                 Junction beginNode = project.getRoadNetwork().getNodeByPK(bnodePK);
-                Junction endNode = project.getRoadNetwork().getNodeByPK(bnodePK);
+                Junction endNode = project.getRoadNetwork().getNodeByPK(enodePK);
                 Vehicle vehicle = project.getVehicleByPK(vehiclePK);
                 trafficPaternList.add(new TrafficPattern(tpPK, beginNode, endNode, vehicle, arrivalRate));
 
@@ -535,5 +535,18 @@ public class ProjectReader {
         }
 
     }
+
+    public boolean simulationHasRuns(int simpk) {
+        if (m_dao.simulationHasruns(simpk) == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public HashMap<String, Integer> getSimulationRunsOrderedList(int simpk) {
+        return m_dao.getOrderedRunsList(simpk);
+    }
+
+
 
 }

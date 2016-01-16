@@ -28,7 +28,7 @@ import roadnetwork.state.SimulationStateCreated;
 public class StateFactory {
     
     
-    public ProjectState getProjectState(String state,Project project){
+    public static ProjectState getProjectState(String state,Project project){
         
         switch (state){
             case "ProjectStateCreated": return new ProjectStateCreated(project);
@@ -48,7 +48,7 @@ public class StateFactory {
     }
     
     
-        public SimulationState getSimulationState(String state,Simulation simulation){
+        public static SimulationState getSimulationState(String state,Simulation simulation){
         
         switch (state){
             case "SimulationStateActive": return new SimulationStateActive(simulation);

@@ -65,5 +65,11 @@ public class ImportedResultSingleTrafficPattern implements ImportedResult{
 
         return results;    
     }
+
+    @Override
+    public String toString() {
+        return "Specific Traffic Pattern Results";
+    }
+    
     
 }

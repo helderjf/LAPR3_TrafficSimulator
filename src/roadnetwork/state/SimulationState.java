@@ -18,5 +18,7 @@ public interface SimulationState {
     public boolean canEditProperties();
 
     public boolean propertiesChanged();
+
+    public boolean canCopySimulation();
     
 }

@@ -21,16 +21,12 @@ public class Simulation {
     private String m_description;
     private SimulationState m_state;
     private ArrayList<TrafficPattern> m_trafficPatternList;
-    
+
     private SimulationRun m_currentRun;
 
-    
-    
     public Simulation() {
         m_state = new SimulationStateCreated(this);
     }
-    
-    
 
     Simulation(String name, String description) {
         m_name = name;
@@ -46,17 +42,16 @@ public class Simulation {
         this.m_trafficPatternList = m_trafficPatternList;
         this.m_currentRun = m_currentRun;
     }
-    
-    public Simulation(Simulation otherSimulation, StateFactory stateFactory){
-        m_name=otherSimulation.m_name;
-        m_description=otherSimulation.m_description;
-        m_trafficPatternList=new ArrayList();
-        for(TrafficPattern tp : otherSimulation.m_trafficPatternList){
+
+    public Simulation(Simulation otherSimulation, StateFactory stateFactory) {
+        m_name = otherSimulation.m_name;
+        m_description = otherSimulation.m_description;
+        m_trafficPatternList = new ArrayList();
+        for (TrafficPattern tp : otherSimulation.m_trafficPatternList) {
             m_trafficPatternList.add(TrafficPattern.trafficPatternPseudoCopy(tp));
         }
+        m_state = StateFactory.getSimulationState(otherSimulation.getState().getClass().getSimpleName(), this);
     }
-    
-    
 
     public String getName() {
         return m_name;
@@ -71,7 +66,7 @@ public class Simulation {
     }
 
     public boolean xmlImported() {
-        
+
         return m_state.xmlImported();
     }
 
@@ -82,7 +77,7 @@ public class Simulation {
     public void setName(String m_name) {
         this.m_name = m_name;
     }
-    
+
     public void setPK(int m_pk) {
         this.m_pk = m_pk;
     }
@@ -108,8 +103,10 @@ public class Simulation {
     }
 
     public SimulationRun newSimulationRun(RoadNetwork roadNetwork, String runName, double runDuration, double runTimeStep, BestPathAlgorithm bpm) {
-        m_currentRun=null;
-        SimulationRun m_currentRun = new SimulationRun(runName, runDuration, runTimeStep, roadNetwork, m_trafficPatternList, bpm);
+        m_currentRun = null;
+        SimulationRun run = new SimulationRun(runName, runDuration, runTimeStep, roadNetwork, m_trafficPatternList, bpm);
+        m_currentRun = run;
+
         return m_currentRun;
     }
 
@@ -118,7 +115,7 @@ public class Simulation {
     }
 
     public boolean hasPK() {
-        return m_pk!=0;
+        return m_pk != 0;
     }
 
     public boolean canEditProperties() {
@@ -129,8 +126,15 @@ public class Simulation {
         return m_state.propertiesChanged();
     }
 
+//    public void setCurrentRun(SimulationRun run){
+//        m_currentRun=run;
+//    }
     public SimulationRun getCurrentRun() {
         return m_currentRun;
+    }
+
+    public boolean canCopySimulation() {
+        return m_state.canCopySimulation();
     }
 
 }

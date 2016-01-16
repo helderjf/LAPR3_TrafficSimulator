@@ -65,6 +65,11 @@ public class RunSimulationInsertDataPane extends javax.swing.JPanel {
         jLabel4.setText("Best Path Method");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(m_bpmList.toArray()));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("h");
 
@@ -218,6 +223,10 @@ public class RunSimulationInsertDataPane extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         m_ancestor.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

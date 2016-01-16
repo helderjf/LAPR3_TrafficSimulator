@@ -123,6 +123,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void editSimulationProperties() {
         new EditSimulationPropertiesDialog(this, true);
     }
+    
+        private void copySimulation() {
+        new CopySimulationDialog(this, true);
+    }
 
     public Manager getManager() {
         return m_manager;
@@ -163,7 +167,6 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
-        jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -323,10 +326,12 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenu8.setText("Simulation Run(s)");
 
-        jMenuItem14.setText("View Runs");
-        jMenu8.add(jMenuItem14);
-
         jMenuItem16.setText("Export Run Results");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jMenuItem16);
 
         jMenuItem15.setText("Delete Runs");
@@ -335,6 +340,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu7.add(jMenu8);
 
         jMenuItem10.setText("Copy Simulation");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem10);
 
         jMenuItem11.setText("Properties");
@@ -357,7 +367,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -560,6 +570,14 @@ public class MainFrame extends javax.swing.JFrame {
         openSimualtion();
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        copySimulation();
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -579,7 +597,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
@@ -594,5 +611,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+
 
 }

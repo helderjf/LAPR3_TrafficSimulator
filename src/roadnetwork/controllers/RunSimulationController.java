@@ -6,6 +6,7 @@
 package roadnetwork.controllers;
 
 import IO.ExportHTML;
+import data.access.layer.ProjectReader;
 import data.access.layer.ProjectWriter;
 import java.util.ArrayList;
 import roadnetwork.domain.BestPathAlgorithm;
@@ -29,6 +30,7 @@ public class RunSimulationController {
     private RoadNetwork m_roadNetwork;
     private SimulationRun m_simulationRun;
     private ResultSimulation m_runResults;
+    private ProjectReader m_projectReader;
     private ProjectWriter m_projectWriter;
 
     public RunSimulationController(Manager manager) {
@@ -68,12 +70,18 @@ public class RunSimulationController {
 
         return m_runResults;
     }
-    
-    public boolean saveRun(){
+
+    public int saveRun() {
+
+        if (!m_manager.getProjectReader().simulationExists(m_project.getPK(), m_simulation.getName())) {
+            return -2;
+        }
+
         m_projectWriter = m_manager.getProjectWriter();
-        return m_projectWriter.saveSimulationRun();
+        if (!m_projectWriter.saveSimulationRun(m_simulation)) {
+            return -3;
+        }
+        return 1;
     }
-    
-    
-    
+
 }
