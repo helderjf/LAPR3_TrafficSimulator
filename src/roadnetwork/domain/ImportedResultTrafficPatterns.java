@@ -30,26 +30,26 @@ public class ImportedResultTrafficPatterns implements ImportedResult{
                     + "<th>Arrival Rate (s)</th>"
                     + "<th>Average Consumption</th>"
                 + "</tr>";
-        for (int i = 0; i < m_nodeOrig.size(); i++) {
+        for (int i = 0; i < m_trafficPatternList.size(); i++) {
             results
                     += "<td>"
-                    + m_nodeOrig.get(i)
+                    + m_trafficPatternList.get(i).getBeginNode().getJunctionId()
                     + "</td>"
                     + "<td>"
-                    + m_nodeDest.get(i)
+                    + m_trafficPatternList.get(i).getEndNode().getJunctionId()
                     + "</td>"
                     + "<td>"
-                    + m_vehicle.get(i)
+                    + m_trafficPatternList.get(i).getVehicle().getName()
                     + "</td>"
                     + "<td>"
-                    + m_arrivalRate.get(i)
+                    + m_trafficPatternList.get(i).getArrivalRate()
                     + "</td>"
                     + "<td>"
-                    + m_avgConsumpion.get(i)
+                    + m_averageConsumptionList.get(i)
                     + "</td>";
         }
         results += "</table>";
-
+        
         return results;
     }
 

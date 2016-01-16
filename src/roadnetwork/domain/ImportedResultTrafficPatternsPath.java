@@ -40,34 +40,34 @@ public class ImportedResultTrafficPatternsPath implements ImportedResult{
                     + "<th>Direction</th>"
                     + "<th>Average Consumption</th>"
                 + "</tr>";
-        for (int i = 0; i < m_nodeOrig.size(); i++) {
+        for (int i = 0; i < m_trafficPatternList.size(); i++) {
             results
                     += "<td>"
-                    + m_nodeOrig.get(i)
+                    + m_trafficPatternList.get(i).getBeginNode().getJunctionId()
                     + "</td>"
                     + "<td>"
-                    + m_nodeDest.get(i)
+                    + m_trafficPatternList.get(i).getEndNode().getJunctionId()
                     + "</td>"
                     + "<td>"
-                    + m_vehicle.get(i)
+                    + m_trafficPatternList.get(i).getVehicle().getName()
                     + "</td>"
                     + "<td>"
-                    + m_arrivalRate.get(i)
+                    + m_trafficPatternList.get(i).getArrivalRate()
                     + "</td>"
                     + "<td>"
-                    + m_segRoad.get(i)
+                    + m_sectionList.get(i).getRoadName()
                     + "</td>"
                     + "<td>"
-                    + m_segInNode.get(i)
+                    + m_sectionList.get(i).getBeginningNode().getJunctionId()
                     + "</td>"
                     + "<td>"
-                    + m_segOutNode.get(i)
+                    + m_sectionList.get(i).getEndingNode().getJunctionId()
                     + "</td>"
                     + "<td>"
-                    + m_segIndex.get(i)
+                    + m_segmentList.get(i).getIndex()
                     + "</td>"
                     + "<td>"
-                    + m_segDirection.get(i)
+                    + m_directionList.get(i)
                     + "</td>"
                     + "<td>"
                     + m_segAVGConsumption.get(i)
