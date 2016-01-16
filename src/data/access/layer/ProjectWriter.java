@@ -574,5 +574,14 @@ public class ProjectWriter {
         }
         return true;
     }
+    
+    
+    
+    public boolean projectCopy(Project project, String name, String description){
+        
+        //TODO
+        
+        return true;
+    }
 
 }

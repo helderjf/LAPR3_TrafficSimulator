@@ -23,13 +23,6 @@ public class ImportVehiclesController {
         m_manager = manager;
     }
 
-    public boolean canImportVehicles() {
-        if (m_manager.getCurrentProject() == null) {
-            return false;
-        }
-        return m_manager.getCurrentProject().canImportVehicles();
-    }
-
     public boolean importVehicles(File file) {
         ImportXML importXML = new ImportXML(file);
 

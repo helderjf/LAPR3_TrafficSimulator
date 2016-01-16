@@ -779,7 +779,7 @@ public class VehicleTest {
     @Test
     public void testSetPK() {
         System.out.println("setPK");
-        int pk = 0;
+        int pk = 1;
         Vehicle instance = vehicle3;
         instance.setPK(pk);
         int expResult = 1;

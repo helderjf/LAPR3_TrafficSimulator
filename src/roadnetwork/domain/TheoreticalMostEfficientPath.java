@@ -22,8 +22,6 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
     Junction m_destinyNode;
     Vehicle m_vehicle;
     ArrayList<PathParcel> m_bestPath;
-    ArrayList<Junction> m_bestPathNodes;
-    double m_bestPathLength;
     ArrayList<SimPathParcel> m_simPathParcelList;
     
     private final double gravity = 9.81; // m^2
@@ -32,22 +30,21 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
 
     //@Override
     @Override
-    public ResultStaticAnalysis getBestPathResults(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
+    public ArrayList<PathParcel> getBestPathResults(RoadNetwork roadNetwork, Junction originNode, Junction destinyNode, Vehicle vehicle) {
         m_graph = new Graph<>(true);
         m_roadNetwork=roadNetwork;
         m_originNode=originNode;
         m_destinyNode=destinyNode;
         m_vehicle=vehicle;
         m_bestPath = new ArrayList<>();
-        m_bestPathNodes=new ArrayList<>();
         
         staticGraphConstruction(m_roadNetwork, m_vehicle);
         
-        m_bestPathLength = GraphAlgorithms.getShortestPathLength(m_graph, m_originNode, m_destinyNode, m_bestPath, m_bestPathNodes);
+        GraphAlgorithms.calculateShortestPath(m_graph, m_originNode, m_destinyNode, m_bestPath);
 
         calculateStaticData();
         
-        return constructResults();
+        return m_bestPath;
     }
 
     //---Graph Construction---
@@ -229,16 +226,6 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
     
     private double calculateSectionTollCosts(Section section){
         return section.getToll();
-    }
-
-    //---Static Analysis Results---
-    private ResultStaticAnalysis constructResults() {
-        
-        ResultStaticAnalysis simResult = new ResultStaticAnalysis(m_originNode, m_destinyNode);
-        simResult.setPath(m_bestPath);
-        simResult.setLength(m_bestPathLength);
-        simResult.setVehicle(m_vehicle);
-        return simResult;
     }
 
     @Override

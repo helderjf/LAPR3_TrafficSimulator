@@ -45,6 +45,10 @@ public class ProjectStateSimulationReady extends ProjectStateImpl {
         return true;
     }
     
+    @Override
+    public boolean vehiclesAssigned(){
+        return true;
+    }
     
     @Override
     public boolean canOpenSimulation() {

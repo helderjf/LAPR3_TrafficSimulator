@@ -27,12 +27,6 @@ public class ProjectStateImpl implements ProjectState {
     public boolean canImportRoadNetwork() {
         return false;
     }
-
-    @Override
-    public boolean canImportVehicles() {
-        return false;
-    }
-
     @Override
     public boolean canSaveProject() {
         return false;

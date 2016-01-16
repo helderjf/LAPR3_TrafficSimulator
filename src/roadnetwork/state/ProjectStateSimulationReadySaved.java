@@ -68,5 +68,8 @@ public class ProjectStateSimulationReadySaved extends ProjectStateImpl {
         return true;
     }    
     
+    public boolean vehiclesAssigned(){
+        return true;
+    }
 
 }

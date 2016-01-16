@@ -21,11 +21,6 @@ public class ProjectStateEmpty extends ProjectStateImpl {
     public boolean canImportRoadNetwork() {
         return true;
     }
-    
-    @Override
-    public boolean canImportVehicles(){
-        return true;
-    }
 
     @Override
     public boolean projectSaved() {

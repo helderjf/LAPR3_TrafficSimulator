@@ -44,5 +44,10 @@ public class ProjectStateVehiclesAssignedSaved extends ProjectStateImpl {
         m_project.setState(ns);
         return true;
     }
+    
+    @Override
+    public boolean vehiclesAssigned(){
+        return true;
+    }
 
 }

@@ -530,7 +530,7 @@ public abstract class Vehicle {
      * @return result
      */
     @Override
-    public boolean equals(Object obj) {//to do completar para os novos atributos
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
@@ -538,43 +538,7 @@ public abstract class Vehicle {
             return false;
         }
         final Vehicle other = (Vehicle) obj;
-        if (!Objects.equals(this.m_pk, other.m_pk)) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.mass) != Double.doubleToLongBits(other.mass)) {
-            return false;
-        }
-        if (!Objects.equals(this.type, other.type)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.load) != Double.doubleToLongBits(other.load)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.dragCoefficient) != Double.doubleToLongBits(other.dragCoefficient)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.rrc) != Double.doubleToLongBits(other.rrc)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.wheelSize) != Double.doubleToLongBits(other.wheelSize)) {
-            return false;
-        }
-        if (!Objects.equals(this.velocityLimit, other.velocityLimit)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.minRPM) != Double.doubleToLongBits(other.minRPM)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.maxRPM) != Double.doubleToLongBits(other.maxRPM)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.finalDriveRatio) != Double.doubleToLongBits(other.finalDriveRatio)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.name, other.name);
     }
 
 

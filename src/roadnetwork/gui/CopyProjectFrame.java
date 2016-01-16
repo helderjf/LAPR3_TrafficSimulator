@@ -5,6 +5,9 @@
  */
 package roadnetwork.gui;
 
+import javax.swing.JOptionPane;
+import roadnetwork.controllers.CopyProjectController;
+
 /**
  *
  * @author josemiranda
@@ -12,15 +15,22 @@ package roadnetwork.gui;
 public class CopyProjectFrame extends javax.swing.JFrame {
 
     MainFrame m_mainFrame;
-    
+    CopyProjectController m_copyProjectController;
+
     /**
      * Creates new form JanelaCopyProject
      */
     public CopyProjectFrame(MainFrame frame) {
-        m_mainFrame=frame;
-        initComponents();
-        setLocationRelativeTo(null);
-        setVisible(true);
+        m_mainFrame = frame;
+        if (frame.getManager().getCurrentProject() != null) {
+            m_copyProjectController = new CopyProjectController();
+            initComponents();
+            setContentPane(new CopyProjectPane(this));
+            setLocationRelativeTo(null);
+            setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Select an active project!", "Copy Project", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -49,8 +59,11 @@ public class CopyProjectFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    public MainFrame getMainFrame() {
+        return m_mainFrame;
+    }
 }

@@ -16,11 +16,6 @@ public class ProjectStateRoadNetworkAssignedSaved extends ProjectStateImpl {
     public ProjectStateRoadNetworkAssignedSaved(Project p) {
         super(p);
     }
-    
-    @Override
-    public boolean canImportVehicles(){
-        return true;
-    }
 
     @Override
     public boolean isSaved() {
