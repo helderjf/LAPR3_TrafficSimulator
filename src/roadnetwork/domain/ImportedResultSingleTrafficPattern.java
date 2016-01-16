@@ -23,7 +23,24 @@ public class ImportedResultSingleTrafficPattern implements ImportedResult{
     @Override
     public String getGlobalResultsHTMLCode() {
         String results
-                = "<table border = 1>"
+                ="<p><b> Traffic Pattern:<b></p>"
+                + "<p> "
+                + "Node Origin: "
+                    +m_trafficPattern.getBeginNode().getJunctionId()
+                +"</p>"
+                + "<p> "
+                + "Node Destiny: "
+                    +m_trafficPattern.getEndNode().getJunctionId()
+                +"</p>"
+                + "<p> "
+                + "Vehicle: "
+                    +m_trafficPattern.getVehicle().getName()
+                +"</p>"
+                + "<p> "
+                + "Arrival Rate: "
+                    +m_trafficPattern.getArrivalRate()
+                +"</p>"
+                + "<table border = 1>"
                 + "<tr>"
                     + "<th colspan=7> Segment</th>"
                 + "</tr>"
@@ -36,22 +53,22 @@ public class ImportedResultSingleTrafficPattern implements ImportedResult{
                     + "<th>Average Consumption</th>"
                     + "<th>Time spent (s)</th>"
                 + "</tr>";
-        for (int i = 0; i < m_road.size(); i++) {
+        for (int i = 0; i < m_sectionList.size(); i++) {
             results
                     += "<td>"
-                    + m_road.get(i)
+                    + m_sectionList.get(i).getRoadName()
                     + "</td>"
                     + "<td>"
-                    + m_inNode.get(i)
+                    + m_sectionList.get(i).getBeginningNode()
                     + "</td>"
                     + "<td>"
-                    + m_outNode.get(i)
+                    + m_sectionList.get(i).getEndingNode()
                     + "</td>"
                     + "<td>"
-                    + m_segIndex.get(i)
+                    + m_segmentList.get(i).getIndex()
                     + "</td>"
                     + "<td>"
-                    + m_direction.get(i)
+                    + m_directionList.get(i)
                     + "</td>"
                     + "<td>"
                     + m_avgConsumption.get(i)

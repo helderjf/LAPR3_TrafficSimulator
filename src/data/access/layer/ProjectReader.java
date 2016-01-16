@@ -552,14 +552,12 @@ public class ProjectReader {
         return m_dao.getOrderedRunsList(simpk);
     }
 
-    public ImportedResult getRunResultsByTrafficPattern(Project project, int runPK) {
+    public ImportedResult getRunResultsByTrafficPattern(Project project, int runPK, ImportedResultTrafficPatterns results) {
         try {
             ResultSet output = m_dao.getRunResultsByTrafficPattern(runPK);
             if (output == null) {
                 return null;
             }
-
-            ImportedResult results = new ImportedResultTrafficPatterns();
 
             ArrayList<TrafficPattern> trafficPatternsList = new ArrayList();
             ArrayList<Double> avgConsumptionsList = new ArrayList();
@@ -581,14 +579,13 @@ public class ProjectReader {
         }
     }
 
-    public ImportedResult getRunResultsByTrafficPatternAndSegment(Project project, int runPK) {
+    public ImportedResult getRunResultsByTrafficPatternAndSegment(Project project, int runPK, ImportedResultTrafficPatternsPath results) {
         try {
             ResultSet output = m_dao.getRunResultsByTrafficPatternAndSegments(runPK);
             if (output == null) {
                 return null;
             }
 
-            ImportedResult results = new ImportedResultTrafficPatternsPath();
 
             ArrayList<TrafficPattern> trafficPatternsList = new ArrayList();
             ArrayList<Section> sectionList = new ArrayList();
@@ -625,14 +622,13 @@ public class ProjectReader {
         }
     }
 
-    public ImportedResult getRunResultsByTrafficPatternAndSegment(Project project, int runPK, int trafficPatternPK) {
+    public ImportedResult getRunResultsByTrafficPatternAndSegment(Project project, int runPK, int trafficPatternPK, ImportedResultSingleTrafficPattern results) {
         try {
             ResultSet output = m_dao.getRunResultsForATrafficPattern(runPK, trafficPatternPK);
             if (output == null) {
                 return null;
             }
 
-            ImportedResult results = new ImportedResultSingleTrafficPattern();
 
             TrafficPattern trafficPattern = project.getCurrentSimulation().getTrafficPatternByPK(trafficPatternPK);
             ArrayList<Section> sectionList = new ArrayList();

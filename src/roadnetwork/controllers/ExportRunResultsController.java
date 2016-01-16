@@ -10,6 +10,7 @@ import data.access.layer.ProjectReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import roadnetwork.domain.ImportedResult;
+import roadnetwork.domain.ImportedResultSingleTrafficPattern;
 import roadnetwork.domain.ImportedResultTrafficPatterns;
 import roadnetwork.domain.ImportedResultTrafficPatternsPath;
 import roadnetwork.domain.Manager;
@@ -75,9 +76,12 @@ public class ExportRunResultsController {
     public boolean exportResults(String fileName, String runName, ImportedResult impResult) {
         //ToDo - construir impResult de acordo com a run recebida
         if (impResult instanceof ImportedResultTrafficPatterns) {
-            m_projectReader.getRunResultsByTrafficPattern(m_project,m_runsMap.get(runName));
+            ImportedResultTrafficPatterns impResultTP = (ImportedResultTrafficPatterns) impResult;
+            m_projectReader.getRunResultsByTrafficPattern(m_project,m_runsMap.get(runName), impResultTP);
+            
         } else if (impResult instanceof ImportedResultTrafficPatternsPath) {
-            m_projectReader.getRunResultsByTrafficPatternAndSegment(m_project,m_runsMap.get(runName));
+            ImportedResultTrafficPatternsPath impResultTPPath=(ImportedResultTrafficPatternsPath)impResult;
+            m_projectReader.getRunResultsByTrafficPatternAndSegment(m_project,m_runsMap.get(runName), impResultTPPath);
         } else {
             return false;
         }
@@ -90,8 +94,8 @@ public class ExportRunResultsController {
     public boolean exportResults(String fileName, String runName, ImportedResult impResult, TrafficPattern tpattern) {
         //ToDo - construir impResult de acordo com a run e tpattern recebidos
 
-        
-         m_projectReader.getRunResultsByTrafficPatternAndSegment(m_project,m_runsMap.get(runName),tpattern.getPK());
+        ImportedResultSingleTrafficPattern impResultsSingleTP = (ImportedResultSingleTrafficPattern)impResult;
+         m_projectReader.getRunResultsByTrafficPatternAndSegment(m_project,m_runsMap.get(runName),tpattern.getPK(), impResultsSingleTP);
         
         ExportHTML html = m_manager.newHTML(fileName);
         return html.exportDetailedResults(impResult);
