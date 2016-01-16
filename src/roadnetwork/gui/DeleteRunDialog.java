@@ -87,11 +87,13 @@ public class DeleteRunDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     void deleteRun(String runName) {
         if (m_deleteRunController.deleteRun(runName)) {
+            JOptionPane.showMessageDialog(this, "Run deleted.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+
         } else {
             JOptionPane.showMessageDialog(this, "Error! Not possible to delete run.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
         }

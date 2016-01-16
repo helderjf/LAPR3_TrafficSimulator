@@ -66,7 +66,7 @@ public class DeleteRunController {
 
     
     public boolean deleteRun(String runName){
-        
+        m_projectWriter=m_manager.getProjectWriter();
         int runPK = m_runsMap.get(runName);
         return m_projectWriter.deleteSimulationRun(runPK);
         
