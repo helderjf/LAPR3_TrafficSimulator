@@ -31,6 +31,13 @@ public class SimulationStateActive extends SimulationStateImpl{
     public boolean canCopySimulation() {
         return true;
     }
+
+    @Override
+    public boolean canDeleteRun() {
+        return true;
+    }
+    
+    
     
     
     

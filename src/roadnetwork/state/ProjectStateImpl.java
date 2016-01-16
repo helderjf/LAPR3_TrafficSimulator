@@ -125,5 +125,10 @@ public class ProjectStateImpl implements ProjectState {
         return false;
     }
 
+    @Override
+    public boolean canDeleteRun() {
+        return false;
+    }
+
 
 }

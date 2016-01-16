@@ -113,7 +113,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void openSimualtion() {
-        new OpenSimulationDialog(this,true);
+        new OpenSimulationDialog(this, true);
     }
 
     private void runSimulation() {
@@ -123,9 +123,13 @@ public class MainFrame extends javax.swing.JFrame {
     private void editSimulationProperties() {
         new EditSimulationPropertiesDialog(this, true);
     }
-    
-        private void copySimulation() {
+
+    private void copySimulation() {
         new CopySimulationDialog(this, true);
+    }
+
+    private void deleteSimulationRun() {
+        new DeleteRunDialog(this,true);
     }
 
     public Manager getManager() {
@@ -335,6 +339,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu8.add(jMenuItem16);
 
         jMenuItem15.setText("Delete Runs");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jMenuItem15);
 
         jMenu7.add(jMenu8);
@@ -578,6 +587,10 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        deleteSimulationRun();
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -611,7 +624,5 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
-
 
 }
