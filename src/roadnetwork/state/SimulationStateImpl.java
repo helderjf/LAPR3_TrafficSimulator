@@ -39,5 +39,10 @@ public class SimulationStateImpl implements SimulationState{
     public boolean propertiesChanged() {
         return true;
     }
+
+    @Override
+    public boolean canCopySimulation() {
+        return false;
+    }
     
 }

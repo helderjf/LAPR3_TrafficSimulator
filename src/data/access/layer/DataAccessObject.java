@@ -573,10 +573,9 @@ public class DataAccessObject {
             //execute statement
             statement.execute();
 
-            int[] errors = new int[droppedTrafPatList.length];
-
-            ARRAY ora_errors = ((OracleCallableStatement) statement).getARRAY(4);//to do tratar erros
-            errors = ora_errors.getIntArray();
+            //int[] errors = new int[droppedTrafPatList.length];//to do tratar erros
+            //ARRAY ora_errors = ((OracleCallableStatement) statement).getARRAY(4);//to do tratar erros
+            //errors = ora_errors.getIntArray();//to do tratar erros
 
             return 1;
 
@@ -626,10 +625,11 @@ public class DataAccessObject {
             ARRAY output = ((OracleCallableStatement) statement).getARRAY(3);
 
             int[] injectedVehiclesPK = output.getIntArray();
+            
 
             statement = m_connection.prepareCall("{call SAVE_INJECTED_V_BEHAVIOURS(?,?,?,?,?,?,?,?)}");
 
-            statement.setObject(1, injectedVehiclesPK);
+            statement.setObject(1, output);
             statement.setObject(2, sections);
             statement.setObject(3, segments);
             statement.setObject(4, directions);
@@ -642,9 +642,9 @@ public class DataAccessObject {
             //execute statement
             statement.execute();
 
-            int[] errors = new int[injectedVehiclesPK.length];
-            ARRAY ora_errors = ((OracleCallableStatement) statement).getARRAY(4);//to do tratar erros
-            errors = ora_errors.getIntArray();
+            //int[] errors = new int[injectedVehiclesPK.length];//to do tratar erros
+            //ARRAY ora_errors = ((OracleCallableStatement) statement).getARRAY(4);//to do tratar erros
+            //errors = ora_errors.getIntArray();//to do tratar erros
 
             return 1;
 

@@ -47,5 +47,7 @@ public interface ProjectState {
 
     public boolean canOpenSimulation();
 
+    public boolean canCopySimulation();
+
 }
     

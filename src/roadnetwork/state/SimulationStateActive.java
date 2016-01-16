@@ -26,5 +26,12 @@ public class SimulationStateActive extends SimulationStateImpl{
     public boolean canEditProperties() {
         return true;
     }
+
+    @Override
+    public boolean canCopySimulation() {
+        return true;
+    }
+    
+    
     
 }
