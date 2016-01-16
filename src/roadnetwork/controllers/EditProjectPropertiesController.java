@@ -5,6 +5,7 @@
  */
 package roadnetwork.controllers;
 
+import java.sql.SQLRecoverableException;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 
@@ -54,7 +55,7 @@ public class EditProjectPropertiesController {
         return m_project.propertiesChanged();
     }
 
-    public boolean nameExists(String name) {
+    public boolean nameExists(String name) throws SQLRecoverableException {
         return (!m_project.getName().equals(name) && m_manager.getProjectReader().projectNameExists(name));
     }
 

@@ -5,7 +5,10 @@
  */
 package roadnetwork.gui;
 
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.DeleteRunController;
 
@@ -31,32 +34,37 @@ public class DeleteRunDialog extends javax.swing.JDialog {
 
     private void run() {
 
-        int response = m_deleteRunController.canDeleteRun();
-        if (response == -1) {
-            JOptionPane.showMessageDialog(this, "Can't copy simulation. There is no active project.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-        } else if (response == -2) {
-            JOptionPane.showMessageDialog(this, "Error. Not possible to delete run.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-        } else if (response == -3) {
-            JOptionPane.showMessageDialog(this, "Error. There is no active simulation.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-        } else if (response == -4) {
-            JOptionPane.showMessageDialog(this, "Error. Not possible to delete run.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-        } else if (response == -5) {
-            JOptionPane.showMessageDialog(this, "The active simulation does not exist on the data base server.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-        } else if (response == -6) {
-            JOptionPane.showMessageDialog(this, "The active simulation does not have Runs saved on the data base server.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-        } else {
-            initComponents();
-            ArrayList<String> runNames = m_deleteRunController.getSimulationRuns();
-            setContentPane(new DeleteRunPane(this, runNames));
-            setLocationRelativeTo(null);
-            setVisible(true);
-
+        try {
+            int response = m_deleteRunController.canDeleteRun();
+            if (response == -1) {
+                JOptionPane.showMessageDialog(this, "Can't copy simulation. There is no active project.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            } else if (response == -2) {
+                JOptionPane.showMessageDialog(this, "Error. Not possible to delete run.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            } else if (response == -3) {
+                JOptionPane.showMessageDialog(this, "Error. There is no active simulation.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            } else if (response == -4) {
+                JOptionPane.showMessageDialog(this, "Error. Not possible to delete run.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            } else if (response == -5) {
+                JOptionPane.showMessageDialog(this, "The active simulation does not exist on the data base server.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            } else if (response == -6) {
+                JOptionPane.showMessageDialog(this, "The active simulation does not have Runs saved on the data base server.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            } else {
+                initComponents();
+                ArrayList<String> runNames = m_deleteRunController.getSimulationRuns();
+                setContentPane(new DeleteRunPane(this, runNames));
+                setLocationRelativeTo(null);
+                setVisible(true);
+                
+            }
+        } catch (SQLRecoverableException ex) {
+            JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(DeleteRunDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -91,9 +99,14 @@ public class DeleteRunDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     void deleteRun(String runName) {
-        if (m_deleteRunController.deleteRun(runName)) {
-        } else {
-            JOptionPane.showMessageDialog(this, "Error! Not possible to delete run.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
+        try {
+            if (m_deleteRunController.deleteRun(runName)) {
+            } else {
+                JOptionPane.showMessageDialog(this, "Error! Not possible to delete run.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLRecoverableException ex) {
+            JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(DeleteRunDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

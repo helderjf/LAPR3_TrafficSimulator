@@ -5,6 +5,7 @@
  */
 package roadnetwork.controllers;
 
+import java.sql.SQLRecoverableException;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 import roadnetwork.domain.Simulation;
@@ -47,7 +48,7 @@ public class EditSimulationPropertiesController {
         return m_simulation.getDescription();
     }
 
-    public boolean setNewProperties(String newName, String newDescription) {
+    public boolean setNewProperties(String newName, String newDescription) throws SQLRecoverableException {
         int projPK = m_project.getPK();
         if (!m_simulation.getName().equals(newName)
                 && (m_manager.getProjectReader().simulationExists(projPK, newName))) {

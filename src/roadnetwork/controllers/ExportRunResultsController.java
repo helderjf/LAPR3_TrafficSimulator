@@ -7,6 +7,7 @@ package roadnetwork.controllers;
 
 import IO.ExportHTML;
 import data.access.layer.ProjectReader;
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import roadnetwork.domain.ImportedResult;
@@ -36,7 +37,7 @@ public class ExportRunResultsController {
         m_manager = manager;
     }
 
-    public int canExport() {
+    public int canExport() throws SQLRecoverableException {
         if (m_manager.getCurrentProject() == null) {
             return -1;
         }
@@ -56,7 +57,7 @@ public class ExportRunResultsController {
         return 1;
     }
 
-    public ArrayList<String> getSimulationRuns() {
+    public ArrayList<String> getSimulationRuns() throws SQLRecoverableException {
         m_runsMap = m_projectReader.getSimulationRunsOrderedList(m_simulation.getPK());
 
         for (String rname : m_runsMap.keySet()) {

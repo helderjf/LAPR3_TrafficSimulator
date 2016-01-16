@@ -6,6 +6,7 @@
 package roadnetwork.controllers;
 
 import data.access.layer.ProjectReader;
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import roadnetwork.domain.Manager;
@@ -28,7 +29,7 @@ public class OpenSimulationController {
         m_manager = manager;
     }
 
-    public int canOpenSimulation() {
+    public int canOpenSimulation() throws SQLRecoverableException {
 
         if (m_manager.getCurrentProject() == null) {
             return -1;
@@ -45,7 +46,7 @@ public class OpenSimulationController {
 
     }
 
-    public ArrayList<String> getProjectSimulations() {
+    public ArrayList<String> getProjectSimulations() throws SQLRecoverableException {
 
         m_simulationMap = m_projectReader.getOrderedSimulationList(m_project.getPK());
         ArrayList<String> simulations = new ArrayList();

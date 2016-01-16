@@ -5,6 +5,9 @@
  */
 package roadnetwork.gui;
 
+import java.sql.SQLRecoverableException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.CopySimulationController;
 
@@ -80,13 +83,18 @@ public class CopySimulationDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     void newSimulationCopy(String name, String description) {
-        if (m_copySimulationController.simulationExists(name)) {
-            JOptionPane.showMessageDialog(this, "A simulation with the same name exists. Please select a diferent name.", "Copy Simulation", JOptionPane.ERROR_MESSAGE);
-        } else {
-            if (m_copySimulationController.copySimulation(name, description));
-            JOptionPane.showMessageDialog(this, "Simulation copied.", "Copy Simulation", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-            
+        try {
+            if (m_copySimulationController.simulationExists(name)) {
+                JOptionPane.showMessageDialog(this, "A simulation with the same name exists. Please select a diferent name.", "Copy Simulation", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (m_copySimulationController.copySimulation(name, description));
+                JOptionPane.showMessageDialog(this, "Simulation copied.", "Copy Simulation", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+                
+            }
+        } catch (SQLRecoverableException ex) {
+            JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(CopySimulationDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

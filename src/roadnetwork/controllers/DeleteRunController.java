@@ -7,6 +7,7 @@ package roadnetwork.controllers;
 
 import data.access.layer.ProjectReader;
 import data.access.layer.ProjectWriter;
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import roadnetwork.domain.Manager;
@@ -30,7 +31,7 @@ public class DeleteRunController {
         m_manager = manager;
     }
 
-    public int canDeleteRun() {
+    public int canDeleteRun() throws SQLRecoverableException {
         if (m_manager.getCurrentProject() == null) {
             return -1;
         }
@@ -55,7 +56,7 @@ public class DeleteRunController {
         return 1;
     }
 
-    public ArrayList<String> getSimulationRuns() {
+    public ArrayList<String> getSimulationRuns() throws SQLRecoverableException {
         m_runsMap = m_projectReader.getSimulationRunsOrderedList(m_simulation.getPK());
         ArrayList<String> runNames = new ArrayList();
         for (String rname : m_runsMap.keySet()) {
@@ -65,7 +66,7 @@ public class DeleteRunController {
     }
 
     
-    public boolean deleteRun(String runName){
+    public boolean deleteRun(String runName) throws SQLRecoverableException{
         
         int runPK = m_runsMap.get(runName);
         return m_projectWriter.deleteSimulationRun(runPK);

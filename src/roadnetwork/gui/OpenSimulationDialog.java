@@ -5,7 +5,10 @@
  */
 package roadnetwork.gui;
 
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.OpenSimulationController;
 
@@ -31,23 +34,28 @@ public class OpenSimulationDialog extends javax.swing.JDialog {
     }
 
     private void run() {
-        int response = m_openSimulationController.canOpenSimulation();
-
-        if (response == -1) {
-            JOptionPane.showMessageDialog(this, "Can't open simulation. There is no active project.", "No active project", JOptionPane.INFORMATION_MESSAGE);
-            setVisible(false);
-        } else if (response == -2) {
-            JOptionPane.showMessageDialog(this, "Can't open simulation. Projec has no Road Network or Vehicles", "Error", JOptionPane.INFORMATION_MESSAGE);
-            setVisible(false);
-        } else if (response == -3) {
-            JOptionPane.showMessageDialog(this, "The currernt Project has no simulations", "No Simulations", JOptionPane.INFORMATION_MESSAGE);
-            setVisible(false);
-        } else {
-
-            ArrayList<String> simulationList = m_openSimulationController.getProjectSimulations();
-            setContentPane(new OpenSimulationPane(this, simulationList));
-            setLocationRelativeTo(null);
-            setVisible(true);
+        try {
+            int response = m_openSimulationController.canOpenSimulation();
+            
+            if (response == -1) {
+                JOptionPane.showMessageDialog(this, "Can't open simulation. There is no active project.", "No active project", JOptionPane.INFORMATION_MESSAGE);
+                setVisible(false);
+            } else if (response == -2) {
+                JOptionPane.showMessageDialog(this, "Can't open simulation. Projec has no Road Network or Vehicles", "Error", JOptionPane.INFORMATION_MESSAGE);
+                setVisible(false);
+            } else if (response == -3) {
+                JOptionPane.showMessageDialog(this, "The currernt Project has no simulations", "No Simulations", JOptionPane.INFORMATION_MESSAGE);
+                setVisible(false);
+            } else {
+                
+                ArrayList<String> simulationList = m_openSimulationController.getProjectSimulations();
+                setContentPane(new OpenSimulationPane(this, simulationList));
+                setLocationRelativeTo(null);
+                setVisible(true);
+            }
+        } catch (SQLRecoverableException ex) {
+            JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(OpenSimulationDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
