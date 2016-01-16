@@ -73,7 +73,7 @@ public class RunSimulationController {
 
     public int saveRun() {
 
-        if (!m_manager.getProjectReader().simulationExists(m_project.getPK(), m_simulation.getName())) {
+        if (m_manager.getProjectReader().simulationExists(m_project.getPK(), m_simulation.getName())!=0) {
             return -2;
         }
 

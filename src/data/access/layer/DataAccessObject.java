@@ -1210,6 +1210,12 @@ public class DataAccessObject {
         }
     }
 
+    /**
+     * Checks if certain simulation is created
+     * @param projectPK
+     * @param simulationName
+     * @return -1 if database error, 0 if does not, 1 or more if exist (count)
+     */
     int simulationExists(int projectPK, String simulationName) {
         try {
             if (m_connection == null) {
@@ -1229,7 +1235,7 @@ public class DataAccessObject {
 
             return statement.getInt(3);
 
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;//returns null so the caller knows the connection failed
         }

@@ -63,11 +63,11 @@ public class ImportedResultSingleTrafficPatternTest {
         
         importedResultSingleTrafficPattern.m_avgConsumption = m_avgConsumption;
         importedResultSingleTrafficPattern.m_avgTimeSpent = m_avgTimeSpent;
-        importedResultSingleTrafficPattern.m_direction = m_direction;
-        importedResultSingleTrafficPattern.m_inNode = m_inNode;
-        importedResultSingleTrafficPattern.m_outNode = m_outNode;
-        importedResultSingleTrafficPattern.m_road = m_road;
-        importedResultSingleTrafficPattern.m_segIndex = m_segIndex;
+//        importedResultSingleTrafficPattern.m_direction = m_direction;
+//        importedResultSingleTrafficPattern.m_inNode = m_inNode;
+//        importedResultSingleTrafficPattern.m_outNode = m_outNode;
+//        importedResultSingleTrafficPattern.m_road = m_road;
+//        importedResultSingleTrafficPattern.m_segIndex = m_segIndex;
  
     }
     
