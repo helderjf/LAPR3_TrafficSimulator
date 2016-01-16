@@ -70,6 +70,9 @@ public class CombustionVehicle extends Vehicle implements Combustion {
         super(name, description, type, fuel, mass, load, dragCoefficient, frontalArea, rrc, wheelSize, velocityLimit, minRPM, maxRPM, finalDriveRatio, gearList, throttleList);
     }
     
+    public CombustionVehicle(CombustionVehicle otherCombustionVehicle){
+        super(otherCombustionVehicle);
+    }
 
 
     /**

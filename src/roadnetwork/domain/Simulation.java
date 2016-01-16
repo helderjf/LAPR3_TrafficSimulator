@@ -6,6 +6,7 @@
 package roadnetwork.domain;
 
 import java.util.ArrayList;
+import roadnetwork.factory.StateFactory;
 import roadnetwork.state.SimulationState;
 import roadnetwork.state.SimulationStateCreated;
 
@@ -44,6 +45,15 @@ public class Simulation {
         this.m_state = m_state;
         this.m_trafficPatternList = m_trafficPatternList;
         this.m_currentRun = m_currentRun;
+    }
+    
+    public Simulation(Simulation otherSimulation, StateFactory stateFactory){
+        m_name=otherSimulation.m_name;
+        m_description=otherSimulation.m_description;
+        m_trafficPatternList=new ArrayList();
+        for(TrafficPattern tp : otherSimulation.m_trafficPatternList){
+            m_trafficPatternList.add(TrafficPattern.trafficPatternPseudoCopy(tp));
+        }
     }
     
     

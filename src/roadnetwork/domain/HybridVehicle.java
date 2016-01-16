@@ -35,6 +35,12 @@ public class HybridVehicle extends Vehicle implements Electric, Combustion {
         super(name, description, type, fuel, mass, load, dragCoefficient, frontalArea, rrc, wheelSize, velocityLimit, minRPM, maxRPM, finalDriveRatio, gearList, throttleList);
         this.energyRegenerationRatio = energyRegenerationRatio;
     }
+    
+    
+    public HybridVehicle(HybridVehicle otherHybridVehicle){
+        super(otherHybridVehicle);
+        energyRegenerationRatio=otherHybridVehicle.energyRegenerationRatio;
+    }
 
     @Override
     public double breakingEnergyRegeneration(double breakingForce) {

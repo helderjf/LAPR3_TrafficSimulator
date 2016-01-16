@@ -45,6 +45,22 @@ public class RoadNetwork {
         m_nodeList = junctions;
         m_sectionList = sectionList;
     }
+    
+    public RoadNetwork(RoadNetwork otherRoadNetwork){
+        m_name=otherRoadNetwork.m_name;
+        m_description=otherRoadNetwork.m_description;
+        m_nodeList=new ArrayList();
+        for(Junction j : otherRoadNetwork.m_nodeList){
+            m_nodeList.add(new Junction(j));
+        }
+        m_sectionList=new ArrayList();
+        for(Section s : otherRoadNetwork.m_sectionList){
+            m_sectionList.add(new Section(s));
+        }
+        
+        
+    }
+    
 
     /**
      *

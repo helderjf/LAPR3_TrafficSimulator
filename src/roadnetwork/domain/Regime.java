@@ -53,6 +53,15 @@ public class Regime {
         m_sfc = sfc;
     }
     
+    public Regime(Regime otherRegime){
+        m_torque = otherRegime.m_torque;
+        m_rpmLow = otherRegime.m_rpmLow;
+        m_rpmHigh = otherRegime.m_rpmHigh;
+        m_sfc = otherRegime.m_sfc;
+    }
+    
+    
+    
     /**
      *
      * @return PK

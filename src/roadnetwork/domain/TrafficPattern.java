@@ -29,6 +29,15 @@ public class TrafficPattern implements TimeUnit {
         this.vehicle = vehicle;
         this.arrivalRate = arrivalRate;
     }
+    
+    public static TrafficPattern trafficPatternPseudoCopy(TrafficPattern otherTrafficPatern){
+        TrafficPattern pseudoCopy = new TrafficPattern();
+        pseudoCopy.beginNode=otherTrafficPatern.beginNode;
+        pseudoCopy.endNode=otherTrafficPatern.endNode;
+        pseudoCopy.vehicle=otherTrafficPatern.vehicle;
+        pseudoCopy.arrivalRate=otherTrafficPatern.arrivalRate;
+        return pseudoCopy;
+    }
 
     
     public Junction getBeginNode() {

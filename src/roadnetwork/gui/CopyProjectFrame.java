@@ -23,12 +23,16 @@ public class CopyProjectFrame extends javax.swing.JFrame {
     public CopyProjectFrame(MainFrame frame) {
         m_mainFrame = frame;
         if (frame.getManager().getCurrentProject() != null) {
-            m_copyProjectController = new CopyProjectController();
-            initComponents();
-            setContentPane(new CopyProjectPane(this));
-            setLocationRelativeTo(null);
-            setVisible(true);
-        }else{
+            m_copyProjectController = new CopyProjectController(m_mainFrame.getManager());
+            if (m_copyProjectController.canCopyProject()) {
+                initComponents();
+                setContentPane(new CopyProjectPane(this));
+                setLocationRelativeTo(null);
+                setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error! Can't copy project!", "Copy Project", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
             JOptionPane.showMessageDialog(this, "Select an active project!", "Copy Project", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -62,8 +66,15 @@ public class CopyProjectFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
     public MainFrame getMainFrame() {
         return m_mainFrame;
+    }
+
+    void newProjectCopy(String name, String description) {
+        if(m_copyProjectController.projectExists(name)){
+             JOptionPane.showMessageDialog(this, "A project with the same name exists. Please select a diferent name.", "Copy Project", JOptionPane.ERROR_MESSAGE);
+        }else{
+            if(m_copyProjectController.copyProject(name,description));
+        }
     }
 }

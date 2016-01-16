@@ -34,7 +34,7 @@ public class ProjectStateImpl implements ProjectState {
 
     @Override
     public boolean canCopyProject() {
-        return false;
+        return true;
     }
 
     @Override

@@ -45,9 +45,9 @@ public class Junction {
      * 
      * @param n Node object
      */
-    public Junction(Junction n)
+    public Junction(Junction otherJunction)
     {
-        n.junctionId = this.junctionId;
+        junctionId = otherJunction.junctionId;
     }
 
     /**

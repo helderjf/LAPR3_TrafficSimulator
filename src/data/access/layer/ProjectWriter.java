@@ -25,7 +25,6 @@ import roadnetwork.domain.SimulationRun;
 import roadnetwork.domain.Throttle;
 import roadnetwork.domain.TrafficPattern;
 import roadnetwork.domain.Vehicle;
-import roadnetwork.state.SimulationState;
 
 /**
  *
@@ -390,6 +389,7 @@ public class ProjectWriter {
         double[] injectedVTimeIn = new double[endedVehiclesList.size()];
         double[] injectedVTimeOut = new double[endedVehiclesList.size()];
         double[] injectedVEnergy = new double[endedVehiclesList.size()];
+
         fillInjecttedArrays(endedVehiclesList,
                 // cruisingVehiclesList,
                 injectedVTrafPatList,
@@ -574,14 +574,42 @@ public class ProjectWriter {
         }
         return true;
     }
-    
-    
-    
-    public boolean projectCopy(Project project, String name, String description){
-        
-        //TODO
-        
-        return true;
+
+    public boolean saveProjectCopy(Project m_activeProject, String name, String description) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

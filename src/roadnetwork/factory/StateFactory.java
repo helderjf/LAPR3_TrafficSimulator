@@ -28,7 +28,7 @@ import roadnetwork.state.SimulationStateCreated;
 public class StateFactory {
     
     
-    public ProjectState getSimulationState(String state,Project project){
+    public ProjectState getProjectState(String state,Project project){
         
         switch (state){
             case "ProjectStateCreated": return new ProjectStateCreated(project);

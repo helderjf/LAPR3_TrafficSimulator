@@ -126,6 +126,10 @@ public class Manager {
     public ExportHTML newHTML(String fileName){
         return new ExportHTML(fileName);
     }
+
+    public StateFactory getStateFactory() {
+        return new StateFactory();
+    }
     
     
     

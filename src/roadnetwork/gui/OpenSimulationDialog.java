@@ -27,8 +27,6 @@ public class OpenSimulationDialog extends javax.swing.JDialog {
         m_openSimulationController = new OpenSimulationController(m_ancestor.getManager());
         initComponents();
         run();
-        setLocationRelativeTo(null);
-        setVisible(true);
 
     }
 
@@ -44,11 +42,13 @@ public class OpenSimulationDialog extends javax.swing.JDialog {
         } else if (response == -3) {
             JOptionPane.showMessageDialog(this, "The currernt Project has no simulations", "No Simulations", JOptionPane.INFORMATION_MESSAGE);
             setVisible(false);
+        } else {
+
+            ArrayList<String> simulationList = m_openSimulationController.getProjectSimulations();
+            setContentPane(new OpenSimulationPane(this, simulationList));
+            setLocationRelativeTo(null);
+            setVisible(true);
         }
-        
-        ArrayList<String> simulationList= m_openSimulationController.getProjectSimulations();
-        setContentPane(new OpenSimulationPane(this,simulationList));
-        
     }
 
     /**
@@ -79,12 +79,11 @@ public class OpenSimulationDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
     void selectSimulation(String selectedValue) {
-        if(m_openSimulationController.selectSimulation(selectedValue)){
+        if (m_openSimulationController.selectSimulation(selectedValue)) {
             JOptionPane.showMessageDialog(this, "The selected simulation is now active.", "Open simulation", JOptionPane.INFORMATION_MESSAGE);
             setVisible(false);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Error. It was not possible to open the simulation.", "Open simulation", JOptionPane.INFORMATION_MESSAGE);
         }
     }

@@ -576,6 +576,7 @@ public class DataAccessObject {
             int[] errors = new int[droppedTrafPatList.length];
 
             ARRAY ora_errors = ((OracleCallableStatement) statement).getARRAY(4);//to do tratar erros
+            errors = ora_errors.getIntArray();
 
             return 1;
 
@@ -614,22 +615,37 @@ public class DataAccessObject {
             ARRAY energyConsumptions = new ARRAY(oracleFloatArray, m_connection, injectedVEnergy);
 
             //create statement
-            CallableStatement statement = m_connection.prepareCall("{call SAVE_INJECTED_VEHICLES(?,?,?,?,?,?,?,?)}");
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_INJECTED_VEHICLES(?,?,?)}");
             statement.setInt(1, runPK);
             statement.setObject(2, trafficpaterns);
-            statement.setObject(3, sections);
-            statement.setObject(4, segments);
-            statement.setObject(5, directions);
-            statement.setObject(6, inTimes);
-            statement.setObject(7, exitTimes);
-            statement.setObject(8, energyConsumptions);
+            statement.registerOutParameter(3, OracleTypes.ARRAY, "INTEGER_T");
 
-            //statement.registerOutParameter(9, OracleTypes.ARRAY, "INTEGER_T");
             //execute statement
             statement.execute();
 
-            //int[] errors = new int[droppedTrafPatList.length];
-            //ARRAY ora_errors = ((OracleCallableStatement) statement).getARRAY(4);//to do tratar erros
+            ARRAY output = ((OracleCallableStatement) statement).getARRAY(3);
+
+            int[] injectedVehiclesPK = output.getIntArray();
+
+            statement = m_connection.prepareCall("{call SAVE_INJECTED_V_BEHAVIOURS(?,?,?,?,?,?,?,?)}");
+
+            statement.setObject(1, injectedVehiclesPK);
+            statement.setObject(2, sections);
+            statement.setObject(3, segments);
+            statement.setObject(4, directions);
+            statement.setObject(5, inTimes);
+            statement.setObject(6, exitTimes);
+            statement.setObject(7, energyConsumptions);
+
+            statement.registerOutParameter(8, OracleTypes.ARRAY, "INTEGER_T");
+
+            //execute statement
+            statement.execute();
+
+            int[] errors = new int[injectedVehiclesPK.length];
+            ARRAY ora_errors = ((OracleCallableStatement) statement).getARRAY(4);//to do tratar erros
+            errors = ora_errors.getIntArray();
+
             return 1;
 
         } catch (SQLException ex) {

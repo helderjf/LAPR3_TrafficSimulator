@@ -88,7 +88,7 @@ public class ProjectReader {
             m_project.setName(properties.getString(2));
             m_project.setDescription(properties.getString(3));
             String s = properties.getString(4);
-            m_project.setState(m_stateFactory.getSimulationState(s, m_project));
+            m_project.setState(m_stateFactory.getProjectState(s, m_project));
             return true;
         } catch (SQLException ex) {
             System.out.println("Project properties not retrieved");
