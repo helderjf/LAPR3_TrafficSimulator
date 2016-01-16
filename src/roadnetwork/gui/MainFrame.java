@@ -41,6 +41,7 @@ public class MainFrame extends javax.swing.JFrame {
     private ImportRoadNetworkDialog m_importRoadNetworkDialog;
     private CreateSimulationFrame m_createSimulationFrame;
     private RunSimulationFrame m_runSimulationFrame;
+    private ExportRunResultsDialog m_exportRunResultsDialog;
 
     /**
      * Creates new form JanelaPrincipal
@@ -130,6 +131,11 @@ public class MainFrame extends javax.swing.JFrame {
 
     public Manager getManager() {
         return m_manager;
+    }
+    
+    private void exportResults() {
+        m_exportRunResultsDialog=new ExportRunResultsDialog(this, true);
+        revalidate();
     }
 
     /**
@@ -575,7 +581,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        // TODO add your handling code here:
+        exportResults();
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
 
@@ -611,6 +617,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+    
 
 
 
