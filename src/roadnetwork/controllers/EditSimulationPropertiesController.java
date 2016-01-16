@@ -50,7 +50,7 @@ public class EditSimulationPropertiesController {
     public boolean setNewProperties(String newName, String newDescription) {
         int projPK = m_project.getPK();
         if (!m_simulation.getName().equals(newName)
-                && (m_manager.getProjectReader().simulationExists(projPK, newName))) {
+                && !(m_manager.getProjectReader().simulationExists(projPK, newName)==0)) {
             return false;
         }
 
