@@ -80,8 +80,7 @@ public class CopySimulationDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     void newSimulationCopy(String name, String description) {
-        //TODO ADD CHECK FOR -1
-        if (m_copySimulationController.simulationExists(name)!=0) {
+        if (m_copySimulationController.simulationExists(name)) {
             JOptionPane.showMessageDialog(this, "A simulation with the same name exists. Please select a diferent name.", "Copy Simulation", JOptionPane.ERROR_MESSAGE);
         } else {
             if (m_copySimulationController.copySimulation(name, description));

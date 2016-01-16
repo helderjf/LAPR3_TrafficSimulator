@@ -479,8 +479,11 @@ public class ProjectReader {
         return true;
     }
 
-    public int simulationExists(int projectPK, String simulationName) {
-        return m_dao.simulationExists(projectPK, simulationName);
+    public boolean simulationExists(int projectPK, String simulationName) {
+        if (m_dao.simulationExists(projectPK, simulationName) == 0) {
+            return false;
+        }
+        return true;
     }
 
     public boolean projectHasSimulations(int projectPK) {

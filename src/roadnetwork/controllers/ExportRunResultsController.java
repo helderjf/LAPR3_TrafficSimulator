@@ -46,7 +46,7 @@ public class ExportRunResultsController {
         }
         m_simulation = m_project.getCurrentSimulation();
         m_projectReader = m_manager.getProjectReader();
-        if (m_projectReader.simulationExists(m_project.getPK(), m_simulation.getName())!=0) {
+        if (!m_projectReader.simulationExists(m_project.getPK(), m_simulation.getName())) {
             return -3;
         }
         if (!m_projectReader.simulationHasRuns(m_simulation.getPK())) {
