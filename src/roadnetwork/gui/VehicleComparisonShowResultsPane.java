@@ -21,6 +21,8 @@ public class VehicleComparisonShowResultsPane extends javax.swing.JPanel {
     
     /**
      * Creates new form VehicleComparisonShowResultsPane
+     * @param ancestor
+     * @param results
      */
     public VehicleComparisonShowResultsPane(VehicleComparisonFrame ancestor, ArrayList<Result> results) {
         m_ancestorFrame=ancestor;

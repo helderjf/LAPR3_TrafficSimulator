@@ -21,8 +21,7 @@ public class ImportedResultTrafficPatterns implements ImportedResult{
     @Override
     public String getGlobalResultsHTMLCode() {
         String results
-                = "<body>"
-                + "<table border = 1>"
+                = "<table border = 1>"
                 + "<tr>"
                     + "<th colspan=4> Traffic Pattern</th>"
                 + "</tr>"
@@ -51,7 +50,7 @@ public class ImportedResultTrafficPatterns implements ImportedResult{
                     + m_avgConsumpion.get(i)
                     + "</td>";
         }
-        results += "</table></body>";
+        results += "</table>";
 
         return results;
     }

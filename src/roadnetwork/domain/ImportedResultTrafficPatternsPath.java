@@ -29,8 +29,7 @@ public class ImportedResultTrafficPatternsPath implements ImportedResult{
     @Override
     public String getGlobalResultsHTMLCode() {
     String results
-                = "<body>"
-                + "<table border = 1>"
+               = "<table border = 1>"
                 + "<tr>"
                     + "<th colspan=4> Traffic Pattern</th>"
                     +"<th colspan=6> Segment</th>"
@@ -80,7 +79,7 @@ public class ImportedResultTrafficPatternsPath implements ImportedResult{
                     + m_segAVGConsumption.get(i)
                     + "</td>";
         }
-        results += "</table></body>";
+        results += "</table>";
 
         return results;    
     }

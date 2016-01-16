@@ -282,12 +282,14 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         Vertex<V,E> vorig = endpoints[0] ;
         Vertex<V,E> vdest = endpoints[1] ;
         
-        if (vorig != null && vdest != null) 
+        if (vorig != null && vdest != null)
+        {
             if (edge.equals(getEdge(vorig,vdest))){
                vorig.getOutgoing().remove(vdest);
                listEdge.remove(edge);
                numEdge--;
-            } 
+            }
+        }
     }
            
     public Vertex<V,E> getVertex(V vInf){
@@ -445,6 +447,10 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         }
         listVert.remove(v);
         numVert--;
+    }
+
+    void removeEdge(ArrayList<Edge<String, String>> edge) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
    

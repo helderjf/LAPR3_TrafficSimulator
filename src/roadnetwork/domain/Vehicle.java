@@ -552,6 +552,8 @@ public abstract class Vehicle {
      * @return EngineEfficiency
      */
     abstract public List<EngineEfficiency> getEngineEfficiency();
+    
+
 
     /**
      * 

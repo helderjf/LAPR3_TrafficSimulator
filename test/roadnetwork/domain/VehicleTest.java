@@ -24,6 +24,7 @@ public class VehicleTest {
     Vehicle vehicle1;
     Vehicle vehicle2;
     Vehicle vehicle3;
+    Vehicle vehicle4;
     
     SectionTypology stype1;
     SectionTypology stype2;
@@ -52,6 +53,12 @@ public class VehicleTest {
     Throttle throttle1;
     Throttle throttle2;
     Throttle throttle3;
+    
+    EngineEfficiency engineEfficiency1;
+    EngineEfficiency engineEfficiency2;
+    EngineEfficiency engineEfficiency3;
+    
+    ArrayList<EngineEfficiency> lstEngineEfficiency;
     
     public VehicleTest() {
     }
@@ -88,6 +95,10 @@ public class VehicleTest {
         gearList1.put(2, 20.00);
         gearList1.put(3, 30.00);
         gearList1.put(4, 40.00);
+        
+        gearList2 = new HashMap<>();
+        gearList2.put(1, 10.00);
+
         
         regime1 = new Regime(85, 1000, 2499, 8.2);
         regime2 = new Regime(95, 2500, 3999, 6.2);
@@ -165,6 +176,59 @@ public class VehicleTest {
                 2.6,//final drive ratio
                 gearList1,
                 throttleList1);
+        
+        vehicle4 = new CombustionVehicle("dummy4", //name
+                "descricao2", //descricao
+                "truck",//type
+                "diesel",//fuel
+                1100, //mass
+                100,//load
+                0.21,//drag
+                1.1,//frontal area
+                0.02,//rcc
+                0.1,//wheel size
+                velocityLimit1,//
+                1200,//min rpm
+                5900,//max rpm
+                4.6,//final drive ratio
+                gearList2,
+                throttleList1);
+        
+        engineEfficiency1 = new EngineEfficiency();
+        engineEfficiency2 = new EngineEfficiency();
+        engineEfficiency3 = new EngineEfficiency();
+
+        
+        engineEfficiency1.setGear(1);
+        engineEfficiency1.setGearRatio(10.0);
+        engineEfficiency1.setM_rpmHigh(2499.0);
+        engineEfficiency1.setM_rpmLow(1000.0);
+        engineEfficiency1.setM_sfc(8.2);
+        engineEfficiency1.setThrottleRatio("25");
+        engineEfficiency1.setTorque(85.0);
+        
+        engineEfficiency2.setGear(1);
+        engineEfficiency2.setGearRatio(10.0);
+        engineEfficiency2.setM_rpmHigh(3999.0);
+        engineEfficiency2.setM_rpmLow(2500.0);
+        engineEfficiency2.setM_sfc(6.2);
+        engineEfficiency2.setThrottleRatio("25");
+        engineEfficiency2.setTorque(95.0);
+
+        
+        engineEfficiency3.setGear(1);
+        engineEfficiency3.setGearRatio(10.0);
+        engineEfficiency3.setM_rpmHigh(5500.0);
+        engineEfficiency3.setM_rpmLow(4000.0);
+        engineEfficiency3.setM_sfc(10.2);
+        engineEfficiency3.setThrottleRatio("50");
+        engineEfficiency3.setTorque(80.0);
+        
+        
+        lstEngineEfficiency = new ArrayList<>();
+        lstEngineEfficiency.add(engineEfficiency1);
+        lstEngineEfficiency.add(engineEfficiency2);
+        lstEngineEfficiency.add(engineEfficiency3);
   
     }
     
@@ -637,8 +701,8 @@ public class VehicleTest {
     @Test
     public void testGetEngineEfficiency() {
         System.out.println("getEngineEfficiency");
-        Vehicle instance = vehicle1;
-        List<EngineEfficiency> expResult = null;
+        Vehicle instance = vehicle4;
+        List<EngineEfficiency> expResult = lstEngineEfficiency;
         List<EngineEfficiency> result = instance.getEngineEfficiency();
         assertEquals(expResult, result);
 
