@@ -7,7 +7,6 @@ package roadnetwork.gui;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import roadnetwork.domain.ImportedResult;
 import roadnetwork.domain.TrafficPattern;
 
 /**
@@ -17,16 +16,14 @@ import roadnetwork.domain.TrafficPattern;
 public class ExportRunResultsChooseTPatternPane extends javax.swing.JPanel {
     
     ExportRunResultsDialog m_ancestor;
-    String m_run;
-    ImportedResult m_impResult;
     ModelList<TrafficPattern> m_modelList;
     /**
      * Creates new form ExportRunResultsChooseTPatternPane
+     * @param ancestor
+     * @param tpList
      */
-    public ExportRunResultsChooseTPatternPane(ExportRunResultsDialog ancestor, String run, ImportedResult impResult, ArrayList<TrafficPattern> tpList) {
+    public ExportRunResultsChooseTPatternPane(ExportRunResultsDialog ancestor, ArrayList<TrafficPattern> tpList) {
         m_ancestor=ancestor;
-        m_run=run;
-        m_impResult=impResult;
         m_modelList= new ModelList<>();
         m_modelList.addItems(tpList);
         
@@ -102,8 +99,8 @@ public class ExportRunResultsChooseTPatternPane extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (jList1.getSelectedValue()!=null) {
-            String tp = (String)jList1.getSelectedValue();
-            m_ancestor.exportResultsSpecieficTP("Simulation Detailed Results", m_run, m_impResult, tp);
+            TrafficPattern tp = (TrafficPattern)jList1.getSelectedValue();
+            m_ancestor.exportResultsSpecieficTP("Simulation Detailed Results", tp);
         } else{
             JOptionPane.showMessageDialog(this, "You must choose one option.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }

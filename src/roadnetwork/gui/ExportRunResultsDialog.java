@@ -44,32 +44,43 @@ public class ExportRunResultsDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Can't export run results. There is no active simulation.", "No active simulation", JOptionPane.INFORMATION_MESSAGE);
             setVisible(false);
         } else if (check == -3) {
+            JOptionPane.showMessageDialog(this, "Can't export run results. The current simulation isn't saved.", "Simulation not saved", JOptionPane.INFORMATION_MESSAGE);
+            setVisible(false);
+        } else if (check == -4) {
             JOptionPane.showMessageDialog(this, "Can't export run results. There are no runs saved.", "No runs saved", JOptionPane.INFORMATION_MESSAGE);
             setVisible(false);
-        } else {
+        }else {
             m_simulationRuns = m_exportRunResultsController.getSimulationRuns();
             m_importedResult = m_exportRunResultsController.getImportedResultOptions();
             setContentPane(new ExportRunResultsChooseRunPane(this, m_simulationRuns, m_importedResult));
             setLocationRelativeTo(null);
             setVisible(true);
         }
+        
 
         initComponents();
     }
 
-    private boolean exportResults(String fileName, String run, ImportedResult impResult) {
-        return m_exportRunResultsController.exportResults(fileName, run, impResult);
+    private boolean exportResults(String fileName) {
+        return m_exportRunResultsController.exportResults(fileName, m_selecetedRun, m_selectedResultType);
     }
 
-    private void selectTrafficPattern(String run, ImportedResult impResult) {
+    private void selectTrafficPattern() {
         ArrayList<TrafficPattern> tp = m_exportRunResultsController.getTrafficPatternsList();
-        setContentPane(new ExportRunResultsChooseTPatternPane(this, run, impResult, tp));
+        setContentPane(new ExportRunResultsChooseTPatternPane(this, tp));
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    public boolean exportResultsSpecieficTP(String fileName, String run, ImportedResult impResult, String tp) {
-        return m_exportRunResultsController.exportResults(fileName, run, impResult, tp);
+    public void exportResultsSpecieficTP(String fileName, TrafficPattern tp) {
+        boolean flag = m_exportRunResultsController.exportResults(fileName,m_selecetedRun, m_selectedResultType, tp);
+        if (flag == true) {
+            JOptionPane.showMessageDialog(this, "The selected run's results were correctly exported.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Unnable to export the results.", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        dispose();
     }
 
     /**
@@ -101,7 +112,7 @@ public class ExportRunResultsDialog extends javax.swing.JDialog {
         m_selecetedRun=run;
         m_selectedResultType=impResult;
         if (m_selectedResultType instanceof ImportedResultSingleTrafficPattern) {
-            selectTrafficPattern(run, impResult);
+            selectTrafficPattern();
         } else {
             boolean flag = exportResults("Simulation Detailed Results");
             if (flag == true) {
