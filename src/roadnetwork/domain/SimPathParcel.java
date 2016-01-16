@@ -5,6 +5,8 @@
  */
 package roadnetwork.domain;
 
+import java.util.Objects;
+
 /**
  *
  * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
@@ -150,6 +152,6 @@ public class SimPathParcel implements PathParcel {
     void initializePredictedExitTime(double injectionTime) {
         m_predictedExitTime=m_theoreticalTravelTime+injectionTime;
     }
-  
+
 
 }
