@@ -5,6 +5,7 @@
  */
 package roadnetwork.gui;
 
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
@@ -61,7 +62,9 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void openProject() {
+
         m_openProjectFrame = new OpenProjectFrame(this);
+
         revalidate();
     }
 
@@ -130,15 +133,15 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void deleteSimulationRun() {
-        new DeleteRunDialog(this,true);
+        new DeleteRunDialog(this, true);
     }
 
     public Manager getManager() {
         return m_manager;
     }
-    
+
     private void exportResults() {
-        m_exportRunResultsDialog=new ExportRunResultsDialog(this, true);
+        m_exportRunResultsDialog = new ExportRunResultsDialog(this, true);
         revalidate();
     }
 

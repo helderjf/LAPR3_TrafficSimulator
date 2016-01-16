@@ -46,7 +46,7 @@ public class DeleteRunController {
             return -4;
         }
         m_projectReader = m_manager.getProjectReader();
-        if (!m_projectReader.simulationExists(m_project.getPK(), m_simulation.getName())) {
+        if (m_projectReader.simulationExists(m_project.getPK(), m_simulation.getName())) {
             return -5;
         }
         if (!m_projectReader.simulationHasRuns(m_simulation.getPK())) {

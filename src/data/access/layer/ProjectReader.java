@@ -40,7 +40,6 @@ import roadnetwork.state.SimulationState;
 public class ProjectReader {
 
     private DataAccessObject m_dao;
-    private ArrayList<Integer> m_projectIDList;
     private ArrayList<String> m_projectNameList;
     private Project m_project;
     private StateFactory m_stateFactory;
@@ -479,8 +478,11 @@ public class ProjectReader {
         return true;
     }
 
-    public int simulationExists(int projectPK, String simulationName) {
-        return m_dao.simulationExists(projectPK, simulationName);
+    public boolean simulationExists(int projectPK, String simulationName) {
+        if (m_dao.simulationExists(projectPK, simulationName) > 0) {
+            return true;
+        }
+        return false;
     }
 
     public boolean projectHasSimulations(int projectPK) {
@@ -564,8 +566,8 @@ public class ProjectReader {
                 avgConsumptionsList.add(output.getDouble("AVG_CONSUMPTION"));
             }
 
-            ((ImportedResultTrafficPatterns)results).setTrafficPatternList(trafficPatternsList);
-            ((ImportedResultTrafficPatterns)results).setAverageConsumptionList(avgConsumptionsList);
+            ((ImportedResultTrafficPatterns) results).setTrafficPatternList(trafficPatternsList);
+            ((ImportedResultTrafficPatterns) results).setAverageConsumptionList(avgConsumptionsList);
 
             return results;
 
@@ -582,7 +584,6 @@ public class ProjectReader {
             if (output == null) {
                 return null;
             }
-
 
             ArrayList<TrafficPattern> trafficPatternsList = new ArrayList();
             ArrayList<Section> sectionList = new ArrayList();
@@ -604,11 +605,11 @@ public class ProjectReader {
                 avgConsumptionsList.add(output.getDouble("AVG_CONSUMPTION"));
             }
 
-            ((ImportedResultTrafficPatternsPath)results).setTrafficPatternList(trafficPatternsList);
-            ((ImportedResultTrafficPatternsPath)results).setSectionList(sectionList);
-            ((ImportedResultTrafficPatternsPath)results).setSegmentList(segmentList);
-            ((ImportedResultTrafficPatternsPath)results).setDirectionList(directionList);
-            ((ImportedResultTrafficPatternsPath)results).setSegAVGConsumption(avgConsumptionsList);
+            ((ImportedResultTrafficPatternsPath) results).setTrafficPatternList(trafficPatternsList);
+            ((ImportedResultTrafficPatternsPath) results).setSectionList(sectionList);
+            ((ImportedResultTrafficPatternsPath) results).setSegmentList(segmentList);
+            ((ImportedResultTrafficPatternsPath) results).setDirectionList(directionList);
+            ((ImportedResultTrafficPatternsPath) results).setSegAVGConsumption(avgConsumptionsList);
 
             return results;
 
@@ -626,7 +627,6 @@ public class ProjectReader {
                 return null;
             }
 
-
             TrafficPattern trafficPattern = project.getCurrentSimulation().getTrafficPatternByPK(trafficPatternPK);
             ArrayList<Section> sectionList = new ArrayList();
             ArrayList<Segment> segmentList = new ArrayList();
@@ -634,7 +634,6 @@ public class ProjectReader {
             ArrayList<Double> avgConsumptionsList = new ArrayList();
             ArrayList<Double> avgTimeSpentList = new ArrayList();
 
-            
             while (output.next()) {
 
                 Section sec = project.getRoadNetwork().getSectionByPK(output.getInt("ID_SECTION"));
@@ -647,15 +646,15 @@ public class ProjectReader {
 
                 avgConsumptionsList.add(output.getDouble("AVG_CONSUMPTION"));
                 avgTimeSpentList.add(output.getDouble("AVG_TIME_SPENT"));
-                
+
             }
 
-            ((ImportedResultSingleTrafficPattern)results).setTrafficPattern(trafficPattern);
-            ((ImportedResultSingleTrafficPattern)results).setSectionList(sectionList);
-            ((ImportedResultSingleTrafficPattern)results).setSegmentList(segmentList);
-            ((ImportedResultSingleTrafficPattern)results).setDirectionList(directionList);
-            ((ImportedResultSingleTrafficPattern)results).setAvgConsumption(avgConsumptionsList);
-            ((ImportedResultSingleTrafficPattern)results).setAvgTimeSpent(avgTimeSpentList);
+            ((ImportedResultSingleTrafficPattern) results).setTrafficPattern(trafficPattern);
+            ((ImportedResultSingleTrafficPattern) results).setSectionList(sectionList);
+            ((ImportedResultSingleTrafficPattern) results).setSegmentList(segmentList);
+            ((ImportedResultSingleTrafficPattern) results).setDirectionList(directionList);
+            ((ImportedResultSingleTrafficPattern) results).setAvgConsumption(avgConsumptionsList);
+            ((ImportedResultSingleTrafficPattern) results).setAvgTimeSpent(avgTimeSpentList);
 
             return results;
 
