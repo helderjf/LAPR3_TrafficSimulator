@@ -354,8 +354,7 @@ public class ProjectWriter {
 
     }
 
-    public boolean saveSimulationRun() {
-        Simulation sim = m_project.getCurrentSimulation();
+    public boolean saveSimulationRun(Simulation sim) {
         int simPK = sim.getPK();
         SimulationRun run = sim.getCurrentRun();
         ResultSimulation runResults = run.getResults();
@@ -383,12 +382,19 @@ public class ProjectWriter {
         }
 
         int[] injectedVTrafPatList = new int[endedVehiclesList.size()];
-        int[] injectedVSection = new int[endedVehiclesList.size()];
-        int[] injectedVSegment = new int[endedVehiclesList.size()];
-        String[] injectedVTravelDirection = new String[endedVehiclesList.size()];
-        double[] injectedVTimeIn = new double[endedVehiclesList.size()];
-        double[] injectedVTimeOut = new double[endedVehiclesList.size()];
-        double[] injectedVEnergy = new double[endedVehiclesList.size()];
+        
+        //count total path parcels
+        int totalParcels=0;
+        for(SimVehicle v : endedVehiclesList){
+            totalParcels+=v.getPath().size();
+        }
+        
+        int[] injectedVSection = new int[totalParcels];
+        int[] injectedVSegment = new int[totalParcels];
+        String[] injectedVTravelDirection = new String[totalParcels];
+        double[] injectedVTimeIn = new double[totalParcels];
+        double[] injectedVTimeOut = new double[totalParcels];
+        double[] injectedVEnergy = new double[totalParcels];
 
         fillInjecttedArrays(endedVehiclesList,
                 // cruisingVehiclesList,
@@ -408,8 +414,10 @@ public class ProjectWriter {
                 injectedVTimeIn,
                 injectedVTimeOut,
                 injectedVEnergy) == -1) {
+            
             return false;
         }
+        m_dao.commit();
         return true;
 
     }
@@ -422,16 +430,20 @@ public class ProjectWriter {
     }
 
     private void fillInjecttedArrays(ArrayList<SimVehicle> endedVehiclesList, int[] injectedVTrafPatList, int[] injectedVSection, int[] injectedVSegment, String[] injectedVTravelDirection, double[] injectedVTimeIn, double[] injectedVTimeOut, double[] injectedVEnergy) {
+        int j=0;
         for (int i = 0; i < endedVehiclesList.size(); i++) {
             injectedVTrafPatList[i] = endedVehiclesList.get(i).getTrafficPattern().getPK();
-
+            
             for (SimPathParcel pathParcel : endedVehiclesList.get(i).getPath()) {
-                injectedVSection[i] = pathParcel.getSection().getPK();
-                injectedVSegment[i] = pathParcel.getSegment().getIndex();
-                injectedVTravelDirection[i] = pathParcel.getDirection().toString();
-                injectedVTimeIn[i] = pathParcel.getSimInTime();
-                injectedVTimeOut[i] = pathParcel.getSimExitTime();
-                injectedVEnergy[i] = pathParcel.getSimEnergyConsumption();
+                
+                injectedVSection[j] = pathParcel.getSection().getPK();
+                injectedVSegment[j] = pathParcel.getSegment().getIndex();
+                injectedVTravelDirection[j] = pathParcel.getDirection().toString();
+                injectedVTimeIn[j] = pathParcel.getSimInTime();
+                injectedVTimeOut[j] = pathParcel.getSimExitTime();
+                injectedVEnergy[j] = pathParcel.getSimEnergyConsumption();
+                
+                j++;
             }
         }
 //        for (int i = endedVehiclesList.size(); i < (endedVehiclesList.size() + cruisingVehiclesList.size()); i++) {
@@ -575,8 +587,41 @@ public class ProjectWriter {
         return true;
     }
 
-    public boolean saveProjectCopy(Project m_activeProject, String name, String description) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    public boolean saveSimulationCopy(Project project, Simulation copySimulation) {
+        String simName = copySimulation.getName();
+        String simDesc = copySimulation.getDescription();
+        String simState = copySimulation.getState().getClass().getSimpleName();
+
+        int simPK = m_dao.saveNewSimulation(project.getPK(), simName, simDesc, simState);
+
+        if (simPK <= 0) {
+            return false;
+        }
+
+        copySimulation.setPK(simPK);
+
+        ArrayList<TrafficPattern> traffPatList = copySimulation.getTrafficPatternList();
+
+        int bNodePK;
+        int eNodePK;
+        int vPK;
+        double aRate;
+
+        for (TrafficPattern tp : traffPatList) {
+
+            bNodePK = tp.getBeginNode().getPK();
+            eNodePK = tp.getEndNode().getPK();
+            vPK = tp.getVehicle().getPK();
+            aRate = tp.getArrivalRate();
+
+            int tpPK = m_dao.saveNewTrafficPattern(simPK, bNodePK, eNodePK, vPK, aRate);
+            if (tpPK <= 0) {
+                return false;
+            }
+            tp.setPK(tpPK);
+        }
+        return true;
     }
 
 

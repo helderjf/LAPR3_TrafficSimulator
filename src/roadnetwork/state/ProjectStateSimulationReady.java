@@ -53,6 +53,11 @@ public class ProjectStateSimulationReady extends ProjectStateImpl {
     @Override
     public boolean canOpenSimulation() {
         return true;
+    }  
+    
+    @Override
+    public boolean canCopySimulation() {
+        return true;
     }    
         
 

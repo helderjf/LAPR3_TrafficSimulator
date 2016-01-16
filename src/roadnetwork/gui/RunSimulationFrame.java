@@ -80,15 +80,27 @@ public class RunSimulationFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     void runSimulation(String name, double duration, double timeStep, BestPathAlgorithm bpm) {
-       m_runResults= m_runSimulationContoller.setRunData(name, duration, timeStep, bpm);
-        
+        m_runResults = m_runSimulationContoller.setRunData(name, duration, timeStep, bpm);
+
         showResults();
     }
 
     private void showResults() {
-        setContentPane(new RunSimulationShowResults(this,m_runResults));
+        setContentPane(new RunSimulationShowResults(this, m_runResults));
         revalidate();
     }
 
-    
+    void saveResults() {
+        int response = m_runSimulationContoller.saveRun();
+        if (response == 1) {
+            JOptionPane.showMessageDialog(this, "The run results have been saved to the data base server.", "Simulation Run", JOptionPane.INFORMATION_MESSAGE);
+            setVisible(false);
+        } else if (response == -2) {
+            JOptionPane.showMessageDialog(this, "Error! The active simulation does not exist in the data base serve. You have to save the project first.", "Simulation Run", JOptionPane.INFORMATION_MESSAGE);
+        } else if (response == -3) {
+            JOptionPane.showMessageDialog(this, "Error! It was not possible to save the results to the data base server.", "Simulation Run", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }
+
 }

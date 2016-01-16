@@ -120,5 +120,10 @@ public class ProjectStateImpl implements ProjectState {
         return false;
     }
 
+    @Override
+    public boolean canCopySimulation() {
+        return false;
+    }
+
 
 }

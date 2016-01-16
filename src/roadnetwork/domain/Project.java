@@ -21,7 +21,6 @@ public class Project {
     private String m_description;
     private RoadNetwork m_roadNetwork;
     private ArrayList<Vehicle> m_vehicleList = new ArrayList<>();
-    ;
     private Simulation m_activeSimulation;//active simulation
     private ProjectState m_state;
 
@@ -260,6 +259,12 @@ public class Project {
     public boolean canCopyProject() {
         return m_state.canCopyProject();
     }
+
+    public boolean canCopySimulation() {
+        return m_state.canCopySimulation();
+    }
+
+
 
 
 }

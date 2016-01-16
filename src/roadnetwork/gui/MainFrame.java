@@ -123,6 +123,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void editSimulationProperties() {
         new EditSimulationPropertiesDialog(this, true);
     }
+    
+        private void copySimulation() {
+        new CopySimulationDialog(this, true);
+    }
 
     public Manager getManager() {
         return m_manager;
@@ -335,6 +339,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu7.add(jMenu8);
 
         jMenuItem10.setText("Copy Simulation");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem10);
 
         jMenuItem11.setText("Properties");
@@ -560,6 +569,10 @@ public class MainFrame extends javax.swing.JFrame {
         openSimualtion();
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        copySimulation();
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -594,5 +607,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+
 
 }

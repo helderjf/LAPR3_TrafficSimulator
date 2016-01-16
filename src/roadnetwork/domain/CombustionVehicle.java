@@ -97,6 +97,8 @@ public class CombustionVehicle extends Vehicle implements Combustion {
         }
         return true;
     }
+    
+    
 
     /**
      * 
