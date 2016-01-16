@@ -16,11 +16,11 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author josemiranda
+ * @author Andre
  */
-public class FastestPathAlgorithmTest {
-
-    Junction node0;
+public class MostEfficientPathRealConditionsTest {
+    
+        Junction node0;
     Junction node1;
     Junction node2;
     ArrayList<Junction> nodeList;
@@ -84,21 +84,22 @@ public class FastestPathAlgorithmTest {
     Vehicle vehicle1;
 
     ArrayList<Vehicle> vehicleList;
-
-    public FastestPathAlgorithmTest() {
+    
+    public MostEfficientPathRealConditionsTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
-        node0 = new Junction("node0");
+        
+                        node0 = new Junction("node0");
         node1 = new Junction("node1");
         node2 = new Junction("node2");
         nodeList = new ArrayList();
@@ -225,13 +226,13 @@ public class FastestPathAlgorithmTest {
         vehicleList = new ArrayList();
         vehicleList.add(vehicle1);
     }
-
+    
     @After
     public void tearDown() {
     }
 
     /**
-     * Test of getBestPathResults method, of class FastestPathAlgorithm.
+     * Test of getBestPathResults method, of class MostEfficientPathRealConditions.
      */
     @Test
     public void testGetBestPathResults() {
@@ -266,10 +267,23 @@ public class FastestPathAlgorithmTest {
         expResult.setPath(path);
         //assertEquals(expResult.getPath().size(), result.getPath().size());
         //assertEquals(expResult.getPath(), result.getPath());
+
     }
 
     /**
-     * Test of getBestPath method, of class FastestPathAlgorithm.
+     * Test of toString method, of class MostEfficientPathRealConditions.
+     */
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        TheoreticalMostEfficientPath instance = new TheoreticalMostEfficientPath();
+        String expResult = "Theoretical Most Efficient Path";
+        String result = instance.toString();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getBestPath method, of class MostEfficientPathRealConditions.
      */
     @Test
     public void testGetBestPath() {
@@ -287,19 +301,6 @@ public class FastestPathAlgorithmTest {
 
 
         assertEquals(expResult, result);
-        
     }
-
-    /**
-     * Test of toString method, of class FastestPathAlgorithm.
-     */
-    @Test
-    public void testToString() {
-        System.out.println("toString");
-        FastestPathAlgorithm instance = new FastestPathAlgorithm();
-        String expResult = "Fastest path";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-    }
-
+    
 }

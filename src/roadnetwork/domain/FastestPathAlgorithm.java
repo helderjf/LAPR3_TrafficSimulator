@@ -273,4 +273,12 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         return "Fastest path";
     }
 
+    public String showData()
+    {
+        StringBuilder data=new StringBuilder();
+        for (PathParcel pp : m_fastestPath) {
+            data.append(pp.getSection());
+        }
+        return data.toString();
+    }
 }
