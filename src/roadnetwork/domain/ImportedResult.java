@@ -5,10 +5,13 @@
  */
 package roadnetwork.domain;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author josemiranda
  */
 public interface ImportedResult {
     public String getGlobalResultsHTMLCode();
+
 }

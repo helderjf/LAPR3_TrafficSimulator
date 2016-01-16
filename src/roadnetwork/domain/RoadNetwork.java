@@ -23,14 +23,14 @@ public class RoadNetwork {
     /**
      *
      */
-    public RoadNetwork(){
+    public RoadNetwork() {
         m_PK = 0;
-        m_name="";
-        m_description="";
-        m_nodeList=new ArrayList<>();
-        m_sectionList=new ArrayList<>();
+        m_name = "";
+        m_description = "";
+        m_nodeList = new ArrayList<>();
+        m_sectionList = new ArrayList<>();
     }
-    
+
     /**
      *
      * @param name
@@ -45,22 +45,20 @@ public class RoadNetwork {
         m_nodeList = junctions;
         m_sectionList = sectionList;
     }
-    
-    public RoadNetwork(RoadNetwork otherRoadNetwork){
-        m_name=otherRoadNetwork.m_name;
-        m_description=otherRoadNetwork.m_description;
-        m_nodeList=new ArrayList();
-        for(Junction j : otherRoadNetwork.m_nodeList){
+
+    public RoadNetwork(RoadNetwork otherRoadNetwork) {
+        m_name = otherRoadNetwork.m_name;
+        m_description = otherRoadNetwork.m_description;
+        m_nodeList = new ArrayList();
+        for (Junction j : otherRoadNetwork.m_nodeList) {
             m_nodeList.add(new Junction(j));
         }
-        m_sectionList=new ArrayList();
-        for(Section s : otherRoadNetwork.m_sectionList){
+        m_sectionList = new ArrayList();
+        for (Section s : otherRoadNetwork.m_sectionList) {
             m_sectionList.add(new Section(s));
         }
-        
-        
+
     }
-    
 
     /**
      *
@@ -166,13 +164,24 @@ public class RoadNetwork {
 
     /**
      * Gets a node base on his ID
+     *
      * @param id
      * @return the node with the ID
      */
     public Junction getNodeByID(String id) {
         for (Junction m_nodeList1 : m_nodeList) {
-            if(m_nodeList1.getJunctionId() == null ? id == null : m_nodeList1.getJunctionId().equals(id))
+            if (m_nodeList1.getJunctionId() == null ? id == null : m_nodeList1.getJunctionId().equals(id)) {
                 return m_nodeList1;
+            }
+        }
+        return null;
+    }
+
+    public Section getSectionByPK(int pk) {
+        for (Section s : m_sectionList) {
+            if (s.getPK() == pk) {
+                return s;
+            }
         }
         return null;
     }

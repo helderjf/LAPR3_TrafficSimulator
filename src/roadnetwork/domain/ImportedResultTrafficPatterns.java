@@ -12,11 +12,9 @@ import java.util.ArrayList;
  * @author josemiranda
  */
 public class ImportedResultTrafficPatterns implements ImportedResult{
-    ArrayList<String> m_nodeOrig;
-    ArrayList<String> m_nodeDest;
-    ArrayList<String> m_vehicle;
-    ArrayList<Double> m_arrivalRate;
-    ArrayList<Double> m_avgConsumpion;
+    ArrayList<TrafficPattern> m_trafficPatternList;
+    ArrayList<Double> m_averageConsumptionList;
+
 
     @Override
     public String getGlobalResultsHTMLCode() {
@@ -58,6 +56,14 @@ public class ImportedResultTrafficPatterns implements ImportedResult{
     @Override
     public String toString() {
         return "Traffic Patterns Results";
+    }
+
+    public void setTrafficPatternList(ArrayList<TrafficPattern> trafficPatternsList) {
+        m_trafficPatternList=trafficPatternsList;
+    }
+
+    public void setAverageConsumptionList(ArrayList<Double> avgConsumptionsList) {
+        m_averageConsumptionList=avgConsumptionsList;
     }
     
     

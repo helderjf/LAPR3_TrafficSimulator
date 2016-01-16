@@ -13,16 +13,10 @@ import java.util.ArrayList;
  */
 public class ImportedResultTrafficPatternsPath implements ImportedResult{
 
-    ArrayList<String> m_nodeOrig;
-    ArrayList<String> m_nodeDest;
-    ArrayList<String> m_vehicle;
-    ArrayList<Double> m_arrivalRate;
-    
-    ArrayList<String> m_segRoad;
-    ArrayList<String> m_segInNode;
-    ArrayList<String> m_segOutNode;
-    ArrayList<Integer> m_segIndex;
-    ArrayList<String> m_segDirection;
+    ArrayList<TrafficPattern> m_trafficPatternList;
+    ArrayList<Section> m_sectionList;
+    ArrayList<Segment> m_segmentList;
+    ArrayList<SimDirection> m_directionList;
     ArrayList<Double> m_segAVGConsumption;
     
     
@@ -88,6 +82,29 @@ public class ImportedResultTrafficPatternsPath implements ImportedResult{
     public String toString() {
         return "Traffic Patterns Results per segment";
     }
+
+    public void setTrafficPatternList(ArrayList<TrafficPattern> trafficPatternList) {
+        this.m_trafficPatternList = trafficPatternList;
+    }
+
+    public void setSectionList(ArrayList<Section> sectionList) {
+        this.m_sectionList = sectionList;
+    }
+
+    public void setSegmentList(ArrayList<Segment> segmentList) {
+        this.m_segmentList = segmentList;
+    }
+
+    public void setDirectionList(ArrayList<SimDirection> directionList) {
+        this.m_directionList = directionList;
+    }
+
+    public void setSegAVGConsumption(ArrayList<Double> segAVGConsumption) {
+        this.m_segAVGConsumption = segAVGConsumption;
+    }
+    
+    
+    
     
     
 }

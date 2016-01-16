@@ -13,11 +13,10 @@ import java.util.ArrayList;
  */
 public class ImportedResultSingleTrafficPattern implements ImportedResult{
 
-    ArrayList<String> m_road;
-    ArrayList<String> m_inNode;
-    ArrayList<String> m_outNode;
-    ArrayList<Integer> m_segIndex;
-    ArrayList<String> m_direction;
+    TrafficPattern m_trafficPattern;
+    ArrayList<Section> m_sectionList;
+    ArrayList<Segment> m_segmentList;
+    ArrayList<SimDirection> m_directionList;
     ArrayList<Double> m_avgConsumption;
     ArrayList<Double> m_avgTimeSpent;
     
@@ -70,6 +69,33 @@ public class ImportedResultSingleTrafficPattern implements ImportedResult{
     public String toString() {
         return "Specific Traffic Pattern Results";
     }
+
+    public void setTrafficPattern(TrafficPattern trafficPattern) {
+        this.m_trafficPattern = trafficPattern;
+    }
+
+    public void setSectionList(ArrayList<Section> sectionList) {
+        this.m_sectionList = sectionList;
+    }
+
+    public void setSegmentList(ArrayList<Segment> segmentList) {
+        this.m_segmentList = segmentList;
+    }
+
+    public void setDirectionList(ArrayList<SimDirection> directionList) {
+        this.m_directionList = directionList;
+    }
+
+    public void setAvgConsumption(ArrayList<Double> avgConsumption) {
+        this.m_avgConsumption = avgConsumption;
+    }
+
+    public void setAvgTimeSpent(ArrayList<Double> avgTimeSpent) {
+        this.m_avgTimeSpent = avgTimeSpent;
+    }
+    
+    
+    
     
     
 }

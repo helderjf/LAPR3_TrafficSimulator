@@ -20,6 +20,7 @@ import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 import oracle.sql.ARRAY;
 import oracle.sql.ArrayDescriptor;
+import roadnetwork.domain.Project;
 import roadnetwork.domain.SectionDirection;
 import roadnetwork.domain.SectionTypology;
 
@@ -1364,7 +1365,7 @@ public class DataAccessObject {
     }
 
     HashMap<String, Integer> getOrderedRunsList(int simpk) {
-         try {
+        try {
             if (m_connection == null) {
                 if (!connect()) {
                     return null;//returns -1 so the caller knows the connection failed
@@ -1391,6 +1392,89 @@ public class DataAccessObject {
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns -1 so the caller knows the connection failed
+        }
+    }
+
+    ResultSet getRunResultsByTrafficPattern(Integer runPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_TRAF_PATS_AVG_CONSUMPTION(?,?)}");
+            statement.setInt(1, runPK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet output = (ResultSet) statement.getObject(2);
+
+            return output;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    
+        ResultSet getRunResultsByTrafficPatternAndSegments(Integer runPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_TRAF_PATS_SEGS_AVG_CONS(?,?)}");
+            statement.setInt(1, runPK);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet output = (ResultSet) statement.getObject(2);
+
+            return output;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    ResultSet getRunResultsForATrafficPattern(int runPK, int trafPatPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_SEGS_AVG_CONS_FOR_TRAFPAT(?,?,?)}");
+            statement.setInt(1, runPK);
+            statement.setInt(2, trafPatPK);
+            statement.registerOutParameter(3, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            ResultSet output = (ResultSet) statement.getObject(3);
+
+            return output;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns null so the caller knows the connection failed
         }
     }
 

@@ -137,4 +137,13 @@ public class Simulation {
         return m_state.canCopySimulation();
     }
 
+    public TrafficPattern getTrafficPatternByPK(int pk) {
+        for (TrafficPattern tp : m_trafficPatternList) {
+            if (tp.getPK() == pk) {
+                return tp;
+            }
+        }
+        return null;
+    }
+
 }

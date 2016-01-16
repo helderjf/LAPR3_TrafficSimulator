@@ -12,6 +12,10 @@ import java.util.HashMap;
 import roadnetwork.domain.CombustionVehicle;
 import roadnetwork.domain.ElectricVehicle;
 import roadnetwork.domain.HybridVehicle;
+import roadnetwork.domain.ImportedResult;
+import roadnetwork.domain.ImportedResultSingleTrafficPattern;
+import roadnetwork.domain.ImportedResultTrafficPatterns;
+import roadnetwork.domain.ImportedResultTrafficPatternsPath;
 import roadnetwork.domain.SectionDirection;
 import roadnetwork.domain.Junction;
 import roadnetwork.domain.Project;
@@ -20,6 +24,7 @@ import roadnetwork.domain.RoadNetwork;
 import roadnetwork.domain.Section;
 import roadnetwork.domain.SectionTypology;
 import roadnetwork.domain.Segment;
+import roadnetwork.domain.SimDirection;
 import roadnetwork.domain.Simulation;
 import roadnetwork.domain.Throttle;
 import roadnetwork.domain.TrafficPattern;
@@ -547,6 +552,125 @@ public class ProjectReader {
         return m_dao.getOrderedRunsList(simpk);
     }
 
+    public ImportedResult getRunResultsByTrafficPattern(Project project, int runPK) {
+        try {
+            ResultSet output = m_dao.getRunResultsByTrafficPattern(runPK);
+            if (output == null) {
+                return null;
+            }
 
+            ImportedResult results = new ImportedResultTrafficPatterns();
+
+            ArrayList<TrafficPattern> trafficPatternsList = new ArrayList();
+            ArrayList<Double> avgConsumptionsList = new ArrayList();
+
+            while (output.next()) {
+                trafficPatternsList.add(project.getCurrentSimulation().getTrafficPatternByPK(output.getInt("ID_TRAFFIC_PATTERN")));
+                avgConsumptionsList.add(output.getDouble("AVG_CONSUMPTION"));
+            }
+
+            ((ImportedResultTrafficPatterns)results).setTrafficPatternList(trafficPatternsList);
+            ((ImportedResultTrafficPatterns)results).setAverageConsumptionList(avgConsumptionsList);
+
+            return results;
+
+        } catch (SQLException ex) {
+            System.out.println("ImportedResultTrafficPatterns not retrieved");
+            System.out.println(ex);
+            return null;
+        }
+    }
+
+    public ImportedResult getRunResultsByTrafficPatternAndSegment(Project project, int runPK) {
+        try {
+            ResultSet output = m_dao.getRunResultsByTrafficPatternAndSegments(runPK);
+            if (output == null) {
+                return null;
+            }
+
+            ImportedResult results = new ImportedResultTrafficPatternsPath();
+
+            ArrayList<TrafficPattern> trafficPatternsList = new ArrayList();
+            ArrayList<Section> sectionList = new ArrayList();
+            ArrayList<Segment> segmentList = new ArrayList();
+            ArrayList<SimDirection> directionList = new ArrayList();
+            ArrayList<Double> avgConsumptionsList = new ArrayList();
+
+            while (output.next()) {
+                trafficPatternsList.add(project.getCurrentSimulation().getTrafficPatternByPK(output.getInt("ID_TRAFFIC_PATTERN")));
+
+                Section sec = project.getRoadNetwork().getSectionByPK(output.getInt("ID_SECTION"));
+                sectionList.add(sec);
+
+                Segment seg = sec.getSegmentByPK(output.getInt("SEGMENT_INDEX"));
+                segmentList.add(seg);
+
+                directionList.add(SimDirection.valueOf(output.getString("Direction")));
+
+                avgConsumptionsList.add(output.getDouble("AVG_CONSUMPTION"));
+            }
+
+            ((ImportedResultTrafficPatternsPath)results).setTrafficPatternList(trafficPatternsList);
+            ((ImportedResultTrafficPatternsPath)results).setSectionList(sectionList);
+            ((ImportedResultTrafficPatternsPath)results).setSegmentList(segmentList);
+            ((ImportedResultTrafficPatternsPath)results).setDirectionList(directionList);
+            ((ImportedResultTrafficPatternsPath)results).setSegAVGConsumption(avgConsumptionsList);
+
+            return results;
+
+        } catch (SQLException ex) {
+            System.out.println("ImportedResultTrafficPatternsPath not retrieved");
+            System.out.println(ex);
+            return null;
+        }
+    }
+
+    public ImportedResult getRunResultsByTrafficPatternAndSegment(Project project, int runPK, int trafficPatternPK) {
+        try {
+            ResultSet output = m_dao.getRunResultsForATrafficPattern(runPK, trafficPatternPK);
+            if (output == null) {
+                return null;
+            }
+
+            ImportedResult results = new ImportedResultSingleTrafficPattern();
+
+            TrafficPattern trafficPattern = project.getCurrentSimulation().getTrafficPatternByPK(trafficPatternPK);
+            ArrayList<Section> sectionList = new ArrayList();
+            ArrayList<Segment> segmentList = new ArrayList();
+            ArrayList<SimDirection> directionList = new ArrayList();
+            ArrayList<Double> avgConsumptionsList = new ArrayList();
+            ArrayList<Double> avgTimeSpentList = new ArrayList();
+
+            
+            while (output.next()) {
+
+                Section sec = project.getRoadNetwork().getSectionByPK(output.getInt("ID_SECTION"));
+                sectionList.add(sec);
+
+                Segment seg = sec.getSegmentByPK(output.getInt("SEGMENT_INDEX"));
+                segmentList.add(seg);
+
+                directionList.add(SimDirection.valueOf(output.getString("Direction")));
+
+                avgConsumptionsList.add(output.getDouble("AVG_CONSUMPTION"));
+                avgTimeSpentList.add(output.getDouble("AVG_TIME_SPENT"));
+                
+            }
+
+            ((ImportedResultSingleTrafficPattern)results).setTrafficPattern(trafficPattern);
+            ((ImportedResultSingleTrafficPattern)results).setSectionList(sectionList);
+            ((ImportedResultSingleTrafficPattern)results).setSegmentList(segmentList);
+            ((ImportedResultSingleTrafficPattern)results).setDirectionList(directionList);
+            ((ImportedResultSingleTrafficPattern)results).setAvgConsumption(avgConsumptionsList);
+            ((ImportedResultSingleTrafficPattern)results).setAvgTimeSpent(avgTimeSpentList);
+
+            return results;
+
+        } catch (SQLException ex) {
+            System.out.println("ImportedResultSingleTrafficPattern not retrieved");
+            System.out.println(ex);
+            return null;
+        }
+    }
 
 }

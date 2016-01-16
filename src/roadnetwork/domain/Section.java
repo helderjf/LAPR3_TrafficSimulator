@@ -91,20 +91,18 @@ public class Section {
      * @param s Section copy
      */
     public Section(Section otherSection) {
-     roadName=otherSection.roadName;
-     beginningNode=otherSection.beginningNode;
-     endingNode=otherSection.endingNode;
-     typology=otherSection.typology;
-     direction=otherSection.direction;
-     toll=otherSection.toll;
-     wind=new Wind(otherSection.wind);
-     segmentsList = new ArrayList();
-     for(Segment seg : otherSection.segmentsList){
-         segmentsList.add(new Segment(seg));
-     }
-     
-        
-        
+        roadName = otherSection.roadName;
+        beginningNode = otherSection.beginningNode;
+        endingNode = otherSection.endingNode;
+        typology = otherSection.typology;
+        direction = otherSection.direction;
+        toll = otherSection.toll;
+        wind = new Wind(otherSection.wind);
+        segmentsList = new ArrayList();
+        for (Segment seg : otherSection.segmentsList) {
+            segmentsList.add(new Segment(seg));
+        }
+
     }
 
     /**
@@ -287,14 +285,21 @@ public class Section {
         this.roadName = roadId;
     }
 
-    
-
     public void setPK(int pk) {
         m_pk = pk;
     }
 
     public int getPK() {
         return m_pk;
+    }
+
+    public Segment getSegmentByPK(int index) {
+        for (Segment seg : segmentsList) {
+            if (seg.getIndex() == index) {
+                return seg;
+            }
+        }
+        return null;
     }
 
 }
