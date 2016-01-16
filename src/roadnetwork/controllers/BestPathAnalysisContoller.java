@@ -136,7 +136,7 @@ public class BestPathAnalysisContoller {
     }
     
     public boolean exportGlobalResultsHTML(String fileName){
-        ExportHTML html = new ExportHTML(fileName);
+        ExportHTML html = m_manager.newHTML(fileName);
         ArrayList<Result> results = new ArrayList<>();
         results.add(m_analysisResult);
         return html.exportGlobalResults(results);

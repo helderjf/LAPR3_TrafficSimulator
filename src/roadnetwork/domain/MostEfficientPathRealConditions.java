@@ -42,7 +42,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm {
 
         GraphAlgorithms.calculateShortestPath(m_graph, m_originNode, m_destinyNode, m_bestPath);
 
-        claculateStaticData();
+        calculateStaticData();
         
         return m_bestPath;
     }
@@ -71,7 +71,7 @@ public class MostEfficientPathRealConditions implements BestPathAlgorithm {
     }
 
     //---Data Calculation---
-    private void claculateStaticData() {
+    private void calculateStaticData() {
         for (PathParcel pp : m_bestPath) {
             //Section's Travel Time
             pp.setTheoreticalTravelTime(calculateSectionTravelTime(pp.getSection()));

@@ -7,12 +7,8 @@ package roadnetwork.domain;
 
 /**
  *
- * @author André Pedrosa, Hélder Faria, José Miranda, Rubén Rosário
+ * @author josemiranda
  */
-public interface Result {
-    
-    public String printResults();
-    
-    public String getResultsHTMLCode();
-    
+public interface ImportedResult {
+    public String getGlobalResultsHTMLCode();
 }

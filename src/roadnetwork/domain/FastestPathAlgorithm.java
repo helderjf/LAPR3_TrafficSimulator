@@ -44,7 +44,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
         
         GraphAlgorithms.calculateShortestPath(m_graph, m_originNode, m_destinyNode, m_fastestPath);
 
-        claculateStaticData();
+        calculateStaticData();
         
         //
         return m_fastestPath;
@@ -75,7 +75,7 @@ public class FastestPathAlgorithm implements BestPathAlgorithm {
     }
 
     //---Data Calculation---
-    private void claculateStaticData(){
+    private void calculateStaticData(){
         for (PathParcel pp : m_fastestPath) {
             //Section's Travel Time
             pp.setTheoreticalTravelTime(calculateSectionTravelTime(pp.getSection()));
