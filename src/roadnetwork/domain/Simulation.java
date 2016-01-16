@@ -23,15 +23,30 @@ public class Simulation {
     
     private SimulationRun m_currentRun;
 
+    
+    
     public Simulation() {
         m_state = new SimulationStateCreated(this);
     }
+    
+    
 
     Simulation(String name, String description) {
         m_name = name;
         m_description = description;
         m_state = new SimulationStateCreated(this);
     }
+
+    public Simulation(int m_pk, String m_name, String m_description, SimulationState m_state, ArrayList<TrafficPattern> m_trafficPatternList, SimulationRun m_currentRun) {
+        this.m_pk = m_pk;
+        this.m_name = m_name;
+        this.m_description = m_description;
+        this.m_state = m_state;
+        this.m_trafficPatternList = m_trafficPatternList;
+        this.m_currentRun = m_currentRun;
+    }
+    
+    
 
     public String getName() {
         return m_name;

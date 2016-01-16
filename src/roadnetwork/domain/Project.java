@@ -223,4 +223,17 @@ public class Project {
         return m_state.simulationPropertiesChanged();
     }
 
+    public boolean canOpenSimulation() {
+        return m_state.canOpenSimulation();
+    }
+
+    public Vehicle getVehicleByPK(int vehiclePK) {
+        for (Vehicle v : m_vehicleList) {
+            if (v.getPK() == vehiclePK) {
+                return v;
+            }
+        }
+        return null;
+    }
+
 }
