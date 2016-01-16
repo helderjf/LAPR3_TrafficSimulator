@@ -85,7 +85,9 @@ public class Vertex<V,E> {
      */
     @Override
     public String toString() {
-       return element + " (" + key + "): " ; }   
+       String result = element + " (" + key + "): ";
+       return  result; 
+    }   
 
 }
 
