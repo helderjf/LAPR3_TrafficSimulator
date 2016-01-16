@@ -576,7 +576,6 @@ public class DataAccessObject {
             //int[] errors = new int[droppedTrafPatList.length];//to do tratar erros
             //ARRAY ora_errors = ((OracleCallableStatement) statement).getARRAY(4);//to do tratar erros
             //errors = ora_errors.getIntArray();//to do tratar erros
-
             return 1;
 
         } catch (SQLException ex) {
@@ -625,7 +624,6 @@ public class DataAccessObject {
             ARRAY output = ((OracleCallableStatement) statement).getARRAY(3);
 
             int[] injectedVehiclesPK = output.getIntArray();
-            
 
             statement = m_connection.prepareCall("{call SAVE_INJECTED_V_BEHAVIOURS(?,?,?,?,?,?,?,?)}");
 
@@ -645,7 +643,6 @@ public class DataAccessObject {
             //int[] errors = new int[injectedVehiclesPK.length];//to do tratar erros
             //ARRAY ora_errors = ((OracleCallableStatement) statement).getARRAY(4);//to do tratar erros
             //errors = ora_errors.getIntArray();//to do tratar erros
-
             return 1;
 
         } catch (SQLException ex) {
@@ -1339,6 +1336,61 @@ public class DataAccessObject {
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    int simulationHasruns(int simpk) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return -1;
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call CHECK_SIMULATION_HAS_RUNS(?,?)}");
+            statement.setInt(1, simpk);
+            statement.registerOutParameter(2, Types.INTEGER);
+
+            //executar query
+            statement.execute();
+
+            return statement.getInt(2);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;//returns null so the caller knows the connection failed
+        }
+    }
+
+    HashMap<String, Integer> getOrderedRunsList(int simpk) {
+         try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call GET_ORDERED_RUNS_LIST(?,?)}");
+            statement.setInt(1, simpk);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
+
+            //executar query
+            statement.execute();
+
+            m_output = (ResultSet) statement.getObject(2);
+
+            HashMap<String, Integer> runsMap = new HashMap();
+            while (m_output.next()) {
+                runsMap.put(m_output.getString(2), m_output.getInt(1));
+            }
+
+            return runsMap;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//returns -1 so the caller knows the connection failed
         }
     }
 

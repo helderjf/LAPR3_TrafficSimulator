@@ -127,20 +127,10 @@ public class ExportRunResultsChooseRunPane extends javax.swing.JPanel {
         if (jList1.getSelectedValue() == null || jComboBox1.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "You must fill all fields.", "Insuficient data", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            String run = (String) jList1.getSelectedValue().toString().trim();
+            String run = (String) jList1.getSelectedValue().toString();
             ImportedResult impResult = (ImportedResult) jComboBox1.getSelectedItem();
-
-            if (jComboBox1.getSelectedIndex() == 2) {
-                m_ancestor.selectTrafficPattern(run, impResult);
-            } else {
-                boolean flag = m_ancestor.exportResults("Simulation Detailed Results", run, impResult);
-                if (flag == true) {
-                    JOptionPane.showMessageDialog(this, "The selected run's results were correctly exported.", "Success", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Unnable to export the results.", "Error", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-            m_ancestor.setVisible(false);
+            m_ancestor.selectRunAndExportType(run,impResult);
+ 
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

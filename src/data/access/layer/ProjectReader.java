@@ -536,4 +536,17 @@ public class ProjectReader {
 
     }
 
+    public boolean simulationHasRuns(int simpk) {
+        if (m_dao.simulationHasruns(simpk) == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public HashMap<String, Integer> getSimulationRunsOrderedList(int simpk) {
+        return m_dao.getOrderedRunsList(simpk);
+    }
+
+
+
 }

@@ -8,6 +8,7 @@ package roadnetwork.controllers;
 import IO.ExportHTML;
 import data.access.layer.ProjectReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import roadnetwork.domain.ImportedResult;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
@@ -25,6 +26,7 @@ public class ExportRunResultsController {
     private Simulation m_simulation;
     private ProjectReader m_projectReader;
     private ArrayList<String> m_simulationRuns;
+    private HashMap<String,Integer> m_runsMap;
     
     
     public ExportRunResultsController(Manager manager){
@@ -39,17 +41,32 @@ public class ExportRunResultsController {
         if (m_project.getCurrentSimulation()==null) {
             return -2;
         }
+        m_simulation=m_project.getCurrentSimulation();
         m_projectReader=m_manager.getProjectReader();
-        //m_simulationRuns=m_projectReader.getSimulationRuns(m_simulation);
-        if (m_simulationRuns==null) {
+        if(!m_projectReader.simulationExists(m_project.getPK(), m_simulation.getName())){
             return -3;
         }
-        return 0;
+        if (!m_projectReader.simulationHasRuns(m_simulation.getPK())) {
+            return -4;
+        }
+
+        
+        return 1;
     }
     
+    
+    
     public ArrayList<String> getSimulationRuns(){
-        return m_simulationRuns;
+                m_runsMap=m_projectReader.getSimulationRunsOrderedList(m_simulation.getPK());
+        
+       for(String rname : m_runsMap.keySet()){
+           m_simulationRuns.add(rname);
+       }
+       return m_simulationRuns;
     }
+    
+    
+    
     
     public ArrayList<ImportedResult> getImportedResultOptions(){
         return m_manager.createImportedResults();
@@ -63,10 +80,12 @@ public class ExportRunResultsController {
         //ToDo - construir impResult de acordo com a run recebida
         
         ExportHTML html =m_manager.newHTML(fileName);
+        
+        
         return html.exportDetailedResults(impResult);
     }
     
-    public boolean exportResultsSpecieficTP(String fileName, String run, ImportedResult impResult, String tpattern){
+    public boolean exportResults(String fileName, String run, ImportedResult impResult, String tpattern){
         //ToDo - construir impResult de acordo com a run e tpattern recebidos
         
         ExportHTML html =m_manager.newHTML(fileName);
