@@ -1420,8 +1420,7 @@ public class DataAccessObject {
         }
     }
 
-    
-        ResultSet getRunResultsByTrafficPatternAndSegments(Integer runPK) {
+    ResultSet getRunResultsByTrafficPatternAndSegments(Integer runPK) {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1446,12 +1445,6 @@ public class DataAccessObject {
         }
     }
 
-    
-    
-    
-    
-    
-    
     ResultSet getRunResultsForATrafficPattern(int runPK, int trafPatPK) {
         try {
             if (m_connection == null) {
@@ -1475,6 +1468,29 @@ public class DataAccessObject {
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
+        }
+    }
+
+    boolean deleteSimulationRun(int runPK) {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return false;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            //criar statement
+            CallableStatement statement = m_connection.prepareCall("{call DELETE_SIMULATION_RUN(?)}");
+            statement.setInt(1, runPK);
+
+            //executar query
+            statement.execute();
+
+            return true;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return false;//returns -1 so the caller knows the connection failed
         }
     }
 

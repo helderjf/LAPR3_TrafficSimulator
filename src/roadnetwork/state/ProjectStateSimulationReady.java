@@ -44,21 +44,25 @@ public class ProjectStateSimulationReady extends ProjectStateImpl {
     public boolean canSimulate() {
         return true;
     }
-    
+
     @Override
-    public boolean vehiclesAssigned(){
+    public boolean vehiclesAssigned() {
         return true;
     }
-    
+
     @Override
     public boolean canOpenSimulation() {
         return true;
-    }  
-    
+    }
+
     @Override
     public boolean canCopySimulation() {
         return true;
-    }    
-        
+    }
+
+    @Override
+    public boolean canDeleteRun() {
+        return true;
+    }
 
 }

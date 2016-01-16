@@ -146,4 +146,8 @@ public class Simulation {
         return null;
     }
 
+    public boolean canDeleteRun() {
+        return m_state.canDeleteRun();
+    }
+
 }

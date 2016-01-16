@@ -264,6 +264,10 @@ public class Project {
         return m_state.canCopySimulation();
     }
 
+    public boolean canDeleteRun() {
+        return m_state.canDeleteRun();
+    }
+
 
 
 

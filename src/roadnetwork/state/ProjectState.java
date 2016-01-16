@@ -49,5 +49,7 @@ public interface ProjectState {
 
     public boolean canCopySimulation();
 
+    public boolean canDeleteRun();
+
 }
     

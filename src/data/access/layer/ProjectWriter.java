@@ -624,6 +624,10 @@ public class ProjectWriter {
         return true;
     }
 
+    public boolean deleteSimulationRun(int runPK) {
+        return m_dao.deleteSimulationRun(runPK);
+    }
+
 
     
     
