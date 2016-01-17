@@ -16,6 +16,9 @@ import java.util.Objects;
  */
 public class CombustionVehicle extends Vehicle implements Combustion {
 
+    private final double dieselEnergy = 48000; //J/g
+    private final double gasolineEnergy = 44400; //J/g
+    
     /**
      *
      */
@@ -146,6 +149,45 @@ public class CombustionVehicle extends Vehicle implements Combustion {
 //        });
 
         return engineEfficiencyList;
+    }
+    
+    
+    @Override
+    public  double getIdleConsumption(double timeIdle){
+        double rpmLow = 999999;
+        double torque = 0;
+        double sfc = 0;
+        double result = 0;
+
+        for (Throttle t : throttleList) {
+            if (t.getID().startsWith("25")) {
+                for (Regime r : t.getRegimeList()) {
+                    if (r.getRPMLow() < rpmLow) {
+                        rpmLow = r.getRPMLow();
+                        torque = r.getTorque();
+                        sfc = r.getSfc();
+                    }
+                }
+            }
+        }
+        result = (2 * 3.1415 * torque * (rpmLow / 60) * sfc * timeIdle)/3600000;
+
+        return result;
+
+    }
+
+    /**
+     * @return the dieselEnergy
+     */
+    public double getDieselEnergy() {
+        return dieselEnergy;
+    }
+
+    /**
+     * @return the gasolineEnergy
+     */
+    public double getGasolineEnergy() {
+        return gasolineEnergy;
     }
 
 }

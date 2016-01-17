@@ -5,6 +5,9 @@
  */
 package roadnetwork.gui;
 
+import java.sql.SQLRecoverableException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.CreateSimulationController;
 
@@ -64,16 +67,21 @@ public class CreateSimulationFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     void createSimulation(String name, String description, String filepath) {
-       if(m_createSimulationController.simulationExists(name)){
-           m_createSimulationController.setSimulation(name, description);
-           if(m_createSimulationController.setTrafficFile(filepath)){
-               JOptionPane.showMessageDialog(this,"Simulation created with success.");
-               setVisible(false);
-           } else {
-               JOptionPane.showMessageDialog(this,"An error was found while load traffic pattern file. Please try again.");
-           }
-       } else {
-           JOptionPane.showMessageDialog(this,"This simulation already exists.");
-       }
+        try {
+            if (!m_createSimulationController.simulationExists(name)) {
+                m_createSimulationController.setSimulation(name, description);
+                if (m_createSimulationController.setTrafficFile(filepath)) {
+                    JOptionPane.showMessageDialog(this, "Simulation created with success.");
+                    setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(this, "An error was found while load traffic pattern file. Please try again.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "This simulation already exists.");
+            }
+        } catch (SQLRecoverableException ex) {
+            JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(CreateSimulationFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

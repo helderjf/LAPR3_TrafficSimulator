@@ -72,8 +72,14 @@ public class ImportedResultSingleTrafficPattern implements ImportedResult{
                     + m_directionList.get(i)
                     + "</td>"
                     + "<td>"
-                    + String.format("%.2f",m_avgConsumption.get(i))
-                    + "</td>"
+                    + String.format("%.1f",m_avgConsumption.get(i));
+                    if (m_trafficPattern.getVehicle() instanceof CombustionVehicle) {
+                        results+=" g";
+                    }else{
+                        results+=" J";
+                    }
+            results
+                    += "</td>"
                     + "<td>"
                     + String.format("%.2f",m_avgTimeSpent.get(i))
                     + "</td>"

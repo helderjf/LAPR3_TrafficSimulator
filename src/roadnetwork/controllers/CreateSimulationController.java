@@ -6,6 +6,7 @@
 package roadnetwork.controllers;
 
 import IO.ImportSimulationXML;
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
@@ -34,28 +35,21 @@ public class CreateSimulationController {
         return false;
     }
 
-    public boolean simulationExists(String simulationName) {
-        //TODO
-        /*if (m_project.simulationExists(simulationName)) {
-         return true;
-         }
-         if (m_project.hasPK()) {
-         return m_manager.getProjectReader().simulationExists(m_project.getPK(), simulationName);
-         }
-         return false;*/
+    public boolean simulationExists(String simulationName) throws SQLRecoverableException {
+        if (m_project.simulationExists(simulationName)) {
+            return true;
+        }
+        if (m_project.hasPK()) {
+            return m_manager.getProjectReader().simulationExists(m_project.getPK(), simulationName);
+        }
         return true;
     }
 
-    public void setSimulation(String simulationName, String description) {//to do descomentar isto e mudar o método para boolean
-//        if (m_manager.getProjectReader().simulationExists(m_project.getPK(), simulationName)
-//                || m_project.simulationExists(simulationName)) {
-//            return false;
-//        }
+    public void setSimulation(String simulationName, String description) {
         m_simulation = m_project.newSimulation(simulationName, description);
     }
 
     public boolean setTrafficFile(String filepath) {
-        System.out.println("SOUT");
         if (filepath == null) {
             System.out.println("File path null");
             return false;

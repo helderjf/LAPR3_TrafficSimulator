@@ -27,7 +27,7 @@ public class ImportedResultTrafficPatterns implements ImportedResult{
                     + "<th>Origin Node</th>"
                     + "<th>Destiny Node</th>"
                     + "<th>Vehicle</th>"
-                    + "<th>Arrival Rate (s)</th>"
+                    + "<th>Arrival Rate</th>"
                     + "<th>Average Consumption</th>"
                 + "</tr>";
         for (int i = 0; i < m_trafficPatternList.size(); i++) {
@@ -46,8 +46,14 @@ public class ImportedResultTrafficPatterns implements ImportedResult{
                     + String.format("%.2f",m_trafficPatternList.get(i).getArrivalRate())
                     + "</td>"
                     + "<td>"
-                    + String.format("%.2f",m_averageConsumptionList.get(i))
-                    + "</td>"
+                    + String.format("%.1f",m_averageConsumptionList.get(i));
+                    if (m_trafficPatternList.get(i).getVehicle() instanceof CombustionVehicle) {
+                        results+=" g";
+                    }else{
+                        results+=" J";
+                    }
+            results
+                    += "</td>"
                     +"</tr>";
         }
         results += "</table>";
