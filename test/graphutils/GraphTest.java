@@ -92,104 +92,10 @@ public class GraphTest {
 	assertTrue("vertices should now be empty", (itVerts.hasNext()==false));	
     }
 
-    /**
-     * Test of numEdges method, of class Graph.
-     */
-    @Test
-    public void testNumEdges() {
-        System.out.println("Test numEdges");
-
-        assertTrue("result should be zero", (instance.numEdges()==0));
-        System.out.println("ZEROOOO"+instance.numEdges());
-
-        Edge<String,String> edge1=instance.insertEdge("A","B","Edge1",6);
-        assertTrue("result should be one", (instance.numEdges()==1));
-        System.out.println("UMMMMMM:"+instance.numEdges());
-        
-        Edge<String,String> edge2=instance.insertEdge("A","C","Edge2",1);
-        assertTrue("result should be two", (instance.numEdges()==2));
-        
-        instance.removeEdge(edge1);
-        System.out.println("UMMMMMM:"+instance.numEdges());
-        assertTrue("result should be one", (instance.numEdges()==1)); 
 
 
-        instance.removeEdge(edge2);
-        assertTrue("result should be zero", (instance.numEdges()==0));
-    }
 
-    /**
-     * Test of edges method, of class Graph.
-     */
-    @Test
-    public void testEdges() {
-        System.out.println("Test Edges");
 
-        Iterator<Edge<String,String>> itEdge = instance.edges().iterator();
-
-        assertTrue("edges should be empty", (itEdge.hasNext()==false));
-
-        Edge<String,String> edge1=instance.insertEdge("A","B","Edge1",6);
-        Edge<String,String> edge2=instance.insertEdge("A","C","Edge2",1);
-        Edge<String,String> edge3=instance.insertEdge("B","D","Edge3",3);
-        Edge<String,String> edge4=instance.insertEdge("C","D","Edge4",4);
-        Edge<String,String> edge5=instance.insertEdge("C","E","Edge5",1);
-        Edge<String,String> edge6=instance.insertEdge("D","A","Edge6",2);
-        Edge<String,String> edge7=instance.insertEdge("E","D","Edge7",1);
-        Edge<String,String> edge8=instance.insertEdge("E","E","Edge8",1);
-
-        itEdge = instance.edges().iterator();
-        
-        itEdge.next(); itEdge.next();
-        assertTrue("third edge should be edge3", (itEdge.next().equals(edge3)==true));
-        itEdge.next(); itEdge.next();
-        assertTrue("sixth edge should be edge6", (itEdge.next().equals(edge6)==true));
-        
-        instance.removeEdge(edge1);
-
-        itEdge = instance.edges().iterator();
-        assertTrue("first edge should now be edge2", (itEdge.next().equals(edge2)==true));
-
-        instance.removeEdge(edge2); instance.removeEdge(edge3);
-        instance.removeEdge(edge4); instance.removeEdge(edge5);
-        instance.removeEdge(edge6); instance.removeEdge(edge7);
-        instance.removeEdge(edge8);
-        itEdge = instance.edges().iterator();
-        assertTrue("vertices should now be empty", (itEdge.hasNext()==false));
-    }
-
-    /**
-     * Test of getEdge method, of class Graph.
-     */
-    @Test
-    public void testGetEdge() {
-        System.out.println("Test getEdge");
-		
-        Vertex<String,String> vert1=instance.insertVertex("A");
-        Vertex<String,String> vert2=instance.insertVertex("B");
-        Vertex<String,String> vert3=instance.insertVertex("C");
-        Vertex<String,String> vert4=instance.insertVertex("D");
-        Vertex<String,String> vert5=instance.insertVertex("E");
-        
-        Edge<String,String> edge1=instance.insertEdge("A","B","Edge1",6);
-        Edge<String,String> edge2=instance.insertEdge("A","C","Edge2",1);
-        Edge<String,String> edge3=instance.insertEdge("B","D","Edge3",3);
-        Edge<String,String> edge4=instance.insertEdge("C","D","Edge4",4);
-        Edge<String,String> edge5=instance.insertEdge("C","E","Edge5",1);
-        Edge<String,String> edge6=instance.insertEdge("D","A","Edge6",2);
-        Edge<String,String> edge7=instance.insertEdge("E","D","Edge7",1);
-        Edge<String,String> edge8=instance.insertEdge("E","E","Edge8",1);
-		
-        assertTrue("edge should be null", instance.getEdge(vert2,vert5)==null);
-		
-        assertTrue("edge should be edge3", instance.getEdge(vert2,vert4).equals(edge3)==true);       
-        assertTrue("edge should be null", instance.getEdge(vert4,vert2)==null);
-
-	instance.removeEdge(edge6);	
-        assertTrue("edge should be null", instance.getEdge(vert4, vert1)==null);
-        
-        assertTrue("edge should be edge8", instance.getEdge(vert5, vert5).equals(edge8)==true);
-    }
 
     /**
      * Test of endVertices method, of class Graph.
@@ -332,96 +238,8 @@ public class GraphTest {
         assertTrue("in degree should be 2", indeg==2);  
     }
 
-    /**
-     * Test of outgoingEdges method, of class Graph.
-     */
-    @Test
-    public void testOutgoingEdges() {
-        System.out.println(" Test outgoingEdges");
-        		
-        Vertex<String,String> vert1=instance.insertVertex("A");
-        Vertex<String,String> vert2=instance.insertVertex("B");
-        Vertex<String,String> vert3=instance.insertVertex("C");
-        Vertex<String,String> vert4=instance.insertVertex("D");
-        Vertex<String,String> vert5=instance.insertVertex("E");
-        
-        Edge<String,String> edge1=instance.insertEdge("A","B","Edge1",6);
-        Edge<String,String> edge2=instance.insertEdge("A","C","Edge2",1);
-        Edge<String,String> edge3=instance.insertEdge("B","D","Edge3",3);
-        Edge<String,String> edge4=instance.insertEdge("C","D","Edge4",4);
-        Edge<String,String> edge5=instance.insertEdge("C","E","Edge5",1);
-        Edge<String,String> edge6=instance.insertEdge("D","A","Edge6",2);
-        Edge<String,String> edge7=instance.insertEdge("E","D","Edge7",1);
-        Edge<String,String> edge8=instance.insertEdge("E","E","Edge8",1);
-		                        
-        Iterator<Edge<String,String>> itEdge = instance.outgoingEdges(vert3).iterator();
-        Edge<String,String> first = itEdge.next();
-        Edge<String,String> second = itEdge.next();
-        assertTrue("Outgoing Edges of vert3 should be edge4 and edge5",
-                ((first.equals(edge4)==true) && (second.equals(edge5)==true)) ||
-                ((first.equals(edge5)==true) && (second.equals(edge4)==true))); 
-        
-        itEdge = instance.outgoingEdges(vert5).iterator();
-        first = itEdge.next();
-        second = itEdge.next();
-        assertTrue("Outgoing Edges of vert5 should be edge7 and edge8", 
-                  ((first.equals(edge7)==true || second.equals(edge8)==true) ||
-                   (second.equals(edge7)==true || first.equals(edge8)==true)));
-        
-        instance.removeEdge(edge8);
-        
-        itEdge = instance.outgoingEdges(vert5).iterator();
-        
-        assertTrue("first edge should be edge7", (itEdge.next().equals(edge7)==true));
-        
-        instance.removeEdge(edge7);
 
-        itEdge = instance.outgoingEdges(vert5).iterator();
-        assertTrue("edges should be empty", (itEdge.hasNext()==false));
-    }
 
-    /**
-     * Test of incomingEdges method, of class Graph.
-     */
-    @Test
-    public void testIncomingEdges() {
-        Vertex<String,String> vert1=instance.insertVertex("A");
-        Vertex<String,String> vert2=instance.insertVertex("B");
-        Vertex<String,String> vert3=instance.insertVertex("C");
-        Vertex<String,String> vert4=instance.insertVertex("D");
-        Vertex<String,String> vert5=instance.insertVertex("E");
-        
-        Edge<String,String> edge1=instance.insertEdge("A","B","Edge1",6);
-        Edge<String,String> edge2=instance.insertEdge("A","C","Edge2",1);
-        Edge<String,String> edge3=instance.insertEdge("B","D","Edge3",3);
-        Edge<String,String> edge4=instance.insertEdge("C","D","Edge4",4);
-        Edge<String,String> edge5=instance.insertEdge("C","E","Edge5",1);
-        Edge<String,String> edge6=instance.insertEdge("D","A","Edge6",2);
-        Edge<String,String> edge7=instance.insertEdge("E","D","Edge7",1);
-        Edge<String,String> edge8=instance.insertEdge("E","E","Edge8",1);
-		      
-        Iterator<Edge<String,String>> itEdge = instance.incomingEdges(vert4).iterator();
-        
-        assertTrue("first edge should be edge3", (itEdge.next().equals(edge3)==true));
-        assertTrue("second edge should be edge4", (itEdge.next().equals(edge4)==true));
-        assertTrue("third edge should be edge7", (itEdge.next().equals(edge7)==true));
-        
-        itEdge = instance.incomingEdges(vert5).iterator();
-        
-        assertTrue("first edge should be edge5", (itEdge.next().equals(edge5)==true));
-        assertTrue("second edge should be edge8", (itEdge.next().equals(edge8)==true));
-        
-        instance.removeEdge(edge8);
-        
-        itEdge = instance.incomingEdges(vert5).iterator();
-        
-        assertTrue("first edge should be edge5", (itEdge.next().equals(edge5)==true));
-        
-        instance.removeEdge(edge5);
-
-        itEdge = instance.incomingEdges(vert5).iterator();
-        assertTrue("edges should be empty", (itEdge.hasNext()==false));
-    }
 
     /**
      * Test of insertVertex method, of class Graph.
@@ -493,63 +311,7 @@ public class GraphTest {
         assertTrue("sixth edge should be edge6",(itEd.next().equals(edge6)==true));
     }
 
-    /**
-     * Test of removeEdge method, of class Graph.
-     */
-    @Test
-    public void testRemoveEdge() {
-        System.out.println("Test removeVertex");
-        
-        Vertex<String,String> vert1=instance.insertVertex("A");
-        Vertex<String,String> vert2=instance.insertVertex("B");
-        Vertex<String,String> vert3=instance.insertVertex("C");
-        Vertex<String,String> vert4=instance.insertVertex("D");
-        Vertex<String,String> vert5=instance.insertVertex("E");
- 
-        instance.removeVertex("C");
-        assertTrue("Num vertices should be 4", (instance.numVertices()==4));
-        assertTrue("Num edges should be 0", (instance.numEdges()==0));
-      
-        Iterator <Vertex<String,String>> itVert = instance.vertices().iterator();
-        assertTrue("first vertex should be vert1", (itVert.next().equals(vert1)==true));
-        assertTrue("second vertex should be vert2",(itVert.next().equals(vert2)==true));
-        assertTrue("third vertex should be vert4", (itVert.next().equals(vert4)==true));
-        assertTrue("fourth vertex should be vert5",(itVert.next().equals(vert5)==true));
-
-        itVert = instance.vertices().iterator();
-        assertTrue("first vertex key should be 0",itVert.next().getKey()==0);
-        assertTrue("second vertex key should be 1",itVert.next().getKey()==1);
-        assertTrue("third vertex key should be 2",itVert.next().getKey()==2);
-        assertTrue("fourth vertex key should be 3",itVert.next().getKey()==3);
-        
-        instance.insertEdge("A", "B", "edge 1", 0.0);
-        instance.insertEdge("A", "D", "edge 2", 0.0);
-        instance.insertEdge("D", "B", "edge 3", 0.0);
-        instance.insertEdge("E", "A", "edge 4", 0.0);
-
-        assertTrue("Num edges should be 4", (instance.numEdges()==4));
-
-        instance.removeVertex("A");
-
-        assertTrue("Num vertices should be 3", (instance.numVertices()==3));
-        assertTrue("Num edges should be 1", (instance.numEdges()==1));
-        itVert = instance.vertices().iterator();
-
-        assertTrue("first vertex should be vert2", (itVert.next().equals(vert2)==true));
-        assertTrue("second vertex should be vert4",(itVert.next().equals(vert4)==true));
-        assertTrue("third vertex should be vert5", (itVert.next().equals(vert5)==true));
-
-        instance.removeVertex("E");
-        assertTrue("Num vertices should be 2", (instance.numVertices()==2));
-
-        itVert = instance.vertices().iterator();
-
-        assertTrue("first vertex should be vert2 but its key should be 0",
-        (itVert.next().equals(vert2)==true && vert2.getKey()==0));
-        assertTrue("second vertex should be vert4 but its key should be 1",
-        (itVert.next().equals(vert4)==true&& vert4.getKey()==1));
-    }
-
+    
     /**
      * Test of getVertex method, of class Graph.
      */
@@ -573,74 +335,12 @@ public class GraphTest {
 
     }
 
-    /**
-     * Test of getVertex method, of class Graph.
-     */
-    @Test
-    public void testGetVertex_int() {
-        System.out.println("getVertex");
-        int vKey = 1;
-        Graph instance = null;
-        Vertex expResult = null;
-        Vertex result = instance.getVertex(vKey);
-        assertEquals(expResult, result);
 
-    }
 
-    /**
-     * Test of getVOrig method, of class Graph.
-     */
-    @Test
-    public void testGetVOrig() {
-        System.out.println("getVOrig");
-        Graph instance = null;
-        Vertex expResult = null;
-        Vertex result = instance.getVOrig();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
-    /**
-     * Test of getVLast method, of class Graph.
-     */
-    @Test
-    public void testGetVLast() {
-        System.out.println("getVLast");
-        Graph instance = null;
-        Vertex expResult = null;
-        Vertex result = instance.getVLast();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
-    /**
-     * Test of clone method, of class Graph.
-     */
-    @Test
-    public void testClone() {
-        System.out.println("clone");
-        Graph instance = null;
-        Graph expResult = null;
-        Graph result = instance.clone();
-        assertEquals(expResult, result);
 
-    }
 
-    /**
-     * Test of equals method, of class Graph.
-     */
-    @Test
-    public void testEquals() {
-        System.out.println("equals");
-        Object oth = null;
-        Graph instance = null;
-        boolean expResult = false;
-        boolean result = instance.equals(oth);
-        assertEquals(expResult, result);
-
-    }
 
     /**
      * Test of toString method, of class Graph.
@@ -650,62 +350,6 @@ public class GraphTest {
         System.out.println(instance);
     }
 
-    /**
-     * Test of removeVertex method, of class Graph.
-     */
-    @Test
-    public void testRemoveVertex() {
-        System.out.println("Test removeVertex");
-        
-        Vertex<String,String> vert1=instance.insertVertex("A");
-        Vertex<String,String> vert2=instance.insertVertex("B");
-        Vertex<String,String> vert3=instance.insertVertex("C");
-        Vertex<String,String> vert4=instance.insertVertex("D");
-        Vertex<String,String> vert5=instance.insertVertex("E");
- 
-        instance.removeVertex("C");
-        assertTrue("Num vertices should be 4", (instance.numVertices()==4));
-        assertTrue("Num edges should be 0", (instance.numEdges()==0));
-      
-        Iterator <Vertex<String,String>> itVert = instance.vertices().iterator();
-        assertTrue("first vertex should be vert1", (itVert.next().equals(vert1)==true));
-        assertTrue("second vertex should be vert2",(itVert.next().equals(vert2)==true));
-        assertTrue("third vertex should be vert4", (itVert.next().equals(vert4)==true));
-        assertTrue("fourth vertex should be vert5",(itVert.next().equals(vert5)==true));
-
-        itVert = instance.vertices().iterator();
-        assertTrue("first vertex key should be 0",itVert.next().getKey()==0);
-        assertTrue("second vertex key should be 1",itVert.next().getKey()==1);
-        assertTrue("third vertex key should be 2",itVert.next().getKey()==2);
-        assertTrue("fourth vertex key should be 3",itVert.next().getKey()==3);
-        
-        instance.insertEdge("A", "B", "edge 1", 0.0);
-        instance.insertEdge("A", "D", "edge 2", 0.0);
-        instance.insertEdge("D", "B", "edge 3", 0.0);
-        instance.insertEdge("E", "A", "edge 4", 0.0);
-
-        assertTrue("Num edges should be 4", (instance.numEdges()==4));
-
-        instance.removeVertex("A");
-
-        assertTrue("Num vertices should be 3", (instance.numVertices()==3));
-        assertTrue("Num edges should be 1", (instance.numEdges()==1));
-        itVert = instance.vertices().iterator();
-
-        assertTrue("first vertex should be vert2", (itVert.next().equals(vert2)==true));
-        assertTrue("second vertex should be vert4",(itVert.next().equals(vert4)==true));
-        assertTrue("third vertex should be vert5", (itVert.next().equals(vert5)==true));
-
-        instance.removeVertex("E");
-        assertTrue("Num vertices should be 2", (instance.numVertices()==2));
-
-        itVert = instance.vertices().iterator();
-
-        assertTrue("first vertex should be vert2 but its key should be 0",
-        (itVert.next().equals(vert2)==true && vert2.getKey()==0));
-        assertTrue("second vertex should be vert4 but its key should be 1",
-        (itVert.next().equals(vert4)==true&& vert4.getKey()==1));
-
-    }
+   
     
 }

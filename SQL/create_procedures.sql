@@ -1,7 +1,7 @@
 
 ------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------
--- SAVE_NEW PROCEDURES
+-------------------------PROCEDURES
 ------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------
 
@@ -172,17 +172,17 @@ create or replace PROCEDURE SAVE_NEW_VEHICLE(
 	projpk IN VEHICLES.ID_PROJECT%TYPE,
 	nam IN VEHICLES.NAME%TYPE, 
 	descr IN VEHICLES.DESCRIPTION%TYPE, 
-    typ IN VEHICLES.TYPE%TYPE,
-    fuel IN VEHICLES.FUEL%TYPE,
-    mass IN VEHICLES.MASS%TYPE,
-    load IN VEHICLES.LOAD%TYPE,
-    drag IN VEHICLES.DRAG_COEF%TYPE,
-    fronta IN VEHICLES.FRONTAL_AREA%TYPE,
-    rrc IN VEHICLES.RRC%TYPE,
-    wheelsize IN VEHICLES.WHEEL_SIZE%TYPE,
-    fdr IN VEHICLES.FINAL_DRIVE_RATIO%TYPE,
-    rpmmin IN VEHICLES.RPM_MIN%TYPE,
-    rpmmax IN VEHICLES.RPM_MAX%TYPE,
+	typ IN VEHICLES.TYPE%TYPE,
+	fuel IN VEHICLES.FUEL%TYPE,
+	mass IN VEHICLES.MASS%TYPE,
+	load IN VEHICLES.LOAD%TYPE,
+	drag IN VEHICLES.DRAG_COEF%TYPE,
+	fronta IN VEHICLES.FRONTAL_AREA%TYPE,
+	rrc IN VEHICLES.RRC%TYPE,
+	wheelsize IN VEHICLES.WHEEL_SIZE%TYPE,
+	fdr IN VEHICLES.FINAL_DRIVE_RATIO%TYPE,
+	rpmmin IN VEHICLES.RPM_MIN%TYPE,
+	rpmmax IN VEHICLES.RPM_MAX%TYPE,
 	vpk OUT VEHICLES.ID_VEHICLE%TYPE) AS
 
 newpk VEHICLES.ID_VEHICLE%TYPE;
@@ -192,9 +192,9 @@ BEGIN
 newpk := SEQ_VEHICLE.NEXTVAL;
 
 insert INTO VEHICLES(ID_VEHICLE, ID_PROJECT, NAME, DESCRIPTION, TYPE, FUEL,
-                      MASS, LOAD, DRAG_COEF, FRONTAL_AREA, RRC, WHEEL_SIZE, 
-                      FINAL_DRIVE_RATIO, RPM_MIN, RPM_MAX) 
-                      values (newpk, projpk, nam, descr,typ,fuel,mass,load,drag,fronta,rrc,wheelsize,fdr,rpmmin,rpmmax);
+					  MASS, LOAD, DRAG_COEF, FRONTAL_AREA, RRC, WHEEL_SIZE, 
+					  FINAL_DRIVE_RATIO, RPM_MIN, RPM_MAX) 
+					  values (newpk, projpk, nam, descr,typ,fuel,mass,load,drag,fronta,rrc,wheelsize,fdr,rpmmin,rpmmax);
 
 
 vpk := newpk;
@@ -267,9 +267,9 @@ END SAVE_NEW_VEHICLE_GEAR;
 
 
 CREATE OR REPLACE PROCEDURE SAVE_NEW_VEHICLE_VEL_LIMIT (vpk IN VEHICLES_VELOCITY_LIMITS.ID_VEHICLE%TYPE,
-                                                        typ IN VARCHAR2,
-                                                        vlimit IN VEHICLES_VELOCITY_LIMITS.VEL_LIMIT%TYPE,
-                                                        confirm OUT INTEGER) AS
+														typ IN VARCHAR2,
+														vlimit IN VEHICLES_VELOCITY_LIMITS.VEL_LIMIT%TYPE,
+														confirm OUT INTEGER) AS
 
 typology VEHICLES_VELOCITY_LIMITS.ID_TYPOLOGY%TYPE;
 
@@ -290,12 +290,12 @@ END SAVE_NEW_VEHICLE_VEL_LIMIT;
 ------------------------------------------------------------------------------------------------------
 
 CREATE OR REPLACE PROCEDURE SAVE_NEW_VEHICLE_THROTTLE (vpk IN THROTTLES.ID_VEHICLE%TYPE,
-                                                        throtpk IN THROTTLES.ID_THROTTLE%TYPE,
-                                                        regpk IN THROTTLES.ID_REGIME%TYPE,
-                                                        torq IN THROTTLES.TORQUE%TYPE,
-                                                        rpml IN THROTTLES.RPM_LOW%TYPE,
-                                                        rpmh IN THROTTLES.RPM_HIGH%TYPE,
-                                                        sfc IN THROTTLES.SFC%TYPE) AS
+														throtpk IN THROTTLES.ID_THROTTLE%TYPE,
+														regpk IN THROTTLES.ID_REGIME%TYPE,
+														torq IN THROTTLES.TORQUE%TYPE,
+														rpml IN THROTTLES.RPM_LOW%TYPE,
+														rpmh IN THROTTLES.RPM_HIGH%TYPE,
+														sfc IN THROTTLES.SFC%TYPE) AS
 
 
 
@@ -303,7 +303,7 @@ BEGIN
 
 
   INSERT INTO THROTTLES(ID_VEHICLE, ID_THROTTLE, ID_REGIME, TORQUE, RPM_LOW, RPM_HIGH, SFC) 
-              VALUES (vpk, throtpk, regpk, torq, rpml, rpmh, sfc);
+			  VALUES (vpk, throtpk, regpk, torq, rpml, rpmh, sfc);
 
 END SAVE_NEW_VEHICLE_THROTTLE;
 
@@ -397,7 +397,6 @@ END SAVE_NEW_SIMULATION_RUN;
 ------------------------------------------------------------------------------------------------------
 
 
-
 create or replace PROCEDURE SAVE_DROPPED_VEHICLES(
 	  runpk IN DROPPED_VEHICLES.ID_RUN%TYPE,
 	  trafpats IN INTEGER_T,
@@ -406,17 +405,14 @@ create or replace PROCEDURE SAVE_DROPPED_VEHICLES(
 
 dml_errors EXCEPTION;
 PRAGMA EXCEPTION_INIT(dml_errors, -24381);
-o_errors := INTEGER_T();
-
-newpk DROPPED_VEHICLES.ID_DROPPED_VEHICLE%TYPE;
 
 
 BEGIN
 
 FORALL i in 1 .. trafpats.LAST save exceptions
-newpk := seq_dropped_vehicle.NEXTVAL;
+
 insert INTO DROPPED_VEHICLES (ID_DROPPED_VEHICLE, ID_RUN, ID_TRAFFIC_PATTERN, INSTANT_DROPPED) 
-					  values (newpk, runpk, trafpats(i), droptimes(i));
+					  values (seq_dropped_vehicle.NEXTVAL, runpk, trafpats(i), droptimes(i));
 
 exception
   when dml_errors then
@@ -435,43 +431,32 @@ END SAVE_DROPPED_VEHICLES;
 
 
 
+
+
 ------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------
 
 
 
 create or replace PROCEDURE SAVE_INJECTED_VEHICLES(
-	  runpk IN DROPPED_VEHICLES.ID_RUN%TYPE,
-	  trafpats IN INTEGER_T, injpk OUT INTEGER_T, o_errors OUT INTEGER_T) AS
+	  runpk IN INJECTED_VEHICLES.ID_RUN%TYPE,
+	  trafpats IN INTEGER_T, 
+    injpk OUT INTEGER_T) AS
 
-dml_errors EXCEPTION;
-PRAGMA EXCEPTION_INIT(dml_errors, -24381);
-o_errors := INTEGER_T();
-	  	  
-newpk integer;
+
 
 BEGIN
+injpk:= INTEGER_T();
+injpk.EXTEND(trafpats.count);
 
-FORALL i in 1 .. trafpats.LAST save exceptions
-	
-	newpk := seq_injected_vehicle.NEXTVAL;
+FOR i in 1..trafpats.LAST loop
+
+injpk(i):=seq_injected_vehicle.NEXTVAL;
+  
 	insert INTO INJECTED_VEHICLES (ID_INJECTED_VEHICLE, ID_RUN, ID_TRAFFIC_PATTERN) 
-					  values (newpk, runpk, trafpats(i);
+					  values (injpk(i), runpk, trafpats(i));
 	
-	injpk(i):=newpk;
-	
-	
-exception
-  when dml_errors then
-    for i in 1 .. SQL%bulk_exceptions.count loop
-      --if SQL%BULK_EXCEPTIONS(i).ERROR_CODE != 00001 then
-      --  debug.f( '  ... An unexpected exception occurred (%s)', SQLERRM );
-      --  raise;
-      --end if;
-      o_errors.extend(1);
-      o_errors(o_errors.count) := SQL%bulk_exceptions(i).ERROR_INDEX;	
-	
-	
+
 	
 end loop;
 
@@ -483,6 +468,7 @@ END SAVE_INJECTED_VEHICLES;
 
 ------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------
+
 
 
 
@@ -498,15 +484,16 @@ create or replace PROCEDURE SAVE_INJECTED_V_BEHAVIOURS(
 
 dml_errors EXCEPTION;
 PRAGMA EXCEPTION_INIT(dml_errors, -24381);
-o_errors := INTEGER_T();  
+
+
 	
-
-
 BEGIN
 
-FORALL i in 1 .. sections.LAST  save exceptions
+o_errors:= INTEGER_T();
+
+FORALL i in 1 .. injpk.LAST  save exceptions
 	
-	insert INTO INJECTED_VEHICLES_BEHAVIOURS (ID_INJECTED_VEHICLE,ID_SECTION,SEGMENT_INDEX,INSTANT_IN,INSTANT_OUT,ENERGY_SPENT) 
+	insert INTO INJECTED_VEHICLES_BEHAVIOURS (ID_INJECTED_VEHICLE,ID_SECTION,SEGMENT_INDEX,DIRECTION,INSTANT_IN,INSTANT_OUT,ENERGY_SPENT) 
 					  values(injpk(i),sections(i),segments(i),directions(i),intimes(i),outtimes(i),consumptions(i));
 	
 
@@ -519,13 +506,11 @@ exception
       --end if;
       o_errors.extend(1);
       o_errors(o_errors.count) := SQL%bulk_exceptions(i).ERROR_INDEX;	
-	
-	
-	
+
 end loop;
 
 
-END SAVE_INJECTED_VEHICLES;
+END SAVE_INJECTED_V_BEHAVIOURS;
 
 
 
@@ -555,7 +540,7 @@ BEGIN
 
 UPDATE PROJECTS 
   set NAME = nam, 
-      DESCRIPTION = descr,
+	  DESCRIPTION = descr,
 					  STATE = stat 
   where ID_PROJECT = projpk;
 
@@ -581,7 +566,7 @@ BEGIN
 
 UPDATE ROAD_NETWORKS 
   set NAME = nam, 
-      DESCRIPTION = descr
+	  DESCRIPTION = descr
   where ID_ROAD_NETWORK = rnpk;
 
 
@@ -691,7 +676,7 @@ BEGIN
 
 UPDATE SIMULATIONS 
   set NAME = nam, 
-      DESCRIPTION = descr,
+	  DESCRIPTION = descr,
 		STATE = stat 
   where ID_SIMULATION = simpk;
 
@@ -708,31 +693,20 @@ create or replace PROCEDURE UPDATE_TRAFFIC_PATTERN(
 	  bnode IN TRAFFIC_PATTERNS.BEGIN_NODE_ID%TYPE, 
 	  enode IN TRAFFIC_PATTERNS.END_NODE_ID%TYPE, 
 	  vpk IN TRAFFIC_PATTERNS.ID_VEHICLE%TYPE,
-    arate IN TRAFFIC_PATTERNS.ARRIVAL_RATE%TYPE) AS
+	arate IN TRAFFIC_PATTERNS.ARRIVAL_RATE%TYPE) AS
 
 
 BEGIN
 
 UPDATE TRAFFIC_PATTERNS 
   set BEGIN_NODE_ID = bnode, 
-      END_NODE_ID = enode,
-      ID_VEHICLE=vpk,
+	  END_NODE_ID = enode,
+	  ID_VEHICLE=vpk,
 		ARRIVAL_RATE = arate
   where ID_TRAFFIC_PATTERN = trafpk;
 
 
 END UPDATE_TRAFFIC_PATTERN;
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -825,7 +799,7 @@ OPEN outcursor FOR
 	select s.ID_SECTION,s.ROAD_NAME,s.BEGINING_NODE_ID,s.ENDING_NODE_ID,st.NAME as TYPOLOGY, s.DIRECTION, s.TOLL, s.WIND_DIRECTION, s.WIND_SPEED
 		from SECTIONS s, SECTION_TYPOLOGIES st
 		WHERE s.ID_ROAD_NETWORK = rnpk
-      AND s.ID_TYPOLOGY=st.ID_TYPOLOGY;		
+	  AND s.ID_TYPOLOGY=st.ID_TYPOLOGY;		
 
 END GET_ROAD_NETWORK_SECTIONS;
 
@@ -856,22 +830,22 @@ BEGIN
 
 OPEN outcursor FOR
 	select v.ID_VEHICLE, 
-          v.NAME, 
-          v.DESCRIPTION, 
-          v.TYPE, 
+		  v.NAME, 
+		  v.DESCRIPTION, 
+		  v.TYPE, 
 		  v.FUEL,
-          v.MASS, 
-          v.LOAD,
-          v.DRAG_COEF,
-          v.FRONTAL_AREA,
-          v.RRC, 
-          v.WHEEL_SIZE,
-          v.RPM_MIN,
-          v.RPM_MAX,
-          v.FINAL_DRIVE_RATIO
+		  v.MASS, 
+		  v.LOAD,
+		  v.DRAG_COEF,
+		  v.FRONTAL_AREA,
+		  v.RRC, 
+		  v.WHEEL_SIZE,
+		  v.RPM_MIN,
+		  v.RPM_MAX,
+		  v.FINAL_DRIVE_RATIO
 		from VEHICLES v, COMBUSTION_VEHICLES cv
 		WHERE v.ID_PROJECT=projpk
-      and v.ID_VEHICLE=cv.ID_VEHICLE;
+	  and v.ID_VEHICLE=cv.ID_VEHICLE;
 
 END GET_PROJECT_COMB_VEHICLES;
 
@@ -886,24 +860,24 @@ BEGIN
 
 OPEN outcursor FOR
 	select v.ID_VEHICLE, 
-          v.NAME, 
-          v.DESCRIPTION, 
-          v.TYPE,
+		  v.NAME, 
+		  v.DESCRIPTION, 
+		  v.TYPE,
 		  v.FUEL,
-          v.MASS, 
-          v.LOAD,
-          v.DRAG_COEF,
-          v.FRONTAL_AREA,
-          v.RRC, 
-          v.WHEEL_SIZE,
-          v.RPM_MIN,
-          v.RPM_MAX,
-          v.FINAL_DRIVE_RATIO,
+		  v.MASS, 
+		  v.LOAD,
+		  v.DRAG_COEF,
+		  v.FRONTAL_AREA,
+		  v.RRC, 
+		  v.WHEEL_SIZE,
+		  v.RPM_MIN,
+		  v.RPM_MAX,
+		  v.FINAL_DRIVE_RATIO,
 		  hv.ENERGY_REGENERATION_RATIO
 
 		from VEHICLES v, HYBRID_VEHICLES hv
 		WHERE v.ID_PROJECT=projpk
-      and v.ID_VEHICLE=hv.ID_VEHICLE;
+	  and v.ID_VEHICLE=hv.ID_VEHICLE;
 
 END GET_PROJECT_HYBR_VEHICLES;
 
@@ -918,24 +892,24 @@ BEGIN
 
 OPEN outcursor FOR
 	select v.ID_VEHICLE, 
-          v.NAME, 
-          v.DESCRIPTION, 
-          v.TYPE,
+		  v.NAME, 
+		  v.DESCRIPTION, 
+		  v.TYPE,
 		  v.FUEL,		  
-          v.MASS, 
-          v.LOAD,
-          v.DRAG_COEF,
-          v.FRONTAL_AREA,
-          v.RRC, 
-          v.WHEEL_SIZE,
-          v.RPM_MIN,
-          v.RPM_MAX,
-          v.FINAL_DRIVE_RATIO,
+		  v.MASS, 
+		  v.LOAD,
+		  v.DRAG_COEF,
+		  v.FRONTAL_AREA,
+		  v.RRC, 
+		  v.WHEEL_SIZE,
+		  v.RPM_MIN,
+		  v.RPM_MAX,
+		  v.FINAL_DRIVE_RATIO,
 		  ev.ENERGY_REGENERATION_RATIO
 	
 		from VEHICLES v, ELECTRIC_VEHICLES ev
 		WHERE v.ID_PROJECT=projpk
-      and v.ID_VEHICLE=ev.ID_VEHICLE;
+	  and v.ID_VEHICLE=ev.ID_VEHICLE;
 
 END GET_PROJECT_ELEC_VEHICLES;
 
@@ -949,7 +923,7 @@ OPEN outcursor FOR
 	select ID_THROTTLE
 		from THROTTLES
 		WHERE ID_VEHICLE=vehpk
-    group by ID_THROTTLE;
+	group by ID_THROTTLE;
 
 END GET_VEHICLE_THROTTLES;
 
@@ -966,8 +940,8 @@ OPEN outcursor FOR
 	select ID_REGIME, TORQUE, RPM_LOW, RPM_HIGH, SFC
 		from THROTTLES
 		WHERE ID_VEHICLE=vehpk
-      		AND ID_THROTTLE = throtid
-      	ORDER BY RPM_LOW;
+			AND ID_THROTTLE = throtid
+		ORDER BY RPM_LOW;
 
 END GET_VEHICLE_THROTTLE_REGIMES;
 
@@ -985,7 +959,7 @@ OPEN outcursor FOR
 	select ID_GEAR, RATIO
 		from GEARS
 		WHERE ID_VEHICLE=vehpk
-    ORDER BY ID_GEAR;
+	ORDER BY ID_GEAR;
 
 END GET_VEHICLE_GEARS;
 
@@ -1001,7 +975,7 @@ OPEN outcursor FOR
 	select st.NAME, vvl.VEL_LIMIT
 		from VEHICLES_VELOCITY_LIMITS vvl, SECTION_TYPOLOGIES st
 		WHERE vvl.ID_VEHICLE=3
-      		AND vvl.ID_TYPOLOGY = st.ID_TYPOLOGY;
+			AND vvl.ID_TYPOLOGY = st.ID_TYPOLOGY;
 
 END GET_VEHICLE_VEL_LIMITS;
 
@@ -1020,6 +994,48 @@ OPEN outcursor FOR
 		order by name asc;		
 
 END GET_ORDERED_SIMULATION_LIST;
+
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+
+CREATE OR REPLACE PROCEDURE GET_SIMULATION(simpk in SIMULATIONS.ID_SIMULATION%TYPE, simcursor OUT SYS_REFCURSOR) AS
+
+BEGIN
+
+OPEN simcursor FOR
+	select ID_SIMULATION, NAME,DESCRIPTION,STATE
+		from SIMULATIONS
+		where ID_SIMULATION = simpk;		
+
+	
+		
+END GET_SIMULATION;
+
+
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+
+CREATE OR REPLACE PROCEDURE GET_TRAFFIC_PATTERN_LIST(simpk in TRAFFIC_PATTERNS.ID_SIMULATION%TYPE, tpcursor OUT SYS_REFCURSOR) AS
+
+BEGIN
+
+OPEN tpcursor FOR
+	select ID_TRAFFIC_PATTERN, BEGIN_NODE_ID,END_NODE_ID,ID_VEHICLE,ARRIVAL_RATE
+	from TRAFFIC_PATTERNS
+	where ID_SIMULATION=simpk;
+		
+END GET_TRAFFIC_PATTERN_LIST;
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1042,61 +1058,125 @@ END GET_ORDERED_SIM_RUNS_LIST;
 
 
 
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE PROCEDURE GET_TRAF_PATS_AVG_CONSUMPTION (runpk IN INJECTED_VEHICLES.ID_RUN%TYPE, outcursor OUT SYS_REFCURSOR) as
+
+BEGIN
+OPEN outcursor FOR
+
+SELECT tp.ID_TRAFFIC_PATTERN, tp.BEGIN_NODE_ID as BeginNode, tp.END_NODE_ID as EndNode, v.name, tp.arrival_rate, avg(ivb.ENERGY_SPENT) as AVG_CONSUMPTION
+FROM TRAFFIC_PATTERNS tp,INJECTED_VEHICLES iv, INJECTED_VEHICLES_BEHAVIOURS ivb, VEHICLES v
+WHERE iv.ID_RUN = runpk
+  and iv.ID_INJECTED_VEHICLE = ivb.ID_INJECTED_VEHICLE
+	and iv.ID_TRAFFIC_PATTERN = tp.ID_TRAFFIC_PATTERN
+	and tp.ID_VEHICLE = v.ID_VEHICLE
+	
+GROUP BY iv.ID_TRAFFIC_PATTERN, tp.ID_TRAFFIC_PATTERN, tp.BEGIN_NODE_ID, tp.END_NODE_ID, v.name, 
+tp.arrival_rate;
+
+END GET_TRAF_PATS_AVG_CONSUMPTION;
+
+
 ------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------
 
 
-CREATE OR REPLACE PROCEDURE GET_SIMULATION(simpk in SIMULATIONS.ID_SIMULATION%TYPE, simcursor OUT SYS_REFCURSOR, tpcursor OUT SYS_REFCURSOR) AS
+CREATE OR REPLACE PROCEDURE GET_TRAF_PATS_SEGS_AVG_CONS (runpk IN INJECTED_VEHICLES.ID_RUN%TYPE, outcursor OUT SYS_REFCURSOR) as
+
+BEGIN
+OPEN outcursor FOR
+
+SELECT tp.ID_TRAFFIC_PATTERN, tp.BEGIN_NODE_ID as BeginNode, tp.END_NODE_ID as EndNode, v.name, tp.arrival_rate, ivb.ID_SECTION, ivb.SEGMENT_INDEX, ivb.Direction, avg(ivb.ENERGY_SPENT) as AVG_CONSUMPTION
+FROM TRAFFIC_PATTERNS tp,INJECTED_VEHICLES iv, INJECTED_VEHICLES_BEHAVIOURS ivb, VEHICLES v
+
+WHERE iv.ID_RUN = runpk
+  and iv.ID_INJECTED_VEHICLE = ivb.ID_INJECTED_VEHICLE
+	and iv.ID_TRAFFIC_PATTERN = tp.ID_TRAFFIC_PATTERN
+	and tp.ID_VEHICLE = v.ID_VEHICLE
+
+	
+GROUP BY iv.ID_TRAFFIC_PATTERN, tp.ID_TRAFFIC_PATTERN, tp.BEGIN_NODE_ID, tp.END_NODE_ID, v.name, 
+tp.arrival_rate, ivb.ID_SECTION, ivb.SEGMENT_INDEX, ivb.Direction;
+
+END GET_TRAF_PATS_SEGS_AVG_CONS;
+
+
+
+
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+
+CREATE OR REPLACE PROCEDURE GET_SEGS_AVG_CONS_FOR_TRAFPAT (runpk IN INJECTED_VEHICLES.ID_RUN%TYPE, tppk IN INJECTED_VEHICLES.ID_TRAFFIC_PATTERN%TYPE, outcursor OUT SYS_REFCURSOR) as
 
 BEGIN
 
-OPEN simcursor FOR
-	select ID_RUN, NAME,DURATION,TIME_STEP,BEST_PATH_METHOD
-		from SIMULATIONS
-		where ID_SIMULATION = simpk;		
-
-OPEN tpcursor FOR
-	select ID_TRAFFIC_PATTERN, BEGINING_NODE_ID,END_NODE_ID,ID_VEHICLE,ARRIVAL_RATE
-	from TRAFFIC_PATTERNS
-	where ID_SIMULATION=simpk;
-		
-		
-		
-END GET_SIMULATION;
+OPEN outcursor FOR
 
 
 
+SELECT tp.ID_TRAFFIC_PATTERN, 
+        tp.BEGIN_NODE_ID as BeginNode, 
+        tp.END_NODE_ID as EndNode, 
+        v.name, 
+        tp.arrival_rate, 
+        ivb.ID_SECTION, 
+        ivb.SEGMENT_INDEX, 
+        ivb.Direction, 
+        avg(ivb.ENERGY_SPENT) as AVG_CONSUMPTION,
+        avg(ivb.INSTANT_OUT - ivb.INSTANT_IN) as AVG_TIME_SPENT
+FROM TRAFFIC_PATTERNS tp,INJECTED_VEHICLES iv, INJECTED_VEHICLES_BEHAVIOURS ivb, VEHICLES v
 
-------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------
-
-
-
-
-SELECT n.name as BeginNode, n.name as EndNode, v.name, tp.arrival_rate, avg(iv.energy_spent)
-FROM TRAFFIC_PATTERNS tp, SIMULATION_RUNS sr,INJECTED_VEHICLES iv, INJECTED_VEHICLES_BEHAVIOURS ivb, NODES n, VEHICLES v
 WHERE iv.ID_RUN = runpk
+  and iv.ID_TRAFFIC_PATTERN=tppk
+  and iv.ID_INJECTED_VEHICLE = ivb.ID_INJECTED_VEHICLE
 	and iv.ID_TRAFFIC_PATTERN = tp.ID_TRAFFIC_PATTERN
-	and tp.BEGIN_NODE_ID = n.ID_NODE
-	and tp.END_NODE_ID = n.ID_NODE
-	and to.ID_VEHICLE = VEHICLES.ID_VEHICLE
-	and iv.ID_INJECTED_VEHICLE = ivb.ID_INJECTED_VEHICLE
-GROUP BY tp.ID_TRAFFIC_PATTERN;
+	and tp.ID_VEHICLE = v.ID_VEHICLE
+
+	
+GROUP BY iv.ID_TRAFFIC_PATTERN, tp.ID_TRAFFIC_PATTERN, tp.BEGIN_NODE_ID, tp.END_NODE_ID, v.name, 
+tp.arrival_rate, ivb.ID_SECTION, ivb.SEGMENT_INDEX, ivb.Direction
+
+ORDER BY ivb.ID_SECTION, ivb.SEGMENT_INDEX;
+
+END GET_SEGS_AVG_CONS_FOR_TRAFPAT;
 
 
 
-SELECT n.name as BeginNode, n.name as EndNode, v.name, tp.arrival_rate, sec.road_name,sec.begining_node,sec.ending_node,iv.segment_index,iv.direction, avg(iv.energy_spent)
-FROM TRAFFIC_PATTERNS tp, SIMULATION_RUNS sr,INJECTED_VEHICLES iv, INJECTED_VEHICLES_BEHAVIOURS ivb, NODES n, SECTIONS sec, SEGMENTS seg, VEHICLES v
-WHERE iv.ID_RUN = runpk
-	and iv.ID_TRAFFIC_PATTERN = tp.ID_TRAFFIC_PATTERN
-	and tp.BEGIN_NODE_ID = n.ID_NODE
-	and tp.END_NODE_ID = n.ID_NODE
-	and to.ID_VEHICLE = VEHICLES.ID_VEHICLE
-	and iv.ID_INJECTED_VEHICLE = ivb.ID_INJECTED_VEHICLE
-	and iv.ID_SECTION = seg.ID_SECTION
-	and iv.segment_index = seg.SEGMENT_INDEX
-	and seg.ID_SECTION = sec.ID_SECTION
-GROUP BY tp.ID_TRAFFIC_PATTERN;
+
+
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+
+CREATE OR REPLACE PROCEDURE GET_ORDERED_RUNS_LIST(simpk IN SIMULATION_RUNS.ID_SIMULATION%TYPE, outcursor OUT SYS_REFCURSOR) AS
+
+BEGIN
+
+OPEN outcursor FOR
+	select ID_RUN, NAME
+		from SIMULATION_RUNS 
+    where ID_SIMULATION = simpk
+		order by name asc;		
+
+END GET_ORDERED_RUNS_LIST;
+
+
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+
+
 
 
 
@@ -1114,7 +1194,7 @@ GROUP BY tp.ID_TRAFFIC_PATTERN;
 
 ------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------
-
+-- CHECK PROCEDURES
 ------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE PROCEDURE CHECK_PROJECT_EXISTS(pname IN PROJECTS.NAME%TYPE, n OUT integer) AS
@@ -1131,90 +1211,103 @@ END CHECK_PROJECT_EXISTS;
 ------------------------------------------------------------------------------------------------------
 
 create or replace PROCEDURE CHECK_SIMULATION_EXISTS(projpk IN SIMULATIONS.ID_PROJECT%TYPE,
-                                                    sname IN SIMULATIONS.NAME%TYPE, 
-                                                    n OUT integer) AS
+													sname IN SIMULATIONS.NAME%TYPE, 
+													n OUT integer) AS
 
 BEGIN
 
 	select count(Name) into n
 		from SIMULATIONS
 		WHERE NAME = sname
-      and ID_PROJECT=projpk;
+	  and ID_PROJECT=projpk;
 
 END CHECK_SIMULATION_EXISTS;
 ------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------
 
 create or replace PROCEDURE CHECK_SIMULATION_RUN_EXISTS(simpk IN SIMULATION_RUNS.ID_SIMULATION%TYPE,
-                                                    rame IN SIMULATION_RUNS.NAME%TYPE, 
-                                                    n OUT integer) AS
+													rname IN SIMULATION_RUNS.NAME%TYPE, 
+													n OUT integer) AS
 
 BEGIN
 
 	select count(Name) into n
 		from SIMULATION_RUNS
 		WHERE NAME = rname
-      and ID_SIMULATION=simpk;
+	  and ID_SIMULATION=simpk;
 
 END CHECK_SIMULATION_RUN_EXISTS;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------
--- PROCEDIMENTOS PARA OPERACOES BULK SAVE
 ------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------
 
-
---NAO ESTÁ A FUNCIONAR CORRECTAMENTE
-create or replace PROCEDURE SAVE_NEW_NODES(
-		rnpk IN ROAD_NETWORKS.ID_ROAD_NETWORK%TYPE,
-		names IN ARRAY_STRINGS, 
-		nopks OUT ARRAY_VALUES) AS
-
-newpk NODES.ID_NODE%TYPE;
+create or replace PROCEDURE CHECK_PROJECT_HAS_SIMULATIONS(projpk IN SIMULATIONS.ID_PROJECT%TYPE,
+													n OUT integer) AS
 
 BEGIN
 
-FOR i in names.FIRST .. names.LAST
-loop
+	select count(Name) into n
+		from SIMULATIONS
+		WHERE ID_PROJECT=projpk;
 
-newpk := SEQ_ROAD_NETWORK.NEXTVAL;
-
-insert INTO NODES(ID_NODE, ID_ROAD_NETWORK, NAME) values (newpk, rnpk, names(i));
-nopks(i) := newpk;
-
-END LOOP;
+END CHECK_PROJECT_HAS_SIMULATIONS;
 
 
-END SAVE_NEW_NODES;
+
+
+
+
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+
+
+
+create or replace PROCEDURE CHECK_SIMULATION_HAS_RUNS(simpk IN SIMULATION_RUNS.ID_SIMULATION%TYPE,
+													n OUT integer) AS
+
+BEGIN
+
+	select count(Name) into n
+		from SIMULATION_RUNS
+		WHERE ID_SIMULATION=simpk;
+
+END CHECK_SIMULATION_HAS_RUNS;
+
+
+
+
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+
+
+
+create or replace PROCEDURE DELETE_SIMULATION_RUN(runpk IN SIMULATION_RUNS.ID_RUN%TYPE) AS
+
+BEGIN
+
+	delete from SIMULATION_RUNS
+		WHERE ID_RUN=runpk;
+
+END DELETE_SIMULATION_RUN;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

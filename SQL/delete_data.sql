@@ -1,0 +1,72 @@
+-------------------------------------------------------------------
+----------------------DELETE DATA----------------------------------
+-------------------------------------------------------------------
+
+
+DELETE FROM INJECTED_VEHICLES_BEHAVIOURS;
+DELETE FROM INJECTED_VEHICLES;
+DELETE FROM DROPPED_VEHICLES;
+DELETE FROM SIMULATION_RUNS;
+DELETE FROM TRAFFIC_PATTERNS;
+DELETE FROM SIMULATIONS;
+
+DELETE FROM SEGMENTS;
+DELETE FROM SECTIONS;
+DELETE FROM NODES;
+DELETE FROM ROAD_NETWORKS;
+
+DELETE FROM GEARS;
+DELETE FROM THROTTLES;
+DELETE FROM COMBUSTION_VEHICLES;
+DELETE FROM HYBRID_VEHICLES;
+DELETE FROM ELECTRIC_VEHICLES;
+DELETE FROM VEHICLES_VELOCITY_LIMITS;
+DELETE FROM VEHICLES;
+
+DELETE FROM PROJECTS;
+
+
+
+
+-------------------------------------------------------------------
+----------------------DROP TABLES----------------------------------
+-------------------------------------------------------------------
+
+DROP TABLE INJECTED_VEHICLES_BEHAVIOURS;
+DROP TABLE INJECTED_VEHICLES;
+DROP TABLE DROPPED_VEHICLES;
+DROP TABLE SIMULATION_RUNS;
+DROP TABLE TRAFFIC_PATTERNS;
+DROP TABLE SIMULATIONS;
+
+DROP TABLE SEGMENTS;
+DROP TABLE SECTIONS;
+DROP TABLE NODES;
+DROP TABLE ROAD_NETWORKS;
+
+DROP TABLE GEARS;
+DROP TABLE THROTTLES;
+DROP TABLE COMBUSTION_VEHICLES;
+DROP TABLE HYBRID_VEHICLES;
+DROP TABLE ELECTRIC_VEHICLES;
+DROP TABLE VEHICLES_VELOCITY_LIMITS;
+DROP TABLE SECTION_TYPOLOGIES;
+DROP TABLE VEHICLES;
+
+DROP TABLE PROJECTS;
+
+-------------------------------------------------------------------
+----------------------DROP SEQUENCES-------------------------------
+-------------------------------------------------------------------
+
+DROP SEQUENCE seq_project;
+DROP SEQUENCE seq_road_network;
+DROP SEQUENCE seq_node;
+DROP SEQUENCE seq_section;
+DROP SEQUENCE seq_segment;
+DROP SEQUENCE seq_vehicle;
+DROP SEQUENCE seq_simulation;
+DROP SEQUENCE seq_simulation_run;
+DROP SEQUENCE seq_traffic_pattern;
+DROP SEQUENCE seq_injected_vehicle;
+DROP SEQUENCE seq_dropped_vehicle;

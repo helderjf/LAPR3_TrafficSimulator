@@ -22,7 +22,7 @@ public interface SimulationState {
     public boolean canCopySimulation();
 
     public boolean canDeleteRun();
-    
+////    
     public String getDescription();
     
 }

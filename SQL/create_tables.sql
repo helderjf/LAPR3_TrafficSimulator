@@ -1,6 +1,8 @@
 
 
-****************CHAVES PRIMARIAS***************
+-------------------------------------------------------------------
+----------------------SEQUENCES------------------------------------
+-------------------------------------------------------------------
 
 CREATE SEQUENCE seq_project START WITH 1 INCREMENT BY 1;
 
@@ -27,9 +29,9 @@ CREATE SEQUENCE seq_dropped_vehicle START WITH 1 INCREMENT BY 1;
 
 
 
-
-****************TABELAS***************
-
+-------------------------------------------------------------------
+----------------------TABLES---------------------------------------
+-------------------------------------------------------------------
 
 
 CREATE table PROJECTS(
@@ -38,11 +40,6 @@ CREATE table PROJECTS(
 	DESCRIPTION varchar2(255),
 	STATE varchar(255) NOT NULL,
 	CONSTRAINT pk_Project PRIMARY KEY(ID_Project));
-
-
-
-
-
 
 
 
@@ -236,7 +233,7 @@ create table INJECTED_VEHICLES_BEHAVIOURS(
 	ID_SECTION integer,
 	SEGMENT_INDEX integer,
 	DIRECTION varchar2(255),
-	INTANT_IN float,	
+	INSTANT_IN float,	
 	INSTANT_OUT float,
 	ENERGY_SPENT float,
 	CONSTRAINT pk_injected_v_behaviours PRIMARY KEY (ID_INJECTED_VEHICLE,ID_SECTION,SEGMENT_INDEX),
@@ -257,72 +254,12 @@ create table DROPPED_VEHICLES(
 
 
 
+-------------------------------------------------------------------
+----------------------DATA TYPES-----------------------------------
+-------------------------------------------------------------------
 
+create or replace type VARCHAR2_T is table of varchar2(255);
+create or replace type INTEGER_T is table of integer;
+create or replace type FLOAT_T is table of float;
 
-****************APAGAR DADOS***************
-
-
-DELETE FROM INJECTED_VEHICLES_BEHAVIOURS;
-DELETE FROM INJECTED_VEHICLES;
-DELETE FROM DROPPED_VEHICLES;
-DELETE FROM SIMULATION_RUNS;
-DELETE FROM TRAFFIC_PATTERNS;
-DELETE FROM SIMULATIONS;
-
-DELETE FROM SEGMENTS;
-DELETE FROM SECTIONS;
-DELETE FROM NODES;
-DELETE FROM ROAD_NETWORKS;
-
-DELETE FROM GEARS;
-DELETE FROM THROTTLES;
-DELETE FROM COMBUSTION_VEHICLES;
-DELETE FROM HYBRID_VEHICLES;
-DELETE FROM ELECTRIC_VEHICLES;
-DELETE FROM VEHICLES_VELOCITY_LIMITS;
-DELETE FROM VEHICLES;
-
-DELETE FROM PROJECTS;
-
-
-
-
-****************APAGAR TABELAS***************
-
-DROP TABLE INJECTED_VEHICLES_BEHAVIOURS;
-DROP TABLE INJECTED_VEHICLES;
-DROP TABLE DROPPED_VEHICLES;
-DROP TABLE SIMULATION_RUNS;
-DROP TABLE TRAFFIC_PATTERNS;
-DROP TABLE SIMULATIONS;
-
-DROP TABLE SEGMENTS;
-DROP TABLE SECTIONS;
-DROP TABLE NODES;
-DROP TABLE ROAD_NETWORKS;
-
-DROP TABLE GEARS;
-DROP TABLE THROTTLES;
-DROP TABLE COMBUSTION_VEHICLES;
-DROP TABLE HYBRID_VEHICLES;
-DROP TABLE ELECTRIC_VEHICLES;
-DROP TABLE VEHICLES_VELOCITY_LIMITS;
-DROP TABLE SECTION_TYPOLOGIES;
-DROP TABLE VEHICLES;
-
-DROP TABLE PROJECTS;
-
-****************APAGAR SEQUENCIAS***************
-
-DROP SEQUENCE seq_project;
-DROP SEQUENCE seq_road_network;
-DROP SEQUENCE seq_node;
-DROP SEQUENCE seq_section;
-DROP SEQUENCE seq_segment;
-DROP SEQUENCE seq_vehicle;
-DROP SEQUENCE seq_simulation;
-DROP SEQUENCE seq_simulation_run;
-DROP SEQUENCE seq_traffic_pattern;
-DROP SEQUENCE seq_injected_vehicle;
-DROP SEQUENCE seq_dropped_vehicle;
 
