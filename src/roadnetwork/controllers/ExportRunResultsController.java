@@ -58,9 +58,9 @@ public class ExportRunResultsController {
 
     public ArrayList<String> getSimulationRuns() {
         m_runsMap = m_projectReader.getSimulationRunsOrderedList(m_simulation.getPK());
-
+        m_simulationRuns= new ArrayList();
         for (String rname : m_runsMap.keySet()) {
-            m_simulationRuns.add(rname);
+            m_simulationRuns.add((String)rname);
         }
         return m_simulationRuns;
     }
