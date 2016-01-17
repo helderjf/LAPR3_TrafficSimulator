@@ -23,4 +23,6 @@ public interface SimulationState {
 
     public boolean canDeleteRun();
     
+    public String getDescription();
+    
 }

@@ -37,6 +37,11 @@ public class SimulationStateActive extends SimulationStateImpl{
         return true;
     }
     
+    public String getDescription()
+    {
+        return "Active";
+    }
+    
     
     
     

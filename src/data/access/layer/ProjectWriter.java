@@ -448,11 +448,11 @@ public class ProjectWriter {
 
     }
 
-    private void fillInjectedBehavioursArrays(ArrayList<SimVehicle> endedVehiclesList, int[] injectedVehiclesPKs, int[] injectedVehiclesPKsExtended,int[] injectedVSection, int[] injectedVSegment, String[] injectedVTravelDirection, double[] injectedVTimeIn, double[] injectedVTimeOut, double[] injectedVEnergy) {
+    private void fillInjectedBehavioursArrays(ArrayList<SimVehicle> endedVehiclesList, int[] injectedVehiclesPKs, int[] injectedVehiclesPKsExtended, int[] injectedVSection, int[] injectedVSegment, String[] injectedVTravelDirection, double[] injectedVTimeIn, double[] injectedVTimeOut, double[] injectedVEnergy) {
         int j = 0;
         for (int i = 0; i < endedVehiclesList.size(); i++) {
             for (SimPathParcel pathParcel : endedVehiclesList.get(i).getPath()) {
-                injectedVehiclesPKsExtended[j]=injectedVehiclesPKs[i];
+                injectedVehiclesPKsExtended[j] = injectedVehiclesPKs[i];
                 injectedVSection[j] = pathParcel.getSection().getPK();
                 injectedVSegment[j] = pathParcel.getSegment().getIndex();
                 injectedVTravelDirection[j] = pathParcel.getDirection().toString();
@@ -634,11 +634,23 @@ public class ProjectWriter {
             }
             tp.setPK(tpPK);
         }
-        return true;
+        if (m_dao.commit()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean deleteSimulationRun(int runPK) throws SQLRecoverableException {
-        return m_dao.deleteSimulationRun(runPK);
+        if (!m_dao.deleteSimulationRun(runPK)) {
+            return false;
+        }
+        if (m_dao.commit()) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 }

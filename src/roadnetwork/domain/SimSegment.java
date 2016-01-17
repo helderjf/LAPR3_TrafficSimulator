@@ -80,4 +80,10 @@ public class SimSegment {
     Queue<SimVehicle> getCruisingVehicles() {
         return m_vehicleQueue;
     }
+
+    public void setM_vehicleQueue(Queue<SimVehicle> m_vehicleQueue) {
+        this.m_vehicleQueue = m_vehicleQueue;
+    }
+    
+    
 }
