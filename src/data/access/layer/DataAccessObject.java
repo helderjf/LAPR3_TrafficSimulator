@@ -51,7 +51,7 @@ public class DataAccessObject {
             m_connection.setAutoCommit(false);
             System.out.println("Connection to database successfull");
             return true;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(DataAccessObject.class.getName()).log(Level.SEVERE, null, ex);
@@ -119,8 +119,8 @@ public class DataAccessObject {
             System.out.println("acabou execuçao");
 
             return statement.getInt(4);
-            
-        } catch (SQLRecoverableException ex){
+
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -150,7 +150,7 @@ public class DataAccessObject {
 
             return statement.getInt(4);
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -177,7 +177,7 @@ public class DataAccessObject {
             statement.execute();
 
             return statement.getInt(3);
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -221,7 +221,7 @@ public class DataAccessObject {
             statement.execute();
             return statement.getInt(10);
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -260,7 +260,7 @@ public class DataAccessObject {
 
             return 1;
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -314,7 +314,7 @@ public class DataAccessObject {
 
             return statement.getInt(15);
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -347,7 +347,7 @@ public class DataAccessObject {
 
             return 1;
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -372,7 +372,7 @@ public class DataAccessObject {
 
             return 1;
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -398,7 +398,7 @@ public class DataAccessObject {
 
             return 1;
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -424,7 +424,7 @@ public class DataAccessObject {
 
             return 1;
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -451,7 +451,7 @@ public class DataAccessObject {
 
             return 1;
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -487,7 +487,7 @@ public class DataAccessObject {
 
             return 1;
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -515,7 +515,7 @@ public class DataAccessObject {
             statement.execute();
             return statement.getInt(5);
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -545,7 +545,7 @@ public class DataAccessObject {
             statement.execute();
             return statement.getInt(6);
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -574,7 +574,7 @@ public class DataAccessObject {
             statement.execute();
             return statement.getInt(6);
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -612,7 +612,7 @@ public class DataAccessObject {
             //errors = ora_errors.getIntArray();//to do tratar erros
             return 1;
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -620,7 +620,45 @@ public class DataAccessObject {
         }
     }
 
-    int saveRunInjectedVehicles(int runPK,
+    int[] saveRunInjectedVehicles(int runPK, int[] injectedVTrafPatList) throws SQLRecoverableException {
+        try {
+            if (m_connection == null) {
+                if (!connect()) {
+                    return null;//returns -1 so the caller knows the connection failed
+                }
+            }
+
+            ArrayDescriptor oracleIntArray = ArrayDescriptor.createDescriptor("INTEGER_T", m_connection);
+
+            ARRAY trafficpaterns = new ARRAY(oracleIntArray, m_connection, injectedVTrafPatList);
+
+            //create statement
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_INJECTED_VEHICLES(?,?,?)}");
+            statement.setInt(1, runPK);
+            statement.setObject(2, trafficpaterns);
+            statement.registerOutParameter(3, OracleTypes.ARRAY, "INTEGER_T");
+
+            //execute statement
+            statement.execute();
+
+            ARRAY output = ((OracleCallableStatement) statement).getARRAY(3);
+
+            int[] injectedVehiclesPK = output.getIntArray();
+
+            //int[] errors = new int[injectedVehiclesPK.length];//to do tratar erros
+            //ARRAY ora_errors = ((OracleCallableStatement) statement).getARRAY(4);//to do tratar erros
+            //errors = ora_errors.getIntArray();//to do tratar erros
+            return injectedVehiclesPK;
+
+        } catch (SQLRecoverableException ex) {
+            throw ex;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    int saveRunInjectedVehiclesBehaviours(int[] injectedVehiclesPKsExtended,
             int[] injectedVTrafPatList,
             int[] injectedVSection,
             int[] injectedVSegment,
@@ -640,7 +678,7 @@ public class DataAccessObject {
             ArrayDescriptor oracleFloatArray = ArrayDescriptor.createDescriptor("FLOAT_T", m_connection);
             ArrayDescriptor oracleVarchar2Array = ArrayDescriptor.createDescriptor("VARCHAR2_T", m_connection);
 
-            ARRAY trafficpaterns = new ARRAY(oracleIntArray, m_connection, injectedVTrafPatList);
+            ARRAY injVehiclePKs = new ARRAY(oracleIntArray, m_connection, injectedVehiclesPKsExtended);
             ARRAY sections = new ARRAY(oracleIntArray, m_connection, injectedVSection);
             ARRAY segments = new ARRAY(oracleIntArray, m_connection, injectedVSegment);
             ARRAY directions = new ARRAY(oracleVarchar2Array, m_connection, injectedVTravelDirection);
@@ -649,21 +687,8 @@ public class DataAccessObject {
             ARRAY energyConsumptions = new ARRAY(oracleFloatArray, m_connection, injectedVEnergy);
 
             //create statement
-            CallableStatement statement = m_connection.prepareCall("{call SAVE_INJECTED_VEHICLES(?,?,?)}");
-            statement.setInt(1, runPK);
-            statement.setObject(2, trafficpaterns);
-            statement.registerOutParameter(3, OracleTypes.ARRAY, "INTEGER_T");
-
-            //execute statement
-            statement.execute();
-
-            ARRAY output = ((OracleCallableStatement) statement).getARRAY(3);
-
-            int[] injectedVehiclesPK = output.getIntArray();
-
-            statement = m_connection.prepareCall("{call SAVE_INJECTED_V_BEHAVIOURS(?,?,?,?,?,?,?,?)}");
-
-            statement.setObject(1, output);
+            CallableStatement statement = m_connection.prepareCall("{call SAVE_INJECTED_V_BEHAVIOURS(?,?,?,?,?,?,?,?)}");
+            statement.setObject(1, injVehiclePKs);
             statement.setObject(2, sections);
             statement.setObject(3, segments);
             statement.setObject(4, directions);
@@ -681,8 +706,8 @@ public class DataAccessObject {
             //errors = ora_errors.getIntArray();//to do tratar erros
             return 1;
 
-        } catch (SQLRecoverableException ex){
-            throw ex;    
+        } catch (SQLRecoverableException ex) {
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -709,7 +734,7 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -736,7 +761,7 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -761,8 +786,8 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
-            
-        } catch (SQLRecoverableException ex){
+
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -803,7 +828,7 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -839,7 +864,7 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -865,7 +890,7 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -891,7 +916,7 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -922,7 +947,7 @@ public class DataAccessObject {
             }
 
             return projectList;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -950,8 +975,8 @@ public class DataAccessObject {
             ResultSet projectProperties = (ResultSet) statement.getObject(2);
 
             return projectProperties;
-            
-        } catch (SQLRecoverableException ex){
+
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -979,8 +1004,8 @@ public class DataAccessObject {
             ResultSet roadNetwork = (ResultSet) statement.getObject(2);
 
             return roadNetwork;
-            
-        } catch (SQLRecoverableException ex){
+
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1007,7 +1032,7 @@ public class DataAccessObject {
             ResultSet nodes = (ResultSet) statement.getObject(2);
 
             return nodes;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1034,8 +1059,8 @@ public class DataAccessObject {
             ResultSet sections = (ResultSet) statement.getObject(2);
 
             return sections;
-            
-        } catch (SQLRecoverableException ex){
+
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1062,7 +1087,7 @@ public class DataAccessObject {
             ResultSet segments = (ResultSet) statement.getObject(2);
 
             return segments;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1089,7 +1114,7 @@ public class DataAccessObject {
             ResultSet combVehicles = (ResultSet) statement.getObject(2);
 
             return combVehicles;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1116,7 +1141,7 @@ public class DataAccessObject {
             ResultSet hybrVehicles = (ResultSet) statement.getObject(2);
 
             return hybrVehicles;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1143,7 +1168,7 @@ public class DataAccessObject {
             ResultSet elecVehicles = (ResultSet) statement.getObject(2);
 
             return elecVehicles;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1170,7 +1195,7 @@ public class DataAccessObject {
             ResultSet throttles = (ResultSet) statement.getObject(2);
 
             return throttles;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1198,7 +1223,7 @@ public class DataAccessObject {
             ResultSet regimes = (ResultSet) statement.getObject(3);
 
             return regimes;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1225,7 +1250,7 @@ public class DataAccessObject {
             ResultSet gears = (ResultSet) statement.getObject(2);
 
             return gears;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1252,7 +1277,7 @@ public class DataAccessObject {
             ResultSet limits = (ResultSet) statement.getObject(2);
 
             return limits;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1278,7 +1303,7 @@ public class DataAccessObject {
 
             return statement.getInt(2);
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1304,8 +1329,8 @@ public class DataAccessObject {
             statement.execute();
 
             return statement.getInt(3);
-            
-        } catch (SQLRecoverableException ex){
+
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1331,7 +1356,7 @@ public class DataAccessObject {
 
             return statement.getInt(2);
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1364,7 +1389,7 @@ public class DataAccessObject {
 
             return simulationMap;
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1391,7 +1416,7 @@ public class DataAccessObject {
             ResultSet simulation = (ResultSet) statement.getObject(2);
 
             return simulation;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1418,7 +1443,7 @@ public class DataAccessObject {
             ResultSet trafficPatternList = (ResultSet) statement.getObject(2);
 
             return trafficPatternList;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1443,9 +1468,8 @@ public class DataAccessObject {
             statement.execute();
 
             return statement.getInt(2);
-            
-        
-        } catch (SQLRecoverableException ex){
+
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1478,7 +1502,7 @@ public class DataAccessObject {
 
             return runsMap;
 
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1505,8 +1529,8 @@ public class DataAccessObject {
             ResultSet output = (ResultSet) statement.getObject(2);
 
             return output;
-            
-        } catch (SQLRecoverableException ex){
+
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1533,8 +1557,8 @@ public class DataAccessObject {
             ResultSet output = (ResultSet) statement.getObject(2);
 
             return output;
-            
-        } catch (SQLRecoverableException ex){
+
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1562,7 +1586,7 @@ public class DataAccessObject {
             ResultSet output = (ResultSet) statement.getObject(3);
 
             return output;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1586,7 +1610,7 @@ public class DataAccessObject {
             statement.execute();
 
             return true;
-        } catch (SQLRecoverableException ex){
+        } catch (SQLRecoverableException ex) {
             throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);

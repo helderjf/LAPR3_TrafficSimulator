@@ -34,8 +34,8 @@ public class Manager {
     public Manager(String name){
         m_name=name;
         
-        //m_dataAccessObject=new DataAccessObject("jdbc:oracle:thin:@localhost:1521:XE", "grupo60", "pass60");
-        m_dataAccessObject=new DataAccessObject("jdbc:oracle:thin:@//gandalf.dei.isep.ipp.pt:1521/pdborcl", "LAPR3_60", "lapr32015g60");
+        m_dataAccessObject=new DataAccessObject("jdbc:oracle:thin:@localhost:1521:XE", "grupo60", "pass60");
+        //m_dataAccessObject=new DataAccessObject("jdbc:oracle:thin:@//gandalf.dei.isep.ipp.pt:1521/pdborcl", "LAPR3_60", "lapr32015g60");
         
         m_algorithmsList= new ArrayList<>();
         //m_projectReader = new ProjectReader();

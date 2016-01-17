@@ -383,23 +383,32 @@ public class ProjectWriter {
         }
 
         int[] injectedVTrafPatList = new int[endedVehiclesList.size()];
-        
+
         //count total path parcels
-        int totalParcels=0;
-        for(SimVehicle v : endedVehiclesList){
-            totalParcels+=v.getPath().size();
+        int totalParcels = 0;
+        for (SimVehicle v : endedVehiclesList) {
+            totalParcels += v.getPath().size();
         }
-        
+
         int[] injectedVSection = new int[totalParcels];
         int[] injectedVSegment = new int[totalParcels];
         String[] injectedVTravelDirection = new String[totalParcels];
         double[] injectedVTimeIn = new double[totalParcels];
         double[] injectedVTimeOut = new double[totalParcels];
         double[] injectedVEnergy = new double[totalParcels];
+        int[] injectedVehiclesPKsExtended = new int[totalParcels];
 
-        fillInjecttedArrays(endedVehiclesList,
-                // cruisingVehiclesList,
-                injectedVTrafPatList,
+        fillInjectedArrays(endedVehiclesList, injectedVTrafPatList);
+
+        int[] injectedVehiclesPKs = m_dao.saveRunInjectedVehicles(runPK, injectedVTrafPatList);
+        if (injectedVehiclesPKs == null) {
+            return false;
+        }
+
+        fillInjectedBehavioursArrays(
+                endedVehiclesList,
+                injectedVehiclesPKs,
+                injectedVehiclesPKsExtended,
                 injectedVSection,
                 injectedVSegment,
                 injectedVTravelDirection,
@@ -407,7 +416,8 @@ public class ProjectWriter {
                 injectedVTimeOut,
                 injectedVEnergy);
 
-        if (m_dao.saveRunInjectedVehicles(runPK,
+        if (m_dao.saveRunInjectedVehiclesBehaviours(
+                injectedVehiclesPKsExtended,
                 injectedVTrafPatList,
                 injectedVSection,
                 injectedVSegment,
@@ -415,7 +425,7 @@ public class ProjectWriter {
                 injectedVTimeIn,
                 injectedVTimeOut,
                 injectedVEnergy) == -1) {
-            
+
             return false;
         }
         m_dao.commit();
@@ -430,26 +440,29 @@ public class ProjectWriter {
         }
     }
 
-    private void fillInjecttedArrays(ArrayList<SimVehicle> endedVehiclesList, int[] injectedVTrafPatList, int[] injectedVSection, int[] injectedVSegment, String[] injectedVTravelDirection, double[] injectedVTimeIn, double[] injectedVTimeOut, double[] injectedVEnergy) {
-        int j=0;
+    private void fillInjectedArrays(ArrayList<SimVehicle> endedVehiclesList, int[] injectedVTrafPatList) {
         for (int i = 0; i < endedVehiclesList.size(); i++) {
             injectedVTrafPatList[i] = endedVehiclesList.get(i).getTrafficPattern().getPK();
-            
+
+        }
+
+    }
+
+    private void fillInjectedBehavioursArrays(ArrayList<SimVehicle> endedVehiclesList, int[] injectedVehiclesPKs, int[] injectedVehiclesPKsExtended,int[] injectedVSection, int[] injectedVSegment, String[] injectedVTravelDirection, double[] injectedVTimeIn, double[] injectedVTimeOut, double[] injectedVEnergy) {
+        int j = 0;
+        for (int i = 0; i < endedVehiclesList.size(); i++) {
             for (SimPathParcel pathParcel : endedVehiclesList.get(i).getPath()) {
-                
+                injectedVehiclesPKsExtended[j]=injectedVehiclesPKs[i];
                 injectedVSection[j] = pathParcel.getSection().getPK();
                 injectedVSegment[j] = pathParcel.getSegment().getIndex();
                 injectedVTravelDirection[j] = pathParcel.getDirection().toString();
                 injectedVTimeIn[j] = pathParcel.getSimInTime();
                 injectedVTimeOut[j] = pathParcel.getSimExitTime();
                 injectedVEnergy[j] = pathParcel.getSimEnergyConsumption();
-                
+
                 j++;
             }
         }
-//        for (int i = endedVehiclesList.size(); i < (endedVehiclesList.size() + cruisingVehiclesList.size()); i++) {
-//            injectedVTrafPatList[i] = cruisingVehiclesList.get(i - endedVehiclesList.size()).getTrafficPattern().getPK();
-//        }
 
     }
 
@@ -588,7 +601,6 @@ public class ProjectWriter {
         return true;
     }
 
-
     public boolean saveSimulationCopy(Project project, Simulation copySimulation) throws SQLRecoverableException {
         String simName = copySimulation.getName();
         String simDesc = copySimulation.getDescription();
@@ -629,37 +641,4 @@ public class ProjectWriter {
         return m_dao.deleteSimulationRun(runPK);
     }
 
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
