@@ -75,8 +75,7 @@ public class ExportRunResultsDialog extends javax.swing.JDialog {
     private void selectTrafficPattern() {
         ArrayList<TrafficPattern> tp = m_exportRunResultsController.getTrafficPatternsList();
         setContentPane(new ExportRunResultsChooseTPatternPane(this, tp));
-        setLocationRelativeTo(null);
-        setVisible(true);
+        revalidate();
     }
 
     public void exportResultsSpecieficTP(String fileName, TrafficPattern tp) {
@@ -127,8 +126,8 @@ public class ExportRunResultsDialog extends javax.swing.JDialog {
             } else {
                 JOptionPane.showMessageDialog(this, "Unnable to export the results.", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
+            dispose();
         }
-        dispose();
     }
 
     /**

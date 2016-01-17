@@ -21,7 +21,7 @@ public class ImportedResultTrafficPatterns implements ImportedResult{
         String results
                 = "<table border = 1>"
                 + "<tr>"
-                    + "<th colspan=5> Traffic Pattern</th>"
+                    + "<th colspan=4> Traffic Pattern</th>"
                 + "</tr>"
                 + "<tr>"
                     + "<th>Origin Node</th>"
@@ -43,10 +43,10 @@ public class ImportedResultTrafficPatterns implements ImportedResult{
                     + m_trafficPatternList.get(i).getVehicle().getName()
                     + "</td>"
                     + "<td>"
-                    + m_trafficPatternList.get(i).getArrivalRate()
+                    + String.format("%.2f",m_trafficPatternList.get(i).getArrivalRate())
                     + "</td>"
                     + "<td>"
-                    + m_averageConsumptionList.get(i)
+                    + String.format("%.2f",m_averageConsumptionList.get(i))
                     + "</td>"
                     +"</tr>";
         }

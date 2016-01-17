@@ -38,7 +38,7 @@ public class ImportedResultSingleTrafficPattern implements ImportedResult{
                 +"</p>"
                 + "<p> "
                 + "Arrival Rate: "
-                    +m_trafficPattern.getArrivalRate()
+                    +String.format("%.2f",m_trafficPattern.getArrivalRate())
                 +"</p>"
                 + "<table border = 1>"
                 + "<tr>"
@@ -72,10 +72,10 @@ public class ImportedResultSingleTrafficPattern implements ImportedResult{
                     + m_directionList.get(i)
                     + "</td>"
                     + "<td>"
-                    + m_avgConsumption.get(i)
+                    + String.format("%.2f",m_avgConsumption.get(i))
                     + "</td>"
                     + "<td>"
-                    + m_avgTimeSpent.get(i)
+                    + String.format("%.2f",m_avgTimeSpent.get(i))
                     + "</td>"
                     +"</tr>";
         }

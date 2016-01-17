@@ -53,7 +53,7 @@ public class ImportedResultTrafficPatternsPath implements ImportedResult{
                     + m_trafficPatternList.get(i).getVehicle().getName()
                     + "</td>"
                     + "<td>"
-                    + m_trafficPatternList.get(i).getArrivalRate()
+                    + String.format("%.2f",m_trafficPatternList.get(i).getArrivalRate())
                     + "</td>"
                     + "<td>"
                     + m_sectionList.get(i).getRoadName()
@@ -71,7 +71,7 @@ public class ImportedResultTrafficPatternsPath implements ImportedResult{
                     + m_directionList.get(i)
                     + "</td>"
                     + "<td>"
-                    + m_segAVGConsumption.get(i)
+                    + String.format("%.2f",m_segAVGConsumption.get(i))
                     + "</td>"
                     + "</tr>";
         }

@@ -12,10 +12,10 @@ package roadnetwork.domain;
 public class TrafficPattern implements TimeUnit {
 
     private int m_pk;
-    private Junction beginNode;
-    private Junction endNode;
-    private Vehicle vehicle;
-    private double arrivalRate; //in vehicles/seconds
+    private Junction m_beginNode;
+    private Junction m_endNode;
+    private Vehicle m_vehicle;
+    private double m_arrivalRate; //in vehicles/seconds
 
     
     public TrafficPattern(){
@@ -24,62 +24,62 @@ public class TrafficPattern implements TimeUnit {
     
     public TrafficPattern(int m_pk, Junction beginNode, Junction endNode, Vehicle vehicle, double arrivalRate) {
         this.m_pk = m_pk;
-        this.beginNode = beginNode;
-        this.endNode = endNode;
-        this.vehicle = vehicle;
-        this.arrivalRate = arrivalRate;
+        this.m_beginNode = beginNode;
+        this.m_endNode = endNode;
+        this.m_vehicle = vehicle;
+        this.m_arrivalRate = arrivalRate;
     }
     
     public static TrafficPattern trafficPatternPseudoCopy(TrafficPattern otherTrafficPatern){
         TrafficPattern pseudoCopy = new TrafficPattern();
-        pseudoCopy.beginNode=otherTrafficPatern.beginNode;
-        pseudoCopy.endNode=otherTrafficPatern.endNode;
-        pseudoCopy.vehicle=otherTrafficPatern.vehicle;
-        pseudoCopy.arrivalRate=otherTrafficPatern.arrivalRate;
+        pseudoCopy.m_beginNode=otherTrafficPatern.m_beginNode;
+        pseudoCopy.m_endNode=otherTrafficPatern.m_endNode;
+        pseudoCopy.m_vehicle=otherTrafficPatern.m_vehicle;
+        pseudoCopy.m_arrivalRate=otherTrafficPatern.m_arrivalRate;
         return pseudoCopy;
     }
 
     
     public Junction getBeginNode() {
-        return beginNode;
+        return m_beginNode;
     }
 
     public Junction getEndNode() {
-        return endNode;
+        return m_endNode;
     }
 
     public Vehicle getVehicle() {
-        return vehicle;
+        return m_vehicle;
     }
 
     public double getArrivalRate() {
-        return arrivalRate;
+        return m_arrivalRate;
     }
 
     public void setBeginNode(Junction beginNode) {
-        this.beginNode = beginNode;
+        this.m_beginNode = beginNode;
     }
 
     public void setEndNode(Junction endNode) {
-        this.endNode = endNode;
+        this.m_endNode = endNode;
     }
 
     public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+        this.m_vehicle = vehicle;
     }
 
     public void setArrivalRate(double arrivalRate) {
-        this.arrivalRate = arrivalRate;
+        this.m_arrivalRate = arrivalRate;
     }
     
     /**
-     * Sets arrivalRate from a string with the format: X Y/TimeUnit
+     * Sets m_arrivalRate from a string with the format: X Y/TimeUnit
      * @param arrivalRate 
      */
     public void setArrivalRate(String arrivalRate) {
         //Se for -1 é porque houve um erro de parsing
         if(arrivalRateInVehiclesPerSeconds(arrivalRate)!=-1)
-            this.arrivalRate = arrivalRateInVehiclesPerSeconds(arrivalRate);
+            this.m_arrivalRate = arrivalRateInVehiclesPerSeconds(arrivalRate);
     }
 
     /**
@@ -105,7 +105,7 @@ public class TrafficPattern implements TimeUnit {
     }
 
     public boolean validate() {
-        return beginNode != null && endNode != null && vehicle != null && arrivalRate > 0;
+        return m_beginNode != null && m_endNode != null && m_vehicle != null && m_arrivalRate > 0;
     }
 
     public int getPK() {
@@ -118,6 +118,13 @@ public class TrafficPattern implements TimeUnit {
     
     public boolean hasPK(){
         return m_pk!=0;
+    }
+
+    @Override
+    public String toString() {
+        return "Traffic Pattern - Node In: " + m_beginNode + " - Node Out: " + m_endNode
+                + " - Vehicle: " +m_vehicle.getName()+ " - Arrival Rate: " + String.format("%.1f",m_arrivalRate);
+                
     }
 
     
