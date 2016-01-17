@@ -272,8 +272,9 @@ public class SimVehicleTest {
     @Test
     public void testWillEndAtThisTimeStep() {
         System.out.println("willEndAtThisTimeStep");
-        double currentTime = 0.0;
+        double currentTime = 2.0;
         SimVehicle instance = simVehicle;
+        instance.setM_nextPos(simPathParcel1);
         boolean expResult = false;
         boolean result = instance.willEndAtThisTimeStep(currentTime);
         assertEquals(expResult, result);
@@ -286,13 +287,19 @@ public class SimVehicleTest {
     @Test
     public void testEndSimulation() {
         System.out.println("endSimulation");
-        double currentTime = 0.0;
-        SimVehicle instance = null;
-        boolean expResult = false;
+        double currentTime = 2.0;
+        SimVehicle instance = simVehicle;
+        simPathParcel1.setSimExitTime(currentTime);
+        
+        double idleConsumption = vehicle1.getIdleConsumption(2.0);
+        simPathParcel1.addToSimEnergyConsumption(idleConsumption);
+        
+        instance.setM_currentPos(simPathParcel1);
+        boolean expResult = true;
         boolean result = instance.endSimulation(currentTime);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+
     }
 
     /**
@@ -301,12 +308,13 @@ public class SimVehicleTest {
     @Test
     public void testGetPredictedExitTime() {
         System.out.println("getPredictedExitTime");
-        SimVehicle instance = null;
+        SimVehicle instance = simVehicle;
+        instance.setM_currentPos(simPathParcel1);
+        double result = simVehicle.getPredictedExitTime();
+
         double expResult = 0.0;
-        double result = instance.getPredictedExitTime();
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -315,12 +323,11 @@ public class SimVehicleTest {
     @Test
     public void testGetNextPos() {
         System.out.println("getNextPos");
-        SimVehicle instance = null;
+        SimVehicle instance = simVehicle;
         SimPathParcel expResult = null;
         SimPathParcel result = instance.getNextPos();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -330,12 +337,11 @@ public class SimVehicleTest {
     public void testCrossToNextPos() {
         System.out.println("crossToNextPos");
         double currentTime = 0.0;
-        SimVehicle instance = null;
+        SimVehicle instance = simVehicle;
         boolean expResult = false;
         boolean result = instance.crossToNextPos(currentTime);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -345,10 +351,9 @@ public class SimVehicleTest {
     public void testGetStepInjectTime() {
         System.out.println("getStepInjectTime");
         double stepInjectTime = 0.0;
-        SimVehicle instance = null;
+        SimVehicle instance = simVehicle;
         instance.getStepInjectTime(stepInjectTime);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -357,12 +362,11 @@ public class SimVehicleTest {
     @Test
     public void testGetInjectionTime() {
         System.out.println("getInjectionTime");
-        SimVehicle instance = null;
-        double expResult = 0.0;
+        SimVehicle instance = simVehicle;
         double result = instance.getInjectionTime();
+        double expResult = 10.0;
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+  
     }
 
     /**
@@ -371,12 +375,12 @@ public class SimVehicleTest {
     @Test
     public void testGetFirstSimPathParcel() {
         System.out.println("getFirstSimPathParcel");
-        SimVehicle instance = null;
-        SimPathParcel expResult = null;
+        SimVehicle instance = simVehicle;
         SimPathParcel result = instance.getFirstSimPathParcel();
+        SimPathParcel expResult = simPathParcel1;
+        
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -385,10 +389,9 @@ public class SimVehicleTest {
     @Test
     public void testDrop() {
         System.out.println("drop");
-        SimVehicle instance = null;
+        SimVehicle instance = simVehicle;
         instance.drop();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -397,12 +400,11 @@ public class SimVehicleTest {
     @Test
     public void testIsDropped() {
         System.out.println("isDropped");
-        SimVehicle instance = null;
+        SimVehicle instance = simVehicle;
         boolean expResult = false;
         boolean result = instance.isDropped();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -411,12 +413,11 @@ public class SimVehicleTest {
     @Test
     public void testGetdroppedTime() {
         System.out.println("getdroppedTime");
-        SimVehicle instance = null;
-        double expResult = 0.0;
+        SimVehicle instance = simVehicle;
         double result = instance.getdroppedTime();
+        double expResult = -1.0;
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -425,10 +426,9 @@ public class SimVehicleTest {
     @Test
     public void testSetInjected() {
         System.out.println("setInjected");
-        SimVehicle instance = null;
+        SimVehicle instance = simVehicle;
         instance.setInjected();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -437,11 +437,13 @@ public class SimVehicleTest {
     @Test
     public void testUpdatePredictedExitTime() {
         System.out.println("updatePredictedExitTime");
-        double time = 0.0;
-        SimVehicle instance = null;
-        instance.updatePredictedExitTime(time);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double expResult = 2.0;
+        SimVehicle instance = simVehicle;
+        simPathParcel1.setPredictedExitTime(expResult);
+        instance.setM_currentPos(simPathParcel1);
+        instance.updatePredictedExitTime(expResult);
+        double result = instance.getPredictedExitTime();
+        assertEquals(expResult, result,0);
     }
 
     /**
@@ -450,12 +452,11 @@ public class SimVehicleTest {
     @Test
     public void testGetVehiclePK() {
         System.out.println("getVehiclePK");
-        SimVehicle instance = null;
+        SimVehicle instance = simVehicle;
         int expResult = 0;
         int result = instance.getVehiclePK();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -464,12 +465,11 @@ public class SimVehicleTest {
     @Test
     public void testGetTrafficPattern() {
         System.out.println("getTrafficPattern");
-        SimVehicle instance = null;
-        TrafficPattern expResult = null;
+        SimVehicle instance = simVehicle;
+        TrafficPattern expResult = trafficPattern;
         TrafficPattern result = instance.getTrafficPattern();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -478,12 +478,11 @@ public class SimVehicleTest {
     @Test
     public void testGetPath() {
         System.out.println("getPath");
-        SimVehicle instance = null;
-        ArrayList<SimPathParcel> expResult = null;
+        SimVehicle instance = simVehicle;
+        ArrayList<SimPathParcel> expResult = lstSimPathParcel;
         ArrayList<SimPathParcel> result = instance.getPath();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -492,12 +491,11 @@ public class SimVehicleTest {
     @Test
     public void testGetVehicle() {
         System.out.println("getVehicle");
-        SimVehicle instance = null;
-        Vehicle expResult = null;
+        SimVehicle instance = simVehicle;
+        Vehicle expResult = vehicle1;
         Vehicle result = instance.getVehicle();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -506,12 +504,11 @@ public class SimVehicleTest {
     @Test
     public void testGetOriginNode() {
         System.out.println("getOriginNode");
-        SimVehicle instance = null;
-        Junction expResult = null;
+        SimVehicle instance = simVehicle;
+        Junction expResult = node0;
         Junction result = instance.getOriginNode();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -520,12 +517,11 @@ public class SimVehicleTest {
     @Test
     public void testGetDestinyNode() {
         System.out.println("getDestinyNode");
-        SimVehicle instance = null;
-        Junction expResult = null;
+        SimVehicle instance = simVehicle;
+        Junction expResult = node2;
         Junction result = instance.getDestinyNode();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
     
 }
