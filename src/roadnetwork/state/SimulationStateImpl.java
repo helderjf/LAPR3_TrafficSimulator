@@ -49,5 +49,10 @@ public class SimulationStateImpl implements SimulationState{
     public boolean canDeleteRun() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Impl";
+    }
     
 }
