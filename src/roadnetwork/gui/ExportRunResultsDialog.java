@@ -53,16 +53,15 @@ public class ExportRunResultsDialog extends javax.swing.JDialog {
             } else if (check == -4) {
                 JOptionPane.showMessageDialog(this, "Can't export run results. There are no runs saved.", "No runs saved", JOptionPane.INFORMATION_MESSAGE);
                 setVisible(false);
-            }else {
+            } else {
                 m_simulationRuns = m_exportRunResultsController.getSimulationRuns();
                 m_importedResult = m_exportRunResultsController.getImportedResultOptions();
+                initComponents();
                 setContentPane(new ExportRunResultsChooseRunPane(this, m_simulationRuns, m_importedResult));
                 setLocationRelativeTo(null);
                 setVisible(true);
             }
-            
-            
-            initComponents();
+
         } catch (SQLRecoverableException ex) {
             JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(ExportRunResultsDialog.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,7 +80,7 @@ public class ExportRunResultsDialog extends javax.swing.JDialog {
     }
 
     public void exportResultsSpecieficTP(String fileName, TrafficPattern tp) {
-        boolean flag = m_exportRunResultsController.exportResults(fileName,m_selecetedRun, m_selectedResultType, tp);
+        boolean flag = m_exportRunResultsController.exportResults(fileName, m_selecetedRun, m_selectedResultType, tp);
         if (flag == true) {
             JOptionPane.showMessageDialog(this, "The selected run's results were correctly exported.", "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -117,8 +116,8 @@ public class ExportRunResultsDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     void selectRunAndExportType(String run, ImportedResult impResult) {
-        m_selecetedRun=run;
-        m_selectedResultType=impResult;
+        m_selecetedRun = run;
+        m_selectedResultType = impResult;
         if (m_selectedResultType instanceof ImportedResultSingleTrafficPattern) {
             selectTrafficPattern();
         } else {
