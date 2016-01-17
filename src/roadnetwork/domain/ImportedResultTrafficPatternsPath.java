@@ -42,7 +42,8 @@ public class ImportedResultTrafficPatternsPath implements ImportedResult{
                 + "</tr>";
         for (int i = 0; i < m_trafficPatternList.size(); i++) {
             results
-                    += "<td>"
+                    += "<tr>"
+                    + "<td>"
                     + m_trafficPatternList.get(i).getBeginNode().getJunctionId()
                     + "</td>"
                     + "<td>"
@@ -71,7 +72,8 @@ public class ImportedResultTrafficPatternsPath implements ImportedResult{
                     + "</td>"
                     + "<td>"
                     + m_segAVGConsumption.get(i)
-                    + "</td>";
+                    + "</td>"
+                    + "</tr>";
         }
         results += "</table>";
 

@@ -15,6 +15,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import roadnetwork.domain.BestPathAlgorithm;
 import roadnetwork.domain.CombustionVehicle;
+import roadnetwork.domain.FastestPathAlgorithm;
 import roadnetwork.domain.Junction;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
@@ -291,6 +292,7 @@ public class BestPathAnalysisContollerTest {
         System.out.println("newAnalysis");
         BestPathAnalysisContoller instance = controller;
         boolean expResult = true;
+        instance.projectActive();
         boolean result = instance.newAnalysis();
         assertEquals(expResult, result);
     }
@@ -302,7 +304,10 @@ public class BestPathAnalysisContollerTest {
     public void testNewBestPathAnalysis() {
         System.out.println("newBestPathAnalysis");
         BestPathAnalysisContoller instance = controller;
-        ArrayList<Vehicle> expResult = null;
+        instance.projectActive();
+        instance.newAnalysis();
+        ArrayList<Vehicle> expResult = new ArrayList<>();
+        expResult.add(vehicle1);
         ArrayList<Vehicle> result = instance.newBestPathAnalysis();
         assertEquals(expResult, result);
     }
@@ -310,15 +315,6 @@ public class BestPathAnalysisContollerTest {
     /**
      * Test of setVehicle method, of class BestPathAnalysisContoller.
      */
-    @Test
-    public void testSetVehicle() {
-        System.out.println("setVehicle");
-        Vehicle v = null;
-        BestPathAnalysisContoller instance = null;
-        instance.setVehicle(v);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of getNodeList method, of class BestPathAnalysisContoller.
@@ -326,27 +322,13 @@ public class BestPathAnalysisContollerTest {
     @Test
     public void testGetNodeList() {
         System.out.println("getNodeList");
-        BestPathAnalysisContoller instance = null;
-        ArrayList<Junction> expResult = null;
+        BestPathAnalysisContoller instance = controller;
+        instance.projectActive();
+        ArrayList<Junction> expResult = nodeList;
         ArrayList<Junction> result = instance.getNodeList();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of setAnalysisNodes method, of class BestPathAnalysisContoller.
-     */
-    @Test
-    public void testSetAnalysisNodes() {
-        System.out.println("setAnalysisNodes");
-        Junction oj = null;
-        Junction dj = null;
-        BestPathAnalysisContoller instance = null;
-        instance.setAnalysisNodes(oj, dj);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of getBestPathAlgorithms method, of class BestPathAnalysisContoller.
@@ -354,25 +336,10 @@ public class BestPathAnalysisContollerTest {
     @Test
     public void testGetBestPathAlgorithms() {
         System.out.println("getBestPathAlgorithms");
-        BestPathAnalysisContoller instance = null;
-        ArrayList<BestPathAlgorithm> expResult = null;
+        BestPathAnalysisContoller instance = controller;
+        int expResult = 3;
         ArrayList<BestPathAlgorithm> result = instance.getBestPathAlgorithms();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setAlgorithm method, of class BestPathAnalysisContoller.
-     */
-    @Test
-    public void testSetAlgorithm() {
-        System.out.println("setAlgorithm");
-        BestPathAlgorithm alg = null;
-        BestPathAnalysisContoller instance = null;
-        instance.setAlgorithm(alg);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(expResult, result.size());
     }
 
     /**
@@ -381,12 +348,18 @@ public class BestPathAnalysisContollerTest {
     @Test
     public void testRunAnalysis() {
         System.out.println("runAnalysis");
-        BestPathAnalysisContoller instance = null;
-        Result expResult = null;
+        BestPathAnalysisContoller instance = controller;
+        instance.projectActive();
+        instance.newAnalysis();
+        instance.setVehicle(vehicle1);
+        instance.getNodeList();
+        instance.setAnalysisNodes(node0, node1);
+        instance.setAlgorithm(new FastestPathAlgorithm());
+        String expResult = "Fastest path between Node node0 and Node node1 is:\n" +
+                            "node0 ---> node1  @  S01\n" +
+                            "";
         Result result = instance.runAnalysis();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(expResult, result.toString());
     }
 
     /**
@@ -396,12 +369,10 @@ public class BestPathAnalysisContollerTest {
     public void testExportGlobalResultsCSV() {
         System.out.println("exportGlobalResultsCSV");
         String fileName = "";
-        BestPathAnalysisContoller instance = null;
+        BestPathAnalysisContoller instance = controller;
         boolean expResult = false;
         boolean result = instance.exportGlobalResultsCSV(fileName);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -411,12 +382,10 @@ public class BestPathAnalysisContollerTest {
     public void testExportGlobalResultsHTML() {
         System.out.println("exportGlobalResultsHTML");
         String fileName = "";
-        BestPathAnalysisContoller instance = null;
+        BestPathAnalysisContoller instance = controller;
         boolean expResult = false;
         boolean result = instance.exportGlobalResultsHTML(fileName);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
