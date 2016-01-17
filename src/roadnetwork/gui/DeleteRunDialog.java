@@ -100,6 +100,8 @@ public class DeleteRunDialog extends javax.swing.JDialog {
     void deleteRun(String runName) {
         try {
             if (m_deleteRunController.deleteRun(runName)) {
+                JOptionPane.showMessageDialog(this, "The selected run was successfully deleted.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Error! Not possible to delete run.", "Delete Run", JOptionPane.INFORMATION_MESSAGE);
             }

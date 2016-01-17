@@ -32,7 +32,7 @@ public class CreateSimulationFrame extends javax.swing.JFrame {
             setVisible(true);
         }
         else{
-            JOptionPane.showMessageDialog(this,"Please create a project first.");
+            JOptionPane.showMessageDialog(this,"You can't create the simulation at this point. Please check your project.");
         }
         
     }
