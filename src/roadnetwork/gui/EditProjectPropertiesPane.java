@@ -5,6 +5,9 @@
  */
 package roadnetwork.gui;
 
+import java.sql.SQLRecoverableException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -110,11 +113,16 @@ public class EditProjectPropertiesPane extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (!jTextField1.getText().replace(" ", "").equals("") && !jTextPane1.getText().replace(" ", "").equals("")) {
-            if (!m_ancestor.nameExists(jTextField1.getText().trim())) {
-                m_ancestor.newProperties(jTextField1.getText().trim(), jTextPane1.getText().trim());
-            } else {
-                JOptionPane.showMessageDialog(this, "A project with the name name already exists.\n"
-                        + "Please choose a different name");
+            try {
+                if (!m_ancestor.nameExists(jTextField1.getText().trim())) {
+                    m_ancestor.newProperties(jTextField1.getText().trim(), jTextPane1.getText().trim());
+                } else {
+                    JOptionPane.showMessageDialog(this, "A project with the name name already exists.\n"
+                            + "Please choose a different name");
+                }
+            } catch (SQLRecoverableException ex) {
+                JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(EditProjectPropertiesPane.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "You must enter a project name and a project description.");

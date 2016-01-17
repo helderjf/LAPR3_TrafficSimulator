@@ -5,7 +5,10 @@
  */
 package roadnetwork.gui;
 
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.ExportRunResultsController;
 import roadnetwork.domain.ImportedResult;
@@ -36,29 +39,34 @@ public class ExportRunResultsDialog extends javax.swing.JDialog {
     }
 
     private void run() {
-        int check = m_exportRunResultsController.canExport();
-        if (check == -1) {
-            JOptionPane.showMessageDialog(this, "Can't export run results. There is no active project.", "No active project", JOptionPane.INFORMATION_MESSAGE);
-            setVisible(false);
-        } else if (check == -2) {
-            JOptionPane.showMessageDialog(this, "Can't export run results. There is no active simulation.", "No active simulation", JOptionPane.INFORMATION_MESSAGE);
-            setVisible(false);
-        } else if (check == -3) {
-            JOptionPane.showMessageDialog(this, "Can't export run results. The current simulation isn't saved.", "Simulation not saved", JOptionPane.INFORMATION_MESSAGE);
-            setVisible(false);
-        } else if (check == -4) {
-            JOptionPane.showMessageDialog(this, "Can't export run results. There are no runs saved.", "No runs saved", JOptionPane.INFORMATION_MESSAGE);
-            setVisible(false);
-        }else {
-            m_simulationRuns = m_exportRunResultsController.getSimulationRuns();
-            m_importedResult = m_exportRunResultsController.getImportedResultOptions();
-            setContentPane(new ExportRunResultsChooseRunPane(this, m_simulationRuns, m_importedResult));
-            setLocationRelativeTo(null);
-            setVisible(true);
+        try {
+            int check = m_exportRunResultsController.canExport();
+            if (check == -1) {
+                JOptionPane.showMessageDialog(this, "Can't export run results. There is no active project.", "No active project", JOptionPane.INFORMATION_MESSAGE);
+                setVisible(false);
+            } else if (check == -2) {
+                JOptionPane.showMessageDialog(this, "Can't export run results. There is no active simulation.", "No active simulation", JOptionPane.INFORMATION_MESSAGE);
+                setVisible(false);
+            } else if (check == -3) {
+                JOptionPane.showMessageDialog(this, "Can't export run results. The current simulation isn't saved.", "Simulation not saved", JOptionPane.INFORMATION_MESSAGE);
+                setVisible(false);
+            } else if (check == -4) {
+                JOptionPane.showMessageDialog(this, "Can't export run results. There are no runs saved.", "No runs saved", JOptionPane.INFORMATION_MESSAGE);
+                setVisible(false);
+            }else {
+                m_simulationRuns = m_exportRunResultsController.getSimulationRuns();
+                m_importedResult = m_exportRunResultsController.getImportedResultOptions();
+                setContentPane(new ExportRunResultsChooseRunPane(this, m_simulationRuns, m_importedResult));
+                setLocationRelativeTo(null);
+                setVisible(true);
+            }
+            
+            
+            initComponents();
+        } catch (SQLRecoverableException ex) {
+            JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(ExportRunResultsDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-
-        initComponents();
     }
 
     private boolean exportResults(String fileName) {

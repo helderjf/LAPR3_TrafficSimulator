@@ -5,6 +5,7 @@
  */
 package roadnetwork.gui;
 
+import java.sql.SQLRecoverableException;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.NewProjectController;
 
@@ -70,7 +71,7 @@ public class NewProjectFrame extends javax.swing.JFrame {
         }
     }
 
-    boolean nameExists(String name) {
+    boolean nameExists(String name) throws SQLRecoverableException {
         return m_newProjectController.nameExists(name);
     }
 }

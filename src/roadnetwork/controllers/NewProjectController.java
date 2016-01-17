@@ -8,6 +8,7 @@ package roadnetwork.controllers;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 import data.access.layer.ProjectReader;
+import java.sql.SQLRecoverableException;
 
 /**
  *
@@ -44,7 +45,7 @@ public class NewProjectController {
         
     }
 
-    public boolean nameExists(String name) {
+    public boolean nameExists(String name) throws SQLRecoverableException {
         return m_manager.getProjectReader().projectNameExists(name);
     }
 

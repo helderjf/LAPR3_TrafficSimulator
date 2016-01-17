@@ -7,6 +7,7 @@ package roadnetwork.controllers;
 
 import data.access.layer.DataAccessObject;
 import data.access.layer.ProjectWriter;
+import java.sql.SQLRecoverableException;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 
@@ -30,7 +31,7 @@ public class SaveProjectController {
         return m_project.isSaved();
     }
 
-    public boolean saveProject() {
+    public boolean saveProject() throws SQLRecoverableException {
         m_writer = m_manager.getProjectWriter();
 
         boolean aux;

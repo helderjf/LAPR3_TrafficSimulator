@@ -7,6 +7,7 @@ package data.access.layer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import roadnetwork.domain.CombustionVehicle;
@@ -53,7 +54,7 @@ public class ProjectReader {
         return new Project();
     }
 
-    public ArrayList<String> getOrderedProjectList() {
+    public ArrayList<String> getOrderedProjectList() throws SQLRecoverableException {
         m_projectNameList = m_dao.getOrderedProjectList();
         return m_projectNameList;
     }
@@ -471,28 +472,28 @@ public class ProjectReader {
         }
     }
 
-    public boolean projectNameExists(String name) {
+    public boolean projectNameExists(String name) throws SQLRecoverableException {
         if (m_dao.projectNameExists(name) == 0) {
             return false;
         }
         return true;
     }
 
-    public boolean simulationExists(int projectPK, String simulationName) {
+    public boolean simulationExists(int projectPK, String simulationName) throws SQLRecoverableException {
         if (m_dao.simulationExists(projectPK, simulationName) == 0) {
             return false;
         }
         return true;
     }
 
-    public boolean projectHasSimulations(int projectPK) {
+    public boolean projectHasSimulations(int projectPK) throws SQLRecoverableException {
         if (m_dao.projectHasSimulations(projectPK) == 0) {
             return false;
         }
         return true;
     }
 
-    public HashMap<String, Integer> getOrderedSimulationList(int projpk) {
+    public HashMap<String, Integer> getOrderedSimulationList(int projpk) throws SQLRecoverableException {
         return m_dao.getOrderedSimulationList(projpk);
     }
 
@@ -540,14 +541,14 @@ public class ProjectReader {
 
     }
 
-    public boolean simulationHasRuns(int simpk) {
+    public boolean simulationHasRuns(int simpk) throws SQLRecoverableException {
         if (m_dao.simulationHasruns(simpk) == 0) {
             return false;
         }
         return true;
     }
 
-    public HashMap<String, Integer> getSimulationRunsOrderedList(int simpk) {
+    public HashMap<String, Integer> getSimulationRunsOrderedList(int simpk) throws SQLRecoverableException {
         return m_dao.getOrderedRunsList(simpk);
     }
 

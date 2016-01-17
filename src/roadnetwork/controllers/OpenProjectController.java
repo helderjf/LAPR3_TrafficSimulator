@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 import data.access.layer.ProjectReader;
+import java.sql.SQLRecoverableException;
 
 /**
  *
@@ -33,7 +34,7 @@ public class OpenProjectController {
      *
      * @return ProjectsIDList
      */
-    public ArrayList<String> getExistentProjects() {
+    public ArrayList<String> getExistentProjects() throws SQLRecoverableException {
         m_projectReader = m_manager.getProjectReader();
         return m_projectReader.getOrderedProjectList();
     }

@@ -5,6 +5,9 @@
  */
 package roadnetwork.gui;
 
+import java.sql.SQLRecoverableException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.CopyProjectController;
 
@@ -71,10 +74,15 @@ public class CopyProjectFrame extends javax.swing.JFrame {
     }
 
     void newProjectCopy(String name, String description) {
-        if(m_copyProjectController.projectExists(name)){
-             JOptionPane.showMessageDialog(this, "A project with the same name exists. Please select a diferent name.", "Copy Project", JOptionPane.ERROR_MESSAGE);
-        }else{
-            if(m_copyProjectController.copyProject(name,description));
+        try {
+            if(m_copyProjectController.projectExists(name)){
+                JOptionPane.showMessageDialog(this, "A project with the same name exists. Please select a diferent name.", "Copy Project", JOptionPane.ERROR_MESSAGE);
+            }else{
+                if(m_copyProjectController.copyProject(name,description));
+            }
+        } catch (SQLRecoverableException ex) {
+            JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(CopyProjectFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
