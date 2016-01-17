@@ -50,9 +50,9 @@ public class ProjectReader {
         m_stateFactory = sf;
     }
 
-
     public ArrayList<String> getOrderedProjectList() throws SQLRecoverableException {
         m_projectNameList = m_dao.getOrderedProjectList();
+        m_dao.commit();
         return m_projectNameList;
     }
 
@@ -73,7 +73,7 @@ public class ProjectReader {
                 return null;
             }
         }
-
+        m_dao.commit();
         return m_project;
     }
 
@@ -473,6 +473,7 @@ public class ProjectReader {
         if (m_dao.projectNameExists(name) == 0) {
             return false;
         }
+        m_dao.commit();
         return true;
     }
 
@@ -480,6 +481,7 @@ public class ProjectReader {
         if (m_dao.simulationExists(projectPK, simulationName) == 0) {
             return false;
         }
+        m_dao.commit();
         return true;
     }
 
@@ -487,11 +489,15 @@ public class ProjectReader {
         if (m_dao.projectHasSimulations(projectPK) == 0) {
             return false;
         }
+        m_dao.commit();
         return true;
     }
 
     public HashMap<String, Integer> getOrderedSimulationList(int projpk) throws SQLRecoverableException {
-        return m_dao.getOrderedSimulationList(projpk);
+        HashMap<String, Integer> simulations = m_dao.getOrderedSimulationList(projpk);
+        m_dao.commit();
+
+        return simulations;
     }
 
     public Simulation getSimulation(Project project, int simPK) {
@@ -527,6 +533,8 @@ public class ProjectReader {
             SimulationState simstate = m_stateFactory.getSimulationState(state, sim);
             sim.setState(simstate);
 
+            m_dao.commit();
+
             return sim;
 
         } catch (SQLException ex) {
@@ -542,11 +550,15 @@ public class ProjectReader {
         if (m_dao.simulationHasruns(simpk) == 0) {
             return false;
         }
+        m_dao.commit();
+
         return true;
     }
 
     public HashMap<String, Integer> getSimulationRunsOrderedList(int simpk) throws SQLRecoverableException {
-        return m_dao.getOrderedRunsList(simpk);
+        HashMap<String, Integer> runs = m_dao.getOrderedRunsList(simpk);
+        m_dao.commit();
+        return runs;
     }
 
     public ImportedResult getRunResultsByTrafficPattern(Project project, int runPK, ImportedResultTrafficPatterns results) {
@@ -567,6 +579,7 @@ public class ProjectReader {
             ((ImportedResultTrafficPatterns) results).setTrafficPatternList(trafficPatternsList);
             ((ImportedResultTrafficPatterns) results).setAverageConsumptionList(avgConsumptionsList);
 
+            m_dao.commit();
             return results;
 
         } catch (SQLException ex) {
@@ -608,7 +621,7 @@ public class ProjectReader {
             ((ImportedResultTrafficPatternsPath) results).setSegmentList(segmentList);
             ((ImportedResultTrafficPatternsPath) results).setDirectionList(directionList);
             ((ImportedResultTrafficPatternsPath) results).setSegAVGConsumption(avgConsumptionsList);
-
+            m_dao.commit();
             return results;
 
         } catch (SQLException ex) {
@@ -643,7 +656,7 @@ public class ProjectReader {
                 directionList.add(SimDirection.valueOf(output.getString("Direction")));
 
                 avgConsumptionsList.add(output.getDouble("AVG_CONSUMPTION"));
-                
+
                 avgTimeSpentList.add(output.getDouble("AVG_TIME_SPENT"));
 
             }
@@ -654,7 +667,7 @@ public class ProjectReader {
             ((ImportedResultSingleTrafficPattern) results).setDirectionList(directionList);
             ((ImportedResultSingleTrafficPattern) results).setAvgConsumption(avgConsumptionsList);
             ((ImportedResultSingleTrafficPattern) results).setAvgTimeSpent(avgTimeSpentList);
-
+            m_dao.commit();
             return results;
 
         } catch (SQLException ex) {
