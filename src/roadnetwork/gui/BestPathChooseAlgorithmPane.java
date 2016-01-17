@@ -20,6 +20,8 @@ public class BestPathChooseAlgorithmPane extends javax.swing.JPanel {
 
     /**
      * Creates new form BestPathChooseAlgorithm
+     * @param ancestor
+     * @param algorithmsList
      */
     public BestPathChooseAlgorithmPane(BestPathAnalysisFrame ancestor, ArrayList<BestPathAlgorithm> algorithmsList) {
 

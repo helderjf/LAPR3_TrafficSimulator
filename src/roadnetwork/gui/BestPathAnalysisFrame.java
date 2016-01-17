@@ -146,7 +146,6 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
     }
 
     public void setChooseAlgorithmPane() {
-
         this.setContentPane(new BestPathChooseAlgorithmPane(this, m_bestPathAnalysisController.getBestPathAlgorithms()));
         this.revalidate();
     }
@@ -160,7 +159,6 @@ public class BestPathAnalysisFrame extends javax.swing.JFrame {
     void setAnalysisNodes(Junction originNode, Junction destinyNode) {
         m_bestPathAnalysisController.setAnalysisNodes(originNode, destinyNode);
         setChooseAlgorithmPane();
-
     }
 
     void setAlgorithm(BestPathAlgorithm algorithm) {
