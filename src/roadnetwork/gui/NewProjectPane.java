@@ -110,12 +110,7 @@ public class NewProjectPane extends javax.swing.JPanel {
                 && !jTextField1.getText().replace(" ", "").equals("")
                 && jTextPane1.getText() != null
                 && !jTextPane1.getText().replace(" ", "").equals("")) {
-            if (!m_ancestor.nameExists(jTextField1.getText().trim())) {
-                m_ancestor.createProject(jTextField1.getText().trim(), jTextPane1.getText().trim());
-            } else {
-                JOptionPane.showMessageDialog(this, "A project with the name name already exists.\n"
-                        + "Please choose a different name");
-            }
+            m_ancestor.newProject(jTextField1.getText().trim(),jTextPane1.getText().trim());
         } else {
             JOptionPane.showMessageDialog(this, "You must enter a project name and a project description.");
         }
