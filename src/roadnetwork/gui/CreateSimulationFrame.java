@@ -64,11 +64,7 @@ public class CreateSimulationFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     void createSimulation(String name, String description, String filepath) {
-        int r = m_createSimulationController.simulationExists(name);
-        System.out.println("simulationExists="+r);
-        if(r==-1){
-           JOptionPane.showMessageDialog(this,"An error was found connecting to the database. Please try again.");
-       } else if(r==0){
+       if(m_createSimulationController.simulationExists(name)){
            m_createSimulationController.setSimulation(name, description);
            if(m_createSimulationController.setTrafficFile(filepath)){
                JOptionPane.showMessageDialog(this,"Simulation created with success.");
@@ -79,19 +75,5 @@ public class CreateSimulationFrame extends javax.swing.JFrame {
        } else {
            JOptionPane.showMessageDialog(this,"This simulation already exists.");
        }
-        
-        
-        
-//        if(m_createSimulationController.simulationExists(name)){
-//           m_createSimulationController.setSimulation(name, description);
-//           if(m_createSimulationController.setTrafficFile(filepath)){
-//               JOptionPane.showMessageDialog(this,"Simulation created with success.");
-//               setVisible(false);
-//           } else {
-//               JOptionPane.showMessageDialog(this,"An error was found while load traffic pattern file. Please try again.");
-//           }
-//       } else {
-//           JOptionPane.showMessageDialog(this,"This simulation already exists.");
-//       }
     }
 }

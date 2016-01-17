@@ -45,7 +45,7 @@ public class CopySimulationController {
         return 1;
     }
 
-    public int simulationExists(String name) {
+    public boolean simulationExists(String name) {
         m_projectReader = m_manager.getProjectReader();
         return m_projectReader.simulationExists(m_project.getPK(), name);
     }

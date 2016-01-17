@@ -26,10 +26,6 @@ public class CreateSimulationController {
         m_manager = manager;
     }
 
-    /**
-     * Creates new simulation
-     * @return 
-     */
     public boolean newSimulation() {
         m_project = m_manager.getCurrentProject();
         if (m_project != null) {
@@ -38,36 +34,28 @@ public class CreateSimulationController {
         return false;
     }
 
-    /**
-     * Checks if there is already a simulation
-     * @param simulationName
-     * @return 0 if doesn't exist, 1 if it exist, -1 if there is a connection error
-     */
-    public int simulationExists(String simulationName) {
-        if (m_project.simulationExists(simulationName)) {
-            return 1;
-        }
-        if (m_project.hasPK()) {
-            return m_manager.getProjectReader().simulationExists(m_project.getPK(), simulationName);
-        }
-        return 0;
+    public boolean simulationExists(String simulationName) {
+        //TODO
+        /*if (m_project.simulationExists(simulationName)) {
+         return true;
+         }
+         if (m_project.hasPK()) {
+         return m_manager.getProjectReader().simulationExists(m_project.getPK(), simulationName);
+         }
+         return false;*/
+        return true;
     }
 
-    /**
-     * Sets the simulation to a new simulation
-     * @param simulationName
-     * @param description 
-     */
-    public void setSimulation(String simulationName, String description) {
+    public void setSimulation(String simulationName, String description) {//to do descomentar isto e mudar o método para boolean
+//        if (m_manager.getProjectReader().simulationExists(m_project.getPK(), simulationName)
+//                || m_project.simulationExists(simulationName)) {
+//            return false;
+//        }
         m_simulation = m_project.newSimulation(simulationName, description);
     }
 
-    /**
-     * Sets traffic file and calls the parser
-     * @param filepath
-     * @return 
-     */
     public boolean setTrafficFile(String filepath) {
+        System.out.println("SOUT");
         if (filepath == null) {
             System.out.println("File path null");
             return false;
@@ -75,6 +63,7 @@ public class CreateSimulationController {
         ImportSimulationXML r = new ImportSimulationXML();
         ArrayList<TrafficPattern> list = r.read(filepath, m_project);
         if (list == null) {
+            System.out.println("list null");
             return false;
         }
         m_simulation.setTrafficPatternList(list);
