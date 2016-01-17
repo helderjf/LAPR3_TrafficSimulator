@@ -71,7 +71,8 @@ public class SimPathParcelTest {
         
         simPathParcel = new SimPathParcel(section1);
         
- 
+        Junction node0;
+        Junction node1;
     }
     
     @After
@@ -250,10 +251,10 @@ public class SimPathParcelTest {
     public void testCreateReversePP() {
         System.out.println("createReversePP");
         SimPathParcel instance = simPathParcel;
-        SimPathParcel expResult = new SimPathParcel(section1);
-        expResult.createReversePP();
-        PathParcel result = instance.createReversePP();
-        assertEquals(expResult, result);
+        SimPathParcel expResult = new SimPathParcel(section1) {};
+        expResult = (SimPathParcel) expResult.createReversePP();
+        SimPathParcel result = (SimPathParcel) instance.createReversePP();
+        assertEquals(expResult.toString2(), result.toString2());
     }
 
     /**
@@ -262,12 +263,12 @@ public class SimPathParcelTest {
     @Test
     public void testGetTheoreticalEnergyConsumption() {
         System.out.println("getTheoreticalEnergyConsumption");
-        SimPathParcel instance = null;
-        double expResult = 0.0;
+        SimPathParcel instance = simPathParcel;
+        instance.setTheoreticalEnergyConsumption(5.0);
         double result = instance.getTheoreticalEnergyConsumption();
+        double expResult = 5.0;
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -276,11 +277,13 @@ public class SimPathParcelTest {
     @Test
     public void testSetTheoreticalEnergyConsumption() {
         System.out.println("setTheoreticalEnergyConsumption");
-        double energyConsumption = 0.0;
-        SimPathParcel instance = null;
+        double energyConsumption = 5.0;
+        SimPathParcel instance = simPathParcel;
         instance.setTheoreticalEnergyConsumption(energyConsumption);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double result = instance.getTheoreticalEnergyConsumption();
+        double expResult = 5.0;
+        assertEquals(expResult, result, 0.0);
+
     }
 
     /**
@@ -289,12 +292,12 @@ public class SimPathParcelTest {
     @Test
     public void testGetTollCosts() {
         System.out.println("getTollCosts");
-        SimPathParcel instance = null;
-        double expResult = 0.0;
+        SimPathParcel instance = simPathParcel;
+        double expResult = 2.0;
+        simPathParcel.setTollCosts(2.0);
         double result = instance.getTollCosts();
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -303,11 +306,13 @@ public class SimPathParcelTest {
     @Test
     public void testSetTollCosts() {
         System.out.println("setTollCosts");
-        double tollCosts = 0.0;
-        SimPathParcel instance = null;
+        double tollCosts = 2.0;
+        SimPathParcel instance = simPathParcel;
         instance.setTollCosts(tollCosts);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double result = instance.getTollCosts();
+        double expResult = 2.0;
+        assertEquals(expResult, result, 0.0);
+
     }
 
     /**
@@ -316,12 +321,12 @@ public class SimPathParcelTest {
     @Test
     public void testGetPredictedExitTime() {
         System.out.println("getPredictedExitTime");
-        SimPathParcel instance = null;
-        double expResult = 0.0;
+        SimPathParcel instance = simPathParcel;
+        simPathParcel.setPredictedExitTime(2.0);
+        double expResult = 2.0;
         double result = instance.getPredictedExitTime();
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -330,11 +335,12 @@ public class SimPathParcelTest {
     @Test
     public void testSetPredictedExitTime() {
         System.out.println("setPredictedExitTime");
-        double time = 0.0;
-        SimPathParcel instance = null;
+        double time = 2.0;
+        SimPathParcel instance = simPathParcel;
         instance.setPredictedExitTime(time);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double expResult = 2.0;
+        double result = instance.getPredictedExitTime();
+        assertEquals(expResult, result, 0.0);
     }
 
     /**
@@ -343,12 +349,11 @@ public class SimPathParcelTest {
     @Test
     public void testGetSimEnergyConsumption() {
         System.out.println("getSimEnergyConsumption");
-        SimPathParcel instance = null;
-        double expResult = 0.0;
+        SimPathParcel instance = simPathParcel;
+        double expResult = 3.0;
+        instance.addToSimEnergyConsumption(3.0);
         double result = instance.getSimEnergyConsumption();
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -357,11 +362,13 @@ public class SimPathParcelTest {
     @Test
     public void testAddToSimEnergyConsumption() {
         System.out.println("addToSimEnergyConsumption");
-        double idleCosumption = 0.0;
-        SimPathParcel instance = null;
+        double idleCosumption = 2.0;
+        SimPathParcel instance = simPathParcel;
+        instance.setTheoreticalEnergyConsumption(3.0);
         instance.addToSimEnergyConsumption(idleCosumption);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double result = idleCosumption + instance.getTheoreticalEnergyConsumption();
+        double expResult = 5.0;
+        assertEquals(expResult, result, 0.0);
     }
 
     /**
@@ -370,11 +377,13 @@ public class SimPathParcelTest {
     @Test
     public void testInitializePredictedExitTime() {
         System.out.println("initializePredictedExitTime");
-        double injectionTime = 0.0;
-        SimPathParcel instance = null;
+        double injectionTime = 2.0;
+        SimPathParcel instance = simPathParcel;
+        instance.setTheoreticalTravelTime(3.0);
         instance.initializePredictedExitTime(injectionTime);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double result = injectionTime + instance.getTheoreticalTravelTime();
+        double expResult = 5.0;
+        assertEquals(expResult, result, 0.0);
     }
     
 }
