@@ -1618,4 +1618,10 @@ public class DataAccessObject {
         }
     }
 
+    public String getM_dbUrl() {
+        return m_dbUrl;
+    }
+    
+    
+
 }

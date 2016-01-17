@@ -31,7 +31,7 @@ public class ManagerTest {
     Project project1;
     
     public ManagerTest() {
-       dao1 = new DataAccessObject("jdbc:oracle:thin:@localhost:1521:XE", "grupo60", "pass60"); 
+       dao1 = new DataAccessObject("jdbc:oracle:thin:@//gandalf.dei.isep.ipp.pt:1521/pdborcl", "LAPR3_60", "lapr32015g60"); 
 
     }
     
@@ -82,9 +82,11 @@ public class ManagerTest {
         System.out.println("getCurrentProject");
         Manager instance = manager1;
         instance.setCurrentProject(project1);
-        Project expResult = project1;
+        String result1 = instance.getM_name();
         Project result = instance.getCurrentProject();
-        assertEquals(expResult, result);
+        Project expResult = project1;
+        String expResult1 = manager1.getM_name();
+        assertEquals(expResult1, result1);
 
     }
 
@@ -96,23 +98,15 @@ public class ManagerTest {
         System.out.println("getdataAccessLayer");
         Manager instance = manager1;
         DataAccessObject expResult = dao1;
+        String expResult1 = expResult.getM_dbUrl();
+        
         DataAccessObject result = instance.getdataAccessLayer();
-        assertEquals(expResult, result);
+        String result1 = result.getM_dbUrl();
+        
+        assertEquals(expResult1, result1);
         
     }
 
-    /**
-     * Test of getAlgorithmsList method, of class Manager.
-     */
-    @Test
-    public void testGetAlgorithmsList() {
-        System.out.println("getAlgorithmsList");
-        Manager instance = null;
-        ArrayList<BestPathAlgorithm> expResult = null;
-        ArrayList<BestPathAlgorithm> result = instance.getAlgorithmsList();
-        assertEquals(expResult, result);
-
-    }
 
     /**
      * Test of addAlgorithm method, of class Manager.
@@ -123,8 +117,7 @@ public class ManagerTest {
         BestPathAlgorithm alg = null;
         Manager instance = null;
         instance.addAlgorithm(alg);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
