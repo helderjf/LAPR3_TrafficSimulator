@@ -57,6 +57,8 @@ public class SimVehicle {
     double getPredictedExitTime() {
         return m_currentPos.getPredictedExitTime();
     }
+    
+    
 
     SimPathParcel getNextPos() {
         return m_nextPos;
@@ -152,4 +154,16 @@ public class SimVehicle {
         return m_destinyNode;
     }
 
+    public void setM_nextPos(SimPathParcel m_nextPos) {
+        this.m_nextPos = m_nextPos;
+    }
+
+    public void setM_currentPos(SimPathParcel m_currentPos) {
+        this.m_currentPos = m_currentPos;
+    }
+    
+    
+
+    
+    
 }

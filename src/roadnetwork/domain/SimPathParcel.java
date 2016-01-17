@@ -155,4 +155,10 @@ public class SimPathParcel implements PathParcel {
     }
 
 
+    public String toString2() {
+        return "SimPathParcel{" + "m_section=" + m_section + ", m_segment=" + m_segment + ", m_direction=" + m_direction + ", m_theoreticalTravelTime=" + m_theoreticalTravelTime + ", m_simInTime=" + m_simInTime + ", m_predictedExitTime=" + m_predictedExitTime + ", m_simExitTime=" + m_simExitTime + ", m_theoreticalEnergyConsumption=" + m_theoreticalEnergyConsumption + ", m_simEnergyConsumption=" + m_simEnergyConsumption + ", m_tollCosts=" + m_tollCosts + '}';
+    }
+
+    
+
 }
