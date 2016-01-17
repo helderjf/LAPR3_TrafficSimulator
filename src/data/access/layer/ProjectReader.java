@@ -50,9 +50,6 @@ public class ProjectReader {
         m_stateFactory = sf;
     }
 
-    public Project newProject() {
-        return new Project();
-    }
 
     public ArrayList<String> getOrderedProjectList() throws SQLRecoverableException {
         m_projectNameList = m_dao.getOrderedProjectList();
