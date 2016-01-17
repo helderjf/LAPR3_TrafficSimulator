@@ -646,6 +646,7 @@ public class ProjectReader {
                 directionList.add(SimDirection.valueOf(output.getString("Direction")));
 
                 avgConsumptionsList.add(output.getDouble("AVG_CONSUMPTION"));
+                
                 avgTimeSpentList.add(output.getDouble("AVG_TIME_SPENT"));
 
             }
