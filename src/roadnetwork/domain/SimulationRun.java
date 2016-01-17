@@ -103,5 +103,16 @@ public class SimulationRun {
     public void setPK(int runPK) {
         m_pk=runPK;
     }
+    
+    public void setResults(ResultSimulation results)
+    {
+        m_runResults = results;
+    }
+
+    public int getM_pk() {
+        return m_pk;
+    }
+    
+    
 
 }

@@ -131,12 +131,11 @@ public class SimulationTest {
     @Test
     public void testXmlImported() {
         System.out.println("xmlImported");
-        Simulation instance = new Simulation();
+        Simulation instance = simulation2;
         boolean expResult = false;
         boolean result = instance.xmlImported();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -145,9 +144,9 @@ public class SimulationTest {
     @Test
     public void testGetTrafficPatternList() {
         System.out.println("getTrafficPatternList");
-        Simulation instance = new Simulation();
-        ArrayList<TrafficPattern> expResult = lstTrafficPattern;
+        Simulation instance = simulation2;
         ArrayList<TrafficPattern> result = instance.getTrafficPatternList();
+        ArrayList<TrafficPattern> expResult = lstTrafficPattern;
         assertEquals(expResult, result);
 
     }
@@ -229,8 +228,8 @@ public class SimulationTest {
     public void testCanRunSimulation() {
         System.out.println("canRunSimulation");
         Simulation instance = simulation2;
-        boolean expResult = false;
         boolean result = instance.canRunSimulation();
+        boolean expResult = true;
         assertEquals(expResult, result);
 
     }
@@ -241,15 +240,17 @@ public class SimulationTest {
     @Test
     public void testNewSimulationRun() {
         System.out.println("newSimulationRun");
-        RoadNetwork roadNetwork = null;
-        String runName = "";
-        double runDuration = 0.0;
-        double runTimeStep = 0.0;
-        BestPathAlgorithm bpm = null;
+        RoadNetwork roadNetwork2 = roadNetwork;
+        String runName = "run1";
+        double runDuration = 10.0;
+        double runTimeStep = 1.0;
+        BestPathAlgorithm bpm = bestPathAlgorithm;
         Simulation instance = new Simulation();
-        SimulationRun expResult = null;
-        SimulationRun result = instance.newSimulationRun(roadNetwork, runName, runDuration, runTimeStep, bpm);
-        assertEquals(expResult, result);
+        SimulationRun result = instance.newSimulationRun(roadNetwork2, runName, runDuration, runTimeStep, bpm);
+        SimulationRun expResult = simulationRun;
+        String result1 = result.getName();
+        String expResult1 = expResult.getName();
+        assertEquals(expResult1, result1);
 
     }
 
@@ -285,7 +286,7 @@ public class SimulationTest {
     public void testCanEditProperties() {
         System.out.println("canEditProperties");
         Simulation instance = simulation2;
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.canEditProperties();
         assertEquals(expResult, result);
         
@@ -297,12 +298,11 @@ public class SimulationTest {
     @Test
     public void testPropertiesChanged() {
         System.out.println("propertiesChanged");
-        Simulation instance = new Simulation();
-        boolean expResult = false;
+        Simulation instance = simulation2;
         boolean result = instance.propertiesChanged();
+        boolean expResult = true;
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -311,12 +311,11 @@ public class SimulationTest {
     @Test
     public void testGetCurrentRun() {
         System.out.println("getCurrentRun");
-        Simulation instance = new Simulation();
-        SimulationRun expResult = null;
+        Simulation instance = simulation2;
         SimulationRun result = instance.getCurrentRun();
+        SimulationRun expResult = simulationRun;
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -325,12 +324,11 @@ public class SimulationTest {
     @Test
     public void testCanCopySimulation() {
         System.out.println("canCopySimulation");
-        Simulation instance = new Simulation();
-        boolean expResult = false;
+        Simulation instance = simulation2;
         boolean result = instance.canCopySimulation();
+        boolean expResult = true;
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -339,13 +337,12 @@ public class SimulationTest {
     @Test
     public void testGetTrafficPatternByPK() {
         System.out.println("getTrafficPatternByPK");
-        int pk = 0;
-        Simulation instance = new Simulation();
-        TrafficPattern expResult = null;
+        int pk = 2;
+        Simulation instance = simulation2;
         TrafficPattern result = instance.getTrafficPatternByPK(pk);
+        TrafficPattern expResult = trafficPattern2;
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -354,12 +351,11 @@ public class SimulationTest {
     @Test
     public void testCanDeleteRun() {
         System.out.println("canDeleteRun");
-        Simulation instance = new Simulation();
-        boolean expResult = false;
+        Simulation instance = simulation2;
         boolean result = instance.canDeleteRun();
+        boolean expResult = true;
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
     
 }

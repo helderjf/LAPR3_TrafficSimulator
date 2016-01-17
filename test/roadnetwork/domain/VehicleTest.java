@@ -819,8 +819,8 @@ public class VehicleTest {
         System.out.println("getIdleConsumption");
         double timeIdle = 2;
         Vehicle instance = vehicle1;
-        double expResult = 145975.03333333335;
         double result = instance.getIdleConsumption(timeIdle);
+        double expResult = 0.040548620370370374;
         assertEquals(expResult, result, 0.0);
 
     }
@@ -883,6 +883,11 @@ public class VehicleTest {
 
         public List<EngineEfficiency> getEngineEfficiency() {
             return null;
+        }
+
+        @Override
+        public double getIdleConsumption(double timeIdle) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
   

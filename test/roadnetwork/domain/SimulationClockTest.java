@@ -367,10 +367,10 @@ public class SimulationClockTest {
     @Test
     public void testEndSimulation() {
         System.out.println("endSimulation");
-        double time = 0.0;
+        double time = 2.0;
         SimulationClock instance = simulationClock;
-        ArrayList<SimVehicle> expResult = null;
         ArrayList<SimVehicle> result = instance.endSimulation(time);
+        ArrayList<SimVehicle> expResult = null;
         assertEquals(expResult, result);
 
     }
