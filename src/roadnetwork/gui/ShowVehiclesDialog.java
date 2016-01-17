@@ -5,18 +5,47 @@
  */
 package roadnetwork.gui;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import roadnetwork.controllers.ShowVehiclesController;
+import roadnetwork.domain.Vehicle;
+
 /**
  *
  * @author josemiranda
  */
 public class ShowVehiclesDialog extends javax.swing.JDialog {
 
+    private MainFrame m_ancestor;
+    private ShowVehiclesController m_showVehiclesController;
+    private ArrayList<Vehicle> m_vehiclesList;
+    
     /**
      * Creates new form ShowVehiclesDialog
      */
-    public ShowVehiclesDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
+    public ShowVehiclesDialog(MainFrame mainFrame, boolean modal) {
+        super(mainFrame, modal);
+        m_ancestor=mainFrame;
+        m_showVehiclesController= new ShowVehiclesController(m_ancestor.getManager());
+        run();
+    }
+    
+    private void run() {
+        if (!m_showVehiclesController.projectActive()) {
+            JOptionPane.showMessageDialog(this, "Can't show Vehicles. There is no active project.", "No active project", JOptionPane.INFORMATION_MESSAGE);
+            setVisible(false);
+        } else {
+            m_vehiclesList = m_showVehiclesController.getVehiclesList();
+            if (m_vehiclesList == null) {
+                JOptionPane.showMessageDialog(this, "Can't show Vehicles. The current project does't contain vehicles.", "No vehicles", JOptionPane.INFORMATION_MESSAGE);
+                setVisible(false);
+            } else {
+                initComponents();
+                setContentPane(new ShowVehiclesPane(this, m_vehiclesList));
+                setLocationRelativeTo(null);
+                setVisible(true);
+            }
+        }
     }
 
     /**
@@ -44,47 +73,6 @@ public class ShowVehiclesDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ShowVehiclesDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ShowVehiclesDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ShowVehiclesDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ShowVehiclesDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ShowVehiclesDialog dialog = new ShowVehiclesDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
