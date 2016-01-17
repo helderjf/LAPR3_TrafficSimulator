@@ -185,5 +185,35 @@ public class RoadNetwork {
         }
         return null;
     }
+    
+    public String showData(){
+        int length=0;
+        String data=
+                "Road Network " +this.m_name
+                +"\n";
+        
+                for(int i = 0; i < m_sectionList.size(); i++){
+                    ArrayList<Segment> segmentsList =m_sectionList.get(i).getSegmentsList();
+                    
+                    data
+                        += "\nSection "
+                        +m_sectionList.get(i).getBeginningNode().getJunctionId()
+                        +" -->"
+                        +m_sectionList.get(i).getEndingNode().getJunctionId()
+                        +" - Road "
+                        +m_sectionList.get(i).getRoadName()
+                        +"\n     -Segments List:";
+                    for (int j = 0; j < segmentsList.size(); j++) {
+                        
+                    data
+                        += "\n          *Segment  - Index " + segmentsList.get(j).getIndex()
+                        +" Length " + String.format("%.0f",segmentsList.get(j).getLenght());
+                    }
+                    
+                      data+="\n";  
+                }
+                
+                return data;
+    }
 
 }

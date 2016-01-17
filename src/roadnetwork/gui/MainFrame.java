@@ -45,6 +45,7 @@ public class MainFrame extends javax.swing.JFrame {
     private CreateSimulationFrame m_createSimulationFrame;
     private RunSimulationFrame m_runSimulationFrame;
     private ExportRunResultsDialog m_exportRunResultsDialog;
+    private ShowRoadNetworkDialog m_showRoadNetworkDialog;
 
     /**
      * Creates new form JanelaPrincipal
@@ -151,6 +152,11 @@ public class MainFrame extends javax.swing.JFrame {
         m_exportRunResultsDialog = new ExportRunResultsDialog(this, true);
         revalidate();
     }
+    
+    private void showRoadNetwork() {
+        m_showRoadNetworkDialog= new ShowRoadNetworkDialog(this, true);
+        revalidate();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -181,6 +187,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -307,6 +314,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem7);
+
+        jMenuItem14.setText("Show RoadNetwork");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem14);
 
         jMenuBar1.add(jMenu2);
 
@@ -607,6 +622,10 @@ public class MainFrame extends javax.swing.JFrame {
         deleteSimulationRun();
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        showRoadNetwork();
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -626,6 +645,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
@@ -640,5 +660,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+    
 
 }
