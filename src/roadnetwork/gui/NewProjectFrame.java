@@ -6,6 +6,8 @@
 package roadnetwork.gui;
 
 import java.sql.SQLRecoverableException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.NewProjectController;
 
@@ -73,5 +75,19 @@ public class NewProjectFrame extends javax.swing.JFrame {
 
     boolean nameExists(String name) throws SQLRecoverableException {
         return m_newProjectController.nameExists(name);
+    }
+
+    void newProject(String projectName, String projectDescription) {
+        try {
+            if (!nameExists(projectName)) {
+                createProject(projectName, projectDescription);
+            } else {
+                JOptionPane.showMessageDialog(this, "A project with the name name already exists.\n"
+                        + "Please choose a different name");
+            }
+        } catch (SQLRecoverableException ex) {
+            JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(CopyProjectFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
