@@ -98,6 +98,7 @@ public class SimPathParcel implements PathParcel {
 
     public void setSimInTime(double time) {
         m_simInTime = time;
+        m_predictedExitTime=time+m_theoreticalTravelTime;
     }
 
     public double getSimExitTime() {

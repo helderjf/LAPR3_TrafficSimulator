@@ -90,5 +90,29 @@ public class HybridVehicle extends Vehicle implements Electric, Combustion {
     public double getEnergyRegenerationRatio() {
         return energyRegenerationRatio;
     }
+    
+    @Override
+    public  double getIdleConsumption(double timeIdle){
+        double rpmLow=999999;
+        double torque=0;
+        double sfc=0;
+        double result = 0;
+
+        for (Throttle t : throttleList) {
+            if (t.getID().startsWith("25")) {
+                for (Regime r : t.getRegimeList()) {
+                    if(r.getRPMLow()<rpmLow){
+                        rpmLow=r.getRPMLow();
+                        torque=r.getTorque();
+                        sfc=r.getSfc();
+                    }
+                }
+            }
+        }
+        
+        result = 2*3.1415*torque*(rpmLow/60)*sfc*timeIdle;
+        return result;
+
+    }
 
 }
