@@ -110,8 +110,23 @@ public class ResultStaticAnalysis implements Result {
      */
     @Override
     public String toString() {
-        return "Fastest path between " + m_originNode.toString() + " and " + m_destinyNode.toString() + " is:\n"
-                + "COMPLETAR ESTE MÉTODO!!!";
+        String results;
+        results= "Fastest path between " + m_originNode.toString() + " and " + m_destinyNode.toString() + " is:\n";
+        for (PathParcel it : m_path) {
+            if (it.getDirection().equals(SimDirection.direct)) {
+                results+=it.getSection().getBeginningNode().getJunctionId();
+            } else{
+                results+=it.getSection().getEndingNode().getJunctionId();
+            }
+            results+=" ---> ";
+            if (it.getDirection().equals(SimDirection.direct)) {
+                results+=it.getSection().getEndingNode().getJunctionId();
+            } else{
+                results+=it.getSection().getBeginningNode().getJunctionId();
+            }
+            results+="  @  "+it.getSection().getRoadName() + "\n";
+        }
+        return results;
     }
 
     /**

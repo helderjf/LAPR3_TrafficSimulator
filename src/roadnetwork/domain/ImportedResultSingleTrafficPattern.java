@@ -55,7 +55,8 @@ public class ImportedResultSingleTrafficPattern implements ImportedResult{
                 + "</tr>";
         for (int i = 0; i < m_sectionList.size(); i++) {
             results
-                    += "<td>"
+                    += "<tr>"
+                    +"<td>"
                     + m_sectionList.get(i).getRoadName()
                     + "</td>"
                     + "<td>"
@@ -75,7 +76,8 @@ public class ImportedResultSingleTrafficPattern implements ImportedResult{
                     + "</td>"
                     + "<td>"
                     + m_avgTimeSpent.get(i)
-                    + "</td>";
+                    + "</td>"
+                    +"</tr>";
         }
         results += "</table>";
 
