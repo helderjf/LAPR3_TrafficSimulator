@@ -362,30 +362,5 @@ public class BestPathAnalysisContollerTest {
         assertEquals(expResult, result.toString());
     }
 
-    /**
-     * Test of exportGlobalResultsCSV method, of class BestPathAnalysisContoller.
-     */
-    @Test
-    public void testExportGlobalResultsCSV() {
-        System.out.println("exportGlobalResultsCSV");
-        String fileName = "";
-        BestPathAnalysisContoller instance = controller;
-        boolean expResult = false;
-        boolean result = instance.exportGlobalResultsCSV(fileName);
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of exportGlobalResultsHTML method, of class BestPathAnalysisContoller.
-     */
-    @Test
-    public void testExportGlobalResultsHTML() {
-        System.out.println("exportGlobalResultsHTML");
-        String fileName = "";
-        BestPathAnalysisContoller instance = controller;
-        boolean expResult = false;
-        boolean result = instance.exportGlobalResultsHTML(fileName);
-        assertEquals(expResult, result);
-    }
     
 }

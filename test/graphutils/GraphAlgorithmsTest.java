@@ -118,93 +118,74 @@ public class GraphAlgorithmsTest {
         assertTrue("then Castelo Branco", it.next().compareTo("Castelo Branco")==0);
     }
 
-    /**
-     * Test of allPaths method, of class GraphAlgorithms.
-     */
-    @Test
-    public void testAllPaths() {
-        System.out.println("Test of all paths");
-        
-        ArrayList<Deque<String>> paths = new ArrayList<Deque<String>>();
-
-        assertFalse("There should not be paths if vertex does not exist",
-                        GraphAlgorithms.allPaths(completeMap, "Porto", "LX")==null);
- 
-        paths = GraphAlgorithms.allPaths(completeMap, "Porto", "Lisboa");
-        assertTrue("There should be 4 paths", paths.size()==4);
-        
-        paths=GraphAlgorithms.allPaths(completeMap, "Porto", "Faro");
-        assertTrue("There should not be paths between Porto and Faro in the incomplete map", paths.size()==0);
-    }
-
-    /**
-    * Test of shortestPath method, of class GraphAlgorithms.
-    */
-    @Test
-    public void testShortestPath() {
-        System.out.println("Test of shortest path");
-		
-	Deque<String> shortPath = new LinkedList<String>();
-	double lenpath=0;
-        lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","LX",shortPath);
-        assertTrue("Length path should be 0 if vertex does not exist", shortPath.size() == 0);
-	
-        lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","Faro",shortPath);
-	assertTrue("Length path should be 0 if there is no path", shortPath.size() == 0);
-		
-        lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","Porto",shortPath);
-        assertTrue("Length path should be 1 if source and vertex are the same", shortPath.size() == 1);
-		
-	lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","Lisboa",shortPath);
-        assertTrue("Path between Porto and Lisboa should be 335 Km", lenpath == 335);
-		
-        Iterator<String> it = shortPath.iterator();
-
-        assertTrue("First in path should be Porto", it.next().compareTo("Porto")==0);
-        assertTrue("then Aveiro", it.next().compareTo("Aveiro")==0);
-        assertTrue("then Coimbra", it.next().compareTo("Coimbra")==0);
-        assertTrue("then Lisboa", it.next().compareTo("Lisboa")==0);
-
-	lenpath=GraphAlgorithms.shortestPath(completeMap,"Braga","Leiria",shortPath);
-        assertTrue("Path between Braga and Leiria should be 255 Km", lenpath == 255);
-		
-        it = shortPath.iterator();
-
-        assertTrue("First in path should be Braga", it.next().compareTo("Braga")==0);
-        assertTrue("then Porto", it.next().compareTo("Porto")==0);
-        assertTrue("then Aveiro", it.next().compareTo("Aveiro")==0);
-        assertTrue("then Leiria", it.next().compareTo("Leiria")==0);
-	
-        Edge<String,String> edge=completeMap.insertEdge("Aveiro","Viseu","A25",85);
-        
-        shortPath.clear();
-        lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","Castelo Branco",shortPath);	
-	assertTrue("Path between Porto and Castelo Branco should be 335 Km", lenpath == 335);
-	assertTrue("Path between Porto and Castelo Branco should be 5 cities", shortPath.size() == 5);
-
-        it = shortPath.iterator();
-
-        assertTrue("First in path should be Porto", it.next().compareTo("Porto")==0);
-        assertTrue("then Aveiro", it.next().compareTo("Aveiro")==0);
-        assertTrue("then Viseu", it.next().compareTo("Viseu")==0);
-        assertTrue("then Guarda", it.next().compareTo("Guarda")==0);
-        assertTrue("then Castelo Branco", it.next().compareTo("Castelo Branco")==0);
-
-        //Changing Edge: Aveiro-Viseu with Edge: Leiria-C.Branco 
-        //should change shortest path between Porto and Castelo Branco
-
-        completeMap.removeEdge(edge);
-        completeMap.insertEdge("Leiria","Castelo Branco","A23",170);
-	shortPath.clear();
-        lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","Castelo Branco",shortPath);
-        assertTrue("Path between Porto and Castelo Branco should now be 365 Km", lenpath == 365);
-        assertTrue("Path between Porto and Castelo Branco should be 4 cities", shortPath.size() == 4);
-
-        it = shortPath.iterator();
-
-        assertTrue("First in path should be Porto", it.next().compareTo("Porto")==0);
-        assertTrue("then Aveiro", it.next().compareTo("Aveiro")==0);
-        assertTrue("then Leiria", it.next().compareTo("Leiria")==0);
-        assertTrue("then Castelo Branco", it.next().compareTo("Castelo Branco")==0);	
-    }
+//    /**
+//    * Test of shortestPath method, of class GraphAlgorithms.
+//    */
+//    @Test
+//    public void testShortestPath() {
+//        System.out.println("Test of shortest path");
+//		
+//	Deque<String> shortPath = new LinkedList<String>();
+//	double lenpath=0;
+//        lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","LX",shortPath);
+//        assertTrue("Length path should be 0 if vertex does not exist", shortPath.size() == 0);
+//	
+//        lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","Faro",shortPath);
+//	assertTrue("Length path should be 0 if there is no path", shortPath.size() == 0);
+//		
+//        lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","Porto",shortPath);
+//        assertTrue("Length path should be 1 if source and vertex are the same", shortPath.size() == 1);
+//		
+//	lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","Lisboa",shortPath);
+//        assertTrue("Path between Porto and Lisboa should be 335 Km", lenpath == 335);
+//		
+//        Iterator<String> it = shortPath.iterator();
+//
+//        assertTrue("First in path should be Porto", it.next().compareTo("Porto")==0);
+//        assertTrue("then Aveiro", it.next().compareTo("Aveiro")==0);
+//        assertTrue("then Coimbra", it.next().compareTo("Coimbra")==0);
+//        assertTrue("then Lisboa", it.next().compareTo("Lisboa")==0);
+//
+//	lenpath=GraphAlgorithms.shortestPath(completeMap,"Braga","Leiria",shortPath);
+//        assertTrue("Path between Braga and Leiria should be 255 Km", lenpath == 255);
+//		
+//        it = shortPath.iterator();
+//
+//        assertTrue("First in path should be Braga", it.next().compareTo("Braga")==0);
+//        assertTrue("then Porto", it.next().compareTo("Porto")==0);
+//        assertTrue("then Aveiro", it.next().compareTo("Aveiro")==0);
+//        assertTrue("then Leiria", it.next().compareTo("Leiria")==0);
+//	
+//        Edge<String,String> edge=completeMap.insertEdge("Aveiro","Viseu","A25",85);
+//        
+//        shortPath.clear();
+//        lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","Castelo Branco",shortPath);	
+//	assertTrue("Path between Porto and Castelo Branco should be 335 Km", lenpath == 335);
+//	assertTrue("Path between Porto and Castelo Branco should be 5 cities", shortPath.size() == 5);
+//
+//        it = shortPath.iterator();
+//
+//        assertTrue("First in path should be Porto", it.next().compareTo("Porto")==0);
+//        assertTrue("then Aveiro", it.next().compareTo("Aveiro")==0);
+//        assertTrue("then Viseu", it.next().compareTo("Viseu")==0);
+//        assertTrue("then Guarda", it.next().compareTo("Guarda")==0);
+//        assertTrue("then Castelo Branco", it.next().compareTo("Castelo Branco")==0);
+//
+//        //Changing Edge: Aveiro-Viseu with Edge: Leiria-C.Branco 
+//        //should change shortest path between Porto and Castelo Branco
+//
+//        completeMap.removeEdge(edge);
+//        completeMap.insertEdge("Leiria","Castelo Branco","A23",170);
+//	shortPath.clear();
+//        lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","Castelo Branco",shortPath);
+//        assertTrue("Path between Porto and Castelo Branco should now be 365 Km", lenpath == 365);
+//        assertTrue("Path between Porto and Castelo Branco should be 4 cities", shortPath.size() == 4);
+//
+//        it = shortPath.iterator();
+//
+//        assertTrue("First in path should be Porto", it.next().compareTo("Porto")==0);
+//        assertTrue("then Aveiro", it.next().compareTo("Aveiro")==0);
+//        assertTrue("then Leiria", it.next().compareTo("Leiria")==0);
+//        assertTrue("then Castelo Branco", it.next().compareTo("Castelo Branco")==0);	
+//    }
 }

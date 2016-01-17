@@ -87,6 +87,7 @@ public class ManagerTest {
         Project expResult = project1;
         String expResult1 = manager1.getM_name();
         assertEquals(expResult1, result1);
+       
 
     }
 
@@ -108,87 +109,10 @@ public class ManagerTest {
     }
 
 
-    /**
-     * Test of addAlgorithm method, of class Manager.
-     */
-    @Test
-    public void testAddAlgorithm() {
-        System.out.println("addAlgorithm");
-        BestPathAlgorithm alg = null;
-        Manager instance = null;
-        instance.addAlgorithm(alg);
 
-    }
 
-    /**
-     * Test of newCSV method, of class Manager.
-     */
-    @Test
-    public void testNewCSV() {
-        System.out.println("newCSV");
-        String fileName = "file1";
-        Manager instance = manager1;
-        ExportCSV expResult = exportCSV1;
-        ExportCSV result = instance.newCSV("file1");
-        assertEquals(expResult, result);
-    }
 
-    /**
-     * Test of getProjectReader method, of class Manager.
-     */
-    @Test
-    public void testGetProjectReader() {
-        System.out.println("getProjectReader");
-        Manager instance = null;
-        ProjectReader expResult = null;
-        ProjectReader result = instance.getProjectReader();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
-    /**
-     * Test of setCurrentProject method, of class Manager.
-     */
-    @Test
-    public void testSetCurrentProject() {
-        System.out.println("setCurrentProject");
-        Project project = null;
-        Manager instance = null;
-        boolean expResult = false;
-        boolean result = instance.setCurrentProject(project);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
-    /**
-     * Test of getProjectWriter method, of class Manager.
-     */
-    @Test
-    public void testGetProjectWriter() {
-        System.out.println("getProjectWriter");
-        Manager instance = null;
-        ProjectWriter expResult = null;
-        ProjectWriter result = instance.getProjectWriter();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of newHTML method, of class Manager.
-     */
-    @Test
-    public void testNewHTML() {
-        System.out.println("newHTML");
-        String fileName = "";
-        Manager instance = null;
-        ExportHTML expResult = null;
-        ExportHTML result = instance.newHTML(fileName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
     
 }
