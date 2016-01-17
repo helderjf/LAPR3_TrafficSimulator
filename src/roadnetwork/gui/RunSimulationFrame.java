@@ -5,7 +5,10 @@
  */
 package roadnetwork.gui;
 
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.RunSimulationController;
 import roadnetwork.domain.BestPathAlgorithm;
@@ -91,14 +94,19 @@ public class RunSimulationFrame extends javax.swing.JFrame {
     }
 
     void saveResults() {
-        int response = m_runSimulationContoller.saveRun();
-        if (response == 1) {
-            JOptionPane.showMessageDialog(this, "The run results have been saved to the data base server.", "Simulation Run", JOptionPane.INFORMATION_MESSAGE);
-            setVisible(false);
-        } else if (response == -2) {
-            JOptionPane.showMessageDialog(this, "Error! The active simulation does not exist in the data base serve. You have to save the project first.", "Simulation Run", JOptionPane.INFORMATION_MESSAGE);
-        } else if (response == -3) {
-            JOptionPane.showMessageDialog(this, "Error! It was not possible to save the results to the data base server.", "Simulation Run", JOptionPane.INFORMATION_MESSAGE);
+        try {
+            int response = m_runSimulationContoller.saveRun();
+            if (response == 1) {
+                JOptionPane.showMessageDialog(this, "The run results have been saved to the data base server.", "Simulation Run", JOptionPane.INFORMATION_MESSAGE);
+                setVisible(false);
+            } else if (response == -2) {
+                JOptionPane.showMessageDialog(this, "Error! The active simulation does not exist in the data base serve. You have to save the project first.", "Simulation Run", JOptionPane.INFORMATION_MESSAGE);
+            } else if (response == -3) {
+                JOptionPane.showMessageDialog(this, "Error! It was not possible to save the results to the data base server.", "Simulation Run", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLRecoverableException ex) {
+            JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(RunSimulationFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

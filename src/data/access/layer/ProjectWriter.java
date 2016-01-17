@@ -5,6 +5,7 @@
  */
 package data.access.layer;
 
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import roadnetwork.domain.CombustionVehicle;
@@ -39,7 +40,7 @@ public class ProjectWriter {
         m_dao = dao;
     }
 
-    public boolean saveNewProject(Project project) {
+    public boolean saveNewProject(Project project) throws SQLRecoverableException {
 
         m_project = project;
 
@@ -73,7 +74,7 @@ public class ProjectWriter {
         return true;//TO DO fazer verificação
     }
 
-    public boolean updateProject(Project project) {
+    public boolean updateProject(Project project) throws SQLRecoverableException {
 
         m_project = project;
 
@@ -107,7 +108,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean saveNewProjectProperties() {
+    private boolean saveNewProjectProperties() throws SQLRecoverableException {
         String projectName = m_project.getName();
         String projectDescription = m_project.getDescription();
         String projectState = m_project.getState().getClass().getSimpleName();
@@ -122,7 +123,7 @@ public class ProjectWriter {
 
     }
 
-    private boolean saveNewProjectRoadNetwork() {
+    private boolean saveNewProjectRoadNetwork() throws SQLRecoverableException {
         RoadNetwork roadNetwork = m_project.getRoadNetwork();
 
         String roadNetworkName = roadNetwork.getName();
@@ -139,7 +140,7 @@ public class ProjectWriter {
         }
     }
 
-    private boolean saveNewProjectNodeList(RoadNetwork roadNetwork) {
+    private boolean saveNewProjectNodeList(RoadNetwork roadNetwork) throws SQLRecoverableException {
         ArrayList<Junction> nodeList = roadNetwork.getNodeList();
         for (Junction it : nodeList) {
             it.setPK(m_dao.saveNewNode(roadNetwork.getPK(), it.getJunctionId()));
@@ -150,7 +151,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean saveNewProjectRoadNetworkSections(RoadNetwork roadNetwork) {
+    private boolean saveNewProjectRoadNetworkSections(RoadNetwork roadNetwork) throws SQLRecoverableException {
         ArrayList<Section> sectionList = roadNetwork.getSectionList();
         for (Section section : sectionList) {
             section.setPK(m_dao.saveNewSection(
@@ -175,7 +176,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean saveNewProjectSectionSegments(int sectionPK, ArrayList<Segment> segmentList) {
+    private boolean saveNewProjectSectionSegments(int sectionPK, ArrayList<Segment> segmentList) throws SQLRecoverableException {
         for (Segment segment : segmentList) {//TO DO verificação de que não ha index de segmentos repetidos para a mesma section
             if (m_dao.saveNewSegment(
                     sectionPK,
@@ -193,7 +194,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean saveNewProjectVehicles() {
+    private boolean saveNewProjectVehicles() throws SQLRecoverableException {
         ArrayList<Vehicle> vehicleList = m_project.getVehicleList();
         for (Vehicle vehicle : vehicleList) {
             if (!saveNewVehicle(vehicle)) {
@@ -203,7 +204,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean saveNewVehicle(Vehicle vehicle) {
+    private boolean saveNewVehicle(Vehicle vehicle) throws SQLRecoverableException {
         int vehiclePK = m_dao.saveNewVehicle(
                 m_project.getPK(),
                 vehicle.getName(),
@@ -247,7 +248,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean saveNewVehicleVelocityLimits(Vehicle vehicle) {
+    private boolean saveNewVehicleVelocityLimits(Vehicle vehicle) throws SQLRecoverableException {
 
         HashMap<SectionTypology, Double> limits = vehicle.getVelocityLimits();
 
@@ -260,7 +261,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean saveNewCombustionVehicle(Vehicle vehicle) {
+    private boolean saveNewCombustionVehicle(Vehicle vehicle) throws SQLRecoverableException {
 
         if (m_dao.saveNewCombustionVehicle(vehicle.getPK()) != 1) {
             return false;
@@ -269,7 +270,7 @@ public class ProjectWriter {
                 && saveNewVehicleThrottle(vehicle));
     }
 
-    private boolean saveNewHybridVehicle(Vehicle vehicle) {
+    private boolean saveNewHybridVehicle(Vehicle vehicle) throws SQLRecoverableException {
         if (m_dao.saveNewHybridVehicle(vehicle.getPK(), ((HybridVehicle) vehicle).getEnergyRegenerationRatio()) != 1) {
             return false;
         }
@@ -277,7 +278,7 @@ public class ProjectWriter {
                 && saveNewVehicleThrottle(vehicle));
     }
 
-    private boolean saveNewElectricVehicle(Vehicle vehicle) {
+    private boolean saveNewElectricVehicle(Vehicle vehicle) throws SQLRecoverableException {
         if (m_dao.saveNewElectricVehicle(vehicle.getPK(), ((ElectricVehicle) vehicle).getEnergyRegenerationRatio()) != 1) {
             return false;
         }
@@ -285,7 +286,7 @@ public class ProjectWriter {
                 && saveNewVehicleThrottle(vehicle));
     }
 
-    private boolean saveNewVehicleGears(Vehicle vehicle) {
+    private boolean saveNewVehicleGears(Vehicle vehicle) throws SQLRecoverableException {
         HashMap<Integer, Double> gears = vehicle.getGearList();
         for (Integer gear : gears.keySet()) {
             if (m_dao.saveNewVehicleGear(vehicle.getPK(), gear, gears.get(gear)) != 1) {
@@ -295,7 +296,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean saveNewVehicleThrottle(Vehicle vehicle) {
+    private boolean saveNewVehicleThrottle(Vehicle vehicle) throws SQLRecoverableException {
         ArrayList<Throttle> throttleList = vehicle.getThrottleList();//TO DO alterar para a interface cmobustion, quando soublermos se o hybrid tambem vai ter gears
         for (Throttle throttle : throttleList) {
             ArrayList<Regime> regimeList = throttle.getRegimeList();
@@ -316,7 +317,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean saveNewSimulation() {
+    private boolean saveNewSimulation() throws SQLRecoverableException {
         Simulation sim = m_project.getCurrentSimulation();
         String simName = sim.getName();
         String simDesc = sim.getDescription();
@@ -354,7 +355,7 @@ public class ProjectWriter {
 
     }
 
-    public boolean saveSimulationRun(Simulation sim) {
+    public boolean saveSimulationRun(Simulation sim) throws SQLRecoverableException {
         int simPK = sim.getPK();
         SimulationRun run = sim.getCurrentRun();
         ResultSimulation runResults = run.getResults();
@@ -452,7 +453,7 @@ public class ProjectWriter {
 
     }
 
-    private boolean updateProjectProperties() {
+    private boolean updateProjectProperties() throws SQLRecoverableException {
         int projectPK = m_project.getPK();
         String projectName = m_project.getName();
         String projectDescription = m_project.getDescription();
@@ -464,7 +465,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean updateProjectRoadNetwork() {
+    private boolean updateProjectRoadNetwork() throws SQLRecoverableException {
         RoadNetwork roadNetwork = m_project.getRoadNetwork();
 
         if (!roadNetwork.hasPK()) {
@@ -484,7 +485,7 @@ public class ProjectWriter {
         }
     }
 
-    private boolean updateNodeList(RoadNetwork roadNetwork) {
+    private boolean updateNodeList(RoadNetwork roadNetwork) throws SQLRecoverableException {
         ArrayList<Junction> nodeList = roadNetwork.getNodeList();
         for (Junction it : nodeList) {
             if (m_dao.updateNode(it.getPK(), it.getJunctionId()) == -1) {
@@ -494,7 +495,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean updateRoadNetworkSections(RoadNetwork roadNetwork) {
+    private boolean updateRoadNetworkSections(RoadNetwork roadNetwork) throws SQLRecoverableException {
         ArrayList<Section> sectionList = roadNetwork.getSectionList();
         for (Section section : sectionList) {
             if (m_dao.updateSection(
@@ -518,7 +519,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean updateSectionSegments(int sectionPK, ArrayList<Segment> segmentList) {
+    private boolean updateSectionSegments(int sectionPK, ArrayList<Segment> segmentList) throws SQLRecoverableException {
         for (Segment segment : segmentList) {//TO DO verificação de que não ha index de segmentos repetidos para a mesma section
             if (m_dao.updateSegment(
                     sectionPK,
@@ -536,7 +537,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean updateProjectVehicles() {
+    private boolean updateProjectVehicles() throws SQLRecoverableException {
         ArrayList<Vehicle> vehicleList = m_project.getVehicleList();
         for (Vehicle vehicle : vehicleList) {
             if (!vehicle.hasPK()) {
@@ -549,7 +550,7 @@ public class ProjectWriter {
         return true;
     }
 
-    private boolean updateProjectSimulation() {
+    private boolean updateProjectSimulation() throws SQLRecoverableException {
         Simulation sim = m_project.getCurrentSimulation();
 
         if (!sim.hasPK()) {
@@ -588,7 +589,7 @@ public class ProjectWriter {
     }
 
 
-    public boolean saveSimulationCopy(Project project, Simulation copySimulation) {
+    public boolean saveSimulationCopy(Project project, Simulation copySimulation) throws SQLRecoverableException {
         String simName = copySimulation.getName();
         String simDesc = copySimulation.getDescription();
         String simState = copySimulation.getState().getClass().getSimpleName();
@@ -624,7 +625,7 @@ public class ProjectWriter {
         return true;
     }
 
-    public boolean deleteSimulationRun(int runPK) {
+    public boolean deleteSimulationRun(int runPK) throws SQLRecoverableException {
         return m_dao.deleteSimulationRun(runPK);
     }
 

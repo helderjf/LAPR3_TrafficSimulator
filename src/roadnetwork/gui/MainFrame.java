@@ -5,8 +5,11 @@
  */
 package roadnetwork.gui;
 
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.SaveProjectController;
 import roadnetwork.domain.CombustionVehicle;
@@ -61,7 +64,9 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void openProject() {
+
         m_openProjectFrame = new OpenProjectFrame(this);
+
         revalidate();
     }
 
@@ -105,10 +110,15 @@ public class MainFrame extends javax.swing.JFrame {
         if (m_saveProjectController.checkProjectSaved()) {
             JOptionPane.showMessageDialog(this, "The project is already saved", "Save Project", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            if (m_saveProjectController.saveProject()) {
-                JOptionPane.showMessageDialog(this, "Project saved", "Save Project", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Ther was an error! The project has not been saved!", "Save Project", JOptionPane.ERROR_MESSAGE);
+            try {
+                if (m_saveProjectController.saveProject()) {
+                    JOptionPane.showMessageDialog(this, "Project saved", "Save Project", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ther was an error! The project has not been saved!", "Save Project", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLRecoverableException ex) {
+                JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -130,15 +140,15 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void deleteSimulationRun() {
-        new DeleteRunDialog(this,true);
+        new DeleteRunDialog(this, true);
     }
 
     public Manager getManager() {
         return m_manager;
     }
-    
+
     private void exportResults() {
-        m_exportRunResultsDialog=new ExportRunResultsDialog(this, true);
+        m_exportRunResultsDialog = new ExportRunResultsDialog(this, true);
         revalidate();
     }
 

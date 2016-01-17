@@ -7,6 +7,7 @@ package roadnetwork.controllers;
 
 import data.access.layer.ProjectReader;
 import data.access.layer.ProjectWriter;
+import java.sql.SQLRecoverableException;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 
@@ -31,13 +32,13 @@ public class CopyProjectController {
     }
         
         
-    public boolean projectExists(String name){
+    public boolean projectExists(String name) throws SQLRecoverableException{
         m_projectReader=m_manager.getProjectReader();
         return m_projectReader.projectNameExists(name);
         
     }
 
-    public boolean copyProject(String name, String description) {
+    public boolean copyProject(String name, String description) throws SQLRecoverableException {
         m_projectWriter=m_manager.getProjectWriter();
         Project copyProject = new Project(m_activeProject, m_manager.getStateFactory());
         copyProject.setName(name);

@@ -7,6 +7,7 @@ package data.access.layer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import roadnetwork.domain.CombustionVehicle;
@@ -40,7 +41,6 @@ import roadnetwork.state.SimulationState;
 public class ProjectReader {
 
     private DataAccessObject m_dao;
-    private ArrayList<Integer> m_projectIDList;
     private ArrayList<String> m_projectNameList;
     private Project m_project;
     private StateFactory m_stateFactory;
@@ -54,7 +54,7 @@ public class ProjectReader {
         return new Project();
     }
 
-    public ArrayList<String> getOrderedProjectList() {
+    public ArrayList<String> getOrderedProjectList() throws SQLRecoverableException {
         m_projectNameList = m_dao.getOrderedProjectList();
         return m_projectNameList;
     }
@@ -472,28 +472,28 @@ public class ProjectReader {
         }
     }
 
-    public boolean projectNameExists(String name) {
+    public boolean projectNameExists(String name) throws SQLRecoverableException {
         if (m_dao.projectNameExists(name) == 0) {
             return false;
         }
         return true;
     }
 
-    public boolean simulationExists(int projectPK, String simulationName) {
+    public boolean simulationExists(int projectPK, String simulationName) throws SQLRecoverableException {
         if (m_dao.simulationExists(projectPK, simulationName) == 0) {
             return false;
         }
         return true;
     }
 
-    public boolean projectHasSimulations(int projectPK) {
+    public boolean projectHasSimulations(int projectPK) throws SQLRecoverableException {
         if (m_dao.projectHasSimulations(projectPK) == 0) {
             return false;
         }
         return true;
     }
 
-    public HashMap<String, Integer> getOrderedSimulationList(int projpk) {
+    public HashMap<String, Integer> getOrderedSimulationList(int projpk) throws SQLRecoverableException {
         return m_dao.getOrderedSimulationList(projpk);
     }
 
@@ -541,14 +541,14 @@ public class ProjectReader {
 
     }
 
-    public boolean simulationHasRuns(int simpk) {
+    public boolean simulationHasRuns(int simpk) throws SQLRecoverableException {
         if (m_dao.simulationHasruns(simpk) == 0) {
             return false;
         }
         return true;
     }
 
-    public HashMap<String, Integer> getSimulationRunsOrderedList(int simpk) {
+    public HashMap<String, Integer> getSimulationRunsOrderedList(int simpk) throws SQLRecoverableException {
         return m_dao.getOrderedRunsList(simpk);
     }
 
@@ -567,8 +567,8 @@ public class ProjectReader {
                 avgConsumptionsList.add(output.getDouble("AVG_CONSUMPTION"));
             }
 
-            ((ImportedResultTrafficPatterns)results).setTrafficPatternList(trafficPatternsList);
-            ((ImportedResultTrafficPatterns)results).setAverageConsumptionList(avgConsumptionsList);
+            ((ImportedResultTrafficPatterns) results).setTrafficPatternList(trafficPatternsList);
+            ((ImportedResultTrafficPatterns) results).setAverageConsumptionList(avgConsumptionsList);
 
             return results;
 
@@ -585,7 +585,6 @@ public class ProjectReader {
             if (output == null) {
                 return null;
             }
-
 
             ArrayList<TrafficPattern> trafficPatternsList = new ArrayList();
             ArrayList<Section> sectionList = new ArrayList();
@@ -607,11 +606,11 @@ public class ProjectReader {
                 avgConsumptionsList.add(output.getDouble("AVG_CONSUMPTION"));
             }
 
-            ((ImportedResultTrafficPatternsPath)results).setTrafficPatternList(trafficPatternsList);
-            ((ImportedResultTrafficPatternsPath)results).setSectionList(sectionList);
-            ((ImportedResultTrafficPatternsPath)results).setSegmentList(segmentList);
-            ((ImportedResultTrafficPatternsPath)results).setDirectionList(directionList);
-            ((ImportedResultTrafficPatternsPath)results).setSegAVGConsumption(avgConsumptionsList);
+            ((ImportedResultTrafficPatternsPath) results).setTrafficPatternList(trafficPatternsList);
+            ((ImportedResultTrafficPatternsPath) results).setSectionList(sectionList);
+            ((ImportedResultTrafficPatternsPath) results).setSegmentList(segmentList);
+            ((ImportedResultTrafficPatternsPath) results).setDirectionList(directionList);
+            ((ImportedResultTrafficPatternsPath) results).setSegAVGConsumption(avgConsumptionsList);
 
             return results;
 
@@ -629,7 +628,6 @@ public class ProjectReader {
                 return null;
             }
 
-
             TrafficPattern trafficPattern = project.getCurrentSimulation().getTrafficPatternByPK(trafficPatternPK);
             ArrayList<Section> sectionList = new ArrayList();
             ArrayList<Segment> segmentList = new ArrayList();
@@ -637,7 +635,6 @@ public class ProjectReader {
             ArrayList<Double> avgConsumptionsList = new ArrayList();
             ArrayList<Double> avgTimeSpentList = new ArrayList();
 
-            
             while (output.next()) {
 
                 Section sec = project.getRoadNetwork().getSectionByPK(output.getInt("ID_SECTION"));
@@ -650,15 +647,15 @@ public class ProjectReader {
 
                 avgConsumptionsList.add(output.getDouble("AVG_CONSUMPTION"));
                 avgTimeSpentList.add(output.getDouble("AVG_TIME_SPENT"));
-                
+
             }
 
-            ((ImportedResultSingleTrafficPattern)results).setTrafficPattern(trafficPattern);
-            ((ImportedResultSingleTrafficPattern)results).setSectionList(sectionList);
-            ((ImportedResultSingleTrafficPattern)results).setSegmentList(segmentList);
-            ((ImportedResultSingleTrafficPattern)results).setDirectionList(directionList);
-            ((ImportedResultSingleTrafficPattern)results).setAvgConsumption(avgConsumptionsList);
-            ((ImportedResultSingleTrafficPattern)results).setAvgTimeSpent(avgTimeSpentList);
+            ((ImportedResultSingleTrafficPattern) results).setTrafficPattern(trafficPattern);
+            ((ImportedResultSingleTrafficPattern) results).setSectionList(sectionList);
+            ((ImportedResultSingleTrafficPattern) results).setSegmentList(segmentList);
+            ((ImportedResultSingleTrafficPattern) results).setDirectionList(directionList);
+            ((ImportedResultSingleTrafficPattern) results).setAvgConsumption(avgConsumptionsList);
+            ((ImportedResultSingleTrafficPattern) results).setAvgTimeSpent(avgTimeSpentList);
 
             return results;
 

@@ -5,6 +5,9 @@
  */
 package roadnetwork.gui;
 
+import java.sql.SQLRecoverableException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.EditSimulationPropertiesController;
 
@@ -85,15 +88,20 @@ public class EditSimulationPropertiesDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     void newProperties(String newName, String newDescription) {
-        if (m_editSimProppertiesController.setNewProperties(newName, newDescription)) {
-
-            JOptionPane.showMessageDialog(this, "Simulation properties changed.", "Simulatin Properties", JOptionPane.INFORMATION_MESSAGE);
-            //setVisible(false);
-            dispose();
-        } else {
-
-            JOptionPane.showMessageDialog(this, "A simulation with the same name exists. Please choose a diferente name.", "Simulatin Properties", JOptionPane.ERROR_MESSAGE);
-
+        try {
+            if (m_editSimProppertiesController.setNewProperties(newName, newDescription)) {
+                
+                JOptionPane.showMessageDialog(this, "Simulation properties changed.", "Simulatin Properties", JOptionPane.INFORMATION_MESSAGE);
+                //setVisible(false);
+                dispose();
+            } else {
+                
+                JOptionPane.showMessageDialog(this, "A simulation with the same name exists. Please choose a diferente name.", "Simulatin Properties", JOptionPane.ERROR_MESSAGE);
+                
+            }
+        } catch (SQLRecoverableException ex) {
+            JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(EditSimulationPropertiesDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

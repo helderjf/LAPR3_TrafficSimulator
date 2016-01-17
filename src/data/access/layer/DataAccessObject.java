@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLRecoverableException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -43,13 +44,15 @@ public class DataAccessObject {
         m_pass = pass;
     }
 
-    public boolean connect() {
+    public boolean connect() throws SQLRecoverableException {
 
         try {
             m_connection = DriverManager.getConnection(m_dbUrl, m_user, m_pass);
             m_connection.setAutoCommit(false);
             System.out.println("Connection to database successfull");
             return true;
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(DataAccessObject.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -93,7 +96,7 @@ public class DataAccessObject {
         return pidl;
     }
 
-    public int saveNewProject(String projectName, String projectDescription, String projectState) {
+    public int saveNewProject(String projectName, String projectDescription, String projectState) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -116,7 +119,9 @@ public class DataAccessObject {
             System.out.println("acabou execuçao");
 
             return statement.getInt(4);
-
+            
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             System.out.println(ex);
             //Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,7 +129,7 @@ public class DataAccessObject {
         }
     }
 
-    public int saveNewRoadNetwork(int projectPK, String roadNetworkName, String roadNetworkDescription) {
+    public int saveNewRoadNetwork(int projectPK, String roadNetworkName, String roadNetworkDescription) throws SQLRecoverableException {
 
         try {
             if (m_connection == null) {
@@ -145,6 +150,8 @@ public class DataAccessObject {
 
             return statement.getInt(4);
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -152,7 +159,7 @@ public class DataAccessObject {
 
     }
 
-    public int saveNewNode(int roadNetworkPK, String nodeName) {
+    public int saveNewNode(int roadNetworkPK, String nodeName) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -170,6 +177,8 @@ public class DataAccessObject {
             statement.execute();
 
             return statement.getInt(3);
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -186,7 +195,7 @@ public class DataAccessObject {
             SectionDirection direction,
             double toll,
             double windDirection,
-            double windVelocity) {
+            double windVelocity) throws SQLRecoverableException {
 
         try {
             if (m_connection == null) {
@@ -212,6 +221,8 @@ public class DataAccessObject {
             statement.execute();
             return statement.getInt(10);
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -226,7 +237,7 @@ public class DataAccessObject {
             double lenght,
             double maxVelocity,
             double minVelocity,
-            double maxVehicles) {
+            double maxVehicles) throws SQLRecoverableException {
 
         try {
             if (m_connection == null) {
@@ -249,6 +260,8 @@ public class DataAccessObject {
 
             return 1;
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -270,7 +283,7 @@ public class DataAccessObject {
             double wheelSize,
             double finalDriveRatio,
             double minRPM,
-            double maxRPM) {
+            double maxRPM) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -301,6 +314,8 @@ public class DataAccessObject {
 
             return statement.getInt(15);
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -308,7 +323,7 @@ public class DataAccessObject {
 
     }
 
-    int saveNewVehicleVelocityLimits(int vehiclePK, SectionTypology typology, Double speed) {
+    int saveNewVehicleVelocityLimits(int vehiclePK, SectionTypology typology, Double speed) throws SQLRecoverableException {
 
         try {
             if (m_connection == null) {
@@ -332,6 +347,8 @@ public class DataAccessObject {
 
             return 1;
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -339,7 +356,7 @@ public class DataAccessObject {
 
     }
 
-    public int saveNewCombustionVehicle(int vehiclePK) {
+    public int saveNewCombustionVehicle(int vehiclePK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -355,6 +372,8 @@ public class DataAccessObject {
 
             return 1;
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -362,7 +381,7 @@ public class DataAccessObject {
 
     }
 
-    public int saveNewHybridVehicle(int vehiclePK, double energyRegenerationRatio) {
+    public int saveNewHybridVehicle(int vehiclePK, double energyRegenerationRatio) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -379,6 +398,8 @@ public class DataAccessObject {
 
             return 1;
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -386,7 +407,7 @@ public class DataAccessObject {
 
     }
 
-    public int saveNewElectricVehicle(int vehiclePK, double energyRegenerationRatio) {
+    public int saveNewElectricVehicle(int vehiclePK, double energyRegenerationRatio) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -403,6 +424,8 @@ public class DataAccessObject {
 
             return 1;
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -410,7 +433,7 @@ public class DataAccessObject {
 
     }
 
-    public int saveNewVehicleGear(int vehiclePK, int gear, Double ratio) {
+    public int saveNewVehicleGear(int vehiclePK, int gear, Double ratio) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -428,6 +451,8 @@ public class DataAccessObject {
 
             return 1;
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -440,7 +465,7 @@ public class DataAccessObject {
             double torque,
             double rpmLow,
             double rpmHigh,
-            double sfc) {
+            double sfc) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -462,13 +487,15 @@ public class DataAccessObject {
 
             return 1;
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
     }
 
-    int saveNewSimulation(int projPK, String simName, String simDesc, String simState) {
+    int saveNewSimulation(int projPK, String simName, String simDesc, String simState) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -488,6 +515,8 @@ public class DataAccessObject {
             statement.execute();
             return statement.getInt(5);
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -495,7 +524,7 @@ public class DataAccessObject {
 
     }
 
-    int saveNewTrafficPattern(int simPK, int bNodePK, int eNodePK, int vPK, double aRate) {
+    int saveNewTrafficPattern(int simPK, int bNodePK, int eNodePK, int vPK, double aRate) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -516,13 +545,15 @@ public class DataAccessObject {
             statement.execute();
             return statement.getInt(6);
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
     }
 
-    int saveNewRun(int simPK, String name, double duration, double timeStep, String bestPathMehod) {
+    int saveNewRun(int simPK, String name, double duration, double timeStep, String bestPathMehod) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -543,13 +574,15 @@ public class DataAccessObject {
             statement.execute();
             return statement.getInt(6);
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
     }
 
-    int saveRunDroppedVehicles(int runPK, int[] droppedTrafPatList, double[] droppedIntantsList) {
+    int saveRunDroppedVehicles(int runPK, int[] droppedTrafPatList, double[] droppedIntantsList) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -579,6 +612,8 @@ public class DataAccessObject {
             //errors = ora_errors.getIntArray();//to do tratar erros
             return 1;
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -592,7 +627,7 @@ public class DataAccessObject {
             String[] injectedVTravelDirection,
             double[] injectedVTimeIn,
             double[] injectedVTimeOut,
-            double[] injectedVEnergy) {
+            double[] injectedVEnergy) throws SQLRecoverableException {
 
         try {
             if (m_connection == null) {
@@ -646,13 +681,15 @@ public class DataAccessObject {
             //errors = ora_errors.getIntArray();//to do tratar erros
             return 1;
 
+        } catch (SQLRecoverableException ex){
+            throw ex;    
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
     }
 
-    int updateProject(int projectPK, String projectName, String projectDescription, String projectState) {
+    int updateProject(int projectPK, String projectName, String projectDescription, String projectState) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -672,14 +709,15 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
-
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
     }
 
-    int updateRoadNetwork(int roadNetworkPK, String roadNetworkName, String roadNetworkDescription) {
+    int updateRoadNetwork(int roadNetworkPK, String roadNetworkName, String roadNetworkDescription) throws SQLRecoverableException {
 
         try {
             if (m_connection == null) {
@@ -698,14 +736,15 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
-
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
     }
 
-    int updateNode(int nodePK, String nodeName) {
+    int updateNode(int nodePK, String nodeName) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -722,6 +761,9 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
+            
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -737,7 +779,7 @@ public class DataAccessObject {
             SectionDirection direction,
             double toll,
             double windDirection,
-            double windVelocity) {
+            double windVelocity) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -761,7 +803,8 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
-
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -775,7 +818,7 @@ public class DataAccessObject {
             double lenght,
             double maxVelocity,
             double minVelocity,
-            double maxVehicles) {
+            double maxVehicles) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -796,7 +839,8 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
-
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -804,7 +848,7 @@ public class DataAccessObject {
 
     }
 
-    int updateSimulation(int simpk, String simName, String simDesc, String simState) {
+    int updateSimulation(int simpk, String simName, String simDesc, String simState) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -821,14 +865,15 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
-
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
     }
 
-    int updateTrafficPattern(int tpPK, int bNodePK, int eNodePK, int vPK, double aRate) {
+    int updateTrafficPattern(int tpPK, int bNodePK, int eNodePK, int vPK, double aRate) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -846,14 +891,15 @@ public class DataAccessObject {
             statement.execute();
 
             return 1;
-
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
     }
 
-    ArrayList<String> getOrderedProjectList() {
+    ArrayList<String> getOrderedProjectList() throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -876,7 +922,8 @@ public class DataAccessObject {
             }
 
             return projectList;
-
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns -1 so the caller knows the connection failed
@@ -884,7 +931,7 @@ public class DataAccessObject {
 
     }
 
-    ResultSet getProjectProperties(String projectName) {
+    ResultSet getProjectProperties(String projectName) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -903,6 +950,9 @@ public class DataAccessObject {
             ResultSet projectProperties = (ResultSet) statement.getObject(2);
 
             return projectProperties;
+            
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
@@ -910,7 +960,7 @@ public class DataAccessObject {
 
     }
 
-    ResultSet getRoadNetwork(int projectPK) {
+    ResultSet getRoadNetwork(int projectPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -929,13 +979,16 @@ public class DataAccessObject {
             ResultSet roadNetwork = (ResultSet) statement.getObject(2);
 
             return roadNetwork;
+            
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    ResultSet getRoadNetworkNodes(int roadNetworkPK) {
+    ResultSet getRoadNetworkNodes(int roadNetworkPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -954,13 +1007,15 @@ public class DataAccessObject {
             ResultSet nodes = (ResultSet) statement.getObject(2);
 
             return nodes;
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    ResultSet getRoadNetworkSections(int roadNetworkPK) {
+    ResultSet getRoadNetworkSections(int roadNetworkPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -979,13 +1034,16 @@ public class DataAccessObject {
             ResultSet sections = (ResultSet) statement.getObject(2);
 
             return sections;
+            
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    ResultSet getSectionSegments(int sectionPK) {
+    ResultSet getSectionSegments(int sectionPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1004,13 +1062,15 @@ public class DataAccessObject {
             ResultSet segments = (ResultSet) statement.getObject(2);
 
             return segments;
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    ResultSet getCombustionVehicles(int projectPK) {
+    ResultSet getCombustionVehicles(int projectPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1029,13 +1089,15 @@ public class DataAccessObject {
             ResultSet combVehicles = (ResultSet) statement.getObject(2);
 
             return combVehicles;
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    ResultSet getHybridVehicles(int projectPK) {
+    ResultSet getHybridVehicles(int projectPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1054,13 +1116,15 @@ public class DataAccessObject {
             ResultSet hybrVehicles = (ResultSet) statement.getObject(2);
 
             return hybrVehicles;
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    ResultSet getElectricVehicles(int projectPK) {
+    ResultSet getElectricVehicles(int projectPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1079,13 +1143,15 @@ public class DataAccessObject {
             ResultSet elecVehicles = (ResultSet) statement.getObject(2);
 
             return elecVehicles;
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    ResultSet getVehicleThrottles(int vehiclePK) {
+    ResultSet getVehicleThrottles(int vehiclePK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1104,13 +1170,15 @@ public class DataAccessObject {
             ResultSet throttles = (ResultSet) statement.getObject(2);
 
             return throttles;
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    ResultSet getThrottleRegimes(int vehiclePK, String throttleID) {
+    ResultSet getThrottleRegimes(int vehiclePK, String throttleID) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1130,13 +1198,15 @@ public class DataAccessObject {
             ResultSet regimes = (ResultSet) statement.getObject(3);
 
             return regimes;
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    ResultSet getVehicleGears(int vehiclePK) {
+    ResultSet getVehicleGears(int vehiclePK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1155,13 +1225,15 @@ public class DataAccessObject {
             ResultSet gears = (ResultSet) statement.getObject(2);
 
             return gears;
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    ResultSet getVehicleVelocityLimits(int vehiclePK) {
+    ResultSet getVehicleVelocityLimits(int vehiclePK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1180,13 +1252,15 @@ public class DataAccessObject {
             ResultSet limits = (ResultSet) statement.getObject(2);
 
             return limits;
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    int projectNameExists(String projectName) {
+    int projectNameExists(String projectName) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1204,13 +1278,15 @@ public class DataAccessObject {
 
             return statement.getInt(2);
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;//returns null so the caller knows the connection failed
         }
     }
 
-    int simulationExists(int projectPK, String simulationName) {
+    int simulationExists(int projectPK, String simulationName) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1228,14 +1304,16 @@ public class DataAccessObject {
             statement.execute();
 
             return statement.getInt(3);
-
+            
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;//returns null so the caller knows the connection failed
         }
     }
 
-    int projectHasSimulations(int projectPK) {
+    int projectHasSimulations(int projectPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1253,13 +1331,15 @@ public class DataAccessObject {
 
             return statement.getInt(2);
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;//returns null so the caller knows the connection failed
         }
     }
 
-    HashMap<String, Integer> getOrderedSimulationList(int projpk) {
+    HashMap<String, Integer> getOrderedSimulationList(int projpk) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1284,13 +1364,15 @@ public class DataAccessObject {
 
             return simulationMap;
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns -1 so the caller knows the connection failed
         }
     }
 
-    ResultSet getSimulation(int simPK) {
+    ResultSet getSimulation(int simPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1309,13 +1391,15 @@ public class DataAccessObject {
             ResultSet simulation = (ResultSet) statement.getObject(2);
 
             return simulation;
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    ResultSet getTrafficPattern(int simPK) {
+    ResultSet getTrafficPattern(int simPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1334,13 +1418,15 @@ public class DataAccessObject {
             ResultSet trafficPatternList = (ResultSet) statement.getObject(2);
 
             return trafficPatternList;
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    int simulationHasruns(int simpk) {
+    int simulationHasruns(int simpk) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1357,14 +1443,17 @@ public class DataAccessObject {
             statement.execute();
 
             return statement.getInt(2);
-
+            
+        
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return -1;//returns null so the caller knows the connection failed
         }
     }
 
-    HashMap<String, Integer> getOrderedRunsList(int simpk) {
+    HashMap<String, Integer> getOrderedRunsList(int simpk) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1389,13 +1478,15 @@ public class DataAccessObject {
 
             return runsMap;
 
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns -1 so the caller knows the connection failed
         }
     }
 
-    ResultSet getRunResultsByTrafficPattern(Integer runPK) {
+    ResultSet getRunResultsByTrafficPattern(Integer runPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1414,13 +1505,16 @@ public class DataAccessObject {
             ResultSet output = (ResultSet) statement.getObject(2);
 
             return output;
+            
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    ResultSet getRunResultsByTrafficPatternAndSegments(Integer runPK) {
+    ResultSet getRunResultsByTrafficPatternAndSegments(Integer runPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1439,13 +1533,16 @@ public class DataAccessObject {
             ResultSet output = (ResultSet) statement.getObject(2);
 
             return output;
+            
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    ResultSet getRunResultsForATrafficPattern(int runPK, int trafPatPK) {
+    ResultSet getRunResultsForATrafficPattern(int runPK, int trafPatPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1465,13 +1562,15 @@ public class DataAccessObject {
             ResultSet output = (ResultSet) statement.getObject(3);
 
             return output;
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return null;//returns null so the caller knows the connection failed
         }
     }
 
-    boolean deleteSimulationRun(int runPK) {
+    boolean deleteSimulationRun(int runPK) throws SQLRecoverableException {
         try {
             if (m_connection == null) {
                 if (!connect()) {
@@ -1487,7 +1586,8 @@ public class DataAccessObject {
             statement.execute();
 
             return true;
-
+        } catch (SQLRecoverableException ex){
+            throw ex;
         } catch (SQLException ex) {
             Logger.getLogger(ProjectWriter.class.getName()).log(Level.SEVERE, null, ex);
             return false;//returns -1 so the caller knows the connection failed

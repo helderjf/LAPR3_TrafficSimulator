@@ -8,6 +8,7 @@ package roadnetwork.controllers;
 import IO.ExportHTML;
 import data.access.layer.ProjectReader;
 import data.access.layer.ProjectWriter;
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
 import roadnetwork.domain.BestPathAlgorithm;
 import roadnetwork.domain.Manager;
@@ -71,7 +72,7 @@ public class RunSimulationController {
         return m_runResults;
     }
 
-    public int saveRun() {
+    public int saveRun() throws SQLRecoverableException {
 
         if (!m_manager.getProjectReader().simulationExists(m_project.getPK(), m_simulation.getName())) {
             return -2;

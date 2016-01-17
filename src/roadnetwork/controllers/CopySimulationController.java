@@ -7,6 +7,7 @@ package roadnetwork.controllers;
 
 import data.access.layer.ProjectReader;
 import data.access.layer.ProjectWriter;
+import java.sql.SQLRecoverableException;
 import roadnetwork.domain.Manager;
 import roadnetwork.domain.Project;
 import roadnetwork.domain.Simulation;
@@ -45,12 +46,12 @@ public class CopySimulationController {
         return 1;
     }
 
-    public boolean simulationExists(String name) {
+    public boolean simulationExists(String name) throws SQLRecoverableException {
         m_projectReader = m_manager.getProjectReader();
         return m_projectReader.simulationExists(m_project.getPK(), name);
     }
 
-    public boolean copySimulation(String name, String description) {
+    public boolean copySimulation(String name, String description) throws SQLRecoverableException {
         m_projectWriter = m_manager.getProjectWriter();
         Simulation copySimulation = new Simulation(m_activeSimulation, m_manager.getStateFactory());
         copySimulation.setName(name);

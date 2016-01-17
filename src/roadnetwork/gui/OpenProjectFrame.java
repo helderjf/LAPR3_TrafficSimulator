@@ -5,7 +5,10 @@
  */
 package roadnetwork.gui;
 
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import roadnetwork.controllers.OpenProjectController;
 
@@ -25,22 +28,27 @@ public class OpenProjectFrame extends javax.swing.JFrame {
      * @param frame
      */
     public OpenProjectFrame(MainFrame frame) {
-        m_mainFrame=frame;
-        
-        m_openProjectController=new OpenProjectController(m_mainFrame.getManager());
-        m_projectsIDList = m_openProjectController.getExistentProjects();
-        
-        if (m_projectsIDList.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "There are no projects available");
-            m_mainFrame = new MainFrame(m_mainFrame.getManager());
-        }else{
-        
-            m_modelProjectsIDs = new ModelList<>();
-            m_modelProjectsIDs.setItems(m_projectsIDList);
-        
-            initComponents();
-            setLocationRelativeTo(null);
-            setVisible(true);
+        try {
+            m_mainFrame=frame;
+            
+            m_openProjectController=new OpenProjectController(m_mainFrame.getManager());
+            m_projectsIDList = m_openProjectController.getExistentProjects();
+            
+            if (m_projectsIDList.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "There are no projects available");
+                m_mainFrame = new MainFrame(m_mainFrame.getManager());
+            }else{
+                
+                m_modelProjectsIDs = new ModelList<>();
+                m_modelProjectsIDs.setItems(m_projectsIDList);
+                
+                initComponents();
+                setLocationRelativeTo(null);
+                setVisible(true);
+            }
+        } catch (SQLRecoverableException ex) {
+            Logger.getLogger(OpenProjectFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error found while trying to connect to database. Please try again.", "Database Error", JOptionPane.ERROR_MESSAGE);
         }
         
     }
