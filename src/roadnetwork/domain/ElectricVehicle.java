@@ -92,7 +92,27 @@ public class ElectricVehicle extends Vehicle implements Electric {
     }
     
     
-    
+    @Override
+    public  double getIdleConsumption(double timeIdle){
+        double rpmLow=999999;
+        double torque=0;
+        double result = 0;
+
+        for (Throttle t : throttleList) {
+            if (t.getID().startsWith("25")) {
+                for (Regime r : t.getRegimeList()) {
+                    if(r.getRPMLow()<rpmLow){
+                        rpmLow=r.getRPMLow();
+                        torque=r.getTorque();
+                    }
+                }
+            }
+        }
+        
+        result = 2*3.1415*torque*(rpmLow/60)*timeIdle;
+        return result;
+
+    }
     
 
 }

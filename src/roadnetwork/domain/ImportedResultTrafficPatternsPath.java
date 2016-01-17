@@ -71,8 +71,14 @@ public class ImportedResultTrafficPatternsPath implements ImportedResult{
                     + m_directionList.get(i)
                     + "</td>"
                     + "<td>"
-                    + String.format("%.2f",m_segAVGConsumption.get(i))
-                    + "</td>"
+                    + String.format("%.1f",m_segAVGConsumption.get(i));
+                    if (m_trafficPatternList.get(i).getVehicle() instanceof CombustionVehicle) {
+                        results+=" g";
+                    }else{
+                        results+=" J";
+                    }
+            results
+                    += "</td>"
                     + "</tr>";
         }
         results += "</table>";

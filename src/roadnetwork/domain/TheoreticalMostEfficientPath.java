@@ -121,10 +121,10 @@ public class TheoreticalMostEfficientPath implements BestPathAlgorithm{
                 segmentEnergyConsumption=0;
             } else if (combustionVehicle.getFuel().equalsIgnoreCase("Gasoline")) {
                 //segmentEnergyConsumption in grams
-                segmentEnergyConsumption=segmentEnergyConsumption/(1000*44.4);
+                segmentEnergyConsumption=segmentEnergyConsumption/(combustionVehicle.getGasolineEnergy());
             }else if (combustionVehicle.getFuel().equalsIgnoreCase("Diesel")) {
                 //segmentEnergyConsumption in grams
-                segmentEnergyConsumption=segmentEnergyConsumption/(1000*48);
+                segmentEnergyConsumption=segmentEnergyConsumption/(combustionVehicle.getDieselEnergy());
             }
         
         } else if ((m_vehicle instanceof ElectricVehicle) && segmentEnergyConsumption<0) {
